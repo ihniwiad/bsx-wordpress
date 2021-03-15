@@ -5,40 +5,56 @@
 */
 
 
+// import DomData from './../../dom/dom-data'
+// import MakeFnElems from './../../dom/function-elements'
+
+
 import $ from "jquery"
-import BSX_UTILS from './../utils/utils'
+import Utils from './../utils/utils'
 
 
-( function( $, Utils ) {
+// const KEY = 'remote-event'
 
-    $.fn.remoteEvent = function() {
 
-        var $elems = $( this );
 
-        $elems.each( function() {
+$.fn.remoteEvent = function() {
 
-            var $elem = $( this );
-            var options = Utils.getOptionsFromAttr( $elem );
+    var $elems = $( this );
 
-            var targetSelector = '';
-            if ( typeof options.target != 'undefined' ) {
-                targetSelector = options.target;
+    $elems.each( function() {
+
+        var $elem = $( this );
+        var options = Utils.getOptionsFromAttr( $elem );
+
+        var targetSelector = '';
+        if ( typeof options.target != 'undefined' ) {
+            targetSelector = options.target;
+        }
+        var $target = ( Utils.$functionAndTargetElems.filter( targetSelector ).lenght > 0 ) ? Utils.$functionAndTargetElems.filter( targetSelector ) : $( targetSelector );
+        
+        var triggerEvent = options.triggerEvent || 'click';
+        var remoteEvent = options.remoteEvent || 'click';
+
+        $elem.on( triggerEvent, function() {
+            if ( $target.length > 0 ) {
+                $target.trigger( remoteEvent );
             }
-            var $target = ( Utils.$functionAndTargetElems.filter( targetSelector ).lenght > 0 ) ? Utils.$functionAndTargetElems.filter( targetSelector ) : $( targetSelector );
-            
-            var triggerEvent = options.triggerEvent || 'click';
-            var remoteEvent = options.remoteEvent || 'click';
-
-            $elem.on( triggerEvent, function() {
-                if ( $target.length > 0 ) {
-                    $target.trigger( remoteEvent );
-                }
-            } );
-
         } );
 
-    };
+    } );
 
-    Utils.$functionElems.filter( '[data-fn="remote-event"]' ).remoteEvent();
+};
 
-} )( $, BSX_UTILS );
+// init
+
+Utils.$functionElems.filter( '[data-fn="remote-event"]' ).remoteEvent();
+
+
+// init
+
+// if ( DomData.getElems( KEY ) ) {
+//   DomData.getElems( KEY ).forEach( ( trigger ) => {
+//     $( trigger ).remoteEvent()
+//   } )
+// }
+

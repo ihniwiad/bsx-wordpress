@@ -26,8 +26,8 @@ require_once( 'src/libs/accordion/class-accordion.php' );
       <?php include 'template-parts/html-header.php'; ?>
 
 
-      <div class="container mb-5">
-        <h1 data-bsx="key_1 key_5">Hello Babel with Gulp</h1>
+      <div class="container below-navbar-content mb-5">
+        <h1 data-bsx="key_1 key_5">BSX WordPress</h1>
         <p data-bsx="key_1">Please see console log.</p>
         <p class="foo bar blub bla" data-bsx="key_1">I have css classes.</p>
         <div data-bsx="key_2">Some div</div>

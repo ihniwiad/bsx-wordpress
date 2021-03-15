@@ -1,0 +1,309 @@
+// atf
+
+
+// HIDE ALL NON NECESSARY CONTENTS
+
+// level 2..n
+
+.bsx-appnav-navbar-nav ul {
+	display: none;
+}
+
+
+// DESKTOP / MOBILE VISIBILITY CLASSES
+
+// responsive visibility
+@include bsx-appnav-navigation(desktop) {
+	.bsx-appnav-desktop-hidden {
+		display: none !important;
+	}
+}
+@include bsx-appnav-navigation(mobile) {
+	.bsx-appnav-mobile-hidden {
+		display: none !important;
+	}
+}
+
+
+// TOGGLER
+
+@include bsx-appnav-navigation(mobile) {
+	.bsx-appnav-navbar-toggler {
+
+		position: relative;
+		box-sizing: content-box;
+		min-width: $bsx-appnav-link-atf-min-width;
+		min-height: $bsx-appnav-link-atf-min-height;
+		display: flex;
+		align-items: center;
+		background: transparent; // remove default button style
+		border: none;
+		padding-top: $bsx-appnav-desktop-level-1-link-py;
+		padding-bottom: $bsx-appnav-desktop-level-1-link-py;
+		font-size: $bsx-font-size-base;
+		color: transparent;
+
+		// atf text bubble
+		&::before {
+			content: "";
+			position: absolute;
+			left: $bsx-appnav-link-px;
+			right: $bsx-appnav-link-px;
+			height: $bsx-appnav-link-atf-min-height;
+			margin-top: $bsx-appnav-link-atf-margin-top;
+			background: $bsx-appnav-link-atf-bg-color;
+			border-radius: $bsx-appnav-link-atf-min-height / 2;
+		}
+	}
+}
+@include bsx-appnav-navigation(desktop) {
+	.bsx-appnav-navbar-toggler {
+		display: none;
+	}
+}
+
+
+// BRAND
+
+.bsx-appnav-navbar-brand {
+	display: flex;
+	margin-left: $bsx-appnav-navbar-brand-margin-left;
+	margin-right: $bsx-appnav-navbar-brand-margin-right;
+	padding: $bsx-appnav-navbar-brand-padding;
+	align-items: $bsx-appnav-navbar-brand-align-items;
+	font-size: $bsx-appnav-navbar-brand-font-size;
+	line-height: $bsx-appnav-navbar-brand-line-height;
+	white-space: nowrap;
+	max-width: $bsx-appnav-navbar-brand-max-width;
+
+	@include bsx-hover-focus {
+		text-decoration: none;
+	}
+
+	img,
+	svg {
+		max-width: $bsx-appnav-navbar-logo-max-width;
+		height: $bsx-appnav-navbar-logo-height;
+	}
+}
+
+
+// NAVBAR
+
+.bsx-appnav-navbar {
+
+	padding-top: $bsx-appnav-navbar-py;
+	padding-bottom: $bsx-appnav-navbar-py;
+	background-color: $bsx-appnav-navbar-bg-color;
+	box-shadow: $bsx-appnav-navbar-box-shadow;
+
+	// TODO: make configurable scroll toggle or mobile absolute desktop fixed
+
+	&.bsx-appnav-fixed-top {
+		@if $bsx-appnav-fixed-top-mobile-static {
+			// devide mobile absolute desktop fixed
+			@include bsx-appnav-navigation(mobile) {
+				position: absolute;
+			}
+			@include bsx-appnav-navigation(desktop) {
+				position: fixed;
+			}
+		}
+		@else {
+			// always fixed
+			position: fixed;
+		}
+		top: 0;
+		right: 0;
+		left: 0;
+		z-index: $bsx-appnav-navbar-z-index;
+	}
+}
+
+
+
+// MOBILE NAVBAR
+
+@include bsx-appnav-navigation(mobile) {
+
+	.bsx-appnav-navbar {
+		display: block;
+	}
+
+}
+
+// DESKTOP NAVBAR
+
+@include bsx-appnav-navigation(desktop) {
+
+	.bsx-appnav-navbar {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+
+		.bsx-appnav-navbar-nav {
+			flex-direction: row;
+		}
+	}
+
+}
+
+
+// NAVBAR CONTAINER
+
+.bsx-appnav-navbar-container {
+	display: flex;
+	flex-direction: row;
+}
+
+@include bsx-appnav-navigation(mobile) {
+
+	.bsx-appnav-navbar-container {
+		@if $bsx-appnav-navbar-container-mobile-padding-left != '' {
+			padding-left: $bsx-appnav-navbar-container-mobile-padding-left;
+		}
+		@if $bsx-appnav-navbar-container-mobile-padding-right != '' {
+			padding-right: $bsx-appnav-navbar-container-mobile-padding-right;
+		}
+	}
+}
+
+
+// NAVBAR COLLAPSE
+
+// mobile navbar collapse
+
+@include bsx-appnav-navigation(mobile) {
+
+	.bsx-appnav-navbar-collapse {
+		display: none;
+	}
+}
+
+// desktop navbar collapse
+
+@include bsx-appnav-navigation(desktop) {
+
+	.bsx-appnav-navbar-collapse {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+	}
+	
+}
+
+
+// NAVBAR NAV
+
+.bsx-appnav-navbar-nav {
+	display: flex;
+	flex-direction: column;
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	list-style: none;
+
+	// all levels
+
+	li {
+
+		// link (all)
+		a {
+			display: block;
+			padding: $bsx-appnav-link-py $bsx-appnav-link-px;
+			text-decoration: $bsx-appnav-link-text-decoration;
+		}
+	}
+
+	// only level 1
+
+	> li {
+
+		// link (level 1)
+		& > a {
+
+			@include bsx-appnav-navigation(desktop) {
+
+				padding-top: $bsx-appnav-desktop-level-1-link-py;
+				padding-bottom: $bsx-appnav-desktop-level-1-link-py;
+
+				@if $bsx-appnav-desktop-level-1-link-display != '' {
+					display: $bsx-appnav-desktop-level-1-link-display;
+				}
+				@if $bsx-appnav-desktop-level-1-link-align-items != '' {
+					align-items: $bsx-appnav-desktop-level-1-link-align-items;
+				}
+
+			}
+
+			position: relative;
+			min-width: $bsx-appnav-link-atf-min-width;
+			min-height: $bsx-appnav-link-atf-min-height;
+			color: transparent;
+
+			// atf text bubble
+			&::before {
+				content: "";
+				position: absolute;
+				left: $bsx-appnav-link-px;
+				right: $bsx-appnav-link-px;
+				height: $bsx-appnav-link-atf-min-height;
+				margin-top: $bsx-appnav-link-atf-margin-top;
+				background: $bsx-appnav-link-atf-bg-color;
+				border-radius: $bsx-appnav-link-atf-min-height / 2;
+			}
+
+		}
+
+	}
+
+}
+
+
+// MAIN NAVBAR NAV
+
+// desktop main navbar nav
+
+@include bsx-appnav-navigation(desktop) {
+	
+	.bsx-appnav-navbar-nav.bsx-main-navbar-nav {
+		margin-right: auto;
+	}
+}
+
+
+// ALLMEDIA DROPDOWN NAV (always looking like desktop dropdown variation of appnav)
+
+// navbar nav
+.bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav {
+
+	display: inline-flex;
+	flex-direction: row;
+	//justify-content: flex-end;
+
+	// only level 1
+
+	> li {
+
+		// link (level 1)
+		& > a {
+
+			padding-top: $bsx-appnav-desktop-level-1-link-py;
+			padding-bottom: $bsx-appnav-desktop-level-1-link-py;
+
+			@if $bsx-appnav-desktop-level-1-link-display != '' {
+				display: $bsx-appnav-desktop-level-1-link-display;
+			}
+			@if $bsx-appnav-desktop-level-1-link-align-items != '' {
+				align-items: $bsx-appnav-desktop-level-1-link-align-items;
+			}
+
+		}
+
+	}
+
+}
+
+
+
+

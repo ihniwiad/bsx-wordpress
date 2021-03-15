@@ -1,0 +1,111 @@
+// VAR
+
+// accordion function
+
+$bsx-acc-transition-duration:   0.4s !default;
+$bsx-acc-transition-effect:     ease !default;
+
+// accordion styling
+
+// (main)
+$bsx-acc-header-padding:            .25em .5em !default;
+$bsx-acc-header-background:         rgba(#0275d8, .25) !default;
+$bsx-acc-header-border-style:       none !default;
+$bsx-acc-header-border-width:        !default;
+$bsx-acc-header-border-color:        !default;
+$bsx-acc-header-font-size:          inherit !default;
+$bsx-acc-header-text-align:         left !default;
+
+$bsx-acc-header-icon-after-width:         .25em !default;
+$bsx-acc-header-icon-padding-x:           $bsx-acc-header-icon-after-width / 5 !default;
+$bsx-acc-header-icon-after-margin-value:  $bsx-acc-header-icon-after-width / 5 * 3 !default;
+$bsx-acc-header-icon-after-border-width:  1px !default;
+$bsx-acc-header-icon-after-border-style:  none none solid solid !default;
+$bsx-acc-header-icon-after-border-color:  inherit !default;
+
+$bsx-acc-content-border-style:       none none solid !default;
+$bsx-acc-content-border-width:       1px !default;
+$bsx-acc-content-border-color:       inherit !default;
+
+// (optional)
+$bsx-acc-header-icon-after-content:           "" !default;
+$bsx-acc-header-icon-after-transform:         rotate(-45deg) !default;
+$bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
+
+
+// STYLE
+
+// accordion function
+
+.bsx-acc-content {
+  height: 0;
+  overflow: hidden;
+  transition: height $bsx-acc-transition-duration $bsx-acc-transition-effect;
+}
+.bsx-acc-content.open,
+.bsx-acc-content.show {
+  height: unset;
+}
+.bsx-acc-content > [acc-cnt-inr]::before,
+.bsx-acc-content > [acc-cnt-inr]::after {
+  content: "";
+  display: table;
+}
+
+// /accordion function
+
+
+// accordion styling
+
+.acc-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  text-align: $bsx-acc-header-text-align;
+  border-style: $bsx-acc-header-border-style;
+  border-width: $bsx-acc-header-border-width;
+  border-color: $bsx-acc-header-border-color;
+  font-size: $bsx-acc-header-font-size;
+  padding: $bsx-acc-header-padding;
+  background: $bsx-acc-header-background;
+}
+.acc-header-text {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+.acc-header-icon {
+  flex-basis: 0;
+  flex-grow: 0;
+  display: flex; // make Safari happy
+  align-items: center; // make Safari happy
+  padding: $bsx-acc-header-icon-padding-x;
+}
+.acc-header-icon::after {
+  content: $bsx-acc-header-icon-after-content;
+  display: block;
+  width: $bsx-acc-header-icon-after-width;
+  height: $bsx-acc-header-icon-after-width;
+  border-color: $bsx-acc-header-icon-after-border-color;
+  border-style: $bsx-acc-header-icon-after-border-style;
+  border-width: $bsx-acc-header-icon-after-border-width;
+  transform: $bsx-acc-header-icon-after-transform;
+  margin-top: -$bsx-acc-header-icon-after-margin-value;
+  // margin-right: $bsx-acc-header-icon-after-margin-value;
+  transition: all $bsx-acc-transition-duration $bsx-acc-transition-effect;
+}
+.open > .acc-header-icon::after,
+.active > .acc-header-icon::after {
+  transform: $bsx-acc-header-icon-after-active-transform;
+  margin-top: $bsx-acc-header-icon-after-margin-value;
+}
+
+.bsx-acc-content {
+  border-style: $bsx-acc-content-border-style;
+  border-width: $bsx-acc-content-border-width;
+  border-color: $bsx-acc-content-border-color;
+}
+
+// accordion styling
+
+

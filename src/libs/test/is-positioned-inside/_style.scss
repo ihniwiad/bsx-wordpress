@@ -1,0 +1,41 @@
+
+.outer-elem {
+  position: relative;
+  padding: 1.5rem .5rem;
+  border: 1px dashed #ccc;
+}
+.inner-elem {
+  position: absolute;
+  display: inline-block;
+  width: 100px;
+  padding: .5rem;
+  border: 1px dashed #f00;
+  background: rgba(0, 0, 0, .05);
+}
+.inner-elem-1 {
+  bottom: -1rem;
+}
+.inner-elem-2 {
+  left: -2px;
+}
+.inner-elem-3 {
+  left: -1px;
+}
+.inner-elem-4 {
+  right: -2px;
+}
+.inner-elem-5 {
+  right: -1px;
+}
+.inner-elem-6 {
+  top: -2px;
+}
+.inner-elem-7 {
+  top: -1px;
+}
+.inner-elem-8 {
+  bottom: -2px;
+}
+.inner-elem-9 {
+  bottom: -1px;
+}

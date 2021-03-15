@@ -1,0 +1,73 @@
+// VAR
+
+$bsx-move-in-duration:    .5s !default;
+
+
+// TEST
+
+$bsx-test-color:  rgba(#0275d8, .5) !default;
+$bsx-test-color-2:  rgba(#0275d8, .25) !default;
+
+
+
+// STYLE
+
+
+.of-hidden {
+  overflow: hidden;
+}
+
+
+@keyframes move-in-right {
+  0% {
+    transform: translate3d(-10%, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+.move-in-right {
+  animation: move-in-right $bsx-move-in-duration ease-in;
+}
+
+@keyframes move-in-left {
+  0% {
+    transform: translate3d(10%, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+.move-in-left {
+  animation: move-in-left $bsx-move-in-duration linear;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+
+// TEST
+
+.appeared {
+  background: $bsx-test-color;
+}
+.test-appeared {
+  background: $bsx-test-color-2;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.blue {
+  color: blue;
+}
+.orange {
+  color: orange;
+}

@@ -313,12 +313,9 @@ Utils.getOptionsFromAttr = function( elem ) {
 
 // get elem from selector
 Utils.getElementFromSelector = function( selector ) {
-    var $elem = Utils.$functionElems.filter( selector );
+    var $elem = Utils.$functionAndTargetElems.filter( selector );
     if ( $elem.length == 0 ) {
-        $elem = Utils.$targetElems.filter( selector );
-        if ( $elem.length == 0 ) {
-            $elem = $( selector );
-        }
+        $elem = $( selector );
     }
     return $elem;
 }
@@ -371,69 +368,6 @@ $.fn.getFormValues = function() {
     } );
     return values;
 }
-/*
-$.fn.getFormValues = function() {
-
-    var $form = this;
-    var values = {};
-
-    function inject( position, value ) {
-
-        var match = position.match( /^([^\[]+)(.*)/ );
-
-        if ( !! match[ 2 ] ) {
-            var exp = /\[([^\]]+)]/g;
-            var child;
-            var children = [];
-            children[ 0 ] = match[ 1 ];
-            while ( ( child = exp.exec( match[ 2 ] ) ) !== null )
-            {
-                children.push( child[ 1 ] );
-            }
-
-            for ( var i = children.length - 1; i >= 0; i-- ) {
-                var val = {};
-                val[ children[ i ] ] = value;
-                value = val;
-            }
-
-            values = $.extend( true, values, value );
-        }
-        else {
-            values[ match[ 1 ] ] = value;
-        }
-    }
-
-    $form.find( 'input, select, textarea' ).each( function( i, elem ) {
-
-        var $elem = $( elem );
-
-        if ( !! $elem.attr( 'name' ) ) {
-
-            if ( $elem.attr( 'type' ) == "checkbox" ) {
-                // get checkbox group
-                var groupValues = [];
-                $form.find( '[name="' + $elem.attr( 'name' ) + '"]:checked' ).each( function( j, checkbox )
-                {
-                    groupValues.push( $( checkbox ).val() );
-                } );
-                inject( $elem.attr( 'name' ), groupValues );
-            }
-            else if ( $elem.attr( 'type' ) == 'radio' ) {
-                if ( $elem.is( ':checked' ) ) {
-                    inject( $elem.attr( 'name' ), $elem.val() );
-                }
-            }
-            else {
-                inject( $elem.attr( 'name' ), $elem.val() );
-            }
-        }
-
-    } );
-    return values;
-}
-*/
-// /get form values
 
 // replace form by message
 $.fn.replaceFormByMessage = function( options ) {

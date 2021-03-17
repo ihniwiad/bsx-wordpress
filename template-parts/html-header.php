@@ -84,6 +84,25 @@
 
         <div class="bsx-appnav-collapse-backdrop" data-fn="remote-event" data-fn-options="{ target: '#toggle-navbar-collapse' }" data-tg="dropdown-multilevel-excluded"></div>
 
+        <ul class="bsx-appnav-navbar-nav bsx-icon-navbar-nav bsx-allmedia-dropdown-nav">
+            <li class="">
+                <a id="iconnav-link-1" href="javascript:void( 0 );" data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false"><i class="fa fa-phone" aria-hidden="true"></i><span class="sr-only">Telefon</span></a>
+                <ul class="ul-right" aria-labelledby="iconnav-link-1">
+                    <li>
+                        <a class="" href="tel:+49 1234.567890">+49 1234.567890</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a id="iconnav-link-2" href="javascript:void( 0 );" data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope" aria-hidden="true"></i><span class="sr-only">E-Mail</span></a>
+                <ul class="ul-right" aria-labelledby="iconnav-link-2">
+                    <li>
+                        <a class="create-mt" data-fn="create-mt" data-mt-n="mail" data-mt-d="example" data-mt-s="com"></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
     </nav>
 
 </header>

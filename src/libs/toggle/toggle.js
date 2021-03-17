@@ -133,7 +133,7 @@ $.fn.toggle = function() {
 
 
 // init
-Utils.$functionElems.filter( '[data-fn="toggle"]' ).toggle();
+Utils.$functionElems.filter( '[' + Utils.attributes.functionElement + '~="toggle"]' ).toggle();
 
 
 

@@ -47,7 +47,7 @@ $.fn.remoteEvent = function() {
 
 // init
 
-Utils.$functionElems.filter( '[data-fn="remote-event"]' ).remoteEvent();
+Utils.$functionElems.filter( '[' + Utils.attributes.functionElement + '~="remote-event"]' ).remoteEvent();
 
 
 // init

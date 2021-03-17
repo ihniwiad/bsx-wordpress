@@ -321,93 +321,180 @@ Utils.getElementFromSelector = function( selector ) {
 }
 // /get elem from selector
 
-// get form values
-$.fn.getFormValues = function() {
-
-    var values = {};
-
-    $formElems = $( this ).find( 'input, select, textarea' );
-
-    $formElems.each( function( i, elem ) {
-
-        var $elem = $( elem );
-
-        if ( $elem.attr( 'type' ) == 'checkbox' ) {
-
-            var checkboxName = $elem.attr( 'name' );
-            var $checkboxGroup = $formElems.filter( '[name="' + checkboxName + '"]' );
-            var checkboxGroupCount = $checkboxGroup.length;
-
-            if ( checkboxGroupCount > 1 ) {
-                var checkboxGroupValues = [];
-                $checkboxGroup.each( function( j, groupElem ) {
-                    var $groupElem = $( groupElem );
-                    if ( $groupElem.is( ':checked' ) ) {
-                        checkboxGroupValues.push( $groupElem.val() );
-                    }
-                } );
-                if ( checkboxGroupValues.length > 0 ) {
-                    values[ checkboxName ] = checkboxGroupValues;
-                }
-                else {
-                    values[ checkboxName ] = null;
-                }
-            }
-            else {
-                values[ checkboxName ] = $elem.is( ':checked' ) ? $elem.val() : null;
-            }
-        }
-        else if ( $elem.attr( 'type' ) == 'radio' ) {
-            if ( $elem.is( ':checked' ) ) {
-                values[ $elem.attr( 'name' ) ] = $elem.val();
-            }
-        }
-        else {
-            values[ $elem.attr( 'name' ) ] = $elem.val();
-        }
-    } );
-    return values;
+// check touch
+Utils.hasTouch = function() { 
+    return 'ontouchstart' in window || navigator.maxTouchPoints
 }
+// /check touch
+
+// check browser
+// detect ios / android
+var isIos = /iPad|iPhone|iPod/.test( navigator.platform ) && ! window.MSStream;
+var iosVersion = null;
+var iosFullVersion = null;
+var isAndroid = /(android)/i.test( navigator.userAgent );
+var isWin = navigator.platform.indexOf( 'Win' ) > -1;
+var isMobileIe = navigator.userAgent.match( /iemobile/i );
+var isWinPhone = navigator.userAgent.match( /Windows Phone/i );
+if ( isIos ) {
+    document.body.className += ' is-ios';
+
+    // detect version (required for fixes)
+    var iosMaxVersion = 11;
+    iosVersion = parseInt(
+        ( '' + ( /CPU.*OS ([0-9_]{1,5})|(CPU like).*AppleWebKit.*Mobile/i.exec( navigator.userAgent ) || [ 0,'' ] )[ 1 ] )
+        .replace( 'undefined', '3_2' ).replace( '_', '.' ).replace( /_/g, '' )
+    ) || false;
+    iosFullVersion = ( '' + ( /CPU.*OS ([0-9_]{1,9})|(CPU like).*AppleWebKit.*Mobile/i.exec( navigator.userAgent ) || [ 0,'' ] )[ 1 ] )
+        .replace( 'undefined', '3_2' ) || false;
+    if ( iosVersion !== false ) {
+        document.body.className += ' ios' + iosVersion;
+        for ( i = iosVersion; i <= iosMaxVersion; i++ ) {
+            document.body.className += ' ioslte' + i;
+        }
+    }
+
+}
+else if ( isAndroid ) {
+    document.body.className += ' is-android';
+}
+else if ( isWin ) {
+    document.body.className += ' is-win';
+    if ( isMobileIe ) {
+        document.body.className += ' is-mobile-ie';
+    }
+}
+if ( isWinPhone ) {
+    document.body.className += ' is-win-phone';
+}
+function detectIe() {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf( 'MSIE ' );
+        if ( msie > 0 ) {
+        return parseInt( ua.substring( msie + 5, ua.indexOf( '.', msie ) ), 10 );
+    }
+    var trident = ua.indexOf( 'Trident/' );
+    if ( trident > 0 ) {
+        var rv = ua.indexOf( 'rv:' );
+        return parseInt( ua.substring( rv + 3, ua.indexOf( '.', rv ) ), 10 );
+    }
+    var edge = ua.indexOf( 'Edge/' );
+    if ( edge > 0 ) {
+        return parseInt( ua.substring( edge + 5, ua.indexOf( '.', edge ) ), 10 );
+    }
+    return false;
+}
+// detect ie gt 9
+var ieMaxVersion = 14;
+var ieVersion = detectIe();
+var isIe = ( ieVersion !== false );
+if ( isIe && ieVersion > 9 ) {
+    document.body.className += ' ie ie' + ieVersion;
+    for ( i = ieVersion; i <= ieMaxVersion; i++ ) {
+        document.body.className += ' ielte' + i;
+    }
+}
+// add browser data to utils to use global
+Utils.AnalyzeBrowser = {
+    isIos: function() { return isIos; },
+    iosVersion: function() { return iosVersion; },
+    iosFullVersion: function() { return iosFullVersion; },
+    isAndroid: function() { return isAndroid; },
+    isWin: function() { return isWin; },
+    isIe: function() { return isIe; },
+    ieVersion: function() { return ieVersion; },
+    isMobileIe: function() { return isMobileIe; },
+    isWinPhone: function() { return isWinPhone; }
+};
+// /check browser
+
+// get form values
+// Utils.getFormValues = function( form ) {
+
+//     var values = {};
+
+//     $formElems = $( form ).find( 'input, select, textarea' );
+
+//     $formElems.each( function( i, elem ) {
+
+//         var $elem = $( elem );
+
+//         if ( $elem.attr( 'type' ) == 'checkbox' ) {
+
+//             var checkboxName = $elem.attr( 'name' );
+//             var $checkboxGroup = $formElems.filter( '[name="' + checkboxName + '"]' );
+//             var checkboxGroupCount = $checkboxGroup.length;
+
+//             if ( checkboxGroupCount > 1 ) {
+//                 var checkboxGroupValues = [];
+//                 $checkboxGroup.each( function( j, groupElem ) {
+//                     var $groupElem = $( groupElem );
+//                     if ( $groupElem.is( ':checked' ) ) {
+//                         checkboxGroupValues.push( $groupElem.val() );
+//                     }
+//                 } );
+//                 if ( checkboxGroupValues.length > 0 ) {
+//                     values[ checkboxName ] = checkboxGroupValues;
+//                 }
+//                 else {
+//                     values[ checkboxName ] = null;
+//                 }
+//             }
+//             else {
+//                 values[ checkboxName ] = $elem.is( ':checked' ) ? $elem.val() : null;
+//             }
+//         }
+//         else if ( $elem.attr( 'type' ) == 'radio' ) {
+//             if ( $elem.is( ':checked' ) ) {
+//                 values[ $elem.attr( 'name' ) ] = $elem.val();
+//             }
+//         }
+//         else {
+//             values[ $elem.attr( 'name' ) ] = $elem.val();
+//         }
+//     } );
+//     return values;
+// }
 
 // replace form by message
-$.fn.replaceFormByMessage = function( options ) {
+// Utils.replaceFormByMessage = function( form, options ) {
 
-    var $form = $( this );
-    var $parent = $form.parent();
-    var $message = ( !! options && !! options.$message ) ? options.$message : $form.next();
+//     var $form = $( form );
+//     var $parent = $form.parent();
+//     var $message = ( !! options && !! options.$message ) ? options.$message : $form.next();
 
-    // hide form, show message instead
-    $parent.css( { height: ( parseInt( $parent.css( 'height' ) ) + 'px' ) } );
-    $form.fadeOut( function() {
-        $message.fadeIn();
-        $parent.animate( { height: ( parseInt( $message.css( 'height' ) ) + 'px' ) }, function() {
-            $parent.removeAttr( 'style' );
-        } );
-    } );
-    $form.aria( 'hidden', true );
-    $message.aria( 'hidden', false );
-}
+//     // hide form, show message instead
+//     $parent.css( { height: ( parseInt( $parent.css( 'height' ) ) + 'px' ) } );
+//     $form.fadeOut( function() {
+//         $message.fadeIn();
+//         $parent.animate( { height: ( parseInt( $message.css( 'height' ) ) + 'px' ) }, function() {
+//             $parent.removeAttr( 'style' );
+//         } );
+//     } );
+//     $form.aria( 'hidden', true );
+//     $message.aria( 'hidden', false );
+// }
 // /replace form by message
 
 // execute callback function
-$.fn.executeCallbackFunction = function() {
+// Utils.executeCallbackFunction = function( elem ) {
 
-    var callbackStr = $( this ).attr( Utils.attributes.callback );
+//     var callbackStr = $( elem ).attr( Utils.attributes.callback );
 
-    if ( !! callbackStr ) {
+//     if ( !! callbackStr ) {
 
-        // get function name
-        var explode = callbackStr.split( '(' );
-        var callbackName = explode[ 0 ];
+//         // get function name
+//         var explode = callbackStr.split( '(' );
+//         var callbackName = explode[ 0 ];
 
-        var callback = Function( callbackStr );
+//         var callback = Function( callbackStr );
 
-        if ( !! callback && typeof window[ callbackName ] === 'function' ) {
-            callback();
-        }
+//         if ( !! callback && typeof window[ callbackName ] === 'function' ) {
+//             callback();
+//         }
 
-    }
-}
+//     }
+// }
 // /execute callback function
 
 export default Utils;

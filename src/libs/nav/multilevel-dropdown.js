@@ -49,8 +49,7 @@ EXAMPLE 2:
 
 import $ from "jquery"
 import Utils from './../../js/leg-utils/utils/utils'
-import BrowserAnalytics from './../../js/browser-analytics/index'
-// import './../../js/leg-utils/utils/init.js'
+// import BrowserAnalytics from './../../js/browser-analytics/index'
 
 
 // const KEY = 'dropdown-multilevel'
@@ -58,7 +57,7 @@ import BrowserAnalytics from './../../js/browser-analytics/index'
 
 
 // fix ios missing body click event (set event to all elements which are children of body)
-if ( BrowserAnalytics.isIos ) {
+if ( Utils.AnalyzeBrowser.isIos() ) {
     var bodyChildren = document.body.children;
     for ( var i = 0; i < bodyChildren.length; i++ ) {
         // if ( bodyChildren[ i ].tagName == 'DIV' ) {
@@ -75,8 +74,8 @@ $.fn.dropdownMultilevel = function( options ) {
         openedClass: Utils.classes.open,
         hasOpenedSublevelClass: 'has-' + Utils.classes.open,
         animatingClass: Utils.classes.animating,
-        closeElemSelector: '[data-fn="dropdown-multilevel-close"]',
-        excludedBodyElements: '[data-tg="dropdown-multilevel-excluded"]',
+        closeElemSelector: '[' + Utils.attributes.functionElement + '~="dropdown-multilevel-close"]',
+        excludedBodyElements: '[' + Utils.attributes.targetElement + '~="dropdown-multilevel-excluded"]',
         scrollDuration: 100
     };
 
@@ -111,7 +110,7 @@ $.fn.dropdownMultilevel = function( options ) {
     $.fn._getCloseElem = function() {
         // gets close link (must be placed within first list element)
         var $this = $( this );
-        return $this._getList().children().fist().find( '[data-fn="dropdown-multilevel-close"]' );
+        return $this._getList().children().fist().find( '[' + Utils.attributes.functionElement + '~="dropdown-multilevel-close"]' );
     };
     $.fn._getParentList = function() {
         // gets parent ul to target (doesn’t have to be parent to trigger)
@@ -309,7 +308,7 @@ $.fn.dropdownMultilevel = function( options ) {
 
 // init
 
-Utils.$functionElems.filter( '[data-fn="dropdown-multilevel"]' ).dropdownMultilevel();
+Utils.$functionElems.filter( '[' + Utils.attributes.functionElement + '~="dropdown-multilevel"]' ).dropdownMultilevel();
 
 
 // init

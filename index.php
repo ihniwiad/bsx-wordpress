@@ -3,6 +3,7 @@
 namespace Bsx;
 
 require_once( 'src/libs/accordion/class-accordion.php' );
+require_once( 'src/libs/lazy-img/class-lazy-img.php' );
 
 ?>
 <!DOCTYPE html>
@@ -34,14 +35,29 @@ require_once( 'src/libs/accordion/class-accordion.php' );
         <p data-bsx="key_3 key_5">Another paragraph</p>
       </div>
 
-      <section>
+
+      <div class="container">
+        <?php
+          // list of example accordions
+          include 'src/libs/lazy-img/example.php';
+        ?>
+      </div>
+
+      <!-- section>
         <div class="container mt-5">
           <h2>Lazy img</h2>
           <div>
-            <figure class="wp-block-bsx-blocks-lazy-img"><script>document.write( '<picture><source media="(orientation: portrait) and (max-width: 499.98px)" srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjhweCIgaGVpZ2h0PSIzODRweCIgdmlld0JveD0iMCAwIDc2OCAzODQiPjxyZWN0IGZpbGw9Im5vbmUiIHdpZHRoPSI3NjgiIGhlaWdodD0iMzg0Ii8+PC9zdmc+" data-srcset="http://localhost/wp-example/wp-content/uploads/2020/04/sergio-jara-yX9WbPbz8J8-unsplash-1200x600-1-768x384.jpg" data-width="768" data-height="384"/><source media="(max-width: 459.98px)" srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjhweCIgaGVpZ2h0PSIyNTZweCIgdmlld0JveD0iMCAwIDc2OCAyNTYiPjxyZWN0IGZpbGw9Im5vbmUiIHdpZHRoPSI3NjgiIGhlaWdodD0iMjU2Ii8+PC9zdmc+" data-srcset="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-768x256.jpg" data-width="768" data-height="256"/><source media="(max-width: 767.98px)" srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDI0cHgiIGhlaWdodD0iMzQxcHgiIHZpZXdCb3g9IjAgMCAxMDI0IDM0MSI+PHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMzQxIi8+PC9zdmc+" data-srcset="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1024x341.jpg" data-width="1024" data-height="341"/><img loading="lazy" class="img-fluid" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTM2cHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCAxNTM2IDUxMiI+PHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjE1MzYiIGhlaWdodD0iNTEyIi8+PC9zdmc+" alt="Rocky island with palms" data-src="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1536x512.jpg" width="1536" height="512" data-fn="lazyload"/></picture>' );</script><noscript><img loading="lazy" class="img-fluid" src="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1536x512.jpg" alt="Rocky island with palms" width="1536" height="512"/></noscript></figure>
+            <figure>
+              <script>
+                document.write( '<picture><source media="(orientation: portrait) and (max-width: 499.98px)" srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjhweCIgaGVpZ2h0PSIzODRweCIgdmlld0JveD0iMCAwIDc2OCAzODQiPjxyZWN0IGZpbGw9Im5vbmUiIHdpZHRoPSI3NjgiIGhlaWdodD0iMzg0Ii8+PC9zdmc+" data-srcset="http://localhost/wp-example/wp-content/uploads/2020/04/sergio-jara-yX9WbPbz8J8-unsplash-1200x600-1-768x384.jpg" data-width="768" data-height="384"/><source media="(max-width: 459.98px)" srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjhweCIgaGVpZ2h0PSIyNTZweCIgdmlld0JveD0iMCAwIDc2OCAyNTYiPjxyZWN0IGZpbGw9Im5vbmUiIHdpZHRoPSI3NjgiIGhlaWdodD0iMjU2Ii8+PC9zdmc+" data-srcset="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-768x256.jpg" data-width="768" data-height="256"/><source media="(max-width: 767.98px)" srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDI0cHgiIGhlaWdodD0iMzQxcHgiIHZpZXdCb3g9IjAgMCAxMDI0IDM0MSI+PHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMzQxIi8+PC9zdmc+" data-srcset="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1024x341.jpg" data-width="1024" data-height="341"/><img class="img-fluid" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTM2cHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCAxNTM2IDUxMiI+PHJlY3QgZmlsbD0ibm9uZSIgd2lkdGg9IjE1MzYiIGhlaWdodD0iNTEyIi8+PC9zdmc+" alt="Rocky island with palms" data-src="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1536x512.jpg" width="1536" height="512" data-fn="lazyload"/></picture>' );
+              </script>
+              <noscript>
+                <img loading="lazy" class="img-fluid" src="http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1536x512.jpg" alt="Rocky island with palms" width="1536" height="512"/>
+              </noscript>
+            </figure>
           </div>
         </div>
-      </section>
+      </section -->
 
 
       <!-- section class="mb-5">

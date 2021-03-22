@@ -1,0 +1,12 @@
+{
+  "keyString": "{KEY}",
+  "attr": {
+    "fn": "data-fn",
+    "tg": "data-tg",
+    "conf": [
+      "data-fn-options",
+      "data-{KEY}-conf",
+      "data-conf"
+    ]
+  }
+}

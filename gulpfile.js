@@ -16,6 +16,7 @@ const browserify = require( 'browserify' );
 const source = require( 'vinyl-source-stream' );
 const buffer = require( 'vinyl-buffer' );
 // const sourcemaps = require( 'gulp-sourcemaps' );
+const autoprefixer  = require( 'gulp-autoprefixer' );
 
 
 const paths = {
@@ -80,24 +81,60 @@ const jsFolderClean = ( cb ) => {
 exports.js_clean = jsFolderClean;
 
 
-const css = ( cb ) => {
-  return gulp.src( paths.css.src, { sourcemaps: true } )
-    .pipe( sass() )
-    .pipe( cleanCSS() )
-    // pass in options to the stream
-    .pipe( rename( {
-      basename: 'style',
-      suffix: '.min'
-    } ) )
-    .pipe( gulp.dest( paths.css.dest ) );
+// const css = ( cb ) => {
+//   return gulp.src( paths.css.src, { sourcemaps: true } )
+//     .pipe( sass() )
+//     .pipe( cleanCSS() )
+//     // pass in options to the stream
+//     .pipe( rename( {
+//       basename: 'style',
+//       suffix: '.min'
+//     } ) )
+//     .pipe( gulp.dest( paths.css.dest ) );
 
-  cb();
+//   cb();
+// }
+
+
+
+
+const makeCss = ( cb ) => {
+
+    return gulp.src( paths.css.src, { sourcemaps: true } )
+        // .pipe( sourcemaps.init() )
+        .pipe( sass().on( 'error', sass.logError ) )
+        .pipe( autoprefixer() )
+        // .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( paths.css.dest ) )
+    ;
+
+    cb();
 }
 
-exports.css = series( 
+const cssCleanAndMinify = ( cb ) => {
+
+    return gulp.src( paths.css.dest + '/**/*.css' )
+        .pipe( cleanCSS( { debug: true }, ( details ) => {
+            console.log( details.name + ': ' + details.stats.originalSize );
+            console.log( details.name + ': ' + details.stats.minifiedSize );
+        } ) )
+        .pipe( rename( ( path ) => {
+            path.basename += '.min';
+        } ) )
+        .pipe( gulp.dest( paths.css.dest ) )
+    ;
+
+    cb();
+}
+
+
+const css = series( 
     cssFolderClean,
-    css, 
+    makeCss, 
+    cssCleanAndMinify,
 );
+
+exports.css = css;
 
 
 const jsMinify = ( cb ) => {
@@ -123,7 +160,7 @@ const jsMinify = ( cb ) => {
 //    cb();
 // }
 
-const js = ( cb ) => {
+const makeJs = ( cb ) => {
 
     return browserify( {
             entries: [ './src/js/index.js' ],
@@ -143,11 +180,13 @@ const js = ( cb ) => {
     cb();
 }
 
-exports.js = series( 
+const js = series( 
     jsFolderClean,
-    js, 
+    makeJs, 
     jsMinify,
 );
+
+exports.js = js;
 
 
 // NOTE: take care at this path since you’re deleting files outside your project

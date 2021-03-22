@@ -5,6 +5,24 @@ namespace Bsx;
 require_once( 'src/libs/accordion/class-accordion.php' );
 require_once( 'src/libs/lazy-img/class-lazy-img.php' );
 
+// get config
+// $config_json = json_decode( file_get_contents(get_template_directory() . '/src/config.json' ), true );
+$config_json = json_decode( file_get_contents( './src/config.json' ), true );
+if ( ! defined( 'BSX_WP_CONFIG_JSON' ) ) {
+  define( 'BSX_WP_CONFIG_JSON', $config_json );
+}
+echo '<!-- keyString: ' . BSX_WP_CONFIG_JSON[ 'keyString' ] . ' -->';
+
+/*
+// define plugin dir path (relative to local file system)
+if ( ! defined( 'BSX_BLOCKS_PLUGIN_DIR_PATH' ) ) {
+  define( 'BSX_BLOCKS_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+}
+// define plugins url (relative to server domain)
+if ( ! defined( 'BSX_BLOCKS_PLUGINS_URL' ) ) {
+  define( 'BSX_BLOCKS_PLUGINS_URL', plugins_url( '/', __FILE__ ) );
+}
+*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,8 +31,17 @@ require_once( 'src/libs/lazy-img/class-lazy-img.php' );
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BSX WordPress</title>
 
-    <link rel="preload" href="assets/css/style.min.css" as="style">
-    <link href="assets/css/style.min.css" rel="stylesheet">
+    <style>
+      <?php
+        $atf_style = file_get_contents( './assets/css/atf.css' );
+        echo $atf_style;
+      ?>
+    </style>
+
+    <!-- link href="assets/css/atf.css" rel="stylesheet" -->
+
+    <link rel="preload" href="assets/css/style.css" as="style">
+    <link href="assets/css/style.css" rel="stylesheet">
 
   </head>
   <body>

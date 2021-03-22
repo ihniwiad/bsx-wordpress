@@ -14,6 +14,14 @@ class Accordion {
   const DEFAULT_TARGET_OPENED_CLASS = 'open';
   const DEFAULT_TRIGGER_OPENED_CLASS = 'open';
 
+  // config
+  // const CONFIG_JSON = ( defined( 'BSX_WP_CONFIG_JSON' ) ) ? BSX_WP_CONFIG_JSON : array();
+  // var CONFIG_JSON = array();
+  // if ( defined( 'BSX_WP_CONFIG_JSON' ) ) {
+  //   CONFIG_JSON = BSX_WP_CONFIG_JSON;
+  // }
+  // const FN_ATTR = isset( CONFIG_JSON[ 'attr' ] ) && isset( CONFIG_JSON[ 'attr' ][ 'fn' ] ) ? CONFIG_JSON[ 'attr' ][ 'fn' ] : 'data-bsx';
+
   // config attr params
   const CONFIG_ATTR_KEYS = array(
     'multi_open' => 'multipleOpen',

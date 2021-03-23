@@ -3,52 +3,9 @@
 @import "./scss/appnav-additional-var";
 
 @import "./scss/appnav-mixins";
-// @import "./scss/appnav-atf";
 
 // style
-// @import "./scss/appnav-mixins";
 @import "./scss/appnav";
 @import "./scss/dropdown";
 @import "./scss/appnav-additional";
 
-
-
-/*
-
-    "addVariables": [
-      {
-        "key": "/scss/_appnav-var.scss"
-      },
-      {
-        "key": "/scss/_dropdown-var.scss"
-      },
-      {
-        "key": "/scss/_appnav-additional-var.scss"
-      }
-    ],
-    "use": [
-      {
-        "key": "/scss/_appnav-mixins.scss"
-      },
-      {
-        "key": "/scss/_appnav.scss"
-      },
-      {
-        "key": "/scss/_dropdown.scss"
-      },
-      {
-        "key": "/scss/_appnav-additional.scss"
-      }
-    ],
-    "atf": [
-      {
-        "key": "/scss/_appnav-mixins.scss"
-      },
-      {
-        "key": "/scss/_appnav-atf.scss"
-      }
-    ]
-
-
-
-*/

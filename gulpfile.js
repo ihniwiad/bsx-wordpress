@@ -148,7 +148,7 @@ const makeFontsPreloads = ( cb ) => {
     // this function needs to be executed after css has been built
 
     // get fonts from minimized css file
-    const cssFileContent = String( fs.readFileSync( paths.css.dest + '/style.min.css' ) );
+    const cssFileContent = String( fs.readFileSync( paths.css.dest + 'style.min.css' ) );
     const allowedFormats = [ 'woff2' ]; //, 'woff'
     const fontsList = [];
     const fontsSnippets = cssFileContent.match( replacePatterns.cssFonts.match );

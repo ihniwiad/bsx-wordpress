@@ -1,4 +1,40 @@
 @charset "UTF-8";
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Regular.woff2") format("woff2"), url("../fonts/roboto/Roboto-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;  
+  font-display: fallback; }
+
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("../fonts/roboto/Roboto-Regular.woff2") format("woff2"), url("../fonts/roboto/Roboto-Regular.woff") format("woff");  
+  font-display: fallback; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Light.woff2") format("woff2"), url("../fonts/roboto/Roboto-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;  
+  font-display: fallback; }
+
+@font-face {
+  font-family: "Roboto-Light";
+  src: url("../fonts/roboto/Roboto-Light.woff2") format("woff2"), url("../fonts/roboto/Roboto-Light.woff") format("woff");  
+  font-display: fallback; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Medium.woff2") format("woff2"), url("../fonts/roboto/Roboto-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;  
+  font-display: fallback; }
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: url("../fonts/roboto/Roboto-Medium.woff2") format("woff2"), url("../fonts/roboto/Roboto-Medium.woff") format("woff");  
+  font-display: fallback; }
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -10203,45 +10239,6 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
 .main-container-banner {
   margin-top: 0.5rem; }
 
-/*
-
-    "addVariables": [
-      {
-        "key": "/scss/_appnav-var.scss"
-      },
-      {
-        "key": "/scss/_dropdown-var.scss"
-      },
-      {
-        "key": "/scss/_appnav-additional-var.scss"
-      }
-    ],
-    "use": [
-      {
-        "key": "/scss/_appnav-mixins.scss"
-      },
-      {
-        "key": "/scss/_appnav.scss"
-      },
-      {
-        "key": "/scss/_dropdown.scss"
-      },
-      {
-        "key": "/scss/_appnav-additional.scss"
-      }
-    ],
-    "atf": [
-      {
-        "key": "/scss/_appnav-mixins.scss"
-      },
-      {
-        "key": "/scss/_appnav-atf.scss"
-      }
-    ]
-
-
-
-*/
 .create-mt::before {
   content: attr(data-mt-n) "@" attr(data-mt-d) "." attr(data-mt-s); }
 

@@ -32,6 +32,10 @@ $scriptsJsFilePath = $rootRelatedAssetsPath . $scriptsJsFileName;
 $scriptsJsVersion = file_exists( $scriptsJsFilePath ) ? filemtime( $scriptsJsFilePath ) : 'null';
 
 
+// logo path
+$logoPath = $assetsPath . 'img/ci/logo/logo.svg';
+
+
 // include classes
 // if ( class_exists( 'BsxPhotoswipe001' ) ) {
 // 	$BsxPhotoswipe = new BsxPhotoswipe001;

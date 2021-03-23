@@ -6,6 +6,13 @@
 
 // fonts
 
+// roboto
+@import "./../fonts/roboto/variables";
+@import "./../../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-regular";
+@import "./../../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-light";
+@import "./../../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-medium";
+
+// fontawesome
 @import "./../fonts/font-awesome/variables";
 @import "./../../node_modules/font-awesome/scss/font-awesome";
 

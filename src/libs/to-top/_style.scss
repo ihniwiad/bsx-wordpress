@@ -1,0 +1,28 @@
+
+$bsx-totop-z-index:     15 !default;
+$bsx-totop-transition:  all 400ms ease-in-out !default;
+$bsx-totop-margin:      0.5em !default;
+
+
+
+.to-top-wrapper {
+  position: fixed;
+  z-index: $bsx-totop-z-index;
+  right: 0;
+  bottom: 0;
+  transition: $bsx-totop-transition;
+  transform: translate3d(0, 100%, 0);
+
+  // deprecated, will be replaces by .body.scroll-away-top .to-top-wrapper
+  // &.show {
+  //   transform: translate3d(0, 0, 0);
+  // }
+
+  > .btn {
+    margin: $bsx-totop-margin;
+  }
+}
+
+body.scroll-away-top.scroll-up .to-top-wrapper {
+  transform: translate3d(0, 0, 0);
+}

@@ -19,11 +19,17 @@
         </a>
 
         <div class="bsx-appnav-navbar-collapse" id="navbarNavDropdown" data-tg="navbar-collapse">
+
+            <?php
+                // true will show configured menu, false will list all pages as menu
+                $use_menu = true;
+
+                if ( ! $use_menu ) :
+            ?>
             
             <ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="toggle-navbar-collapse">
-
-                <!-- Bsx_Walker_Page -->
                 <?php 
+                    echo '<!-- Bsx_Walker_Page -->';
                     wp_list_pages(
                         array(
                             'match_menu_classes' => true,
@@ -33,8 +39,25 @@
                         )
                     );
                 ?>
-
             </ul>
+
+            <?php 
+                else :
+
+                wp_nav_menu( 
+                    array( 
+                        'theme_location' => 'primary-menu',
+                        'walker' => new Bsx_Walker_Nav_Menu(),
+                        'menu' => '',
+                        'container' => '',
+                        'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse">%3$s</ul>',
+                        'menu_class' => 'bsx-appnav-navbar-nav bsx-main-navbar-nav',
+                        'menu_id' => '',
+                    ) 
+                ); 
+
+                endif;
+            ?>
 
         </div>
 

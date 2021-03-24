@@ -35,7 +35,7 @@ const paths = {
         watchSrc: 'src/**/*.js',
     },
     publish: {
-        watchSrc: [ 'src/**/*.php', '*.php', 'template-parts/**/*.php' ],
+        watchSrc: [ 'src/**/*.php', '*.php', 'template-parts/**/*.php', 'classes/**/*.php' ],
     },
 };
 

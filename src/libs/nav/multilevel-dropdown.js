@@ -1,3 +1,8 @@
+// TOFIX: 
+// when desktop level 3 open and clicking other level 2 item all nav closes 
+// instead of keeping level 2 opened and open clicked level 3
+
+
 /*
 
 EXAMPLE 1:

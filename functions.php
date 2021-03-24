@@ -73,6 +73,7 @@ $assetsPath = $rootPath.'assets/';
 
 // Custom page walker.
 require get_template_directory() . '/classes/class-bsx-walker-page.php';
+require get_template_directory() . '/classes/class-bsx-walker-nav-menu.php';
 // require get_template_directory() . '/classes/include-classes.php';
 
 
@@ -80,6 +81,36 @@ require get_template_directory() . '/classes/class-bsx-walker-page.php';
  * WordPress titles
  */
 add_theme_support( 'title-tag' );
+
+
+/**
+ * navigations
+ */
+// function bsx_register_nav_menu(){
+//     register_nav_menus( array(
+//         'primary_menu' => __( 'Primary Menu', 'bsx-wordpress' ),
+//         'footer_menu' => __( 'Footer Menu', 'bsx-wordpress' ),
+//     ) );
+//     add_theme_support( 'menus' );
+// }
+// add_action( 'after_setup_theme', 'bsx_register_nav_menu', 0 );
+
+function register_my_menus() {
+    register_nav_menus(
+        array(
+            'primary-menu' => __( 'Primary Menu', 'bsx-wordpress' ),
+            'secondary-menu' => __( 'Footer Menu', 'bsx-wordpress' )
+        )
+    );
+}
+add_action( 'init', 'register_my_menus' );
+
+// function bsx_register_nav_menu() {
+//     register_nav_menu( 'primary_menu', __( 'Primary Menu', 'bsx-wordpress' ) );
+//     add_theme_support( 'menus' );
+//     add_theme_support( 'title-tag' );
+// }
+// add_action( 'after_setup_theme', 'bsx_register_nav_menu' );
 
 
 /**
@@ -215,12 +246,8 @@ add_theme_support( 'post-thumbnails' );
 // add_filter( 'allowed_block_types', 'myplugin_allowed_block_types', 10, 2 );
 
 
-
-// TODO: add custom global options
-
-
 /**
- * custom settings, add menu with sublevels
+ * custom global options, add menu with sublevels
  */
 
 function custom_settings_add_menu() {
@@ -438,16 +465,11 @@ function render_custom_checkbox( $args ) {
 add_action( 'admin_init', 'custom_settings_page_setup' );
 
 
-
-
-// TODO: add page/post meta boxes
-
-
-
 /**
- * page style configuration
+ * meta boxes
  */
 
+// page style
 function add_page_style_meta_box() {
     $screen = "page"; // choose 'post' or 'page'
     add_meta_box( 

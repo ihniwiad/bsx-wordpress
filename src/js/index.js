@@ -8,6 +8,8 @@ import './../libs/toggle/toggle.js';
 import './leg-utils/remote-event/remote-event.js';
 import './../libs/create-mailto/create-mailto.js';
 import './../libs/lazy-img/custom-lazyload.js';
+import './../libs/scroll-class-names/scroll-class-names.js';
+import './../libs/animated-anchors/animated-anchors.js';
 
 
 // test scripts

@@ -3,8 +3,8 @@
  * Custom page walker for this theme.
  *
  * @package WordPress
- * @subpackage bsx wordpress example
- * @since bsx wordpress example 1.0
+ * @subpackage bsx wordpress
+ * @since bsx wordpress 1.0
  */
 
 if ( ! class_exists( 'Bsx_Walker_Page' ) ) {

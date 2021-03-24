@@ -435,13 +435,6 @@ function render_custom_checkbox( $args ) {
     $options = get_option( $args[ 0 ] );
     echo '<label><input type="checkbox" id="'  . $args[ 0 ] . '" name="' . $args[ 0 ] . '" value="1"' . ( ( $options ) ? 'checked' : '' ) . ' />' . __( 'Yes', 'bsx-wordpress' ) . '</label>';
 }
-
-/*
-function setting_footer_phone_mail_show() { ?>
-    <label><input type="checkbox" name="footer_phone_mail_show" id="footer_phone_mail_show" value="1" <?php if ( get_option('footer_phone_mail_show') ) echo 'checked' ?> />Yes</label>
-<?php }
-*/
-
 add_action( 'admin_init', 'custom_settings_page_setup' );
 
 
@@ -451,3 +444,68 @@ add_action( 'admin_init', 'custom_settings_page_setup' );
 
 
 
+/**
+ * page style configuration
+ */
+
+function add_page_style_meta_box() {
+    $screen = "page"; // choose 'post' or 'page'
+    add_meta_box( 
+        'page_style_meta_box', // $id
+        __( 'Page Style', 'bsx-wordpress' ), // $title
+        'show_page_style_meta_box', // $callback
+        $screen, // $screen
+        'side', // $context, choose 'normal' or 'side')
+        'default', // $priority
+        null 
+    );
+}
+add_action( 'add_meta_boxes', 'add_page_style_meta_box' );
+
+function show_page_style_meta_box() {
+    global $post;
+    $meta = get_post_meta( $post->ID, 'page_style', true ); 
+    ?>
+        <input type="hidden" name="page_style_meta_box_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
+        <p>
+            <label>
+                <input type="checkbox" name="page_style[add_page_top_space]" value="1" <?php if ( is_array( $meta ) && isset( $meta[ 'add_page_top_space' ] ) && $meta[ 'add_page_top_space' ] == 1 ) echo 'checked' ?>><?php echo __( 'Add space on Page top', 'bsx-wordpress' ); ?>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="page_style[wrap_page_with_container]" value="1" <?php if ( is_array( $meta ) && isset( $meta[ 'wrap_page_with_container' ] ) && $meta[ 'wrap_page_with_container' ] == 1 ) echo 'checked' ?>><?php echo  __( 'Wrap Page with Container', 'bsx-wordpress' ); ?>
+            </label>
+        </p>
+    <?php 
+}
+function save_page_style_meta( $post_id ) {
+    // verify nonce
+    if ( isset( $_POST[ 'page_style_meta_box_nonce' ] ) && ! wp_verify_nonce( $_POST[ 'page_style_meta_box_nonce' ], basename(__FILE__) ) ) {
+        return $post_id;
+    }
+    // check autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return $post_id;
+    }
+    // check permissions
+    if ( isset( $_POST[ 'post_type' ] ) && 'page' === $_POST[ 'post_type' ] ) {
+        if ( !current_user_can( 'edit_page', $post_id ) ) {
+            return $post_id;
+        } 
+        elseif ( !current_user_can( 'edit_post', $post_id ) ) {
+            return $post_id;
+        }
+    }
+    if ( isset( $_POST[ 'page_style' ] ) ) {
+        $old = get_post_meta( $post_id, 'page_style', true );
+        $new = $_POST[ 'page_style' ];
+        if ( $new && $new !== $old ) {
+            update_post_meta( $post_id, 'page_style', $new );
+        } 
+        elseif ( '' === $new && $old ) {
+            delete_post_meta( $post_id, 'page_style', $old );
+        }
+    }
+}
+add_action( 'save_post', 'save_page_style_meta' );

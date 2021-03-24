@@ -35,4 +35,6 @@ msgstr "Nach oben"
 msgid "No content available"
 msgstr "Kein Inhalt verfügbar"
 
-
+#: functions.php:228 functions.php:246
+msgid "Theme Settings"
+msgstr "Theme Einstellungen"

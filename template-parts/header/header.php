@@ -18,25 +18,11 @@
             ?>
         </a>
 
-        <!--
-
-        TODO: mark current nav item for sr
-            <span class="sr-only">(current)</span>
-
-        -->
-
         <div class="bsx-appnav-navbar-collapse" id="navbarNavDropdown" data-tg="navbar-collapse">
-
-
-
             
             <ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="toggle-navbar-collapse">
 
-
-
-
                 <!-- Bsx_Walker_Page -->
-
                 <?php 
                     wp_list_pages(
                         array(
@@ -48,46 +34,7 @@
                     );
                 ?>
 
-                <!--
-                <li class="bsx-appnav-desktop-hidden">
-                    <a class="" href="#"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;<span class="sr-only">Home</span></a>
-                </li>
-                <li class="">
-                    <a class="bsx-appnav-dropdown-toggle" id="navbarDropdownMenuLink-a0" href="#" data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false">Lorem ipsum</a>
-                    <ul class="" aria-labelledby="navbarDropdownMenuLink-a0">
-                        <li class="bsx-appnav-back-link">
-                            <a class="" href="#" aria-label="Menüebene schließen" data-label="Zurück" data-fn="dropdown-multilevel-close"></a>
-                        </li>
-                        <li class="">
-                            <a class="bsx-appnav-dropdown-toggle" id="navbarDropdownMenuLink-a0a" href="#" data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false">Aliquam lorem</a>
-                            <ul class="" aria-labelledby="navbarDropdownMenuLink-a0a">
-                                <li class="bsx-appnav-back-link">
-                                    <a class="" href="#" aria-label="Menüebene schließen" data-label="Zurück" data-fn="dropdown-multilevel-close"></a>
-                                </li>
-                                <li>
-                                    <a class="" href="#">Ante in</a>
-                                </li>
-                                <li class="">
-                                    <a class="" href="#">Dapibus</a>
-                                </li>
-                                <li>
-                                    <a class="" href="#">Viverra quis</a>
-                                </li>
-                                <li>
-                                    <a class="" href="#">Feugiat a</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                -->
-
-
-
             </ul>
-
-
-
 
         </div>
 
@@ -152,15 +99,6 @@
                 </ul>
             </li>
         </ul>
-
-        <?php 
-            // if ( class_exists( 'BsxAppNavExampleNav001' ) ) {
-            //  $BsxAppNavigation = new BsxAppNavExampleNav001;
-            //  if ( method_exists( $BsxAppNavigation, 'printExampleIconNav' ) ) {
-            //      $BsxAppNavigation->printExampleIconNav();
-            //  }
-            // }
-        ?>
 
     </nav>
 

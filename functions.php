@@ -219,6 +219,234 @@ add_theme_support( 'post-thumbnails' );
 // TODO: add custom global options
 
 
+/**
+ * custom settings, add menu with sublevels
+ */
+
+function custom_settings_add_menu() {
+    add_menu_page( 
+        __( 'Theme Settings', 'bsx-wordpress' ), // page title
+        __( 'Theme Settings', 'bsx-wordpress' ), // menu title
+        'manage_options', // capability
+        'custom_options', // menu_slug
+        'custom_settings_page', // function to show related content
+        null, // icon url
+        1 // position
+    );
+    add_submenu_page( 
+        'custom_options', // parent_slug
+        __( 'Social Media' ), // page_title
+        __( 'Social Media' ), // menu_title
+        'manage_options', // capability
+        'custom-settings-social-media', // menu_slug, 
+        'custom_settings_social_media', // function = '', 
+        1 // position = null
+    );
+    add_submenu_page( 
+        'custom_options', // parent_slug
+        __( 'Layout' ), // page_title
+        __( 'Layout' ), // menu_title
+        'manage_options', // capability
+        'custom-settings-layout', // menu_slug, 
+        'custom_settings_layout', // function = '', 
+        99 // position = null
+    );
+}
+add_action( 'admin_menu', 'custom_settings_add_menu' );
+
+function custom_settings_page() { ?>
+    <div class="wrap">
+        <h2><?php __( 'Theme Settings', 'bsx-wordpress' ); ?></h2>
+        <form method="post" action="options.php">
+            <?php
+                do_settings_sections( 'custom_options_contact' ); // page
+                settings_fields( 'custom-settings-contact' ); // option group (may have multiple sections)
+                submit_button();
+            ?>
+        </form>
+    </div>
+<?php }
+function custom_settings_social_media() { ?>
+    <div class="wrap">
+        <h2><?php __( 'Social Media', 'bsx-wordpress' ); ?></h2>
+        <form method="post" action="options.php">
+            <?php
+                do_settings_sections( 'custom_options_social_media' ); // page
+                settings_fields( 'custom-settings-social-media' ); // option group (may have multiple sections)
+                submit_button();
+            ?>
+        </form>
+    </div>
+<?php }
+function custom_settings_layout() { ?>
+    <div class="wrap">
+        <h2><?php __( 'Layout', 'bsx-wordpress' ); ?></h2>
+        <form method="post" action="options.php">
+            <?php
+                do_settings_sections( 'custom_options_layout' ); // page
+                settings_fields( 'custom-settings-layout' ); // option group (may have multiple sections)
+                submit_button();
+            ?>
+        </form>
+    </div>
+<?php }
+
+
+/**
+ * custom settings, create pages setup
+ */
+
+function custom_settings_page_setup() {
+
+    // section
+    add_settings_section(
+        'custom-settings-section-contact', // id
+        __( 'Contact', 'bsx-wordpress' ), // title
+        null, // callback function
+        'custom_options_contact' // page
+    );
+
+    // fields for section
+    add_settings_field(
+        'owner-name', // id
+        __( 'Owner name', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'owner-name',
+            'label_for' => 'owner-name'
+        ) // args = array()
+    );
+    add_settings_field(
+        'phone', // id
+        __( 'Phone', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'phone',
+            'label_for' => 'phone'
+        ) // args = array()
+    );
+    add_settings_field(
+        'mail', // id
+        __( 'Email', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'mail',
+            'label_for' => 'mail'
+        ) // args = array()
+    );
+
+    // register each field
+    register_setting(
+        'custom-settings-contact', // option group
+        'owner-name' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'phone' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'mail' // option name
+    );
+
+    // social media section
+    add_settings_section(
+        'custom-settings-section-social-media', // id
+        __( 'Social Media', 'bsx-wordpress' ), // title
+        null, // callback function
+        'custom_options_social_media' // page
+    );
+
+    // fields for section
+    add_settings_field(
+        'facebook', // id
+        __( 'Facebook', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_social_media', // page
+        'custom-settings-section-social-media', // section = 'default'
+        array(
+            'facebook',
+            'label_for' => 'facebook'
+        ) // args = array()
+    );
+    add_settings_field(
+        'twitter', // id
+        __( 'Twitter', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_social_media', // page
+        'custom-settings-section-social-media', // section = 'default'
+        array(
+            'twitter',
+            'label_for' => 'twitter'
+        ) // args = array()
+    );
+
+    // register each field
+    register_setting(
+        'custom-settings-social-media', // option group
+        'facebook' // option name
+    );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'twitter' // option name
+    );
+
+    // layout section
+    add_settings_section(
+        'custom-settings-section-layout', // id
+        __( 'Layout', 'bsx-wordpress' ), // title
+        null, // callback function
+        'custom_options_layout' // page
+    );
+
+    // fields for section
+    add_settings_field(
+        'footer_phone_mail_show', // id
+        __( 'Show Phone & Email in footer', 'bsx-wordpress' ), // title
+        'render_custom_checkbox', // callback, use unique function name
+        'custom_options_layout', // page
+        'custom-settings-section-layout', // section = 'default'
+        array(
+            'footer_phone_mail_show',
+            'label_for' => 'footer_phone_mail_show'
+        ) // args = array()
+    );
+
+    // register each field
+    register_setting(
+        'custom-settings-layout', // option group
+        'footer_phone_mail_show' // option_name
+    );
+
+}
+// Shared  across sections
+// modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
+function render_custom_input_field( $args ) {
+    $options = get_option( $args[ 0 ] );
+    echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '"></input>';
+}
+function render_custom_checkbox( $args ) {
+    $options = get_option( $args[ 0 ] );
+    echo '<label><input type="checkbox" id="'  . $args[ 0 ] . '" name="' . $args[ 0 ] . '" value="1"' . ( ( $options ) ? 'checked' : '' ) . ' />' . __( 'Yes', 'bsx-wordpress' ) . '</label>';
+}
+
+/*
+function setting_footer_phone_mail_show() { ?>
+    <label><input type="checkbox" name="footer_phone_mail_show" id="footer_phone_mail_show" value="1" <?php if ( get_option('footer_phone_mail_show') ) echo 'checked' ?> />Yes</label>
+<?php }
+*/
+
+add_action( 'admin_init', 'custom_settings_page_setup' );
+
+
+
+
 // TODO: add page/post meta boxes
 
 

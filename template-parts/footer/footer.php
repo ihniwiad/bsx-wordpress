@@ -181,20 +181,41 @@
             </div>
             <nav class="col-sm text-sm-right mb-1">
                 <?php
-                    $footer_links_ids = array( '0', '1', '2' );
-                    $print_html = '';
-                    foreach ( $footer_links_ids as $id ) {
-                        $title = get_option( 'footer_link_' . $id . '_title' );
-                        $url = get_option( 'footer_link_' . $id . '_url' );
-                        if ( $title && $url ) {
-                            if ( $print_html != '' ) {
-                                // is not first filled item (1st and 3rd item may be filled with 2nd empty)
-                                $print_html .= '&ensp;|&ensp;';
-                            }
-                            $print_html .= '<a class="footer-link" href="' . $url . '">' . $title . '</a>';
-                        }
-                    }
-                    print( $print_html );
+
+
+                    echo '<!-- footer bottom nav -->';
+                    wp_nav_menu( 
+                        array( 
+                            'theme_location' => 'footer-bottom-menu',
+                            'menu' => '',
+                            'container' => '',
+                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                            'menu_class' => 'bsx-footer-bottom-nav list-unstyled',
+                            'menu_id' => '',
+                            'before' => '', // in <li> before <a>
+                            'after' => '', // in <li> after <a>
+                            'link_before' => '', // in <a> before text
+                            'link_after' => '', // in <a> after text,
+                            'add_li_class' => 'footer-bottom-menu-li', // custom filter add_additional_class_on_li(), see functions.php 
+                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                        ) 
+                    ); 
+
+
+                    // $footer_links_ids = array( '0', '1', '2' );
+                    // $print_html = '';
+                    // foreach ( $footer_links_ids as $id ) {
+                    //     $title = get_option( 'footer_link_' . $id . '_title' );
+                    //     $url = get_option( 'footer_link_' . $id . '_url' );
+                    //     if ( $title && $url ) {
+                    //         if ( $print_html != '' ) {
+                    //             // is not first filled item (1st and 3rd item may be filled with 2nd empty)
+                    //             $print_html .= '&ensp;|&ensp;';
+                    //         }
+                    //         $print_html .= '<a class="footer-link" href="' . $url . '">' . $title . '</a>';
+                    //     }
+                    // }
+                    // print( $print_html );
                 ?>
             </nav>
         </div>

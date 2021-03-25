@@ -55,8 +55,6 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
      */
     public function start_lvl( &$output, $depth = 0, $args = null ) {
 
-      $createClickableParentLinkChild = true;
-
       if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
         $t = '';
         $n = '';
@@ -137,6 +135,8 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
      */
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
 
+      $createClickableParentLinkChild = true;
+
       if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
         $t = '';
         $n = '';
@@ -148,6 +148,14 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
       $classes   = empty( $item->classes ) ? array() : (array) $item->classes;
       $classes[] = 'menu-item-' . $item->ID;
+
+      if ( 
+        in_array( 'current_page_item', $item->classes, true ) 
+        || in_array( 'current_page_ancestor', $item->classes, true ) 
+      ) {
+        $classes[] = 'active';
+      }
+
 
       /**
        * Filters the arguments for a single nav menu item.
@@ -218,6 +226,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
       // link id is required for each dropdown link to connect link with dropdown list
       $linkId = 'appnav-link-' . $item->ID;
+      $dropdownId = 'appnav-dropdown-' . $item->ID;
 
       // check if has children (inspired from twentytwentyone)
       if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
@@ -227,6 +236,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         $atts['id']               = $linkId;
         $atts['data-fn']          = 'dropdown-multilevel';
         $atts['aria-haspopup']    = 'true';
+        $atts['aria-controls']    = $dropdownId;
         $atts['aria-expanded']    = 'false';
       }
 
@@ -259,6 +269,12 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         }
       }
 
+      // remember href for overview subitem
+      $pageHref = '';
+      if ( isset( $atts[ 'href' ] ) ) {
+          $pageHref = $atts[ 'href' ];
+      }
+
       /** This filter is documented in wp-includes/post-template.php */
       $title = apply_filters( 'the_title', $item->title, $item->ID );
 
@@ -280,13 +296,6 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $item_output .= '</a>';
       $item_output .= $args->after;
 
-      // TODO: if has children insert opening ul here
-
-      // TEST
-      // if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
-      //   $item_output .= '<span></span>';
-      // }
-
       /**
        * Filters a menu item's starting output.
        *
@@ -303,9 +312,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
        */
       $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 
-
-
-      // start ul here (after a is built) instead of `start_lvl()`
+      // start ul here (after a is built) instead of in `start_lvl()` function
 
       // check if has children (inspired from twentytwentyone)
       if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
@@ -325,32 +332,20 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
         $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
-        $output .= "{$n}{$indent}<ul$class_names aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
-
-        $linkId = 'appnav-link-' . $item->ID;
+        $output .= "{$n}{$indent}<ul$class_names id=\"" . $dropdownId . "\" aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
 
         // add back item
         $output .= $n . $indent . '<li class="bsx-appnav-back-link">' . $n . $indent . '<a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a>' . $n . '</li>' . $n;
 
         // add overview item
         if ( $createClickableParentLinkChild ) {
-          $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . esc_url( get_permalink( $page->ID ) ) . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+          $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
         }
 
       }
       else {
-
+        // do nothing since there is no list to open
       }
-
-
-
-
-
-
-
-
-
-
     }
 
     /**

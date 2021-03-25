@@ -1,0 +1,15 @@
+
+// TODO: add pipe (|) to footer bottom nav
+
+.footer-link {
+  color: inherit;
+}
+
+
+.footer-bottom-menu-li {
+  display: inline-block;
+}
+.footer-bottom-menu-li:not(:first-child)::before {
+  // one before and two after since already has one space distance
+  content: "\00a0|\00a0\00a0";
+}

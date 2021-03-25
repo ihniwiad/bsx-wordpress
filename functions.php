@@ -27,53 +27,14 @@ $resourcesPath = 'resources/';
 $assetsPath = $rootPath.'assets/';
 
 
-// variables
-
-
-// dev mode
-// $isDevMode = false;
-// if ( isset( $_GET[ 'dev' ] ) && $_GET[ 'dev' ] == '1' ) {
-//   $isDevMode = true;
-// }
-
-
-// paths
-
-// $serverName = $_SERVER[ 'SERVER_NAME' ];
-// $homeUrl = get_bloginfo( 'url' ) . '/';
-
-// $rootPath = get_bloginfo( 'template_directory' ).'/';
-// $resourcesPath = 'resources/';
-
-// $relativeAssetsPath = 'assets/';
-// $assetsPath = $rootPath . $relativeAssetsPath;
-
-// // make equal protocol
-// $rootRelatedAssetsPath = explode( str_replace( 'https://', 'http://', $homeUrl ), str_replace( 'https://', 'http://', $assetsPath ) )[ 1 ];
-
-// // get css file version using absolute file path
-// $cssFileName = 'css/style.min.css';
-// $cssFilePath = $rootRelatedAssetsPath . $cssFileName;
-// $cssVersion = file_exists( $cssFilePath ) ? filemtime( $cssFilePath ) : 'null';
-
-// // get js file versions
-// $vendorJsFileName = 'js/vendor.min.js';
-// $vendorJsFilePath = $rootRelatedAssetsPath . $vendorJsFileName;
-// $vendorJsVersion = file_exists( $vendorJsFilePath ) ? filemtime( $vendorJsFilePath ) : 'null';
-
-// $scriptsJsFileName = 'js/scripts.min.js';
-// $scriptsJsFilePath = $rootRelatedAssetsPath . $scriptsJsFileName;
-// $scriptsJsVersion = file_exists( $scriptsJsFilePath ) ? filemtime( $scriptsJsFilePath ) : 'null';
-    
-
 /**
  * REQUIRED FILES
  * Include required files.
  */
 
 // Custom page walker.
-require get_template_directory() . '/classes/class-bsx-walker-page.php';
-require get_template_directory() . '/classes/class-bsx-walker-nav-menu.php';
+require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-page.php';
+require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-nav-menu.php';
 // require get_template_directory() . '/classes/include-classes.php';
 
 
@@ -86,31 +47,35 @@ add_theme_support( 'title-tag' );
 /**
  * navigations
  */
-// function bsx_register_nav_menu(){
-//     register_nav_menus( array(
-//         'primary_menu' => __( 'Primary Menu', 'bsx-wordpress' ),
-//         'footer_menu' => __( 'Footer Menu', 'bsx-wordpress' ),
-//     ) );
-//     add_theme_support( 'menus' );
-// }
-// add_action( 'after_setup_theme', 'bsx_register_nav_menu', 0 );
 
 function register_my_menus() {
     register_nav_menus(
         array(
             'primary-menu' => __( 'Primary Menu', 'bsx-wordpress' ),
-            'secondary-menu' => __( 'Footer Menu', 'bsx-wordpress' )
+            'footer-bottom-menu' => __( 'Footer Menu', 'bsx-wordpress' )
         )
     );
 }
 add_action( 'init', 'register_my_menus' );
 
-// function bsx_register_nav_menu() {
-//     register_nav_menu( 'primary_menu', __( 'Primary Menu', 'bsx-wordpress' ) );
-//     add_theme_support( 'menus' );
-//     add_theme_support( 'title-tag' );
-// }
-// add_action( 'after_setup_theme', 'bsx_register_nav_menu' );
+// add filter to add class name to li
+function add_additional_class_on_li( $classes, $item, $args ) {
+    if ( isset( $args->add_li_class ) ) {
+        $classes[] = $args->add_li_class;
+    }
+    return $classes;
+}
+add_filter( 'nav_menu_css_class', 'add_additional_class_on_li', 1, 3 );
+
+// add filter to add class name to a
+function add_additional_class_on_a( $atts, $item, $args ) {
+    if ( isset( $args->add_a_class ) ) {
+        $class = $args->add_a_class;
+    }
+    $atts[ 'class' ] = $class;
+    return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'add_additional_class_on_a', 10, 3 );
 
 
 /**

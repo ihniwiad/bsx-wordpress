@@ -72,7 +72,7 @@ function add_additional_class_on_a( $atts, $item, $args ) {
     if ( isset( $args->add_a_class ) ) {
         $class = $args->add_a_class;
     }
-    $atts[ 'class' ] = $class;
+    $atts[ 'class' ] .= $class;
     return $atts;
 }
 add_filter( 'nav_menu_link_attributes', 'add_additional_class_on_a', 10, 3 );

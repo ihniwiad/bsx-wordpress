@@ -239,7 +239,7 @@ if ( ! class_exists( 'Bsx_Walker_Page' ) ) {
 
 				// add opening ul here since required page id is known here but not in `start_lvl()`
 				if ( isset( $args['pages_with_children'][ $page->ID ] ) ) {
-					$output .= "{$n}{$indent}<ul aria-labelledby=\"" . $linkId . "\">{$n}{$indent}<li class=\"bsx-appnav-back-link\">{$n}{$indent}<a href=\"#\" aria-label=\"Menüebene schließen\" data-label=\"" . __( 'Back', 'bsx-wordpress' ) . "\" data-fn=\"dropdown-multilevel-close\"></a>{$n}</li>{$n}";
+					$output .= "{$n}{$indent}<ul aria-labelledby=\"" . $linkId . "\">{$n}{$indent}<li class=\"bsx-appnav-back-link\">{$n}{$indent}<a href=\"#\" aria-label=\"" . __( 'Close Menu item', 'bsx-wordpress' ) . "\" data-label=\"" . __( 'Back', 'bsx-wordpress' ) . "\" data-fn=\"dropdown-multilevel-close\"></a>{$n}</li>{$n}";
 
 					if ( $createClickableParentLinkChild ) {
 						$output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";

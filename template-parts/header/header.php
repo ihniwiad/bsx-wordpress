@@ -44,15 +44,20 @@
             <?php 
                 else :
 
+                echo '<!-- Bsx_Walker_Nav_Menu -->';
                 wp_nav_menu( 
                     array( 
                         'theme_location' => 'primary-menu',
                         'walker' => new Bsx_Walker_Nav_Menu(),
                         'menu' => '',
                         'container' => '',
-                        'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse">%3$s</ul>',
+                        'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse"><li class="bsx-appnav-back-link"><a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a></li>%3$s</ul>',
                         'menu_class' => 'bsx-appnav-navbar-nav bsx-main-navbar-nav',
                         'menu_id' => '',
+                        'before' => '', // in <li> before <a>
+                        'after' => '', // in <li> after <a>
+                        'link_before' => '', // in <a> before text
+                        'link_after' => '', // in <a> after text
                     ) 
                 ); 
 

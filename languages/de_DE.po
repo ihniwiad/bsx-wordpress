@@ -19,6 +19,10 @@ msgstr "Menü"
 msgid "Back"
 msgstr "Zurück"
 
+#: classes/class-bsx-walker-page.php:242
+msgid "Close Menu item"
+msgstr "Menüebene schließen"
+
 #: classes/class-bsx-walker-page.php:245
 msgid "Overview"
 msgstr "Übersicht"

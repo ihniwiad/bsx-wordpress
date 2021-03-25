@@ -33,7 +33,7 @@ include 'variables.php';
 				$currentScriptsJsFilePath = str_replace ( '.min', '' , $currentScriptsJsFilePath );
 			}
 		?>
-		<script src="<?php echo $currentVendorJsFilePath ?>" defer></script>
+		<!-- script src="<?php echo $currentVendorJsFilePath ?>" defer></script -->
 		<script src="<?php echo $currentScriptsJsFilePath ?>" defer></script>
 
 		<?php wp_footer(); ?>

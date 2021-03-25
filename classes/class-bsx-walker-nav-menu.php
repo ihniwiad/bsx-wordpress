@@ -54,6 +54,9 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
      * @param stdClass $args   An object of wp_nav_menu() arguments.
      */
     public function start_lvl( &$output, $depth = 0, $args = null ) {
+
+      $createClickableParentLinkChild = true;
+
       if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
         $t = '';
         $n = '';
@@ -64,21 +67,35 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $indent = str_repeat( $t, $depth );
 
       // Default class.
-      $classes = array( 'sub-menu' );
+      // $classes = array( 'sub-menu' );
 
-      /**
-       * Filters the CSS class(es) applied to a menu list element.
-       *
-       * @since 4.8.0
-       *
-       * @param string[] $classes Array of the CSS classes that are applied to the menu `<ul>` element.
-       * @param stdClass $args    An object of `wp_nav_menu()` arguments.
-       * @param int      $depth   Depth of menu item. Used for padding.
-       */
-      $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
-      $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+      // /**
+      //  * Filters the CSS class(es) applied to a menu list element.
+      //  *
+      //  * @since 4.8.0
+      //  *
+      //  * @param string[] $classes Array of the CSS classes that are applied to the menu `<ul>` element.
+      //  * @param stdClass $args    An object of `wp_nav_menu()` arguments.
+      //  * @param int      $depth   Depth of menu item. Used for padding.
+      //  */
+      // $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
+      // $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
-      $output .= "{$n}{$indent}<ul$class_names data-test-ul>{$n}";
+      // $linkId = 'appnav-link-' . $item->ID;
+
+      // $output .= "{$n}{$indent}<ul$class_names aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
+
+      // // add back item
+      // $output .= $n . $indent . '<li class="bsx-appnav-back-link">' . $n . $indent . '<a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a>' . $n . '</li>' . $n;
+
+      // // add overview item
+      // if ( $createClickableParentLinkChild ) {
+      //   $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . esc_url( get_permalink( $page->ID ) ) . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+      // }
+
+
+      // opening ul has been moved to `start_el()` since required page id is known there but not here
+      $output .= "";
     }
 
     /**
@@ -119,6 +136,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
      * @param int      $id     Current item ID.
      */
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+
       if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
         $t = '';
         $n = '';
@@ -183,6 +201,35 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $atts['href']         = ! empty( $item->url ) ? $item->url : '';
       $atts['aria-current'] = $item->current ? 'page' : '';
 
+      // TODO: add attr: data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false"
+      // TODO: use menu slug `$args["slug"]` to create unique ids
+
+      // TEST
+      $atts['data-test-a'] = '1';
+
+      // TEST: read $args
+      // if ( $item->current ) {
+      //   echo '</div>dump $args: ' . var_dump( $args ) . '<div>';
+      // }
+      // TEST: read $item
+      // if ( $item->current ) {
+      //   echo '</div>dump $item: ' . var_dump( $item ) . '<div>';
+      // }
+
+      // link id is required for each dropdown link to connect link with dropdown list
+      $linkId = 'appnav-link-' . $item->ID;
+
+      // check if has children (inspired from twentytwentyone)
+      if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
+        // add css class `bsx-appnav-dropdown-toggle` to link of dropdown item
+        $atts['class']            = 'bsx-appnav-dropdown-toggle';
+        // add id, data & aria attr (corresponding ul needs aria-labelledby="CORRESPONDING_LINK_ID_HERE")
+        $atts['id']               = $linkId;
+        $atts['data-fn']          = 'dropdown-multilevel';
+        $atts['aria-haspopup']    = 'true';
+        $atts['aria-expanded']    = 'false';
+      }
+
       /**
        * Filters the HTML attributes applied to a menu item's anchor element.
        *
@@ -233,6 +280,13 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $item_output .= '</a>';
       $item_output .= $args->after;
 
+      // TODO: if has children insert opening ul here
+
+      // TEST
+      // if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
+      //   $item_output .= '<span></span>';
+      // }
+
       /**
        * Filters a menu item's starting output.
        *
@@ -248,6 +302,55 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
        * @param stdClass $args        An object of wp_nav_menu() arguments.
        */
       $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+
+
+
+      // start ul here (after a is built) instead of `start_lvl()`
+
+      // check if has children (inspired from twentytwentyone)
+      if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
+
+        // Default class.
+        $classes = array( 'sub-menu' );
+
+        /**
+         * Filters the CSS class(es) applied to a menu list element.
+         *
+         * @since 4.8.0
+         *
+         * @param string[] $classes Array of the CSS classes that are applied to the menu `<ul>` element.
+         * @param stdClass $args    An object of `wp_nav_menu()` arguments.
+         * @param int      $depth   Depth of menu item. Used for padding.
+         */
+        $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
+        $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+        $output .= "{$n}{$indent}<ul$class_names aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
+
+        $linkId = 'appnav-link-' . $item->ID;
+
+        // add back item
+        $output .= $n . $indent . '<li class="bsx-appnav-back-link">' . $n . $indent . '<a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a>' . $n . '</li>' . $n;
+
+        // add overview item
+        if ( $createClickableParentLinkChild ) {
+          $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . esc_url( get_permalink( $page->ID ) ) . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+        }
+
+      }
+      else {
+
+      }
+
+
+
+
+
+
+
+
+
+
     }
 
     /**

@@ -51,7 +51,7 @@
                         'walker' => new Bsx_Walker_Nav_Menu(),
                         'menu' => '',
                         'container' => '',
-                        'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse"><li class="bsx-appnav-back-link"><a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a></li>%3$s</ul>',
+                        'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse">%3$s</ul>',
                         'menu_class' => 'bsx-appnav-navbar-nav bsx-main-navbar-nav',
                         'menu_id' => '',
                         'before' => '', // in <li> before <a>

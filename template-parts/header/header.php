@@ -29,7 +29,7 @@
             
             <ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="toggle-navbar-collapse">
                 <?php 
-                    echo '<!-- Bsx_Walker_Page -->';
+                    echo '<!-- Primary Menu: Bsx_Walker_Page -->';
                     wp_list_pages(
                         array(
                             'match_menu_classes' => true,
@@ -44,7 +44,7 @@
             <?php 
                 else :
 
-                echo '<!-- Bsx_Walker_Nav_Menu -->';
+                echo '<!-- Primary Menu: Bsx_Walker_Nav_Menu -->';
                 wp_nav_menu( 
                     array( 
                         'theme_location' => 'primary-menu',

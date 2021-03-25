@@ -42,3 +42,19 @@ msgstr "Kein Inhalt verfügbar"
 #: functions.php:228 functions.php:246
 msgid "Theme Settings"
 msgstr "Theme Einstellungen"
+
+#: template-parts/footer/footer.php:26
+msgid "Footer column 1 heading"
+msgstr "Erste Spalte"
+
+#: template-parts/footer/footer.php:47
+msgid "Footer column 2 heading"
+msgstr "Weitere Spalte"
+
+#: template-parts/footer/footer.php:68
+msgid "Footer column 3 heading"
+msgstr "Noch eine Spalte"
+
+#: template-parts/footer/footer.php:68
+msgid "Footer column 4 heading"
+msgstr "Letzte Spalte"

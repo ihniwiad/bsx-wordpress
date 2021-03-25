@@ -23,86 +23,90 @@
 
             <div class="col-6 col-md-3">
                 <div>
-                    <strong>Amet orci</strong>
+                    <strong><?php echo __( 'Footer column 1 heading', 'bsx-wordpress' ) ?></strong>
                 </div>
                 <hr class="my-1">
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="footer-link" href="#">Eget eros</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Faucibus</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Tincidunt</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Duis leo</a>
-                    </li>
-                </ul>
+                <?php
+                    echo '<!-- Footer Column 1 Menu -->';
+                    wp_nav_menu( 
+                        array( 
+                            'theme_location' => 'footer-column-1-menu',
+                            'menu' => '',
+                            'container' => '',
+                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
+                            'menu_id' => '',
+                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
+                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                        ) 
+                    ); 
+                ?>
             </div>
 
             <div class="col-6 col-md-3">
                 <div>
-                    <strong>Sed fringilla</strong>
+                    <strong><?php echo __( 'Footer column 2 heading', 'bsx-wordpress' ) ?></strong>
                 </div>
                 <hr class="my-1">
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="footer-link" href="#">Mauris sit </a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Amet nibh</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Donec sodales</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Sagittis magna</a>
-                    </li>
-                </ul>
+                <?php
+                    echo '<!-- Footer Column 2 Menu -->';
+                    wp_nav_menu( 
+                        array( 
+                            'theme_location' => 'footer-column-2-menu',
+                            'menu' => '',
+                            'container' => '',
+                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
+                            'menu_id' => '',
+                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
+                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                        ) 
+                    ); 
+                ?>
             </div>
 
             <div class="col-6 col-md-3">
                 <div>
-                    <strong>Consequat</strong>
+                    <strong><?php echo __( 'Footer column 3 heading', 'bsx-wordpress' ) ?></strong>
                 </div>
                 <hr class="my-1">
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="footer-link" href="#">Leo eget</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Bibendum sodales</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Augue velit</a>
-                    </li>
-                </ul>
+                <?php
+                    echo '<!-- Footer Column 3 Menu -->';
+                    wp_nav_menu( 
+                        array( 
+                            'theme_location' => 'footer-column-3-menu',
+                            'menu' => '',
+                            'container' => '',
+                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
+                            'menu_id' => '',
+                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
+                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                        ) 
+                    ); 
+                ?>
             </div>
 
             <div class="col-6 col-md-3">
                 <div>
-                    <strong>Cursus nunc</strong>
+                    <strong><?php echo __( 'Footer column 4 heading', 'bsx-wordpress' ) ?></strong>
                 </div>
                 <hr class="my-1">
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="footer-link" href="#">Aenean commodo</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Ligula eget </a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Dolor</a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Aenean massa. </a>
-                    </li>
-                    <li>
-                        <a class="footer-link" href="#">Cum sociis</a>
-                    </li>
-                </ul>
+                <?php
+                    echo '<!-- Footer Column 4 Menu -->';
+                    wp_nav_menu( 
+                        array( 
+                            'theme_location' => 'footer-column-4-menu',
+                            'menu' => '',
+                            'container' => '',
+                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
+                            'menu_id' => '',
+                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
+                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                        ) 
+                    ); 
+                ?>
             </div>
 
         </div>
@@ -181,9 +185,7 @@
             </div>
             <nav class="col-sm text-sm-right mb-1">
                 <?php
-
-
-                    echo '<!-- footer bottom nav -->';
+                    echo '<!-- Footer Bottom Menu -->';
                     wp_nav_menu( 
                         array( 
                             'theme_location' => 'footer-bottom-menu',
@@ -192,30 +194,10 @@
                             'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
                             'menu_class' => 'bsx-footer-bottom-nav list-unstyled',
                             'menu_id' => '',
-                            'before' => '', // in <li> before <a>
-                            'after' => '', // in <li> after <a>
-                            'link_before' => '', // in <a> before text
-                            'link_after' => '', // in <a> after text,
                             'add_li_class' => 'footer-bottom-menu-li', // custom filter add_additional_class_on_li(), see functions.php 
                             'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
                         ) 
                     ); 
-
-
-                    // $footer_links_ids = array( '0', '1', '2' );
-                    // $print_html = '';
-                    // foreach ( $footer_links_ids as $id ) {
-                    //     $title = get_option( 'footer_link_' . $id . '_title' );
-                    //     $url = get_option( 'footer_link_' . $id . '_url' );
-                    //     if ( $title && $url ) {
-                    //         if ( $print_html != '' ) {
-                    //             // is not first filled item (1st and 3rd item may be filled with 2nd empty)
-                    //             $print_html .= '&ensp;|&ensp;';
-                    //         }
-                    //         $print_html .= '<a class="footer-link" href="' . $url . '">' . $title . '</a>';
-                    //     }
-                    // }
-                    // print( $print_html );
                 ?>
             </nav>
         </div>

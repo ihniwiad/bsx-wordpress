@@ -52,7 +52,11 @@ function register_my_menus() {
     register_nav_menus(
         array(
             'primary-menu' => __( 'Primary Menu', 'bsx-wordpress' ),
-            'footer-bottom-menu' => __( 'Footer Menu', 'bsx-wordpress' )
+            'footer-column-1-menu' => __( 'Footer Column 1 Menu', 'bsx-wordpress' ),
+            'footer-column-2-menu' => __( 'Footer Column 2 Menu', 'bsx-wordpress' ),
+            'footer-column-3-menu' => __( 'Footer Column 3 Menu', 'bsx-wordpress' ),
+            'footer-column-4-menu' => __( 'Footer Column 4 Menu', 'bsx-wordpress' ),
+            'footer-bottom-menu' => __( 'Footer Bottom Menu', 'bsx-wordpress' )
         )
     );
 }
@@ -311,6 +315,50 @@ function custom_settings_page_setup() {
         ) // args = array()
     );
     add_settings_field(
+        'street', // id
+        __( 'Street', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'street',
+            'label_for' => 'street'
+        ) // args = array()
+    );
+    add_settings_field(
+        'address-additional', // id
+        __( 'Adress Additional', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'address-additional',
+            'label_for' => 'address-additional'
+        ) // args = array()
+    );
+    add_settings_field(
+        'zip', // id
+        __( 'Zip', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'zip',
+            'label_for' => 'zip'
+        ) // args = array()
+    );
+    add_settings_field(
+        'city', // id
+        __( 'City', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'city',
+            'label_for' => 'city'
+        ) // args = array()
+    );
+    add_settings_field(
         'phone', // id
         __( 'Phone', 'bsx-wordpress' ), // title
         'render_custom_input_field', // callback, use unique function name
@@ -337,6 +385,22 @@ function custom_settings_page_setup() {
     register_setting(
         'custom-settings-contact', // option group
         'owner-name' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'street' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'address-additional' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'zip' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'city' // option name
     );
     register_setting(
         'custom-settings-contact', // option group
@@ -378,6 +442,39 @@ function custom_settings_page_setup() {
             'label_for' => 'twitter'
         ) // args = array()
     );
+    add_settings_field(
+        'instagram', // id
+        __( 'Instagram', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_social_media', // page
+        'custom-settings-section-social-media', // section = 'default'
+        array(
+            'instagram',
+            'label_for' => 'instagram'
+        ) // args = array()
+    );
+    add_settings_field(
+        'googleplus', // id
+        __( 'Google Plus', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_social_media', // page
+        'custom-settings-section-social-media', // section = 'default'
+        array(
+            'googleplus',
+            'label_for' => 'googleplus'
+        ) // args = array()
+    );
+    add_settings_field(
+        'xing', // id
+        __( 'Xing', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_social_media', // page
+        'custom-settings-section-social-media', // section = 'default'
+        array(
+            'xing',
+            'label_for' => 'xing'
+        ) // args = array()
+    );
 
     // register each field
     register_setting(
@@ -387,6 +484,18 @@ function custom_settings_page_setup() {
     register_setting(
         'custom-settings-social-media', // option group
         'twitter' // option name
+    );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'instagram' // option name
+    );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'googleplus' // option name
+    );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'xing' // option name
     );
 
     // layout section

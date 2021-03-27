@@ -1,6 +1,12 @@
 <?php 
 
-include 'variables.php';
+// get variables from functions.php
+global $isDevMode;
+global $assetsPath;
+global $relativeAssetsPath;
+global $cssFileName;
+global $cssVersion;
+global $logoPath;
 
 ?>
 
@@ -14,9 +20,9 @@ include 'variables.php';
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- 
-        <?php // <title>BSX WordPress</title> ?>
-        -->
+        <?php 
+            // <title>BSX WordPress</title> 
+        ?>
 
         <!-- fonts preload -->
         <?php include $relativeAssetsPath . 'css/fonts-preloads.php'; ?>

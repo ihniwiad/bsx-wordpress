@@ -28,13 +28,63 @@ $assetsPath = $rootPath.'assets/';
 
 
 /**
- * REQUIRED FILES
- * Include required files.
+ * variables
+ */
+
+// paths
+
+$serverName = $_SERVER[ 'SERVER_NAME' ];
+$homeUrl = get_bloginfo( 'url' ) . '/';
+
+$rootPath = get_bloginfo( 'template_directory' ).'/';
+$resourcesPath = 'resources/';
+
+$relativeAssetsPath = 'assets/';
+$assetsPath = $rootPath . $relativeAssetsPath;
+
+// make equal protocol
+$rootRelatedAssetsPath = explode( str_replace( 'https://', 'http://', $homeUrl ), str_replace( 'https://', 'http://', $assetsPath ) )[ 1 ];
+
+// get css file version using absolute file path
+$cssFileName = 'css/style.min.css';
+$cssFilePath = $rootRelatedAssetsPath . $cssFileName;
+$cssVersion = file_exists( $cssFilePath ) ? filemtime( $cssFilePath ) : 'null';
+
+// get js file versions
+$vendorJsFileName = 'js/vendor.min.js';
+$vendorJsFilePath = $rootRelatedAssetsPath . $vendorJsFileName;
+$vendorJsVersion = file_exists( $vendorJsFilePath ) ? filemtime( $vendorJsFilePath ) : 'null';
+
+$scriptsJsFileName = 'js/scripts.min.js';
+$scriptsJsFilePath = $rootRelatedAssetsPath . $scriptsJsFileName;
+$scriptsJsVersion = file_exists( $scriptsJsFilePath ) ? filemtime( $scriptsJsFilePath ) : 'null';
+
+
+// logo path
+$logoPath = $assetsPath . 'img/ci/logo/logo.svg';
+
+
+// dev mode
+$isDevMode = false;
+if ( isset( $_GET[ 'dev' ] ) && $_GET[ 'dev' ] == '1' ) {
+    $isDevMode = true;
+}
+
+
+// patterns
+$phoneHrefRemovePatterns = array( '/ /i', '/\./i', '/\//i', '/-/i' );
+
+
+
+/**
+ * include required files
  */
 
 // classes
 require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-page.php';
 require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-nav-menu.php';
+
+require_once( __DIR__ . '/src/libs/data-processing-consent/class-consent-popup-manager.php' );
 
 
 /**
@@ -123,10 +173,23 @@ function wpassist_remove_block_library_css(){
 } 
 add_action( 'wp_enqueue_scripts', 'wpassist_remove_block_library_css' );
 
+/**
+ * remove more embed stuff (wp-embed.min.js)
+ */
+ 
+add_action( 'init', function() {
+    remove_action( 'rest_api_init', 'wp_oembed_register_route' );
+    remove_filter( 'oembed_dataparse', 'wp_filter_oembed_result', 10 );
+    remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+    remove_action( 'wp_head', 'wp_oembed_add_host_js' );
+}, PHP_INT_MAX - 1 );
+
 
 /**
  * add Open Graph Meta Tags
  */
+
+// TODO: add meta boxes for title & discription, use title & excerpt as fallback
 
 function meta_og() {
     global $post;
@@ -641,3 +704,19 @@ function save_page_style_meta( $post_id ) {
     }
 }
 add_action( 'save_post', 'save_page_style_meta' );
+
+
+/**
+ * shortcodes
+ */
+
+// consent trigger button, use shortcode block with [consent-trigger-button]
+function add_consent_button_shortcode() {
+  $content = 'Missing method: Consent_Popup_Manager::popupTriggerHtml()';
+  if ( class_exists( 'Consent_Popup_Manager' ) && method_exists( Consent_Popup_Manager, 'popupTriggerHtml' ) ) {
+    $content = Consent_Popup_Manager::popupTriggerHtml();
+  }
+  return $content;
+}
+add_shortcode( 'consent-trigger-button', 'add_consent_button_shortcode' );
+

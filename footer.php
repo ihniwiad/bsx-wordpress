@@ -1,6 +1,12 @@
 <?php 
 
-include 'variables.php';
+// get variables from functions.php
+global $isDevMode;
+global $assetsPath;
+global $scriptsJsFileName;
+global $scriptsJsVersion;
+global $logoPath;
+
 
 ?>
 
@@ -14,7 +20,6 @@ include 'variables.php';
 
 		<?php 
 
-			include 'src/libs/data-processing-consent/class-consent-popup-manager.php';
 			include 'src/libs/data-processing-consent/example.php';
 
 			// photoswipe shadowbox template
@@ -30,10 +35,10 @@ include 'variables.php';
 		
 		<?php
 			// js paths using relative path & version
-			$currentVendorJsFilePath = $assetsPath . $vendorJsFileName . '?v=' . $vendorJsVersion;
+			// $currentVendorJsFilePath = $assetsPath . $vendorJsFileName . '?v=' . $vendorJsVersion;
 			$currentScriptsJsFilePath = $assetsPath . $scriptsJsFileName . '?v=' . $scriptsJsVersion;
 			if ( $isDevMode ) {
-				$currentVendorJsFilePath = str_replace ( '.min', '' , $currentVendorJsFilePath );
+				// $currentVendorJsFilePath = str_replace ( '.min', '' , $currentVendorJsFilePath );
 				$currentScriptsJsFilePath = str_replace ( '.min', '' , $currentScriptsJsFilePath );
 			}
 		?>

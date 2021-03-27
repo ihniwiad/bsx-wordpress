@@ -58,17 +58,10 @@ class Consent_Popup_Manager {
     }
   }
 
-  public function printPopupTrigger() {
-
-    echo '<!-- consent checkboxes -->';
-
-    foreach ( $this->data as $cat ) {
-      if ( isset( $cat[ 'cat' ] ) && isset( $cat[ 'cat_label' ] ) && isset( $cat[ 'items' ] ) && sizeof( $cat[ 'items' ] ) > 0 ) {
-        echo 
-          '<!-- button showing consent popup -->
-            <button class="btn btn-primary" id="consent-popup-trigger" aria-haspopup="true" aria-controls="consent-popup" aria-expanded="false" data-fn="data-processing-popup-trigger">' . __( 'See/change cookie settings', 'bsx-wordpress' ) . '</button>';
-      }
-    }
+  public static function popupTriggerHtml() {
+    return 
+      '<!-- button showing consent popup -->
+        <button class="btn btn-primary" id="consent-popup-trigger" aria-haspopup="true" aria-controls="consent-popup" aria-expanded="false" data-fn="data-processing-popup-trigger">' . __( 'See/change cookie settings', 'bsx-wordpress' ) . '</button>';
   }
 
   public function printHtml( $cat, $html ) {

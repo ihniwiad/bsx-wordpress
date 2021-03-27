@@ -13,6 +13,10 @@ include 'variables.php';
 		</div>
 
 		<?php 
+
+			include 'src/libs/data-processing-consent/class-consent-popup-manager.php';
+			include 'src/libs/data-processing-consent/example.php';
+
 			// photoswipe shadowbox template
 
 			// if ( class_exists( 'BsxPhotoswipe001' ) ) {

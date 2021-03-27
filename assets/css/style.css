@@ -10264,4 +10264,16 @@ body.scroll-away-top.scroll-up .to-top-wrapper {
 .footer-bottom-menu-li:not(:first-child)::before {
   content: "\00a0|\00a0\00a0"; }
 
+.fixed-banner {
+  position: fixed;
+  z-index: 1032;
+  left: 0;
+  right: 0; }
+
+.fixed-banner-top {
+  top: 0; }
+
+.fixed-banner-bottom {
+  bottom: 0; }
+
 /*# sourceMappingURL=style.css.map */

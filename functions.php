@@ -32,10 +32,9 @@ $assetsPath = $rootPath.'assets/';
  * Include required files.
  */
 
-// Custom page walker.
+// classes
 require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-page.php';
 require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-nav-menu.php';
-// require get_template_directory() . '/classes/include-classes.php';
 
 
 /**
@@ -182,6 +181,28 @@ add_action( 'after_setup_theme', 'remove_admin_bar' );
  */
 
 add_theme_support( 'post-thumbnails' );
+
+
+/**
+ * Generate custom search form
+ *
+ * @param string $form Form HTML.
+ * @return string Modified form HTML.
+ */
+function custom_search_form( $form ) {
+    $form = '<form role="search" method="get" id="searchform" class="searchform" action="' . home_url( '/' ) . '" >
+        <div>
+            <label class="sr-only" for="s">' . __( 'Search for:' ) . '</label>
+            <div class="input-group input-group-lg">
+                <input class="form-control" type="text" value="' . get_search_query() . '" name="s" id="s" />
+                <input class="input-group-append btn btn-primary" type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
+            </div>
+        </div>
+    </form>';
+ 
+    return $form;
+}
+add_filter( 'get_search_form', 'custom_search_form' );
 
 
 // manage allowed block types
@@ -359,6 +380,17 @@ function custom_settings_page_setup() {
         ) // args = array()
     );
     add_settings_field(
+        'country', // id
+        __( 'Country', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'country',
+            'label_for' => 'country'
+        ) // args = array()
+    );
+    add_settings_field(
         'phone', // id
         __( 'Phone', 'bsx-wordpress' ), // title
         'render_custom_input_field', // callback, use unique function name
@@ -401,6 +433,10 @@ function custom_settings_page_setup() {
     register_setting(
         'custom-settings-contact', // option group
         'city' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'country' // option name
     );
     register_setting(
         'custom-settings-contact', // option group

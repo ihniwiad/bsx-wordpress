@@ -58,3 +58,15 @@ msgstr "Noch eine Spalte"
 #: template-parts/footer/footer.php:68
 msgid "Footer column 4 heading"
 msgstr "Letzte Spalte"
+
+#: src/libs/data-processing-consen/class-consent-popup-manager.php:68
+msgid "See/change cookie settings"
+msgstr "Cookie-Einstellungen ansehen/ändern"
+
+#: 404.php:9
+msgid "Not found"
+msgstr "Seite nicht gefunden"
+
+#: 404.php:11
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "Die gewünschte Seite existiert nicht oder nicht mehr. Vielleicht hilft die Suche weiter?"

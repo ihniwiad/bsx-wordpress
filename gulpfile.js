@@ -5,7 +5,7 @@ const gulp = require( 'gulp' );
 const { series, parallel } = require( 'gulp' );
 const sass = require( 'gulp-sass' );
 // const babel = require( 'gulp-babel' );
-// const concat = require( 'gulp-concat' );
+const concat = require( 'gulp-concat' );
 const uglify = require( 'gulp-uglify' );
 const rename = require( 'gulp-rename' );
 const cleanCSS = require( 'gulp-clean-css' );
@@ -33,6 +33,12 @@ const paths = {
         dest: 'assets/js/',
         fileName: 'scripts.js',
         watchSrc: 'src/**/*.js',
+    },
+    vendorJs: {
+        srcJsonFile: 'src/js/vendor-js.json',
+        dest: 'assets/js/',
+        fileName: 'vendor.js',
+        watchSrc: 'src/js/vendor-js.json',
     },
     publish: {
         watchSrc: [ 'src/**/*.php', '*.php', 'template-parts/**/*.php', 'classes/**/*.php' ],
@@ -277,9 +283,26 @@ const makeJs = ( cb ) => {
     cb();
 }
 
+const makeVendorJs = ( cb ) => {
+
+    const srcJsonFileContent = JSON.parse( fs.readFileSync( paths.vendorJs.srcJsonFile ) );
+    const VENDOR_STACK = ( typeof srcJsonFileContent !== 'undefined' && typeof srcJsonFileContent.use !== 'undefined' ) ? srcJsonFileContent.use : [];
+
+    return gulp.src( VENDOR_STACK )
+        .pipe( sourcemaps.init() )
+        .pipe( concat( paths.vendorJs.fileName ) )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( paths.vendorJs.dest ) )
+    ;
+
+    cb();
+}
+
+// exports.vendor_js = makeVendorJs;
+
 const js = series( 
     jsFolderClean,
-    makeJs, 
+    parallel( makeJs, makeVendorJs ),
     jsMinify,
 );
 
@@ -343,7 +366,7 @@ function cssWatch() {
 exports.css_watch = cssWatch;
 
 function jsWatch() {
-    gulp.watch( paths.js.watchSrc, 
+    gulp.watch( [ paths.js.watchSrc, paths.vendorJs.watchSrc ],
         series(
             js,
             publish,
@@ -362,6 +385,12 @@ function allWatch() {
         ) 
     );
     gulp.watch( paths.js.watchSrc, 
+        series(
+            js,
+            publish,
+        ) 
+    );
+    gulp.watch( paths.vendorJs.watchSrc, 
         series(
             js,
             publish,

@@ -3,6 +3,8 @@
 // get variables from functions.php
 global $isDevMode;
 global $assetsPath;
+global $vendorJsFileName;
+global $vendorJsVersion;
 global $scriptsJsFileName;
 global $scriptsJsVersion;
 global $logoPath;
@@ -32,14 +34,14 @@ global $logoPath;
 		
 		<?php
 			// js paths using relative path & version
-			// $currentVendorJsFilePath = $assetsPath . $vendorJsFileName . '?v=' . $vendorJsVersion;
+			$currentVendorJsFilePath = $assetsPath . $vendorJsFileName . '?v=' . $vendorJsVersion;
 			$currentScriptsJsFilePath = $assetsPath . $scriptsJsFileName . '?v=' . $scriptsJsVersion;
 			if ( $isDevMode ) {
-				// $currentVendorJsFilePath = str_replace ( '.min', '' , $currentVendorJsFilePath );
+				$currentVendorJsFilePath = str_replace ( '.min', '' , $currentVendorJsFilePath );
 				$currentScriptsJsFilePath = str_replace ( '.min', '' , $currentScriptsJsFilePath );
 			}
 		?>
-		<!-- script src="<?php echo $currentVendorJsFilePath ?>" defer></script -->
+		<script src="<?php echo $currentVendorJsFilePath ?>" defer></script>
 		<script src="<?php echo $currentScriptsJsFilePath ?>" defer></script>
 
 		<?php wp_footer(); ?>

@@ -85,7 +85,7 @@ require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-page.
 require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-nav-menu.php';
 
 require_once( __DIR__ . '/src/libs/data-processing-consent/class-consent-popup-manager.php' );
-require_once( __DIR__ . '/src/libs/photoswipe/class-bsx-photoswipe.php' );
+require_once( __DIR__ . '/src/libs/img-gallery/class-bsx-photoswipe.php' );
 
 
 /**
@@ -767,7 +767,7 @@ function show_meta_tag_meta_box() {
 
         <script>
 ( function( $ ) {
-    $( '[ data-bsxui="counting-input"]' ).each( function() {
+    $( document.currentScript ).parent().find( '[ data-bsxui="counting-input"]' ).each( function() {
         $input = $( this );
         $.fn.updateCount = function() {
             $input = $( this );

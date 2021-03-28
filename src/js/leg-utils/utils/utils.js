@@ -435,6 +435,65 @@ Utils.CookieHandler = {
 // /cookie handler
 
 
+// ui handler
+Utils.UiHandler = {
+    id: -1,
+    listenAppear: function( elem, options ) {
+
+        var $elem = $( elem );
+
+        var defaults = {
+            appearEventTriggered: false,
+            appearEvent: 'appear.uiHandler',
+            appearOffset: 0
+        };
+
+        // get options from function
+        var options = $.extend( {}, defaults, options );
+
+        // get options from attr
+        options = $.extend( {}, options, Utils.getOptionsFromAttr( $elem ) );
+
+        // data
+        $elem.data( {
+            appearEventTriggered: false,
+            id: Utils.UiHandler.id + 1
+        } );
+
+        function _elemInWindow( elem, tol ) {
+
+            var $this = $( elem );
+            var tolerance = tol || 0;
+
+            var elemOffsetTop = $this.offset().top;
+            var elemHeight = $this.height();
+
+            var windowScrollTop = Utils.$window.scrollTop();
+            var windowHeight = Utils.$window.height();
+
+            return ( ! ( elemOffsetTop > windowScrollTop + windowHeight + tolerance ) ) 
+                && ( ! ( windowScrollTop > elemOffsetTop + elemHeight + tolerance ) );
+        };
+
+        Utils.$window.on( 'scroll.' + options.appearEvent + '.' + $elem[ 'id' ] + ' resize.' + options.appearEvent + '.' + $elem[ 'id' ], function() {
+            if ( 
+                ! $elem.data( 'appearEventTriggered' )
+                && _elemInWindow( $elem, options.appearOffset )
+            ) {
+                $elem[ 'appearEventTriggered' ] = true;
+                $elem.trigger( options.appearEvent );
+            }
+            else {
+                if ( $elem.data.appearEventTriggered ) {
+                    Utils.$window.off( 'scroll.' + options.appearEvent + '.' + $elem[ 'id' ] + ' resize.' + options.appearEvent + '.' + $elem[ 'id' ] );
+                }
+            }
+        } );
+    }
+};
+// /ui handler
+
+
 // get form values
 // Utils.getFormValues = function( form ) {
 

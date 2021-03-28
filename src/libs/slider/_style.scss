@@ -1,0 +1,140 @@
+@import "./../../../node_modules/owl.carousel/src/scss/owl.carousel.scss";
+@import "./../../../node_modules/owl.carousel/src/scss/owl.theme.default.scss";
+
+
+// var
+
+
+$nav-color:             rgba($black, 0.8) !default;
+$nav-color-hover:       $black !default;
+
+$nav-background:        rgba($white, 0.6) !default;
+$nav-background-hover:  rgba($white, 0.85) !default;
+
+$dot-margin:      0 !default;
+
+$owl-nav-button-pt:     0.25em !default;
+$owl-nav-button-px:     0.5em !default;
+
+$owl-nav-icon-lg-font-size:   1.5em !default;
+$owl-nav-icon-lg-line-height: 1.5 !default;
+
+$owl-nav-top-t:     1em !default;
+
+$owl-dot-margin:    5px !default;
+
+
+// style
+
+
+// keep space for dots
+.owl-theme {
+  margin-bottom: 30px;
+}
+
+// nav
+.owl-nav,
+.owl-dots {
+  position: absolute;
+  width: 100%;
+}
+.owl-carousel {
+  .owl-nav {
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    margin: 0;
+
+    button.owl-prev,
+    button.owl-next {
+      position: absolute;
+      display: inline-block;
+      transform: translate(0, -50%);
+      background-color: $nav-background;
+      padding: $owl-nav-button-pt $owl-nav-button-px !important; // override owl !important rule
+    }
+
+    // @bootstrap
+    .owl-prev {
+      left: 0;
+      border-radius: 0 $btn-border-radius $btn-border-radius 0;
+    }
+    // @bootstrap
+    .owl-next {
+      right: 0;
+      border-radius: $btn-border-radius 0 0 $btn-border-radius;
+    }
+  }
+
+  .owl-dots {
+    padding-top: 10px;
+  }
+
+  .owl-item {
+
+    img {
+      display: inline-block;
+      width: auto;
+    }
+  }
+}
+
+.owl-carousel.outer-nav {
+  .owl-nav {
+    // @bootstrap
+    .owl-prev {
+      left: -$grid-gutter-width / 2;
+    }
+    // @bootstrap
+    .owl-next {
+      right: -$grid-gutter-width / 2;
+    }
+  }
+}
+
+.owl-carousel.nav-lg {
+  .owl-nav .fa {
+      font-size: $owl-nav-icon-lg-font-size;
+      line-height: $owl-nav-icon-lg-line-height;
+  }
+}
+@include media-breakpoint-down(xs) {
+  .owl-carousel.nav-top-xs-down {
+    .owl-nav {
+        top: $owl-nav-top-t;
+    }
+  }
+}
+@include media-breakpoint-down(sm) {
+  .owl-carousel.nav-top-sm-down {
+    .owl-nav {
+        top: $owl-nav-top-t;
+    }
+  }
+}
+
+.owl-theme .owl-nav {
+  margin-top: 0;
+
+  [class*="owl-"] {
+    margin: 0;
+  }
+}
+
+.owl-dot {
+  margin: $owl-dot-margin;
+}
+
+// dots hidden (since disableing dots destroys page index)
+.dots-hidden .owl-dots {
+  display: none;
+}
+
+// HACK – hide img clones in body (which are created by owl but probably should not be there)
+body > img.owl-lazy,
+body > [src=""][data-g-fn="lazyload"][data-g-src]:not([style]) {
+  position: absolute;
+  visibility: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+

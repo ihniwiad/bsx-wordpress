@@ -1,7 +1,7 @@
 /*
 
 REQUIRES: 
-    $.fn.initLazyload
+    $$.fn.initLazyload
     Utils.UiHandler
 
 
@@ -26,25 +26,28 @@ REQUIRES:
 */
 
 
-import $ from 'jquery'
+import $$ from 'jquery'
 // import * as jQuery from 'jquery'
 import Utils from './../../js/leg-utils/utils/utils'
 
-// import OwlCarousel from 'owl.carousel.es6'
+// import * as owlCarousel from 'owl.carousel.es6'
 // import 'owl.carousel'
 
-// import $owl from './owl-carousel-es6'
+// import owlCarousel from './owl-carousel-es6'
+import * as owlCarousel from './owl-carousel-es6'
+
+// var $ = jQuery
 
 
-$.fn.initOwlCarousel = function() {
+$$.fn.initOwlCarousel = function() {
 
     console.log( 'initOwlCarousel' );
 
-    var $owls = $( this );
+    var $owls = $$( this );
 
     $owls.each( function( index, elem ) {
 
-        var $owl = $( elem );
+        var $owl = $$( elem );
 
         $owl.addClass( 'TEST' )
 
@@ -67,7 +70,7 @@ $.fn.initOwlCarousel = function() {
             autoplayHoverPause: true
         };
 
-        var options = $.extend( {}, defaults, Utils.getOptionsFromAttr( $owl ) );
+        var options = $$.extend( {}, defaults, Utils.getOptionsFromAttr( $owl ) );
 
 
         // trigger appear event
@@ -95,7 +98,7 @@ $.fn.initOwlCarousel = function() {
         // multi lazyload
         if ( options.multiLazyload ) {
 
-            if ( $.fn.initLazyload ) {
+            if ( $$.fn.initLazyload ) {
 
                 // lazyOptions
 
@@ -109,7 +112,7 @@ $.fn.initOwlCarousel = function() {
                     lazyImgUnloadClass: 'unload'
                 };
 
-                var lazyOptions = $.extend( {}, defaults, Utils.getOptionsFromAttr( $owl ) );
+                var lazyOptions = $$.extend( {}, defaults, Utils.getOptionsFromAttr( $owl ) );
 
                 var jqueryLazyloadOptions = {
                     data_attribute: lazyOptions.lazyImgSrcAttr
@@ -123,7 +126,7 @@ $.fn.initOwlCarousel = function() {
                 // initialized
                 $owl.one( 'initialized.owl.carousel', function ( event ) {
 
-                    var $currentOwl = $( event.target );
+                    var $currentOwl = $$( event.target );
                     var currentIndex = event.item.index;
                     var itemCount = event.item.count;
                     var $items = $currentOwl.find( lazyOptions.itemSelector );
@@ -147,13 +150,13 @@ $.fn.initOwlCarousel = function() {
                     // prepare lazyload listeners
                     $lazyImgs.each( function() {
 
-                        var $lazyImg = $( this );
+                        var $lazyImg = $$( this );
 
                         $lazyImg
                             .addClass( lazyOptions.lazyImgUnloadClass )
                             .one( lazyOptions.appearEvent, function( event ) {
 
-                                var $currentImg = $( event.target );
+                                var $currentImg = $$( event.target );
 
                                 $currentImg.one( lazyOptions.loadEvent, function( event ) {
                                     $currentImg.removeClass( lazyOptions.lazyImgUnloadClass );
@@ -172,19 +175,19 @@ $.fn.initOwlCarousel = function() {
 
                         // start autoplay
                         if ( options.autoplay ) {
-                            $( event.target ).trigger( 'start.owl.autoplay' );
+                            $$( event.target ).trigger( 'start.owl.autoplay' );
                             
                             // touch optimation – stop and restart autoplay after each change (mouse devices do stop and restart by hover event)
                             if ( typeof Modernizr !== 'undefined' && Modernizr.touchevents ) {
 
                                 // stop
-                                $( event.target ).on( 'drag.owl.carousel', function( event ) {
-                                    $( event.target ).trigger( 'stop.owl.autoplay' );
+                                $$( event.target ).on( 'drag.owl.carousel', function( event ) {
+                                    $$( event.target ).trigger( 'stop.owl.autoplay' );
                                 } );
 
                                 // restart
-                                $( event.target ).on( 'dragged.owl.carousel', function( event ) {
-                                    $( event.target ).trigger( 'start.owl.autoplay' );
+                                $$( event.target ).on( 'dragged.owl.carousel', function( event ) {
+                                    $$( event.target ).trigger( 'start.owl.autoplay' );
                                 } );
 
                             }
@@ -205,7 +208,7 @@ $.fn.initOwlCarousel = function() {
                 // trigger appear if change slide
                 $owl.on( 'changed.owl.carousel', function( event ) {
 
-                    var $currentOwl = $( event.target );
+                    var $currentOwl = $$( event.target );
                     var currentIndex = event.item.index;
                     var itemCount = event.item.count;
                     var $items = $currentOwl.find( lazyOptions.itemSelector );
@@ -214,9 +217,9 @@ $.fn.initOwlCarousel = function() {
                     var $currentItemWithAssociatedClones = $currentItem.add( $items.eq( currentIndex - itemCount ) ).add( $items.eq( currentIndex + itemCount ) );
                     var $lazyImgs = $items.find( lazyOptions.lazyImgSelector );
 
-                    $.fn._nthItemAndClonesTriggerAppear = function( currentIndex ) {
+                    $$.fn._nthItemAndClonesTriggerAppear = function( currentIndex ) {
 
-                        var $items = $( this );
+                        var $items = $$( this );
                         var $currentItem = $items.eq( currentIndex );
 
                         if ( $currentItem.is( '.' + lazyOptions.itemUnloadClass ) ) {
@@ -271,7 +274,7 @@ $.fn.initOwlCarousel = function() {
 
             }
             else {
-                // ! $.fn.initLazyload
+                // ! $$.fn.initLazyload
                 throw new Error( 'Required function “initLazyload” is missing!' );
             }
         }
@@ -297,7 +300,7 @@ $.fn.initOwlCarousel = function() {
                 activeRemoveClass: ''
             }
 
-            var navOptions = $.extend( {}, defaults, Utils.getOptionsFromAttr( $sliderNav ) );
+            var navOptions = $$.extend( {}, defaults, Utils.getOptionsFromAttr( $sliderNav ) );
 
             var $sliderNavItems = $sliderNav.find( navOptions.itemSelector );
 
@@ -354,7 +357,7 @@ $.fn.initOwlCarousel = function() {
             // set click listener
             $sliderNavItems.each( function() {
 
-                var $sliderNavItem = $( this );
+                var $sliderNavItem = $$( this );
 
                 var targetItemId = parseInt( $sliderNavItem.attr( navOptions.itemIdAttr ) );
 

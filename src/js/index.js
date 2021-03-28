@@ -13,7 +13,7 @@ import './../libs/animated-anchors/animated-anchors.js';
 import './../libs/cookie-related-elem/cookie-related-elem.js';
 import './../libs/data-processing-consent/data-processing-consent.js';
 import './../libs/img-gallery/init-photoswipe.js';
-// import './../libs/slider/init-owl-carousel.js';
+import './../libs/slider/init-owl-carousel.js';
 
 
 // test scripts

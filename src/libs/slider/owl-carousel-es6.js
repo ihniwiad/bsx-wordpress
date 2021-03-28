@@ -15,8 +15,9 @@
  * @todo Test Zepto
  * @todo stagePadding calculate wrong active classes
  */
-import * as jQuery from 'jquery';
-;(function($, window, document, undefined) {
+// import * as jQuery from 'jquery';
+import $ from 'jquery'
+;
 
   /**
    * Creates a carousel.
@@ -1356,7 +1357,7 @@ import * as jQuery from 'jquery';
     this._items = [];
 
     if (content) {
-      content = (content instanceof jQuery) ? content : $(content);
+      content = (content instanceof $) ? content : $(content);
     }
 
     if (this.settings.nestedItemSelector) {
@@ -1388,7 +1389,7 @@ import * as jQuery from 'jquery';
     var current = this.relative(this._current);
 
     position = position === undefined ? this._items.length : this.normalize(position, true);
-    content = content instanceof jQuery ? content : $(content);
+    content = content instanceof $ ? content : $(content);
 
     this.trigger('add', { content: content, position: position });
 
@@ -1759,11 +1760,11 @@ import * as jQuery from 'jquery';
    */
   $.fn.owlCarousel.Constructor = Owl;
 
-  if ( typeof module === "object" && typeof module.exports === "object" ) {
-    module.exports = $.fn.owlCarousel;
-  }
+  // if ( typeof module === "object" && typeof module.exports === "object" ) {
+  //   module.exports = $.fn.owlCarousel;
+  // }
 
-})(jQuery, window, document);
+;
 
 /**
  * AutoRefresh Plugin
@@ -1772,7 +1773,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
 
   /**
    * Creates the auto refresh plugin.
@@ -1875,7 +1876,7 @@ import * as jQuery from 'jquery';
 
   $.fn.owlCarousel.Constructor.Plugins.AutoRefresh = AutoRefresh;
 
-})(jQuery, window, document);
+;
 
 /**
  * Lazy Plugin
@@ -1884,7 +1885,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
 
   /**
    * Creates the lazy plugin.
@@ -2030,7 +2031,7 @@ import * as jQuery from 'jquery';
 
   $.fn.owlCarousel.Constructor.Plugins.Lazy = Lazy;
 
-})(jQuery, window, document);
+;
 
 /**
  * AutoHeight Plugin
@@ -2039,7 +2040,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
   /**
    * Creates the auto height plugin.
    * @class The Auto Height Plugin
@@ -2167,7 +2168,7 @@ import * as jQuery from 'jquery';
   };
 
   $.fn.owlCarousel.Constructor.Plugins.AutoHeight = AutoHeight;
-})(jQuery, window, document);
+;
 
 /**
  * Video Plugin
@@ -2176,7 +2177,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
 
   /**
    * Creates the video plugin.
@@ -2495,7 +2496,7 @@ import * as jQuery from 'jquery';
 
   $.fn.owlCarousel.Constructor.Plugins.Video = Video;
 
-})(jQuery, window, document);
+;
 
 /**
  * Animate Plugin
@@ -2504,7 +2505,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
   /**
    * Creates the animate plugin.
    * @class The Navigation Plugin
@@ -2621,7 +2622,7 @@ import * as jQuery from 'jquery';
   };
 
   $.fn.owlCarousel.Constructor.Plugins.Animate = Animate;
-})(jQuery, window, document);
+;
 
 /**
  * Autoplay Plugin
@@ -2632,7 +2633,7 @@ import * as jQuery from 'jquery';
  * @author Tom De Caluwé
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
   /**
    * Creates the autoplay plugin.
    * @class The Autoplay Plugin
@@ -2853,7 +2854,7 @@ import * as jQuery from 'jquery';
   };
 
   $.fn.owlCarousel.Constructor.Plugins.autoplay = Autoplay;
-})(jQuery, window, document);
+;
 
 /**
  * Navigation Plugin
@@ -2862,7 +2863,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
   'use strict';
 
   /**
@@ -3260,7 +3261,7 @@ import * as jQuery from 'jquery';
 
   $.fn.owlCarousel.Constructor.Plugins.Navigation = Navigation;
 
-})(jQuery, window, document);
+;
 
 /**
  * Hash Plugin
@@ -3269,7 +3270,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
   'use strict';
 
   /**
@@ -3383,7 +3384,7 @@ import * as jQuery from 'jquery';
 
   $.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
 
-})(jQuery, window, document);
+;
 
 /**
  * Support Plugin
@@ -3394,7 +3395,7 @@ import * as jQuery from 'jquery';
  * @author David Deutsch
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+;
 
   var style = $('<support>').get(0).style,
     prefixes = 'Webkit Moz O ms'.split(' '),
@@ -3467,7 +3468,7 @@ import * as jQuery from 'jquery';
     $.support.transform3d = tests.csstransforms3d();
   }
 
-})(jQuery, window, document);
+;
 
 
-
+export default $.fn.owlCarousel

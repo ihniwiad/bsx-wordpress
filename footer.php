@@ -24,12 +24,9 @@ global $logoPath;
 
 			// photoswipe shadowbox template
 
-			// if ( class_exists( 'BsxPhotoswipe001' ) ) {
-			// 	$BsxPhotoswipe = new BsxPhotoswipe001;
-			// 	if ( method_exists( $BsxPhotoswipe, 'printPhotoswipeShadowboxTemplate' ) ) {
-			// 		$BsxPhotoswipe->printPhotoswipeShadowboxTemplate();
-			// 	}
-			// }
+			if ( class_exists( 'Bsx_Photoswipe' ) &&  method_exists( Bsx_Photoswipe, 'shadowbox_template_html' )) {
+				echo Bsx_Photoswipe::shadowbox_template_html();
+			}
 
 		?>
 		

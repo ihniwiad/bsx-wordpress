@@ -70,3 +70,27 @@ msgstr "Seite nicht gefunden"
 #: 404.php:11
 msgid "It looks like nothing was found at this location. Maybe try a search?"
 msgstr "Die gewünschte Seite existiert nicht oder nicht mehr. Vielleicht hilft die Suche weiter?"
+
+#: functions.php:660
+msgid "Page Style"
+msgstr "Seiten-Style"
+
+#: functions.php:677
+msgid "Add space on Page top"
+msgstr "Oben Abstand für Menü zufügen"
+
+#: functions.php:682
+msgid "Wrap Page with Container"
+msgstr "Seite auf Container-Breite begrenzen"
+
+#: functions.php:723
+msgid "Meta Data"
+msgstr "Meta-Daten"
+
+#: functions.php:740
+msgid "Title"
+msgstr "Titel"
+
+#: functions.php:745
+msgid "Description"
+msgstr "Beschreibung"

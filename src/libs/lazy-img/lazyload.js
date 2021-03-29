@@ -501,32 +501,5 @@ $.extend($.expr[":"], {
 });
 
 
-$.fn.initLazyload = function( options ) {
-
-    var defaults = {
-        effect: 'fadeIn',
-        event: ( Utils.hasTouch() ) ? 'scroll touchmove' : 'scroll',
-        data_attribute: 'src'
-    };
-
-    options = $.extend( {}, defaults, options );
-
-    var $elems = $( this );
-
-    $elems.each( function( i, image ) {
-
-        var $image = $( image );
-
-        if ( !! $image.attr( 'data-fn-effect' ) ) {
-            options.effect = $image.attr( 'data-fn-effect' );
-        }
-
-        $image.lazyload( options, i );
-        
-    } );
-
-}
-
-
-Utils.$functionElems.filter( '[' + Utils.attributes.functionElement + '~="lazyload"]' ).initLazyload();
+export default $.fn.lazyload
 

@@ -11248,10 +11248,7 @@ a.pswp__share--download:hover {
 .dots-hidden .owl-dots {
   display: none; }
 
-body > img.owl-lazy,
-body > [src=""][data-g-fn="lazyload"][data-g-src]:not([style]) {
-  position: absolute;
-  visibility: hidden;
-  clip: rect(0, 0, 0, 0); }
+.owl-carousel .owl-item .owl-lazy {
+  opacity: 1; }
 
 /*# sourceMappingURL=style.css.map */

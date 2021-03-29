@@ -1,7 +1,7 @@
 /*
 
 REQUIRES: 
-    $$.fn.initLazyload
+    $.fn.initLazyload
     Utils.UiHandler
 
 
@@ -35,13 +35,13 @@ import Utils from './../../js/leg-utils/utils/utils'
 
 // import owlCarousel from './owl-carousel-es6'
 import * as owlCarousel from './owl-carousel-es6'
+import * as lazyload from './../lazy-img/lazyload'
+import * as initLazyload from './../lazy-img/init-lazyload'
 
 // var $ = jQuery
 
 
 $$.fn.initOwlCarousel = function() {
-
-    console.log( 'initOwlCarousel' );
 
     var $owls = $$( this );
 
@@ -275,7 +275,7 @@ $$.fn.initOwlCarousel = function() {
             }
             else {
                 // ! $$.fn.initLazyload
-                throw new Error( 'Required function “initLazyload” is missing!' );
+                throw new Error( 'Required function `initLazyload` is missing!' );
             }
         }
 

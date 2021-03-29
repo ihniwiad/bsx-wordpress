@@ -131,10 +131,15 @@ $owl-dot-margin:    5px !default;
 }
 
 // HACK – hide img clones in body (which are created by owl but probably should not be there)
-body > img.owl-lazy,
-body > [src=""][data-g-fn="lazyload"][data-g-src]:not([style]) {
-  position: absolute;
-  visibility: hidden;
-  clip: rect(0, 0, 0, 0);
+// body > img.owl-lazy,
+// body > [src=""][data-g-fn="lazyload"][data-g-src]:not([style]) {
+//   position: absolute;
+//   visibility: hidden;
+//   clip: rect(0, 0, 0, 0);
+// }
+
+// FIX
+.owl-carousel .owl-item .owl-lazy {
+  opacity: 1;
 }
 

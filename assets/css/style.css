@@ -11242,7 +11242,7 @@ a.pswp__share--download:hover {
   .owl-theme .owl-nav [class*='owl-'] {
     margin: 0; }
 
-.owl-dot {
+.owl-dot > span {
   margin: 5px; }
 
 .dots-hidden .owl-dots {

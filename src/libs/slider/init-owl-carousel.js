@@ -84,8 +84,6 @@ $$.fn.initOwlCarousel = function() {
 
         var $owl = $$( elem );
 
-        $owl.addClass( 'TEST' )
-
         var autoplaySpeed = function () { return Math.round( $owl.width() * 0.75 ) };
 
         var defaults = {

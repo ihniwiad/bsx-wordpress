@@ -1,29 +1,64 @@
 /*
 
-REQUIRES: 
-    $.fn.initLazyload
-    Utils.UiHandler
+EXAMPLE 1:
+    - CONFIG EXAMPLE: encodeUriNavText for language support
 
-
-<div class="owl-carousel owl-theme" data-fn="owl-carousel" data-fn-options="{ nav: false }">
+<div class="owl-carousel owl-theme" data-fn="owl-carousel" data-fn-options="{ nav: false, encodeUriNavText: [ '%3Cspan%3EZur%C3%BCck%3C/span%3E', '%3Cspan%3EVorw%C3%A4rts%3C/span%3E' ] }">
     <div class="item bg-light display-4">1</div>
     <div class="item bg-light display-4">2</div>
     <div class="item bg-light display-4">3</div>
     ...
 </div>
 
+
+EXAMPLE 2 (original lazyload – 1 image each slide):
+    - CONFIG: data-fn-options="{ lazyLoad: true, responsive: { 0: { items: 1 }, 480: { items: 2 }, 768: { items: 3 }, 992: { items: 4 } }, encodeUriNavText: [ '%3Ci%20class=%22fa%20fa-arrow-left%22%20aria-label=%22Zur%C3%BCck%22%3E%3C/i%3E', '%3Ci%20class=%22fa%20fa-arrow-right%22%20aria-label=%22Vorw%C3%A4rts%22%3E%3C/i%3E' ] }"
+
+<div class="owl-carousel owl-theme" data-fn="owl-carousel" data-fn-options="{ lazyLoad: true, responsive: { 0: { items: 1 }, 480: { items: 2 }, 768: { items: 3 }, 992: { items: 4 } } }">
+    <figure class="item text-center mb-0">
+        <img class="owl-lazy img-fluid" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAQAAAAnOwc2AAAAEUlEQVR42mNk4GHAAIxDWRAAOokAg37Zbo4AAAAASUVORK5CYII=" width="263" height="175" data-src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-001-1400x933-thumb.jpg" alt="Beispiel Bild 1">
+        <noscript>
+            <img class="img-fluid" src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-001-1400x933-thumb.jpg" alt="Beispiel Bild 1">
+        </noscript>
+    </figure>
+    <figure class="item text-center mb-0">
+        <img class="owl-lazy img-fluid" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAQAAAAnOwc2AAAAEUlEQVR42mNk4GHAAIxDWRAAOokAg37Zbo4AAAAASUVORK5CYII=" width="263" height="175" data-src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-002-1400x933-thumb.jpg" alt="Beispiel Bild 2">
+        <noscript>
+            <img class="img-fluid" src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-002-1400x933-thumb.jpg" alt="Beispiel Bild 2">
+        </noscript>
+    </figure>
+    ...
+</div>
+
+
+EXAMPLE 3 (custom lazyload – n images each slide, only 1 slider visible each time):
+    - CONFIG: data-fn-options="{ lazyLoad: false, multiLazyload: true, responsive: { 0: { items: 1 } } }"
+
+<div class="owl-carousel owl-theme" data-fn="owl-carousel" data-fn-options="{ lazyLoad: false, multiLazyload: true, responsive: { 0: { items: 1 } } }">
+    <div class="item">
+        <div class="row">
+            <div class="col-6 col-sm-4 col-md-3 col-lg">
+                <figure class="item text-center mb-0">
+                    <img data-g-fn="lazyload" class="owl-lazy img-fluid" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAQAAAAnOwc2AAAAEUlEQVR42mNk4GHAAIxDWRAAOokAg37Zbo4AAAAASUVORK5CYII=" width="263" height="175" data-g-src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-001-1400x933-thumb.jpg" alt="Beispiel Bild 1">
+                    <noscript><img class="img-fluid" src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-001-1400x933-thumb.jpg" alt="Beispiel Bild 1"></noscript>
+                </figure>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg">
+                <figure class="item text-center mb-0">
+                    <img data-g-fn="lazyload" class="owl-lazy img-fluid" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAQAAAAnOwc2AAAAEUlEQVR42mNk4GHAAIxDWRAAOokAg37Zbo4AAAAASUVORK5CYII=" width="263" height="175" data-g-src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-002-1400x933-thumb.jpg" alt="Beispiel Bild 2">
+                    <noscript><img class="img-fluid" src="http://components.sandbox.matthiasbroecker.de/wp-content/themes/bsx-wordpress-example/assets/example-img/example-img-002-1400x933-thumb.jpg" alt="Beispiel Bild 2"></noscript>
+                </figure>
+            </div>
+            ...
+        </div>
+    </div>
+    ...
+</div>
+
 */
 
 
-/*
-    TODO:
-        - remove jquery-lazyload
-        - add listener slider appear in screen (check scroll, resize)
-            - start autoplay
-            - start manual load in active slide
-                - clone each loaded img into equal imgs in clone(s)
-            - on change / drag init load in next / prev slide
-*/
+// TODO: make nav text configurable in config attr (use decodeURIComponent) to enable multi lang
 
 
 import $$ from 'jquery'
@@ -70,7 +105,15 @@ $$.fn.initOwlCarousel = function() {
             autoplayHoverPause: true
         };
 
-        var options = $$.extend( {}, defaults, Utils.getOptionsFromAttr( $owl ) );
+        var adaptOptions = Utils.getOptionsFromAttr( $owl );
+        if ( typeof adaptOptions !== 'undefined' && typeof adaptOptions.encodeUriNavText !== 'undefined' ) {
+            adaptOptions.navText = [];
+            for ( var i = 0; i < adaptOptions.encodeUriNavText.length; i++ ) {
+                adaptOptions.navText.push( decodeURIComponent( adaptOptions.encodeUriNavText[ i ] ) );
+            }
+        }
+
+        var options = $$.extend( {}, defaults, adaptOptions );
 
 
         // trigger appear event

@@ -1,3 +1,16 @@
+/*
+
+CUSTOM ADAPTIONS FROM ORIGINAL:
+
+- add `import $ from 'jquery'` while removing existing jQuery import `import * as jQuery from 'jquery'`
+- replaced all `jQuery` by `$`
+- removed all single function opening and closing 
+    `(function($, window, document, undefined) {` 
+    `})(jQuery, window, document)`
+- add export at the end `export default $.fn.owlCarousel`
+
+*/
+
 /**
  * Owl Carousel v3.0.2
  * Copyright 2013-2019 David Deutsch
@@ -1759,10 +1772,6 @@ import $ from 'jquery'
    * @public
    */
   $.fn.owlCarousel.Constructor = Owl;
-
-  // if ( typeof module === "object" && typeof module.exports === "object" ) {
-  //   module.exports = $.fn.owlCarousel;
-  // }
 
 ;
 

@@ -1,0 +1,13 @@
+// var
+
+
+$bsx-lazy-img-bg:         rgba(0, 0, 0, .05) !default;
+
+
+
+// style
+
+
+img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
+  background: $bsx-lazy-img-bg;
+}

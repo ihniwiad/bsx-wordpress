@@ -26,17 +26,32 @@
 
 // styles
 
+// TODO: remove
 @import "./../libs/test/index";
 
+@import "./typo/text-shadow";
 @import "./../libs/accordion/style";
 @import "./../libs/appear-effects/style";
 @import "./../libs/nav/style";
 @import "./../libs/create-mailto/style";
 @import "./../libs/to-top/style";
 @import "./../libs/footer/style";
+@import "./../libs/footer/social-media-links";
 @import "./../libs/data-processing-consent/style";
 @import "./../libs/img-gallery/index";
 @import "./../libs/slider/style";
+@import "./../libs/grid/column-row";
+@import "./../libs/grid/grid-float";
+@import "./../libs/grid/rem-cols";
+@import "./../libs/grid/sized-containers";
+@import "./../libs/grid/text-column";
+@import "./../libs/banner/background";
+@import "./../libs/banner/fixed-banner";
+@import "./../libs/banner/st-banner";
+@import "./../libs/banner/vh-banner";
+@import "./../libs/img/zoomable-img";
+@import "./../libs/img/lazy-img";
+@import "./../libs/ui-effects/hover-effects";
 
-// @import "./basic/list";
-// @import "./basic/margin";
+
+

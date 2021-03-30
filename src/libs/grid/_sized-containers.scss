@@ -1,0 +1,31 @@
+// variables
+
+
+// use `2 * $bsx-text-column-max-width + $bsx-grid-gutter-width` instead of 1470px ?
+$bsx-sized-container-sizes: (
+  lg: 1470px,
+  xl: 2000px
+) !default;
+
+
+
+// sized containers
+
+
+%bsx-sized-container {
+  width: 100%;
+  padding-right: ($bsx-grid-gutter-width / 2);
+  padding-left: ($bsx-grid-gutter-width / 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@each $size-index, $width in $bsx-sized-container-sizes {
+  .sized-container-#{$size-index} {
+
+    @extend %bsx-sized-container;
+
+    max-width: $width;
+  }
+}
+

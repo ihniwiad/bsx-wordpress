@@ -1,3 +1,20 @@
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+  color: transparent; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0; }
+
 .bsx-appnav-navbar-nav ul {
   display: none; }
 
@@ -136,5 +153,8 @@
     padding-bottom: 1em;
     display: flex;
     align-items: center; }
+
+[class*="banner-st-"] {
+  background-color: #dee2e6; }
 
 /*# sourceMappingURL=atf.css.map */

@@ -7,7 +7,6 @@ import './../libs/nav/multilevel-dropdown';
 import './../libs/toggle/toggle';
 import './leg-utils/remote-event/remote-event';
 import './../libs/create-mailto/create-mailto';
-// import './../libs/lazy-img/custom-lazyload';
 import './../libs/lazy-img/index';
 import './../libs/scroll-class-names/scroll-class-names';
 import './../libs/animated-anchors/animated-anchors';

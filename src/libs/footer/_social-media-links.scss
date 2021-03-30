@@ -1,0 +1,48 @@
+// var
+
+
+$bsx-social-media-color-prefix:         "text-" !default;
+$bsx-social-media-hover-color-prefix:   "hover-text-" !default;
+
+$bsx-social-media-colors: (
+  facebook: "#3b5998", 
+  googleplus: "#4285F4",
+  instagram: "#FF543E", 
+  linkedin: #0073B0,
+  twitter: "#00aced", 
+  xing: "#B0D400",
+) !default;
+
+$bsx-social-media-hover-color-transition:   $bsx-basic-transition !default;
+
+
+
+// style
+
+
+// make color & hover color classes
+
+@mixin make-social-media-color-links($colors: $bsx-social-media-colors, $prefix: $bsx-social-media-color-prefix, $hover-prefix: $bsx-social-media-hover-color-prefix) {
+  @each $name, $color in $colors {
+      .#{$prefix}#{$name} {
+        color: #{$color} !important;
+      }
+      .#{$hover-prefix}#{$name} {
+          &:hover,
+          &:focus {
+              color: #{$color} !important;
+          }
+      }
+  }
+}
+
+
+// call mixing
+
+@include make-social-media-color-links();
+
+
+[class*="#{$bsx-social-media-hover-color-prefix}"] {
+  transition: $bsx-social-media-hover-color-transition;
+}
+

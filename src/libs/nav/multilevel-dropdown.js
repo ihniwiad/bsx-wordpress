@@ -190,7 +190,7 @@ $.fn.dropdownMultilevel = function( options ) {
                         _listenBodyWhileDropdownOpen( openedElems );
                     }
                     else if ( $currentLatestOpenedList.has( $bodyEventTarget ).length > 0 || $currentLatestOpenedList.is( $bodyEventTarget ) ) {
-                        // click on opend list (event is inside list || event is list)
+                        // click on opened list (event is inside list || event is list)
 
                         // create new close listener
                         _listenBodyWhileDropdownOpen( openedElems );
@@ -204,7 +204,6 @@ $.fn.dropdownMultilevel = function( options ) {
 
                 }
                 else {
-
                     // create new close listener
                     _listenBodyWhileDropdownOpen( openedElems );
 
@@ -246,10 +245,8 @@ $.fn.dropdownMultilevel = function( options ) {
                         // create new close listener
                         _listenBodyWhileDropdownOpen( openedElems );
                     }
-
                 }
                 else {
-
                     // check if do something (check visibility and position inside parent since might be visible but out of sight)
                     if ( ! $list.is( ':visible' ) || ! Utils.elemPositionedInside( $list, $target.parent() ) ) {
 
@@ -258,19 +255,13 @@ $.fn.dropdownMultilevel = function( options ) {
 
                         // close opened dropdowns if not parents
                         if ( openedElems.length > 0 ) {
-
-                            var $latestOpenedList = $( openedElems[ openedElems.length - 1 ] )._getList();
-
-                            // check if clicked dropdown is inside or outside of already opened dropdown
-                            if ( ! $latestOpenedList.has( $elem ).length > 0 ) {
-
-                                // click outside opened dropdown – close all
-                                _closeAllDropdowns();
+                            // check all opened parent dropdowns for having clicken elem, if having not close them
+                            for ( var i = openedElems.length - 1; i > -1; i-- ) {
+                                var $parentOpenedList = $( openedElems[ i ] )._getList();
+                                if ( ! $parentOpenedList.has( $elem ).length > 0 ) {
+                                    $( openedElems[ i ] )._closeDropdown();
+                                }
                             }
-                            else {
-                                // keep opened dropdowns
-                            }
-
                         }
 
                         // open
@@ -281,6 +272,9 @@ $.fn.dropdownMultilevel = function( options ) {
                         if ( ( options = Utils.getOptionsFromAttr( $elem ) ) ) {
                             if ( options.focusOnOpen ) {
                                 Utils.$functionAndTargetElems.filter( options.focusOnOpen ).focus();
+                            }
+                            else {
+                                // TODO: focus first focussable elem
                             }
                         }
 

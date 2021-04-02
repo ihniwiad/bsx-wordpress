@@ -720,15 +720,16 @@ function save_page_style_meta( $post_id ) {
             return $post_id;
         }
     }
-    if ( isset( $_POST[ 'page_style' ] ) ) {
-        $old = get_post_meta( $post_id, 'page_style', true );
+    // cannot check for `isset( $_POST[ 'page_style' ] )` since empty checkboxes would never be saved
+    if ( isset( $_POST[ 'page_style_meta_box_nonce' ] ) ) {
+        // $old = get_post_meta( $post_id, 'page_style', true );
         $new = $_POST[ 'page_style' ];
-        if ( $new && $new !== $old ) {
+        // if ( isset( $new ) && $new !== $old ) {
             update_post_meta( $post_id, 'page_style', $new );
-        } 
-        elseif ( '' === $new && $old ) {
-            delete_post_meta( $post_id, 'page_style', $old );
-        }
+        // } 
+        // elseif ( '' === $new && $old ) {
+        //     delete_post_meta( $post_id, 'page_style', $old );
+        // }
     }
 }
 add_action( 'save_post', 'save_page_style_meta' );

@@ -11273,6 +11273,11 @@ a.pswp__share--download:hover {
 .owl-carousel.outer-nav .owl-nav .owl-next {
   right: -15px; }
 
+@media (min-width: 576px) {
+  .owl-carousel.nav-radius-sm-up .owl-prev,
+  .owl-carousel.nav-radius-sm-up .owl-next {
+    border-radius: 0.25rem; } }
+
 .owl-carousel.nav-lg .owl-nav .fa {
   font-size: 1.5em;
   line-height: 1.5; }

@@ -57,12 +57,12 @@ $owl-dot-margin:    5px !default;
     // @bootstrap
     .owl-prev {
       left: 0;
-      border-radius: 0 $btn-border-radius $btn-border-radius 0;
+      border-radius: 0 $bsx-btn-border-radius $bsx-btn-border-radius 0;
     }
     // @bootstrap
     .owl-next {
       right: 0;
-      border-radius: $btn-border-radius 0 0 $btn-border-radius;
+      border-radius: $bsx-btn-border-radius 0 0 $bsx-btn-border-radius;
     }
   }
 
@@ -88,6 +88,14 @@ $owl-dot-margin:    5px !default;
     // @bootstrap
     .owl-next {
       right: -$grid-gutter-width / 2;
+    }
+  }
+}
+@include media-breakpoint-up(sm) {
+  .owl-carousel.nav-radius-sm-up {
+    .owl-prev,
+    .owl-next {
+        border-radius: $bsx-btn-border-radius;
     }
   }
 }

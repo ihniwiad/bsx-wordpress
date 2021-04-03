@@ -90,6 +90,7 @@ $$.fn.initOwlCarousel = function() {
             loop: true,
             margin: 30,
             nav: true,
+            // navClass: [ 'btn btn-primary is-prev', 'btn btn-primary is-next' ], // default: [ 'owl-prev', 'owl-next' ]
             navText: [ '<i class="fa fa-arrow-left" aria-label="Prev"></i>', '<i class="fa fa-arrow-right" aria-label="Next"></i>' ],
             responsive: { 0: { items: 1 } },
             autoplay: true,

@@ -11247,18 +11247,47 @@ a.pswp__share--download:hover {
   top: 50%;
   margin: 0; }
   .owl-carousel .owl-nav button.owl-prev,
-  .owl-carousel .owl-nav button.owl-next {
+  .owl-carousel .owl-nav button.owl-next,
+  .owl-carousel .owl-nav button.is-prev,
+  .owl-carousel .owl-nav button.is-next {
     position: absolute;
     display: inline-block;
-    transform: translate(0, -50%);
-    background-color: #D6D6D6;
-    padding: 0.25em 0.5em !important; }
-  .owl-carousel .owl-nav .owl-prev {
-    left: 0;
-    border-radius: 0 0.25rem 0.25rem 0; }
-  .owl-carousel .owl-nav .owl-next {
-    right: 0;
-    border-radius: 0.25rem 0 0 0.25rem; }
+    transform: translate(0, -50%); }
+  .owl-carousel .owl-nav .owl-prev,
+  .owl-carousel .owl-nav .is-prev {
+    left: 0; }
+  .owl-carousel .owl-nav .owl-next,
+  .owl-carousel .owl-nav .is-next {
+    right: 0; }
+
+.owl-carousel.styled-nav button.owl-prev,
+.owl-carousel.styled-nav button.owl-next {
+  background-color: #D6D6D6;
+  padding: 0.25em 0.5em !important; }
+
+.owl-carousel.styled-nav .owl-prev {
+  border-radius: 0 0.25rem 0.25rem 0; }
+
+.owl-carousel.styled-nav .owl-next {
+  border-radius: 0.25rem 0 0 0.25rem; }
+
+.owl-carousel.outer-nav .owl-nav .owl-prev,
+.owl-carousel.outer-nav .owl-nav .is-prev {
+  left: -15px; }
+
+.owl-carousel.outer-nav .owl-nav .owl-next,
+.owl-carousel.outer-nav .owl-nav .is-next {
+  right: -15px; }
+
+@media (max-width: 767.98px) {
+  .owl-carousel.outer-nav .owl-nav .owl-prev,
+  .owl-carousel.outer-nav .owl-nav .is-prev {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0; }
+  .owl-carousel.outer-nav .owl-nav .owl-next,
+  .owl-carousel.outer-nav .owl-nav .is-next {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0; } }
 
 .owl-carousel .owl-dots {
   padding-top: 10px; }
@@ -11266,17 +11295,6 @@ a.pswp__share--download:hover {
 .owl-carousel .owl-item img {
   display: inline-block;
   width: auto; }
-
-.owl-carousel.outer-nav .owl-nav .owl-prev {
-  left: -15px; }
-
-.owl-carousel.outer-nav .owl-nav .owl-next {
-  right: -15px; }
-
-@media (min-width: 576px) {
-  .owl-carousel.nav-radius-sm-up .owl-prev,
-  .owl-carousel.nav-radius-sm-up .owl-next {
-    border-radius: 0.25rem; } }
 
 .owl-carousel.nav-lg .owl-nav .fa {
   font-size: 1.5em;

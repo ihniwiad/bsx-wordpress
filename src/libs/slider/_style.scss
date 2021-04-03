@@ -24,6 +24,13 @@ $owl-nav-top-t:     1em !default;
 $owl-dot-margin:    5px !default;
 
 
+
+// INFO
+//
+// for default style use: .owl-carousel.owl-theme.styled-nav (on slider element)
+// if using bootstrap classes on nav, use: .is-prev .is-next (on nav additional to e.g. .btn.btn-primary)
+
+
 // style
 
 
@@ -39,6 +46,7 @@ $owl-dot-margin:    5px !default;
   width: 100%;
 }
 .owl-carousel {
+
   .owl-nav {
     position: absolute;
     z-index: 100;
@@ -46,24 +54,66 @@ $owl-dot-margin:    5px !default;
     margin: 0;
 
     button.owl-prev,
-    button.owl-next {
+    button.owl-next,
+    button.is-prev,
+    button.is-next {
       position: absolute;
       display: inline-block;
       transform: translate(0, -50%);
+    }
+
+    .owl-prev,
+    .is-prev {
+      left: 0;
+    }
+    .owl-next,
+    .is-next {
+      right: 0;
+    }
+  }
+
+  // background, color, border-radius
+  &.styled-nav {
+
+    button.owl-prev,
+    button.owl-next {
       background-color: $nav-background;
       padding: $owl-nav-button-pt $owl-nav-button-px !important; // override owl !important rule
     }
 
-    // @bootstrap
     .owl-prev {
-      left: 0;
       border-radius: 0 $bsx-btn-border-radius $bsx-btn-border-radius 0;
     }
-    // @bootstrap
     .owl-next {
-      right: 0;
       border-radius: $bsx-btn-border-radius 0 0 $bsx-btn-border-radius;
     }
+  }
+
+  &.outer-nav {
+    .owl-nav {
+      .owl-prev,
+      .is-prev {
+        left: -$bsx-grid-gutter-width / 2;
+      }
+      .owl-next,
+      .is-next {
+        right: -$bsx-grid-gutter-width / 2;
+      }
+
+      @include media-breakpoint-down(sm) {
+        .owl-prev,
+        .is-prev {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+        .owl-next,
+        .is-next {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+
   }
 
   .owl-dots {
@@ -75,27 +125,6 @@ $owl-dot-margin:    5px !default;
     img {
       display: inline-block;
       width: auto;
-    }
-  }
-}
-
-.owl-carousel.outer-nav {
-  .owl-nav {
-    // @bootstrap
-    .owl-prev {
-      left: -$grid-gutter-width / 2;
-    }
-    // @bootstrap
-    .owl-next {
-      right: -$grid-gutter-width / 2;
-    }
-  }
-}
-@include media-breakpoint-up(sm) {
-  .owl-carousel.nav-radius-sm-up {
-    .owl-prev,
-    .owl-next {
-        border-radius: $bsx-btn-border-radius;
     }
   }
 }
@@ -133,7 +162,7 @@ $owl-dot-margin:    5px !default;
   margin: $owl-dot-margin;
 }
 
-// dots hidden (since disableing dots destroys page index)
+// dots hidden (since disable dots may cause problems)
 .dots-hidden .owl-dots {
   display: none;
 }

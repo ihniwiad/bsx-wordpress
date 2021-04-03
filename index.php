@@ -27,14 +27,7 @@ get_header(); ?>
                             get_template_part( 'template-parts/content/content', get_post_format() );
                         endwhile;
 
-                        ?>
-                            <nav>
-                                <ul class="pager">
-                                    <li><?php next_posts_link( 'Previous' ); ?></li>
-                                    <li><?php previous_posts_link( 'Next' ); ?></li>
-                                </ul>
-                            </nav>
-                        <?php 
+                        get_template_part( 'template-parts/pagination/post-pagination' );
 
                     else:
 

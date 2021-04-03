@@ -35,6 +35,14 @@ msgstr "Zum Hauptinhalt springen"
 msgid "To top"
 msgstr "Nach oben"
 
+#: index.php:35
+msgid "Older Posts"
+msgstr "Ältere Beiträge"
+
+#: index.php:43
+msgid "Newer Posts"
+msgstr "Neuere Beiträge"
+
 #: template-parts/content/content-none.php:3
 msgid "No content available"
 msgstr "Kein Inhalt verfügbar"
@@ -94,3 +102,6 @@ msgstr "Titel"
 #: functions.php:745
 msgid "Description"
 msgstr "Beschreibung"
+
+
+

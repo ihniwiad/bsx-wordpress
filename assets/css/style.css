@@ -9687,6 +9687,12 @@ a.text-dark:hover, a.text-dark:focus {
 .inner-elem-9 {
   bottom: -1px; }
 
+.text-inherit {
+  color: inherit !important; }
+
+.font-size-inherit {
+  font-size: inherit !important; }
+
 .text-shadow-dark {
   text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.33); }
 

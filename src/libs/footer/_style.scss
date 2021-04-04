@@ -1,8 +1,15 @@
 
+$bsx-footer-icon-link-color: lighten($bsx-appnav-color, 10) !default;
+
+
+
 // TODO: add pipe (|) to footer bottom nav
 
 .footer-link {
   color: inherit;
+}
+.footer-icon-link {
+  color: $bsx-footer-icon-link-color; // equal to menu icon color
 }
 
 

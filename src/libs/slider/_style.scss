@@ -34,6 +34,13 @@ $owl-dot-margin:    5px !default;
 // style
 
 
+// catch margin
+.bsx-slider-wrapper:after {
+  content: "";
+  display: table;
+}
+
+
 // keep space for dots
 .owl-theme {
   margin-bottom: 30px;

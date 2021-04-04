@@ -10267,6 +10267,9 @@ body.scroll-away-top.scroll-up .to-top-wrapper {
 .footer-link {
   color: inherit; }
 
+.footer-icon-link {
+  color: #606a73; }
+
 .footer-bottom-menu-li {
   display: inline-block; }
 
@@ -11232,6 +11235,10 @@ a.pswp__share--download:hover {
       border-radius: 30px; }
     .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
       background: #869791; }
+
+.bsx-slider-wrapper:after {
+  content: "";
+  display: table; }
 
 .owl-theme {
   margin-bottom: 30px; }

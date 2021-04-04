@@ -318,6 +318,7 @@ add_filter( 'get_search_form', 'custom_search_form' );
 //             'bsx-blocks/col', 
 //             'bsx-blocks/row-with-cols', 
 //             'bsx-blocks/section', 
+//             'bsx-blocks/slider', 
 //             'bsx-blocks/wrapper', 
 //         );
 //     }

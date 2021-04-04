@@ -1,16 +1,41 @@
 <div class="blog-post" data-id="content">
 
-    <h2 class="blog-post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+    <h2 class="blog-post-title"><a class="text-inherit" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
     <p class="blog-post-meta">
-        <?php the_date(); ?> by 
-        <a href="#"><?php the_author(); ?></a> 
-        &bull; 
-        <a href="<?php comments_link(); ?>">
-            <?php 
-                printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'bxs-wordpress' ), number_format_i18n( get_comments_number() ) ); 
+        <?php if ( get_the_date() ) : ?>
+            <span class="badge badge-primary">
+                <span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;<span><?php echo get_the_date(); ?></span>
+            </span>
+        <?php endif ?>
+
+        <?php if ( get_the_author_url() ) : ?>
+            <a class="badge badge-primary" href="<?php the_author_url(); ?>"><span class="fa fa-user" aria-hidden="true"></span>&nbsp;<?php the_author(); ?></a> 
+        <?php else : ?>
+            <span class="badge badge-primary"><span class="fa fa-user" aria-hidden="true"></span>&nbsp;<?php the_author(); ?></span>
+        <?php endif ?>
+
+        <?php 
+            $categories = wp_get_post_categories( get_the_ID() );
+        ?>
+        <?php if ( count( categories ) > 0 ) : ?>
+            <?php
+                foreach ( $categories as $cat_obj ) {
+                    $cat = get_category( $cat_obj )
+                    ?>
+                        <a class="badge badge-primary" href="<?php echo get_bloginfo( 'url' ) . '/' . $cat->slug; ?>"><span class="fa fa-tag" aria-hidden="true"></span>&nbsp;<?php echo $cat->name; ?></a>
+                    <?php
+                } 
             ?>
-        </a>
+        <?php endif ?>
+
+        <?php if ( get_comments_number() > 0 ) : ?>
+            <a class="badge badge-primary" href="<?php comments_link(); ?>"><span class="fa fa-comment" aria-hidden="true"></span>&nbsp;
+                <?php 
+                    printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'bxs-wordpress' ), number_format_i18n( get_comments_number() ) ); 
+                ?>
+            </a>
+        <?php endif ?>
     </p>
 
     <?php if ( has_post_thumbnail() ) {?>

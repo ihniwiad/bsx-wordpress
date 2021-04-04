@@ -86,6 +86,7 @@ require get_template_directory() . '/src/libs/nav/classes/class-bsx-walker-nav-m
 
 require_once( __DIR__ . '/src/libs/data-processing-consent/class-consent-popup-manager.php' );
 require_once( __DIR__ . '/src/libs/img-gallery/class-bsx-photoswipe.php' );
+require_once( __DIR__ . '/src/libs/lazy-img/class-lazy-img.php' );
 
 
 /**

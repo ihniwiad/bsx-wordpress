@@ -58,7 +58,7 @@ $img_list[ 1 ] = array(
 
   <?php
     $lazy_img_0 = new LazyImg( $img_list[ 0 ] );
-    $lazy_img_0->print()
+    $lazy_img_0->print();
   ?>
 
 </section>
@@ -67,7 +67,7 @@ $img_list[ 1 ] = array(
 
   <?php
     $lazy_img_1 = new LazyImg( $img_list[ 1 ] );
-    $lazy_img_1->print()
+    $lazy_img_1->print();
   ?>
 
 </section>

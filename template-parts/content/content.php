@@ -17,17 +17,16 @@
 
         <?php 
             $categories = wp_get_post_categories( get_the_ID() );
-        ?>
-        <?php if ( count( categories ) > 0 ) : ?>
-            <?php
+            if ( count( categories ) > 0 ) : 
                 foreach ( $categories as $cat_obj ) {
-                    $cat = get_category( $cat_obj )
+                    $cat = get_category( $cat_obj );
+                    $cat_url = get_category_link( get_cat_ID( $cat->name ) );
                     ?>
-                        <a class="badge badge-primary" href="<?php echo get_bloginfo( 'url' ) . '/' . $cat->slug; ?>"><span class="fa fa-tag" aria-hidden="true"></span>&nbsp;<?php echo $cat->name; ?></a>
+                        <a class="badge badge-primary" href="<?php echo $cat_url; ?>"><span class="fa fa-tag" aria-hidden="true"></span>&nbsp;<?php echo $cat->name; ?></a>
                     <?php
                 } 
-            ?>
-        <?php endif ?>
+            endif 
+        ?>
 
         <?php if ( get_comments_number() > 0 ) : ?>
             <a class="badge badge-primary" href="<?php comments_link(); ?>"><span class="fa fa-comment" aria-hidden="true"></span>&nbsp;

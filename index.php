@@ -15,7 +15,20 @@ get_header(); ?>
 
     <div class="container below-navbar-content">
 
-        <h1>Blog</h1>
+        <?php 
+            // check if posts page has contents
+            $posts_page_id = get_option( 'page_for_posts' );
+            $post_content = get_post( $posts_page_id )->post_content;
+            if ( $post_content ) :
+                // show content of posts page
+                echo $post_content;
+            else :
+                // show h1 fallback
+                ?> 
+                    <h1 data-id="fallback-heading"><?php echo get_the_title( $posts_page_id ) ?></h1>
+                <?php
+            endif;
+        ?>
 
         <div class="row" data-id="index">
             <main class="col-sm-8 blog-main" id="main">

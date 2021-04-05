@@ -6,6 +6,8 @@ get_header();
 
   <section class="container below-navbar-content mb-5">
 
+    <div class="display-1 text-primary font-weight-bold">404</div>
+
     <h1><?php echo __( 'Not found', 'bsx-wordpress' ); ?></h1>
 
     <div class="lead my-4">

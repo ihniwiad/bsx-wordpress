@@ -1,4 +1,5 @@
 <?php 
+global $phoneHrefRemovePatterns;
 ?>
 <!-- bsx-appnav-navbar-scroll-toggle -->
 <header class="bsx-appnav-navbar bsx-appnav-fixed-top bsx-appnav-navbar-scroll-toggle" data-fn="anchor-offset-elem" data-tg="sticky-container-below">

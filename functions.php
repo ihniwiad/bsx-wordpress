@@ -126,8 +126,13 @@ add_filter( 'nav_menu_css_class', 'add_additional_class_on_li', 1, 3 );
 function add_additional_class_on_a( $atts, $item, $args ) {
     if ( isset( $args->add_a_class ) ) {
         $class = $args->add_a_class;
+        if ( isset( $atts[ 'class' ] ) ) {
+            $atts[ 'class' ] .= $class;
+        }
+        else {
+            $atts[ 'class' ] = $class;
+        }
     }
-    $atts[ 'class' ] .= $class;
     return $atts;
 }
 add_filter( 'nav_menu_link_attributes', 'add_additional_class_on_a', 10, 3 );

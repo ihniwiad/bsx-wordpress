@@ -43,6 +43,14 @@ msgstr "Ältere Beiträge"
 msgid "Newer Posts"
 msgstr "Neuere Beiträge"
 
+#: index.php:35
+msgid "Previous Page"
+msgstr "Vorherige Seite"
+
+#: index.php:43
+msgid "Next Page"
+msgstr "Nächste Seite"
+
 #: template-parts/content/content-none.php:3
 msgid "No content available"
 msgstr "Kein Inhalt verfügbar"

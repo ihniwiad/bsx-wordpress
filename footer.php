@@ -26,7 +26,7 @@ global $logoPath;
 
 			// photoswipe shadowbox template
 
-			if ( class_exists( 'Bsx_Photoswipe' ) &&  method_exists( Bsx_Photoswipe, 'shadowbox_template_html' )) {
+			if ( class_exists( 'Bsx_Photoswipe' ) &&  method_exists( 'Bsx_Photoswipe', 'shadowbox_template_html' )) {
 				echo Bsx_Photoswipe::shadowbox_template_html();
 			}
 

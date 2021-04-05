@@ -9,15 +9,15 @@
             </span>
         <?php endif ?>
 
-        <?php if ( get_the_author_url() ) : ?>
-            <a class="badge badge-primary" href="<?php the_author_url(); ?>"><span class="fa fa-user" aria-hidden="true"></span>&nbsp;<?php the_author(); ?></a> 
+        <?php if ( get_the_author_meta( 'url' ) ) : ?>
+            <a class="badge badge-primary" href="<?php echo get_the_author_meta( 'url' ); ?>"><span class="fa fa-user" aria-hidden="true"></span>&nbsp;<?php the_author(); ?></a> 
         <?php else : ?>
             <span class="badge badge-primary"><span class="fa fa-user" aria-hidden="true"></span>&nbsp;<?php the_author(); ?></span>
         <?php endif ?>
 
         <?php 
             $categories = wp_get_post_categories( get_the_ID() );
-            if ( count( categories ) > 0 ) : 
+            if ( count( $categories ) > 0 ) : 
                 foreach ( $categories as $cat_obj ) {
                     $cat = get_category( $cat_obj );
                     $cat_url = get_category_link( get_cat_ID( $cat->name ) );
@@ -57,7 +57,7 @@
                           )
                         );
 
-                        if ( class_exists( 'LazyImg' ) && method_exists( LazyImg, 'print' ) ) {
+                        if ( class_exists( 'LazyImg' ) && method_exists( 'LazyImg', 'print' ) ) {
                             $thumbnail = new LazyImg( $img_data );
                             $thumbnail->print();
                         }

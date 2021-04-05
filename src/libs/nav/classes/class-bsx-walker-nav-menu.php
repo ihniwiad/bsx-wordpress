@@ -338,7 +338,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         $output .= $n . $indent . '<li class="bsx-appnav-back-link">' . $n . $indent . '<a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a>' . $n . '</li>' . $n;
 
         // add overview item
-        if ( $createClickableParentLinkChild ) {
+        if ( $createClickableParentLinkChild && isset( $page ) ) {
           $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
         }
 

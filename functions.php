@@ -511,6 +511,28 @@ function custom_settings_page_setup() {
             'label_for' => 'mail'
         ) // args = array()
     );
+    add_settings_field(
+        'service-phone', // id
+        __( 'Service Phone', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'service-phone',
+            'label_for' => 'service-phone'
+        ) // args = array()
+    );
+    add_settings_field(
+        'service-mail', // id
+        __( 'Service Email', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_contact', // page
+        'custom-settings-section-contact', // section = 'default'
+        array(
+            'service-mail',
+            'label_for' => 'service-mail'
+        ) // args = array()
+    );
 
     // register each field
     register_setting(
@@ -544,6 +566,14 @@ function custom_settings_page_setup() {
     register_setting(
         'custom-settings-contact', // option group
         'mail' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'service-phone' // option name
+    );
+    register_setting(
+        'custom-settings-contact', // option group
+        'service-mail' // option name
     );
 
     // social media section

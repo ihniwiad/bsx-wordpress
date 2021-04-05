@@ -142,7 +142,7 @@ global $phoneHrefRemovePatterns;
 
         <div class="row small">
             <div class="col-sm mb-1">
-                &copy; Copyright <?php echo date_format( date_create(), 'Y' ); ?> <a class="footer-link" href="<?php echo get_bloginfo( 'url' ) . '/'; ?>"><?php echo get_bloginfo( 'name' ); ?></a>
+                &copy; Copyright <?php echo date_format( date_create(), 'Y' ); ?> <a class="footer-link" href="<?php echo get_bloginfo( 'url' ) . '/'; ?>"><?php echo ( get_option( 'owner-name' ) ) ? get_option( 'owner-name' ) : get_bloginfo( 'name' ); ?></a>
             </div>
             <nav class="col-sm text-sm-right mb-1">
                 <?php

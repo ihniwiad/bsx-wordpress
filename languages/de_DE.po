@@ -71,6 +71,50 @@ msgstr "Seite nicht gefunden"
 msgid "It looks like nothing was found at this location. Maybe try a search?"
 msgstr "Die gewünschte Seite existiert nicht oder nicht mehr. Vielleicht hilft die Suche weiter?"
 
+#: functions.php:420
+msgid "Contact"
+msgstr "Kontakt"
+
+#: functions.php:420
+msgid "Owner name"
+msgstr "Firma / Betreiber"
+
+#: functions.php:420
+msgid "Street"
+msgstr "Straße"
+
+#: functions.php:420
+msgid "Adress Additional"
+msgstr "Adresszusatz"
+
+#: functions.php:420
+msgid "Zip"
+msgstr "PLZ"
+
+#: functions.php:420
+msgid "City"
+msgstr "Ort"
+
+#: functions.php:420
+msgid "Country"
+msgstr "Land"
+
+#: functions.php:420
+msgid "Phone"
+msgstr "Telefon"
+
+#: functions.php:420
+msgid "Email"
+msgstr "E-Mail"
+
+#: functions.php:420
+msgid "Service Phone"
+msgstr "Service-Telefon"
+
+#: functions.php:420
+msgid "Service Email"
+msgstr "Service-E-Mail"
+
 #: functions.php:660
 msgid "Page Style"
 msgstr "Seiten-Style"
@@ -126,6 +170,10 @@ msgstr "Footer Spalte 4 Menü"
 #: functions.php:110
 msgid "Footer Column 5 Menu"
 msgstr "Footer Spalte 5 Menü"
+
+#: functions.php:111
+msgid "Footer Bottom Menu"
+msgstr "Footer Bottom-Menü"
 
 
 

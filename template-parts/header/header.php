@@ -25,43 +25,42 @@ global $phoneHrefRemovePatterns;
                 // true will show configured menu, false will list all pages as menu
                 $use_menu = true;
 
-                if ( ! $use_menu ) :
-            ?>
-            
-            <ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="toggle-navbar-collapse">
-                <?php 
-                    echo '<!-- Primary Menu: Bsx_Walker_Page -->';
-                    wp_list_pages(
-                        array(
-                            'match_menu_classes' => true,
-                            'show_sub_menu_icons' => true,
-                            'title_li' => false,
-                            'walker'   => new Bsx_Walker_Page(),
-                        )
-                    );
-                ?>
-            </ul>
-
-            <?php 
+                if ( $use_menu ) :
+                    // use menu
+                    echo '<!-- Primary Menu: Bsx_Walker_Nav_Menu -->';
+                    wp_nav_menu( 
+                        array( 
+                            'theme_location' => 'primary-menu',
+                            'walker' => new Bsx_Walker_Nav_Menu(),
+                            'menu' => '',
+                            'container' => '',
+                            'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse">%3$s</ul>',
+                            'menu_class' => 'bsx-appnav-navbar-nav bsx-main-navbar-nav',
+                            'menu_id' => '',
+                            'before' => '', // in <li> before <a>
+                            'after' => '', // in <li> after <a>
+                            'link_before' => '', // in <a> before text
+                            'link_after' => '', // in <a> after text
+                        ) 
+                    ); 
                 else :
+                    // use page list instead of menu
+                    ?>
+                        <ul class="bsx-appnav-navbar-nav bsx-main-navbar-nav" aria-labelledby="toggle-navbar-collapse">
+                            <?php 
+                                echo '<!-- Primary Menu: Bsx_Walker_Page -->';
+                                wp_list_pages(
+                                    array(
+                                        'match_menu_classes' => true,
+                                        'show_sub_menu_icons' => true,
+                                        'title_li' => false,
+                                        'walker'   => new Bsx_Walker_Page(),
+                                    )
+                                );
+                            ?>
+                        </ul>
 
-                echo '<!-- Primary Menu: Bsx_Walker_Nav_Menu -->';
-                wp_nav_menu( 
-                    array( 
-                        'theme_location' => 'primary-menu',
-                        'walker' => new Bsx_Walker_Nav_Menu(),
-                        'menu' => '',
-                        'container' => '',
-                        'items_wrap' => '<ul id="%1$s" class="%2$s" aria-labelledby="toggle-navbar-collapse">%3$s</ul>',
-                        'menu_class' => 'bsx-appnav-navbar-nav bsx-main-navbar-nav',
-                        'menu_id' => '',
-                        'before' => '', // in <li> before <a>
-                        'after' => '', // in <li> after <a>
-                        'link_before' => '', // in <a> before text
-                        'link_after' => '', // in <a> after text
-                    ) 
-                ); 
-
+                    <?php 
                 endif;
             ?>
 

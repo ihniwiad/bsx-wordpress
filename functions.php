@@ -831,7 +831,7 @@ add_action( 'save_post', 'save_meta_tag_meta' );
 // consent trigger button, use shortcode block with [consent-trigger-button]
 function add_consent_button_shortcode() {
   $content = 'Missing method: Consent_Popup_Manager::popupTriggerHtml()';
-  if ( class_exists( 'Consent_Popup_Manager' ) && method_exists( Consent_Popup_Manager, 'popupTriggerHtml' ) ) {
+  if ( class_exists( 'Consent_Popup_Manager' ) && method_exists( 'Consent_Popup_Manager', 'popupTriggerHtml' ) ) {
     $content = Consent_Popup_Manager::popupTriggerHtml();
   }
   return $content;

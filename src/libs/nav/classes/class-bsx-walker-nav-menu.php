@@ -64,34 +64,6 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       }
       $indent = str_repeat( $t, $depth );
 
-      // Default class.
-      // $classes = array( 'sub-menu' );
-
-      // /**
-      //  * Filters the CSS class(es) applied to a menu list element.
-      //  *
-      //  * @since 4.8.0
-      //  *
-      //  * @param string[] $classes Array of the CSS classes that are applied to the menu `<ul>` element.
-      //  * @param stdClass $args    An object of `wp_nav_menu()` arguments.
-      //  * @param int      $depth   Depth of menu item. Used for padding.
-      //  */
-      // $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
-      // $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
-
-      // $linkId = 'appnav-link-' . $item->ID;
-
-      // $output .= "{$n}{$indent}<ul$class_names aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
-
-      // // add back item
-      // $output .= $n . $indent . '<li class="bsx-appnav-back-link">' . $n . $indent . '<a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a>' . $n . '</li>' . $n;
-
-      // // add overview item
-      // if ( $createClickableParentLinkChild ) {
-      //   $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . esc_url( get_permalink( $page->ID ) ) . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
-      // }
-
-
       // opening ul has been moved to `start_el()` since required page id is known there but not here
       $output .= "";
     }
@@ -196,7 +168,8 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
       $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
-      $output .= $indent . '<li' . $id . $class_names . ' data-test-li>';
+      // $output .= $indent . '<li' . $id . $class_names . ' data-test-li>';
+      $output .= $indent . '<li' . $id . $class_names . '>';
 
       $atts           = array();
       $atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
@@ -209,11 +182,8 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $atts['href']         = ! empty( $item->url ) ? $item->url : '';
       $atts['aria-current'] = $item->current ? 'page' : '';
 
-      // TODO: add attr: data-fn="dropdown-multilevel" aria-haspopup="true" aria-expanded="false"
-      // TODO: use menu slug `$args["slug"]` to create unique ids
-
       // TEST
-      $atts['data-test-a'] = '1';
+      // $atts['data-test-a'] = '1';
 
       // TEST: read $args
       // if ( $item->current ) {
@@ -332,14 +302,15 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
         $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
-        $output .= "{$n}{$indent}<ul$class_names id=\"" . $dropdownId . "\" aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
+        // $output .= "{$n}{$indent}<ul$class_names id=\"" . $dropdownId . "\" aria-labelledby=\"" . $linkId . "\" data-test-ul>{$n}";
+        $output .= "{$n}{$indent}<ul$class_names id=\"" . $dropdownId . "\" aria-labelledby=\"" . $linkId . "\">{$n}";
 
         // add back item
         $output .= $n . $indent . '<li class="bsx-appnav-back-link">' . $n . $indent . '<a href="#" aria-label="' . __( 'Close Menu item', 'bsx-wordpress' ) . '" data-label="' . __( 'Back', 'bsx-wordpress' ) . '" data-fn="dropdown-multilevel-close"></a>' . $n . '</li>' . $n;
 
         // add overview item
-        if ( $createClickableParentLinkChild && isset( $page ) ) {
-          $output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+        if ( $createClickableParentLinkChild ) {
+          $output .= "<li class=\"auto-parent-link\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
         }
 
       }

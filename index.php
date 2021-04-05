@@ -41,8 +41,6 @@ get_header(); ?>
                             get_template_part( 'template-parts/content/content', get_post_format() );
                         endwhile;
 
-                        get_template_part( 'template-parts/pagination/post-pagination' );
-
                     else:
 
                         get_template_part( 'template-parts/content/content-none' );
@@ -57,6 +55,12 @@ get_header(); ?>
 
         </div>
         <!-- /.row -->
+
+        <?php
+            if ( have_posts() ) : 
+                get_template_part( 'template-parts/pagination/post-pagination' );
+            endif;
+        ?>
 
     </div>
     <!-- /.container -->

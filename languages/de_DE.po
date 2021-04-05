@@ -36,6 +36,14 @@ msgid "To top"
 msgstr "Nach oben"
 
 #: index.php:35
+msgid "Blog Pages Navigation"
+msgstr "Beiträge Seiten Navigation"
+
+#: index.php:35
+msgid "Search Pages Navigation"
+msgstr "Suche Seiten Navigation"
+
+#: index.php:35
 msgid "Older Posts"
 msgstr "Ältere Beiträge"
 

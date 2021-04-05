@@ -107,6 +107,7 @@ function register_my_menus() {
             'footer-column-2-menu' => __( 'Footer Column 2 Menu', 'bsx-wordpress' ),
             'footer-column-3-menu' => __( 'Footer Column 3 Menu', 'bsx-wordpress' ),
             'footer-column-4-menu' => __( 'Footer Column 4 Menu', 'bsx-wordpress' ),
+            'footer-column-5-menu' => __( 'Footer Column 5 Menu', 'bsx-wordpress' ),
             'footer-bottom-menu' => __( 'Footer Bottom Menu', 'bsx-wordpress' )
         )
     );
@@ -642,8 +643,19 @@ function custom_settings_page_setup() {
 
     // fields for section
     add_settings_field(
+        'footer_columns_count', // id
+        esc_html__( 'Footer Menu Columns Count (0...5)', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_layout', // page
+        'custom-settings-section-layout', // section = 'default'
+        array(
+            'footer_columns_count',
+            'label_for' => 'footer_columns_count'
+        ) // args = array()
+    );
+    add_settings_field(
         'footer_phone_mail_show', // id
-        __( 'Show Phone & Email in footer', 'bsx-wordpress' ), // title
+        esc_html__( 'Show Phone & Email in footer', 'bsx-wordpress' ), // title
         'render_custom_checkbox', // callback, use unique function name
         'custom_options_layout', // page
         'custom-settings-section-layout', // section = 'default'
@@ -654,6 +666,10 @@ function custom_settings_page_setup() {
     );
 
     // register each field
+    register_setting(
+        'custom-settings-layout', // option group
+        'footer_columns_count' // option_name
+    );
     register_setting(
         'custom-settings-layout', // option group
         'footer_phone_mail_show' // option_name

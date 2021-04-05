@@ -59,22 +59,6 @@ msgstr "Kein Inhalt verfügbar"
 msgid "Theme Settings"
 msgstr "Theme Einstellungen"
 
-#: template-parts/footer/footer.php:26
-msgid "Footer column 1 heading"
-msgstr "Erste Spalte"
-
-#: template-parts/footer/footer.php:47
-msgid "Footer column 2 heading"
-msgstr "Weitere Spalte"
-
-#: template-parts/footer/footer.php:68
-msgid "Footer column 3 heading"
-msgstr "Noch eine Spalte"
-
-#: template-parts/footer/footer.php:68
-msgid "Footer column 4 heading"
-msgstr "Letzte Spalte"
-
 #: src/libs/data-processing-consen/class-consent-popup-manager.php:68
 msgid "See/change cookie settings"
 msgstr "Cookie-Einstellungen ansehen/ändern"
@@ -110,6 +94,44 @@ msgstr "Titel"
 #: functions.php:745
 msgid "Description"
 msgstr "Beschreibung"
+
+#: functions.php:660
+msgid "Layout"
+msgstr "Layout"
+
+#: functions.php:660
+msgid "Footer Menu Columns Count (0...5)"
+msgstr "Anzahl Footer Menü-Spalten (0...5)"
+
+#: functions.php:660
+msgid "Show Phone & Email in footer"
+msgstr "E-Mail & Telefon im Footer anzeigen"
+
+#: functions.php:106
+msgid "Footer Column 1 Menu"
+msgstr "Footer Spalte 1 Menü"
+
+#: functions.php:107
+msgid "Footer Column 2 Menu"
+msgstr "Footer Spalte 2 Menü"
+
+#: functions.php:108
+msgid "Footer Column 3 Menu"
+msgstr "Footer Spalte 3 Menü"
+
+#: functions.php:109
+msgid "Footer Column 4 Menu"
+msgstr "Footer Spalte 4 Menü"
+
+#: functions.php:110
+msgid "Footer Column 5 Menu"
+msgstr "Footer Spalte 5 Menü"
+
+
+
+
+
+
 
 
 

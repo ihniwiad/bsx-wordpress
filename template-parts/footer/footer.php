@@ -21,94 +21,54 @@ global $phoneHrefRemovePatterns;
         </div>
 
         <div class="row">
+            <?php
+                // make n cols
+                $cols_count = 4;
 
-            <div class="col-6 col-md-3">
-                <div>
-                    <strong><?php echo __( 'Footer column 1 heading', 'bsx-wordpress' ) ?></strong>
-                </div>
-                <hr class="my-1">
-                <?php
-                    echo '<!-- Footer Column 1 Menu -->';
-                    wp_nav_menu( 
-                        array( 
-                            'theme_location' => 'footer-column-1-menu',
-                            'menu' => '',
-                            'container' => '',
-                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
-                            'menu_id' => '',
-                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
-                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
-                        ) 
-                    ); 
-                ?>
-            </div>
+                $conf_cols_count = get_option( 'footer_columns_count' );
+                if ( isset( $conf_cols_count ) && $conf_cols_count != '' ) {
+                    $cols_count = number_format( $conf_cols_count );
+                }
 
-            <div class="col-6 col-md-3">
-                <div>
-                    <strong><?php echo __( 'Footer column 2 heading', 'bsx-wordpress' ) ?></strong>
-                </div>
-                <hr class="my-1">
-                <?php
-                    echo '<!-- Footer Column 2 Menu -->';
-                    wp_nav_menu( 
-                        array( 
-                            'theme_location' => 'footer-column-2-menu',
-                            'menu' => '',
-                            'container' => '',
-                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
-                            'menu_id' => '',
-                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
-                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
-                        ) 
-                    ); 
-                ?>
-            </div>
+                $col_class_names = 'col-12 col-sm-6 col-md';
+                switch ( $cols_count ) {
+                    case 4:
+                        $col_class_names = 'col-6 col-md-3';
+                        break;
+                    case 3:
+                        $col_class_names = 'col-12 col-md-4';
+                        break;
+                }
 
-            <div class="col-6 col-md-3">
-                <div>
-                    <strong><?php echo __( 'Footer column 3 heading', 'bsx-wordpress' ) ?></strong>
-                </div>
-                <hr class="my-1">
-                <?php
-                    echo '<!-- Footer Column 3 Menu -->';
-                    wp_nav_menu( 
-                        array( 
-                            'theme_location' => 'footer-column-3-menu',
-                            'menu' => '',
-                            'container' => '',
-                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
-                            'menu_id' => '',
-                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
-                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
-                        ) 
-                    ); 
-                ?>
-            </div>
-
-            <div class="col-6 col-md-3">
-                <div>
-                    <strong><?php echo __( 'Footer column 4 heading', 'bsx-wordpress' ) ?></strong>
-                </div>
-                <hr class="my-1">
-                <?php
-                    echo '<!-- Footer Column 4 Menu -->';
-                    wp_nav_menu( 
-                        array( 
-                            'theme_location' => 'footer-column-4-menu',
-                            'menu' => '',
-                            'container' => '',
-                            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                            'menu_class' => 'bsx-footer-col-nav list-unstyled',
-                            'menu_id' => '',
-                            'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
-                            'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
-                        ) 
-                    ); 
-                ?>
-            </div>
+                for( $i = 0; $i < $cols_count; $i++ ) {
+                    ?>
+                        <div class="<?php echo $col_class_names; ?>">
+                            <div>
+                                <?php
+                                    $menu_name = wp_get_nav_menu_name( 'footer-column-' . ( $i + 1 ) . '-menu' );
+                                    echo '<!-- Footer Column 1 Menu (' . $menu_name . ') -->';
+                                ?>
+                                <strong><?php echo $menu_name; ?></strong>
+                            </div>
+                            <hr class="my-1">
+                            <?php
+                                wp_nav_menu( 
+                                    array( 
+                                        'theme_location' => 'footer-column-' . ( $i + 1 ) . '-menu',
+                                        'menu' => '',
+                                        'container' => '',
+                                        'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                                        'menu_class' => 'bsx-footer-col-nav list-unstyled',
+                                        'menu_id' => '',
+                                        'add_li_class' => '', // custom filter add_additional_class_on_li(), see functions.php 
+                                        'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                                    ) 
+                                ); 
+                            ?>
+                        </div>
+                    <?php
+                }
+            ?>
 
         </div>
 

@@ -58,8 +58,7 @@
                         );
 
                         if ( class_exists( 'LazyImg' ) && method_exists( 'LazyImg', 'print' ) ) {
-                            $thumbnail = new LazyImg( $img_data );
-                            $thumbnail->print();
+                            ( new LazyImg( $img_data ) )->print();
                         }
                     }
                 ?>

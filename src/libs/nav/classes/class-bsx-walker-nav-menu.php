@@ -109,6 +109,27 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
       $createClickableParentLinkChild = true;
 
+      // check if current url is subfolder of blog url
+      $blog_url = get_permalink( get_option( 'page_for_posts' ) );
+      $path = $_SERVER[ 'REQUEST_URI' ]; // path after domain
+      $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)
+      $protocol = ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ? "https://" : "http://"; // protocol
+      $current_url = $protocol . $server_name . $path;
+
+      $page_is_blog_subpage = false;
+      if ( strrpos( ( $current_url ), $blog_url ) === 0 && $current_url != $blog_url ) {
+        $page_is_blog_subpage = true;
+      }
+      else {
+        echo '<!-- NO MATCH -->';
+      }
+
+      // check if current menu item is blog link
+      $item_is_blog_link = false;
+      if ( ! empty( $item->url ) && $item->url === $blog_url ) {
+        $item_is_blog_link = true;
+      }
+
       if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
         $t = '';
         $n = '';
@@ -124,6 +145,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       if ( 
         in_array( 'current_page_item', $item->classes, true ) 
         || in_array( 'current_page_ancestor', $item->classes, true ) 
+        || $item_is_blog_link && $page_is_blog_subpage
       ) {
         $classes[] = 'active';
       }
@@ -181,6 +203,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       }
       $atts['href']         = ! empty( $item->url ) ? $item->url : '';
       $atts['aria-current'] = $item->current ? 'page' : '';
+
 
       // TEST
       // $atts['data-test-a'] = '1';

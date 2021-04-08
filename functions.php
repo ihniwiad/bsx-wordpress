@@ -640,6 +640,17 @@ function custom_settings_page_setup() {
             'label_for' => 'xing'
         ) // args = array()
     );
+    add_settings_field(
+        'linkedin', // id
+        __( 'LinkedIn', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_social_media', // page
+        'custom-settings-section-social-media', // section = 'default'
+        array(
+            'linkedin',
+            'label_for' => 'linkedin'
+        ) // args = array()
+    );
 
     // register each field
     register_setting(
@@ -661,6 +672,10 @@ function custom_settings_page_setup() {
     register_setting(
         'custom-settings-social-media', // option group
         'xing' // option name
+    );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'linkedin' // option name
     );
 
     // layout section

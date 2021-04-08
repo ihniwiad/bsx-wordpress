@@ -112,11 +112,12 @@ global $phoneHrefRemovePatterns;
 
                 <?php
                     $social_media_list = array(
-                        array( 'id' => 'facebook', 'title' => 'Facebook', 'icon' => 'facebook' ),
-                        array( 'id' => 'twitter', 'title' => 'Twitter', 'icon' => 'twitter' ),
-                        array( 'id' => 'instagram', 'title' => 'Instagram', 'icon' => 'instagram' ),
-                        array( 'id' => 'googleplus', 'title' => 'Google Plus', 'icon' => 'google-plus' ),
-                        array( 'id' => 'xing', 'title' => 'Xing', 'icon' => 'xing' ),
+                        array( 'id' => 'facebook', 'title' => __( 'Facebook', 'bsx-wordpress' ), 'icon' => 'facebook' ),
+                        array( 'id' => 'twitter', 'title' => __( 'Twitter', 'bsx-wordpress' ), 'icon' => 'twitter' ),
+                        array( 'id' => 'instagram', 'title' => __( 'Instagram', 'bsx-wordpress' ), 'icon' => 'instagram' ),
+                        array( 'id' => 'googleplus', 'title' => __( 'Google Plus', 'bsx-wordpress' ), 'icon' => 'google-plus' ),
+                        array( 'id' => 'xing', 'title' => __( 'Xing', 'bsx-wordpress' ), 'icon' => 'xing' ),
+                        array( 'id' => 'linkedin', 'title' => __( 'LinkedIn', 'bsx-wordpress' ), 'icon' => 'linkedin' ),
                     );
 
                     $social_media_colors_use = get_option( 'social_media_colors_use' );

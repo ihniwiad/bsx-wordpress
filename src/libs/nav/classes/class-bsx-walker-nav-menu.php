@@ -120,9 +120,6 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       if ( strrpos( ( $current_url ), $blog_url ) === 0 && $current_url != $blog_url ) {
         $page_is_blog_subpage = true;
       }
-      else {
-        echo '<!-- NO MATCH -->';
-      }
 
       // check if current menu item is blog link
       $item_is_blog_link = false;

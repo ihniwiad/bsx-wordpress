@@ -267,7 +267,7 @@
 @include bsx-appnav-navigation(desktop) {
 	
 	.bsx-appnav-navbar-nav.bsx-main-navbar-nav {
-		margin-right: auto;
+		margin: $bsx-appnav-main-navbar-desktop-margin;
 	}
 }
 

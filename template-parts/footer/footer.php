@@ -91,7 +91,7 @@ global $phoneHrefRemovePatterns;
                             }
                         ?>
                         <li class="list-inline-item">
-                            <a class="footer-icon-link hover-text-primary" href="tel:<?php echo $phoneHref; ?>"><i class="fa fa-phone"></i><span class="sr-only">Telefon</span></a>
+                            <a class="footer-icon-link hover-text-primary" href="tel:<?php echo $phoneHref; ?>"><i class="fa fa-phone"></i><span class="sr-only"><?php echo __( 'Phone', 'bsx-wordpress' ) ?></span></a>
                         </li>
                     <?php } ?>
                     <?php if ( $mail ) { ?>
@@ -105,7 +105,7 @@ global $phoneHrefRemovePatterns;
                             $extension = substr( $mail, $dotPos + 1 );
                         ?>
                         <li class="list-inline-item">
-                            <a class="footer-icon-link hover-text-primary" data-fn="create-mt" data-mt-n="<?php echo $name; ?>" data-mt-d="<?php echo $domain; ?>" data-mt-s="<?php echo $extension; ?>"><i class="fa fa-envelope"></i><span class="sr-only">E-Mail</span></a>
+                            <a class="footer-icon-link hover-text-primary" data-fn="create-mt" data-mt-n="<?php echo $name; ?>" data-mt-d="<?php echo $domain; ?>" data-mt-s="<?php echo $extension; ?>"><i class="fa fa-envelope"></i><span class="sr-only"><?php echo __( 'Email', 'bsx-wordpress' ) ?></span></a>
                         </li>
                     <?php } ?>
                 <?php } ?>

@@ -94,6 +94,12 @@ $bsx-appnav-mobile-collapse-max-width:		30rem !default;
 // ul (both, main & icon navbar)
 
 
+// main ul
+
+// dektop only
+$bsx-appnav-main-navbar-desktop-margin: 	0 auto 0 0 !default;
+
+
 // dropdown
 $bsx-appnav-desktop-dropdown-py:					.25em !default;
 $bsx-appnav-desktop-level-1-dropdown-max-height: 	calc(100vh - 5rem) !default;

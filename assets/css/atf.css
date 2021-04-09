@@ -143,7 +143,7 @@ body {
 
 @media (min-width: 992px) {
   .bsx-appnav-navbar-nav.bsx-main-navbar-nav {
-    margin-right: auto; } }
+    margin: 0 auto 0 0; } }
 
 .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav {
   display: inline-flex;

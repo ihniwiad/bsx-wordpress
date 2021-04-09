@@ -168,6 +168,18 @@
 	}
 }
 
+@include bsx-appnav-navigation(desktop) {
+
+	.bsx-appnav-navbar-container {
+		@if $bsx-appnav-navbar-container-desktop-padding-left != '' {
+			padding-left: $bsx-appnav-navbar-container-desktop-padding-left;
+		}
+		@if $bsx-appnav-navbar-container-desktop-padding-right != '' {
+			padding-right: $bsx-appnav-navbar-container-desktop-padding-right;
+		}
+	}
+}
+
 
 // NAVBAR COLLAPSE
 

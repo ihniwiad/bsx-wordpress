@@ -10270,6 +10270,18 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
 body.scroll-away-top.scroll-up .to-top-wrapper {
   transform: translate3d(0, 0, 0); }
 
+.page-footer {
+  margin-top: 2rem;
+  padding-bottom: 0.5rem;
+  background-color: #f8f9fa;
+  box-shadow: 0 2500px 0 2500px #f8f9fa; }
+
+.mb-n-footer-space {
+  margin-bottom: -2rem; }
+
+.pb-footer-space {
+  padding-bottom: 2rem; }
+
 .footer-link {
   color: inherit; }
 

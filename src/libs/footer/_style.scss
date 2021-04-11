@@ -1,12 +1,39 @@
+// variables
 
-$bsx-footer-icon-link-color: lighten($bsx-appnav-color, 10) !default;
+$bsx-footer-icon-link-color:  lighten($bsx-appnav-color, 10) !default;
+
+$bsx-footer-margin-top:       $bsx-paragraph-margin-bottom * 2 !default;
+$bsx-footer-paddinf-bottom:   .5rem !default;
+$bsx-footer-bg-color:         $gray-100 !default;
 
 
 
-// TODO: add pipe (|) to footer bottom nav
+
+// style
+
+
+.page-footer {
+  margin-top: $bsx-footer-margin-top;
+  padding-bottom: $bsx-footer-paddinf-bottom;
+  background-color: $bsx-footer-bg-color;
+  box-shadow: 0 2500px 0 2500px $bsx-footer-bg-color;
+}
+
+.mb-n-footer-space {
+  margin-bottom: -#{$bsx-footer-margin-top};
+}
+.pb-footer-space {
+  padding-bottom: $bsx-footer-margin-top;
+}
+
 
 .footer-link {
   color: inherit;
+
+  // @include bsx-hover-focus {
+  //  text-decoration: underline;
+  //  color: inherit;
+  // }
 }
 .footer-icon-link {
   color: $bsx-footer-icon-link-color; // equal to menu icon color
@@ -20,3 +47,4 @@ $bsx-footer-icon-link-color: lighten($bsx-appnav-color, 10) !default;
   // one before and two after since already has one space distance
   content: "\00a0|\00a0\00a0";
 }
+

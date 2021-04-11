@@ -20,6 +20,10 @@ global $logoPath;
 		
 		</div>
 
+		<div class="wait-screen" data-tg="wait-screen">
+		   <i class="fa fa-circle-o-notch fa-spin wait-screen-icon" aria-hidden="true"></i>
+		</div>
+
 		<?php 
 
 			include 'src/libs/data-processing-consent/example.php';

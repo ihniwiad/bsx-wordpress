@@ -559,6 +559,10 @@ Utils.replaceFormByMessage = function( form, options ) {
     } );
     $form.aria( 'hidden', true );
     $message.aria( 'hidden', false );
+
+    // TODO: scroll up to message begin
+    // TODO: split success / error message ?
+
 }
 // /replace form by message
 
@@ -582,5 +586,45 @@ Utils.replaceFormByMessage = function( form, options ) {
 //     }
 // }
 // /execute callback function
+
+
+// wait screen
+
+/*
+<!-- WAIT SCREEN -->
+<div class="wait-screen" data-tg="wait-screen">
+    <i class="fa fa-circle-o-notch fa-spin wait-screen-icon" aria-hidden="true"></i>
+</div>
+*/
+
+Utils.WaitScreen = {
+    isOpen: false,
+    count: 0,
+    show: function() {
+        Utils.WaitScreen.count++;
+        Utils.WaitScreen.$waitScreen.addClass( Utils.WaitScreen.options.openClass );
+        Utils.WaitScreen.isOpen = true;
+    },
+    hide: function( forceClosing ) {
+        Utils.WaitScreen.count--;
+        if ( Utils.WaitScreen.count < 1 || forceClosing ) {
+            Utils.WaitScreen.count = 0;
+            Utils.WaitScreen.$waitScreen.removeClass( Utils.WaitScreen.options.openClass );
+            Utils.WaitScreen.isOpen = false;
+        }
+    },
+    init: function( options ) {
+        var defaults = {
+            openClass: Utils.classes.open
+        }
+        Utils.WaitScreen.options = $.extend( {}, defaults, options );
+        Utils.WaitScreen.$waitScreen = Utils.$targetElems.filter( '[' + Utils.attributes.targetElement + '~="wait-screen"]' );
+    }
+};
+
+// init wait screen
+Utils.WaitScreen.init();
+
+// /wait screen
 
 export default Utils;

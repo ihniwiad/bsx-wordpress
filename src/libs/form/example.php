@@ -60,8 +60,8 @@
         <div class="alert alert-success lead mb-4" role="alert">
             <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been successfully sent.', 'bsx-wordpress' ); ?>
         </div>
-        <div data-g-tg="response-text">
-        </div>
+        <pre data-g-tg="response-text">
+        </pre>
     </div>
 
 </div>

@@ -14,6 +14,8 @@ var sendMail = function( $form ) {
         event.preventDefault();
         event.stopPropagation();
 
+        Utils.WaitScreen.show();
+
         var defaults = {
             invalidClass: Utils.classes.invalid,
             // sendEmptyValues: true
@@ -40,6 +42,8 @@ var sendMail = function( $form ) {
         } )
             .done( function( response ) {
 
+                Utils.WaitScreen.hide();
+
                 console.log( response );
                 // $( formMessages ).text( response );
 
@@ -50,6 +54,8 @@ var sendMail = function( $form ) {
                 Utils.replaceFormByMessage( $form, { $message: $message } );
             } )
             .fail( function( data ) {
+
+                Utils.WaitScreen.hide();
 
                 if ( data.responseText !== '' ) {
                     console.log( data.responseText );

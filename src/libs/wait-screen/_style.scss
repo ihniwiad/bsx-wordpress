@@ -1,0 +1,28 @@
+
+$bsx-wait-screen-color:         rgba($white, 0.66) !default;
+$bsx-wait-screen-icon-color:    $gray-600 !default;
+$bsx-wait-screen-icon-size:     3rem !default;
+$bsx-wait-screen-icon-z-index:  5000 !default;
+
+
+.wait-screen {
+  display: none;
+  position: fixed;
+  z-index: $bsx-wait-screen-icon-z-index;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $bsx-wait-screen-color;
+  align-items: center;
+  justify-content: center;
+
+  &.show {
+    display: flex;
+  }
+
+  .wait-screen-icon {
+    color: $bsx-wait-screen-icon-color;
+    font-size: $bsx-wait-screen-icon-size;
+  }
+}

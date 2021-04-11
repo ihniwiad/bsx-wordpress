@@ -973,14 +973,46 @@ function bsx_mailer_post_endpoint( $request ) {
         // $response .= $name . ' (' . $type . ', required: ' . $required . '): ' . $value . '<br>';
     }
 
-    $response .= 'SANITIZED OUTPUT:<br>';
+    function replace_placeholders( $text, $sanitized_values ) {
+        // $text = str_replace ( '[site-title]', get_the_title(), $text );
+        $text = str_replace ( '[site-url]', get_site_url(), $text );
+        foreach ( $sanitized_values as $key => $value ) {
+            $text = str_replace ( '[' . $key . ']', $value, $text );
+        }
+        return $text;
+    }
+
+    $mail_subject = '';
+    $mail_content = '';
+
+    if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
+        $mail_subject = replace_placeholders( $sanitized_values[ 'subject' ], $sanitized_values );
+    }
+    else {
+        // fallback subject
+        $mail_subject = 'Mail from contact form at ' . get_site_url();
+    }
+
+    if ( ! empty( $sanitized_values[ 'template' ] ) ) {
+        $mail_content = replace_placeholders( $sanitized_values[ 'template' ], $sanitized_values );
+    }
+    else {
+        // fallback content
+        foreach ( $sanitized_values as $key => $value ) {
+            $mail_content .= $key . ': ' . $value . '\n';
+        }
+    }
+
+
+    $response .= 'SANITIZED OUTPUT:' . "\n\n";
     foreach ( $sanitized_values as $key => $value ) {
         $response .= $key . ': ' . $value . '<br>';
     }
 
  
     if ( $validation_ok ) {
-        return rest_ensure_response( $response );
+        // return rest_ensure_response( $response );
+        return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
     } 
     else {
         // error 404

@@ -543,23 +543,23 @@ Utils.UiHandler = {
 // }
 
 // replace form by message
-// Utils.replaceFormByMessage = function( form, options ) {
+Utils.replaceFormByMessage = function( form, options ) {
 
-//     var $form = $( form );
-//     var $parent = $form.parent();
-//     var $message = ( !! options && !! options.$message ) ? options.$message : $form.next();
+    var $form = $( form );
+    var $parent = $form.parent();
+    var $message = ( !! options && !! options.$message ) ? options.$message : $form.next();
 
-//     // hide form, show message instead
-//     $parent.css( { height: ( parseInt( $parent.css( 'height' ) ) + 'px' ) } );
-//     $form.fadeOut( function() {
-//         $message.fadeIn();
-//         $parent.animate( { height: ( parseInt( $message.css( 'height' ) ) + 'px' ) }, function() {
-//             $parent.removeAttr( 'style' );
-//         } );
-//     } );
-//     $form.aria( 'hidden', true );
-//     $message.aria( 'hidden', false );
-// }
+    // hide form, show message instead
+    $parent.css( { height: ( parseInt( $parent.css( 'height' ) ) + 'px' ) } );
+    $form.fadeOut( function() {
+        $message.fadeIn();
+        $parent.animate( { height: ( parseInt( $message.css( 'height' ) ) + 'px' ) }, function() {
+            $parent.removeAttr( 'style' );
+        } );
+    } );
+    $form.aria( 'hidden', true );
+    $message.aria( 'hidden', false );
+}
 // /replace form by message
 
 // execute callback function

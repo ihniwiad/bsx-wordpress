@@ -899,3 +899,117 @@ function add_consent_button_shortcode() {
 }
 add_shortcode( 'consent-trigger-button', 'add_consent_button_shortcode' );
 
+
+
+// REST ROUTES
+
+/**
+ * callback function for routes endpoint
+ */
+function bsx_example_get_endpoint( $request ) {
+    $products = array(
+        '1' => 'I am product 1',
+        '2' => 'I am product 2',
+        '3' => 'I am product 3',
+    );
+
+    $id = ( string ) $request[ 'id' ];
+ 
+    if ( isset( $products[ $id ] ) ) {
+        $product = $products[ $id ];
+        return rest_ensure_response( $product );
+    } 
+    else {
+        // error 404
+        return new WP_Error( 'rest_example_invalid', esc_html__( 'The product does not exist.', 'bsx-wordpress' ), array( 'status' => 404 ) );
+    }
+ 
+    // error 500
+    return new WP_Error( 'rest_api_sad', esc_html__( 'Something went horribly wrong.', 'bsx-wordpress' ), array( 'status' => 500 ) );
+}
+
+function bsx_mailer_post_endpoint( $request ) {
+
+    $response = '';
+    // $response .= var_dump( $request );
+
+    $sanitized_values = array();
+    $validation_ok = true;
+
+    foreach ( $_POST as $key => $value ) {
+        // extract type for validation from input name `mytype__myname`
+        $split_key = explode( '__', $key);
+        $name = $split_key[ 0 ];
+        $type = $split_key[ 1 ];
+        $required = ( isset( $split_key[ 2 ] ) && $split_key[ 2 ] === 'r') ? true : false;
+
+        $value = trim( $value );
+
+        // sanitize and validate
+        if ( $type === 'email' ) {
+            $value = filter_var( $value, FILTER_SANITIZE_EMAIL );
+            if ( ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+                $validation_ok = false;
+            }
+        }
+        if ( $type === 'number' ) {
+            $value = intval( $value );
+            if ( ! is_numeric( $value ) ) {
+                $validation_ok = false;
+            }
+        }
+
+        // validate others
+        if ( $required ) {
+            if ( empty( $value ) ) {
+                $validation_ok = false;
+            }
+        }
+
+        // add to $values
+        $sanitized_values[ $name ] = $value;
+
+
+        // $response .= $name . ' (' . $type . ', required: ' . $required . '): ' . $value . '<br>';
+    }
+
+    $response .= 'SANITIZED OUTPUT:<br>';
+    foreach ( $sanitized_values as $key => $value ) {
+        $response .= $key . ': ' . $value . '<br>';
+    }
+
+ 
+    if ( $validation_ok ) {
+        return rest_ensure_response( $response );
+    } 
+    else {
+        // error 404
+        return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your request does not exist.', 'bsx-wordpress' ), array( 'status' => 404 ) );
+    }
+ 
+    // error 500
+    return new WP_Error( 'rest_api_sad', esc_html__( 'Something went horribly wrong.', 'bsx-wordpress' ), array( 'status' => 500 ) );
+}
+
+
+/**
+ * register routes for endpoint
+ *
+ * read more here: https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
+ */
+
+function bsx_register_rest_routes() {
+    // call (1 is id): http://localhost/wordpress-testing/wp-json/bsx/v1/example/1
+    register_rest_route( 'bsx/v1', '/example/(?P<id>[\d]+)', array(
+        'methods'  => WP_REST_Server::READABLE,
+        'callback' => 'bsx_example_get_endpoint',
+    ) );
+    // call with POST data: http://localhost/wordpress-testing/wp-json/bsx/v1/mailer/
+    register_rest_route( 'bsx/v1', '/mailer/', array(
+        'methods'  => WP_REST_Server::CREATABLE,
+        'callback' => 'bsx_mailer_post_endpoint',
+    ) );
+}
+ 
+add_action( 'rest_api_init', 'bsx_register_rest_routes' );
+

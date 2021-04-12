@@ -159,6 +159,14 @@ msgstr "Anzahl Footer Menü-Spalten (0...5)"
 msgid "Show Phone & Email in footer"
 msgstr "E-Mail & Telefon im Footer anzeigen"
 
+#: functions.php:714
+msgid "Use Social Media Brand colors"
+msgstr "Social Media Brand-Farben benutzen"
+
+#: functions.php:747
+msgid "Yes"
+msgstr "Ja"
+
 #: functions.php:106
 msgid "Footer Column 1 Menu"
 msgstr "Footer Spalte 1 Menü"

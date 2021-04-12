@@ -709,6 +709,17 @@ function custom_settings_page_setup() {
             'label_for' => 'footer_phone_mail_show'
         ) // args = array()
     );
+    add_settings_field(
+        'social_media_colors_use', // id
+        esc_html__( 'Use Social Media Brand colors', 'bsx-wordpress' ), // title
+        'render_custom_checkbox', // callback, use unique function name
+        'custom_options_layout', // page
+        'custom-settings-section-layout', // section = 'default'
+        array(
+            'social_media_colors_use',
+            'label_for' => 'social_media_colors_use'
+        ) // args = array()
+    );
 
     // register each field
     register_setting(
@@ -718,6 +729,10 @@ function custom_settings_page_setup() {
     register_setting(
         'custom-settings-layout', // option group
         'footer_phone_mail_show' // option_name
+    );
+    register_setting(
+        'custom-settings-layout', // option group
+        'social_media_colors_use' // option_name
     );
 
 }

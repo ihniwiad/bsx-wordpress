@@ -76,26 +76,41 @@ global $phoneHrefRemovePatterns;
             <ul class="list-inline mb-0">
 
                 <?php 
+                    // prepare li output (for social media icons & mail & phone)
+                    function printIconLinkItem( $icon, $href, $title, $hover_class_id = '', $link_atts = '' ) {
+                        // hover color class name if configured in theme options
+                        $hover_class_name = '';
+                        if ( get_option( 'social_media_colors_use' ) && $hover_class_id ) {
+                            $hover_class_name = 'hover-text-' . $hover_class_id;
+                        }
+                        else {
+                            $hover_class_name = 'hover-text-primary';
+                        }
+                        ?>
+                            <li class="list-inline-item">
+                                <a class="footer-icon-link<?php if ( $hover_class_name ) : echo ' ' . $hover_class_name; endif ?>"<?php if ( $href ) : echo ' href="' . $href . '"'; endif ?><?php if ( $link_atts ) : echo ' ' . $link_atts ; endif ?>><i class="fa fa-<?php echo $icon; ?>"></i><span class="sr-only"><?php echo $title; ?></span></a>
+                            </li>
+                        <?php
+                    }
+
+                    // mail & phone
                     $footer_phone_mail_show = get_option( 'footer_phone_mail_show' );
                     $phone = get_option( 'phone' );
                     $mail = get_option( 'mail' );
-                ?>
-                <?php if ( $footer_phone_mail_show ) { ?>
-                    <?php if ( $phone ) { ?>
-                        <?php
+                
+                    if ( $footer_phone_mail_show ) {
+                        if ( $phone ) {
                             // remove unwanted chars
                             $phoneHref = $phone;
                             $patterns = $phoneHrefRemovePatterns;
                             foreach ( $patterns as $pattern ) {
                                 $phoneHref = preg_replace( $pattern, '', $phoneHref );
                             }
-                        ?>
-                        <li class="list-inline-item">
-                            <a class="footer-icon-link hover-text-primary" href="tel:<?php echo $phoneHref; ?>"><i class="fa fa-phone"></i><span class="sr-only"><?php echo __( 'Phone', 'bsx-wordpress' ) ?></span></a>
-                        </li>
-                    <?php } ?>
-                    <?php if ( $mail ) { ?>
-                        <?php
+                            $phoneHref = 'tel:' . $phoneHref;
+
+                            printIconLinkItem( 'phone', $phoneHref, __( 'Phone', 'bsx-wordpress' ), 'primary' );
+                        }
+                        if ( $mail ) {
                             // make attribute from mail address
                             $atPos = strpos( $mail, "@" );
                             $dotPos = strpos( $mail, "." );
@@ -103,14 +118,13 @@ global $phoneHrefRemovePatterns;
                             $name = substr( $mail, 0, $atPos );
                             $domain = substr( $mail, $atPos + 1, $dotPos - $atPos - 1 );
                             $extension = substr( $mail, $dotPos + 1 );
-                        ?>
-                        <li class="list-inline-item">
-                            <a class="footer-icon-link hover-text-primary" data-fn="create-mt" data-mt-n="<?php echo $name; ?>" data-mt-d="<?php echo $domain; ?>" data-mt-s="<?php echo $extension; ?>"><i class="fa fa-envelope"></i><span class="sr-only"><?php echo __( 'Email', 'bsx-wordpress' ) ?></span></a>
-                        </li>
-                    <?php } ?>
-                <?php } ?>
 
-                <?php
+                            $link_attr = 'data-fn="create-mt" data-mt-n="' . $name . '" data-mt-d="' . $domain .'" data-mt-s="' . $extension . '"';
+
+                            printIconLinkItem( 'envelope', '', __( 'Email', 'bsx-wordpress' ), 'primary', $link_attr );
+                        }
+                    } // /if
+
                     $social_media_list = array(
                         array( 'id' => 'facebook', 'title' => __( 'Facebook', 'bsx-wordpress' ), 'icon' => 'facebook' ),
                         array( 'id' => 'twitter', 'title' => __( 'Twitter', 'bsx-wordpress' ), 'icon' => 'twitter' ),
@@ -124,18 +138,11 @@ global $phoneHrefRemovePatterns;
 
                     foreach( $social_media_list as $item ) {
                         $social_media_href = get_option( $item[ 'id' ] );
-                        // print( 'TEST ' . $item[ 'id' ] );
-                        $hover_class_name = ( $social_media_colors_use ) ? 'hover-text-' . $item[ 'id' ] : 'hover-text-primary';
                         if ( $social_media_href ) {
-                            ?>
-                                <li class="list-inline-item">
-                                    <a class="footer-icon-link <?php echo $hover_class_name; ?>" href="<?php echo $social_media_href; ?>" target="_blank"><i class="fa fa-<?php echo $item[ 'icon' ]; ?>"></i><span class="sr-only"><?php echo $item[ 'title' ]; ?></span></a>
-                                </li>
-                            <?php
+                            printIconLinkItem( $item[ 'icon' ], $social_media_href, $item[ 'title' ], $item[ 'id' ], '' );
                         }
                     }
                 ?>
-
             </ul>
         </div>
 

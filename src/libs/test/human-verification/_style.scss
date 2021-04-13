@@ -1,0 +1,86 @@
+
+.bsx-hv-1,
+.bsx-hv-5,
+.bsx-hv-7, {
+  & + .bsx-hv-1:before,
+  & + .bsx-hv-5:before,
+  & + .bsx-hv-7:before {
+    content: "\00a0+\00a0";
+  }
+  &:last-child:after {
+    content: "\00a0=";
+  }
+}
+.bsx-hv-2 {
+  & + .bsx-hv-2:before {
+    content: "\00a0-\00a0";
+  }
+  &:last-child:after {
+    content: "\00a0=";
+  }
+}
+.bsx-hv-3 {
+  & + .bsx-hv-3:before {
+    content: "\00a0*\00a0";
+  }
+  &:last-child:after {
+    content: "\00a0=";
+  }
+}
+.bsx-hv-4 {
+  & + .bsx-hv-4:before {
+    content: "\00a0/\00a0";
+  }
+  &:last-child:after {
+    content: "\00a0=";
+  }
+}
+
+.bsx-hv-6, {
+  & + .bsx-hv-6:before {
+    content: "\00a0-\00a0";
+  }
+  &:last-child:after {
+    content: "\00a0=";
+  }
+}
+.bsx-hv-5,
+.bsx-hv-6 {
+  &:nth-child(2):before {
+    content: "";
+  }
+}
+
+.bsx-hv-8,
+.bsx-hv-9,
+.bsx-hv-10 {
+  & + .bsx-hv-8:before,
+  & + .bsx-hv-9:before,
+  & + .bsx-hv-10:before {
+    content: ",\00a0";
+  }
+}
+.bsx-hv-8 {
+  &:nth-child(4) {
+    display: none;
+  }
+  &:nth-child(3):after {
+    content: ",\00a0?";
+  }
+}
+.bsx-hv-9 {
+  &:nth-child(3) {
+    display: none;
+  }
+  &:nth-child(2):after {
+    content: ",\00a0?";
+  }
+}
+.bsx-hv-10 {
+  &:nth-child(2) {
+    display: none;
+  }
+  &:nth-child(1):after {
+    content: ",\00a0?";
+  }
+}

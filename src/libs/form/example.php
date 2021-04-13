@@ -37,6 +37,19 @@
             <div class="invalid-feedback">Please fill this field.</div>
         </div>
 
+        <div class="form-group">
+            <label for="human-verification">Human verification</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <!-- div class="input-group-text"><span class="bsx-hv-1">5</span><span class="bsx-hv-1">3</span></div -->
+                    <!-- div class="input-group-text"><span class="bsx-hv-2">1</span><span class="bsx-hv-2">2</span><span class="bsx-hv-2">4</span></div -->
+                    <div class="input-group-text" data-g-tg="hv"></div>
+                </div>
+                <input class="form-control" type="number" id="human-verification" name="human_verification__number__r" required>
+            </div>
+            <div class="invalid-feedback">Please fill this field correctly.</div>
+        </div>
+
         <hr>
 
         <div class="form-group">

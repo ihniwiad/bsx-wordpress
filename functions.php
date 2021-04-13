@@ -1000,6 +1000,14 @@ function bsx_mailer_post_endpoint( $request ) {
     $mail_subject = '';
     $mail_content = '';
 
+    // human verification
+    if ( ! empty( $sanitized_values[ 'hv' ] ) ) {
+        $hv_value = urldecode ( $sanitized_values[ 'hv' ] );
+
+
+
+    }
+
     if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
         $mail_subject = replace_placeholders( $sanitized_values[ 'subject' ], $sanitized_values );
     }
@@ -1019,12 +1027,12 @@ function bsx_mailer_post_endpoint( $request ) {
     }
 
 
-    $response .= 'SANITIZED OUTPUT:' . "\n\n";
+    $response .= 'HV VALUE:' . "\n\n" . $hv_value . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
     foreach ( $sanitized_values as $key => $value ) {
         $response .= $key . ': ' . $value . '<br>';
     }
 
- 
+    // TODO: check hv
     if ( $validation_ok ) {
         // return rest_ensure_response( $response );
         return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );

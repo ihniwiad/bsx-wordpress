@@ -9742,23 +9742,26 @@ a.text-dark:hover, a.text-dark:focus {
 .bsx-hv-10 + .bsx-hv-10:before {
   content: ",\00a0"; }
 
-.bsx-hv-8:nth-child(4) {
-  display: none; }
+.bsx-hv-8 {
+  /*&:nth-child(4) {
+    display: none;
+  }*/ }
+  .bsx-hv-8:nth-child(3):after {
+    content: ",\00a0?"; }
 
-.bsx-hv-8:nth-child(3):after {
-  content: ",\00a0?"; }
+.bsx-hv-9 {
+  /*&:nth-child(3) {
+    display: none;
+  }*/ }
+  .bsx-hv-9:nth-child(2):after {
+    content: ",\00a0?"; }
 
-.bsx-hv-9:nth-child(3) {
-  display: none; }
-
-.bsx-hv-9:nth-child(2):after {
-  content: ",\00a0?"; }
-
-.bsx-hv-10:nth-child(2) {
-  display: none; }
-
-.bsx-hv-10:nth-child(1):after {
-  content: ",\00a0?"; }
+.bsx-hv-10 {
+  /*&:nth-child(2) {
+    display: none;
+  }*/ }
+  .bsx-hv-10:nth-child(1):after {
+    content: ",\00a0?"; }
 
 .text-inherit {
   color: inherit !important; }

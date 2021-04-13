@@ -45,7 +45,7 @@
                     <!-- div class="input-group-text"><span class="bsx-hv-2">1</span><span class="bsx-hv-2">2</span><span class="bsx-hv-2">4</span></div -->
                     <div class="input-group-text" data-g-tg="hv"></div>
                 </div>
-                <input class="form-control" type="number" id="human-verification" name="human_verification__number__r" required>
+                <input class="form-control" type="text" id="human-verification" name="human_verification__text__r" required>
             </div>
             <div class="invalid-feedback">Please fill this field correctly.</div>
         </div>

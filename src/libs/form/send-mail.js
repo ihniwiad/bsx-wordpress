@@ -22,6 +22,7 @@ var sendMail = function( $form ) {
     var hvVal = '';
     var hvkey = rN( 100 );
     var mx = 14;
+    var nc = 10;
     var hvkey = parseInt( ( Math.abs( hvkey % operators.length ) + hvVal ).substring( 0, 1 ) );
 
     console.log( 'hvkey (initial): ' + hvkey )
@@ -40,32 +41,43 @@ var sendMail = function( $form ) {
         var tp = rN( 2 ) % 2 == 0 ? 1 : 0;
         console.log( 'type: ' + tp )
         for ( var i = 0; i < itms; i++ ) {
+            // 8: remove 4th
+            // 9: remove 3rd
+            // 10: remove 2nd
             var x = tp ? ( String.fromCharCode( 65 + rn + i ) ).toLowerCase() : rn + i;
-            html += mV( hvkey, x );
-            hvVal += '|' + x;
+            if ( ( hvkey == nc && i != 1 ) || ( hvkey == nc - 1 && i != 2 ) || ( hvkey == nc - 2 && i != 3 ) ) {
+                html += mV( hvkey, x );
+                hvVal += '|' + x;
+            }
         }
     }
     else if ( itms % 2 == 0 ) {
         console.log( '2 items' )
         // 2 (1..4)
         var rns = [ rN( 8 ), rN( 4 ) ];
-        if ( hvkey == 4 ) hvkey = 1;
+
+        console.log( 'rns[ 0 ]: ' + rns[ 0 ] )
+        console.log( 'rns[ 1 ]: ' + rns[ 1 ] )
+
+        if ( hvkey == Math.pow( itms, 2 ) ) hvkey = 1;
         if ( rns[ 0 ] == 2 ) hvkey = Math.pow( itms, 2 ) - 1;
-        if ( rns[ 0 ] % 2 == 0 && rns[ 1 ] == 2 && rns[ 0 ] / rns[ 1 ] ) hvkey = Math.pow( itms, 2 );
+        if ( ( rns[ 0 ] % 2 === 0 ) && ( rns[ 0 ] % rns[ 1 ] === 0 ) && ( rns[ 0 ] > rns[ 1 ] ) && ( rns[ 1 ] === itms ) ) hvkey = Math.pow( itms, 2 );
+        if ( hvkey == itms && rns[ 0 ] < rns[ 1 ] ) ns = [ rns[ 1 ], rns[ 0 ] ];
+        if ( hvkey === itms && rns[ 0 ] === rns[ 1 ] ) hvkey = hvkey - 1;
         hvkey = hvkey > 4 || hvkey < 1 ? 0 + rN( 4 ) : hvkey;
         for ( var i = 0; i < itms; i++ ) {
             html += mV( hvkey, rns[ i ] );
-            hvVal += '|' + rn;
+            hvVal += '|' + rns[ i ];
         }
     }
     else {
         console.log( '3 items' )
         // 3 (5..7)
-        var rns = [ rN( 2 ), rN( 4 ), rN( 8 ) ];
+        var rns = [ rN( 2 ), rN( 4 ), rN( 6 ) ];
         hvkey = hvkey < 5 || hvkey > 7 ? 4 + rN( 3 ) : hvkey;
         for ( var i = 0; i < itms; i++ ) {
             html += mV( hvkey, rns[ i ] );
-            hvVal += '|' + rn;
+            hvVal += '|' + rns[ i ];
         }
     }
 

@@ -976,7 +976,7 @@ function bsx_mailer_post_endpoint( $request ) {
 
         // validate others
         if ( $required ) {
-            if ( empty( $value ) ) {
+            if ( empty( $value ) && ! $value === '0' ) {
                 $validation_ok = false;
             }
         }
@@ -1001,11 +1001,68 @@ function bsx_mailer_post_endpoint( $request ) {
     $mail_content = '';
 
     // human verification
+    $_calc_hv_value = '';
     if ( ! empty( $sanitized_values[ 'hv' ] ) ) {
         $hv_value = urldecode ( $sanitized_values[ 'hv' ] );
 
+        $hv_values_extract = explode( '|', $hv_value );
 
-
+        $hv_type = intval( $hv_values_extract[ 1 ] );
+        $hv_values = [];
+        for ( $i = 2; $i < count( $hv_values_extract ); $i++ ) {
+            $hv_values[] = $hv_values_extract[ $i ];
+        }
+        switch ( $hv_type ) {
+            case 1:
+                $_calc_hv_value = intval( $hv_values[ 0 ] ) + intval( $hv_values[ 1 ] );
+                break;
+            case 2:
+                $_calc_hv_value = intval( $hv_values[ 0 ] ) - intval( $hv_values[ 1 ] );
+                break;
+            case 3:
+                $_calc_hv_value = intval( $hv_values[ 0 ] ) * intval( $hv_values[ 1 ] );
+                break;
+            case 4:
+                $_calc_hv_value = intval( $hv_values[ 0 ] ) / intval( $hv_values[ 1 ] );
+                break;
+            case 5:
+                $_calc_hv_value = intval( $hv_values[ 0 ] . $hv_values[ 1 ] ) + intval( $hv_values[ 2 ] );
+                break;
+            case 6:
+                $_calc_hv_value = intval( $hv_values[ 0 ] . $hv_values[ 1 ] ) - intval( $hv_values[ 2 ] );
+                break;
+            case 7:
+                $_calc_hv_value = intval( $hv_values[ 0 ] ) + intval( $hv_values[ 1 ] ) + intval( $hv_values[ 2 ] );
+                break;
+            // check if numeric
+            case 8:
+                $before_target_value = $hv_values[ count( $hv_values ) - 1 ];
+                if ( is_numeric( $before_target_value ) ) {
+                    $_calc_hv_value = intval( $before_target_value ) + 1;
+                }
+                else {
+                    $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
+                }
+                break;
+            case 9:
+                $before_target_value = $hv_values[ count( $hv_values ) - 2 ];
+                if ( is_numeric( $before_target_value ) ) {
+                    $_calc_hv_value = intval( $before_target_value ) + 1;
+                }
+                else {
+                    $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
+                }
+                break;
+            case 10:
+                $before_target_value = $hv_values[ count( $hv_values ) - 3 ];
+                if ( is_numeric( $before_target_value ) ) {
+                    $_calc_hv_value = intval( $before_target_value ) + 1;
+                }
+                else {
+                    $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
+                }
+                break;
+        }
     }
 
     if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
@@ -1026,8 +1083,13 @@ function bsx_mailer_post_endpoint( $request ) {
         }
     }
 
+    // TEST
+    $test = '';
+    foreach ( $hv_values as $val ) {
+        $test .= $val . ', ';
+    }
 
-    $response .= 'HV VALUE:' . "\n\n" . $hv_value . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
+    $response .= 'HV VALUE:' . "\n\n" . $hv_value . "\n\n" . "(type: $hv_type, values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
     foreach ( $sanitized_values as $key => $value ) {
         $response .= $key . ': ' . $value . '<br>';
     }

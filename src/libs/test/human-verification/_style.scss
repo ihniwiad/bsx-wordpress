@@ -61,25 +61,25 @@
   }
 }
 .bsx-hv-8 {
-  &:nth-child(4) {
+  /*&:nth-child(4) {
     display: none;
-  }
+  }*/
   &:nth-child(3):after {
     content: ",\00a0?";
   }
 }
 .bsx-hv-9 {
-  &:nth-child(3) {
+  /*&:nth-child(3) {
     display: none;
-  }
+  }*/
   &:nth-child(2):after {
     content: ",\00a0?";
   }
 }
 .bsx-hv-10 {
-  &:nth-child(2) {
+  /*&:nth-child(2) {
     display: none;
-  }
+  }*/
   &:nth-child(1):after {
     content: ",\00a0?";
   }

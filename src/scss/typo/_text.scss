@@ -1,7 +1,17 @@
+$bsx-text-primary: "" !default;
 
+
+
+// better use .text-reset ?
 .text-inherit {
   color: inherit !important;
 }
 .font-size-inherit {
   font-size: inherit !important;
+}
+
+@if $bsx-text-primary {
+  .text-primary {
+    color: $bsx-text-primary !important;
+  }
 }

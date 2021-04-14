@@ -305,7 +305,7 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 						left: $bsx-appnav-link-px - $bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
 						right: $bsx-appnav-link-px - $bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
 						bottom: $bsx-appnav-desktop-level-1-active-link-underline-bottom;
-						height: 0.125em;
+						height: $bsx-appnav-desktop-level-1-active-link-underline-height;
 						background: $bsx-appnav-desktop-level-1-active-link-underline-color;
 						border-radius: 0.125em;
 						transform: scaleX(0);

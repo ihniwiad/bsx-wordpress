@@ -973,9 +973,15 @@ function bsx_mailer_post_endpoint( $request ) {
                 $validation_ok = false;
             }
         }
+        if ( $type === 'x' ) {
+            if ( ! $value === '' ) {
+                $validation_ok = false;
+            }
+        }
 
         // validate others
         if ( $required ) {
+            // validate non empty, allow '0'
             if ( empty( $value ) && ! $value === '0' ) {
                 $validation_ok = false;
             }
@@ -1094,10 +1100,14 @@ function bsx_mailer_post_endpoint( $request ) {
         $response .= $key . ': ' . $value . '<br>';
     }
 
+    // get recipient mail
+    $recipient_mail = get_option( 'mail' );
+
     // TODO: check hv
-    if ( $validation_ok ) {
+    // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
+    if ( $validation_ok && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) ) {
         // return rest_ensure_response( $response );
-        return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
+        return rest_ensure_response( 'RECIPIENT: ' . $recipient_mail . "\n\n" . 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
     } 
     else {
         // error 404

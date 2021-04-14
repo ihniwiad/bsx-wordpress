@@ -69,12 +69,26 @@
         </div>
     </form>
 
-    <div data-g-tg="message" aria-hidden="true" style="display: none;">
-        <div class="alert alert-success lead mb-4" role="alert">
-            <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been successfully sent.', 'bsx-wordpress' ); ?>
+    <div data-g-tg="message-wrapper">
+
+        <div data-g-tg="success-message" aria-hidden="true" style="display: none;">
+            <div class="alert alert-success lead mb-4" role="alert">
+                <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been successfully sent.', 'bsx-wordpress' ); ?>
+                <!-- TODO: include response here -->
+            </div>
+            <pre data-g-tg="response-text">
+            </pre>
         </div>
-        <pre data-g-tg="response-text">
-        </pre>
+
+        <div data-g-tg="error-message" aria-hidden="true" style="display: none;">
+            <div class="alert alert-danger lead mb-4" role="alert">
+                <span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' ); ?>
+                <!-- TODO: include response here -->
+            </div>
+            <pre data-g-tg="response-text">
+            </pre>
+        </div>
+
     </div>
 
 </div>

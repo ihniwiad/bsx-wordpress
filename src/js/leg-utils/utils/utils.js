@@ -224,28 +224,28 @@ Utils.ariaExpanded = function( elem, value ) {
 };
 
 // aria
-$.fn.aria = function( ariaName, value ) {
+Utils.aria = function( elem, ariaName, value ) {
     if ( typeof value !== 'undefined' ) {
-        $( this ).attr( 'aria-' + ariaName, value );
+        $( elem ).attr( 'aria-' + ariaName, value );
         return value;
     }
     else {
-        return _convertType( $( this ).attr( 'aria-' + ariaName ) );
+        return _convertType( $( elem ).attr( 'aria-' + ariaName ) );
     }
 };
 
 // hidden
-$.fn.hidden = function( value ) {
+Utils.hidden = function( elem, value ) {
     if ( typeof value !== 'undefined' ) {
         if ( value == true ) {
-            $( this ).attr( 'hidden', true );
+            $( elem ).attr( 'hidden', true );
         }
         else {
-            $( this ).removeAttr( 'hidden' );
+            $( elem ).removeAttr( 'hidden' );
         }
     }
     else {
-        return _convertType( $( this ).attr( hidden ) );
+        return _convertType( $( elem ).attr( hidden ) );
     }
 };
 

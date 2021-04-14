@@ -24,14 +24,15 @@ var sendMail = function( $form ) {
     var mx = 14;
     var nc = 10;
     var hvkey = parseInt( ( Math.abs( hvkey % operators.length ) + hvVal ).substring( 0, 1 ) );
+    if ( hvkey == 0 ) hvkey = 1;
 
     console.log( 'hvkey (initial): ' + hvkey )
 
     var hvo = operators[ Math.abs( hvkey % operators.length ) ];
 
-    // todo
     var itms = 1 + rN( 3 );
     var html = '';
+    var k = hvVal;
 
     if ( itms > operators.length / 2 ) {
         console.log( '4 items' )
@@ -61,8 +62,13 @@ var sendMail = function( $form ) {
 
         if ( hvkey == Math.pow( itms, 2 ) ) hvkey = 1;
         if ( rns[ 0 ] == 2 ) hvkey = Math.pow( itms, 2 ) - 1;
-        if ( ( rns[ 0 ] % 2 === 0 ) && ( rns[ 0 ] % rns[ 1 ] === 0 ) && ( rns[ 0 ] > rns[ 1 ] ) && ( rns[ 1 ] === itms ) ) hvkey = Math.pow( itms, 2 );
-        if ( hvkey == itms && rns[ 0 ] < rns[ 1 ] ) ns = [ rns[ 1 ], rns[ 0 ] ];
+        if ( rns[ 0 ] % 2 === 0 && rns[ 0 ] != 1 && rns[ 0 ] % rns[ 1 ] === 0 && rns[ 0 ] > rns[ 1 ] && rns[ 1 ] === itms ) hvkey = Math.pow( itms, 2 );
+        if ( hvkey == itms && rns[ 0 ] < rns[ 1 ] ) {
+            rns = [ rns[ 1 ], rns[ 0 ] ];
+            console.log( 'switched values' )
+            console.log( '--> rns[ 0 ]: ' + rns[ 0 ] )
+            console.log( '--> rns[ 1 ]: ' + rns[ 1 ] )
+        }
         if ( hvkey === itms && rns[ 0 ] === rns[ 1 ] ) hvkey = hvkey - 1;
         hvkey = hvkey > 4 || hvkey < 1 ? 0 + rN( 4 ) : hvkey;
         for ( var i = 0; i < itms; i++ ) {
@@ -86,7 +92,10 @@ var sendMail = function( $form ) {
     hvVal = hvo + '|' + hvkey + hvVal;
     $hvo.html( hvo );
     $hv.html( html );
-    $form.append( '<input type="hidden" name="hv__text_r" value="' + encodeURIComponent( hvVal ) + '">' );
+    $form
+        .append( '<input type="hidden" name="hv__text_r" value="' + encodeURIComponent( hvVal ) + '">' )
+        .append( '<input type="hidden" name="hv_k__x_r" value="' + k + '">' )
+    ;
 
 
 
@@ -110,14 +119,28 @@ var sendMail = function( $form ) {
 
         options = $.extend( {}, defaults, options );
 
-        // form message elem
-        var $message = $form.parent().find( '[data-g-tg="message"]' );
-        var $responseText = $message.find( '[data-g-tg="response-text"]' );
+        // TODO: remove – form message elem
+        // var $message = $form.parent().find( '[data-g-tg="message"]' );
+        // var $responseText = $message.find( '[data-g-tg="response-text"]' );
+        var $messageWrapper = $form.parent().find( '[data-g-tg="message-wrapper"]' );
 
 
         // TODO: refactor later
 
         var formData = $form.serialize();
+
+        var showMessage = function( $messageWrapper, state, message ) {
+            var $message = $messageWrapper.find( '[data-g-tg="' + state + '-message"]' );
+            var $otherMessage = $messageWrapper.children().not( $message );
+            var $responseText = $message.find( '[data-g-tg="response-text"]' );
+
+            $otherMessage.hide();
+            Utils.aria( $otherMessage, 'hidden', true );
+
+            $message.show();
+            Utils.aria( $message, 'hidden', false );
+            $responseText.html( message );
+        }
 
         $.ajax( {
             type: 'POST',
@@ -132,10 +155,14 @@ var sendMail = function( $form ) {
                 // $( formMessages ).text( response );
 
                 // clear
-                // $form.find( 'input, textarea' ).val( '' );
-                $responseText.html( response );
+                // TODO: what about refresh human verification?
+                // $form.find( 'input:not([hidden]), textarea' ).val( '' );
+                // $responseText.html( response );
 
-                Utils.replaceFormByMessage( $form, { $message: $message } );
+                // Utils.replaceFormByMessage( $form, { $message: $message } );
+                var $$messageWrapper = $form.parent().find( '[data-g-tg="message-wrapper"]' );
+                // var $responseText = $successMessage.find( '[data-g-tg="response-text"]' );
+                showMessage( $messageWrapper, 'success', response );
             } )
             .fail( function( data ) {
 
@@ -143,9 +170,11 @@ var sendMail = function( $form ) {
 
                 if ( data.responseText !== '' ) {
                     console.log( data.responseText );
+
+                    showMessage( $messageWrapper, 'error', data.responseText );
                 } 
                 else {
-                    console.log( 'An unknown error occures. Your message could not be sent.' );
+                    console.log( 'An unknown error occured. Your message could not be sent.' );
                 }
             } )
         ;

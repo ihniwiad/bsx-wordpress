@@ -945,177 +945,188 @@ function bsx_example_get_endpoint( $request ) {
 
 function bsx_mailer_post_endpoint( $request ) {
 
-    $response = '';
-    // $response .= var_dump( $request );
+    if ( $_SERVER[ "REQUEST_METHOD" ] == "POST" ) {
+        // ok, try send mail
 
-    $sanitized_values = array();
-    $validation_ok = true;
+        $response = '';
 
-    foreach ( $_POST as $key => $value ) {
-        // extract type for validation from input name `mytype__myname`
-        $split_key = explode( '__', $key);
-        $name = $split_key[ 0 ];
-        $type = $split_key[ 1 ];
-        $required = ( isset( $split_key[ 2 ] ) && $split_key[ 2 ] === 'r') ? true : false;
+        // $response .= var_dump( $request );
 
-        $value = trim( $value );
+        $sanitized_values = array();
+        $validation_ok = true;
 
-        // sanitize and validate
-        if ( $type === 'email' ) {
-            $value = filter_var( $value, FILTER_SANITIZE_EMAIL );
-            if ( ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
-                $validation_ok = false;
+        foreach ( $_POST as $key => $value ) {
+            // extract type for validation from input name `mytype__myname`
+            $split_key = explode( '__', $key);
+            $name = $split_key[ 0 ];
+            $type = $split_key[ 1 ];
+            $required = ( isset( $split_key[ 2 ] ) && $split_key[ 2 ] === 'r') ? true : false;
+
+            $value = trim( $value );
+
+            // sanitize and validate
+            if ( $type === 'email' ) {
+                $value = filter_var( $value, FILTER_SANITIZE_EMAIL );
+                if ( ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+                    $validation_ok = false;
+                }
+            }
+            elseif ( $type === 'number' ) {
+                $value = intval( $value );
+                if ( ! is_numeric( $value ) ) {
+                    $validation_ok = false;
+                }
+            }
+            elseif ( $type === 'x' ) {
+                if ( ! $value === '' ) {
+                    $validation_ok = false;
+                }
+            }
+
+            // validate others
+            if ( $required ) {
+                // validate non empty, allow '0'
+                if ( empty( $value ) && ! $value === '0' ) {
+                    $validation_ok = false;
+                }
+            }
+
+            // add to $values
+            $sanitized_values[ $name ] = $value;
+
+
+            // $response .= $name . ' (' . $type . ', required: ' . $required . '): ' . $value . '<br>';
+        }
+
+        function replace_placeholders( $text, $sanitized_values ) {
+            // $text = str_replace ( '[site-title]', get_the_title(), $text );
+            $text = str_replace ( '[site-url]', get_site_url(), $text );
+            foreach ( $sanitized_values as $key => $value ) {
+                $text = str_replace ( '[' . $key . ']', $value, $text );
+            }
+            return $text;
+        }
+
+        $mail_subject = '';
+        $mail_content = '';
+
+        // human verification
+        $_calc_hv_value = '';
+        if ( ! empty( $sanitized_values[ 'hv' ] ) ) {
+            $hv_value = urldecode ( $sanitized_values[ 'hv' ] );
+
+            $hv_values_extract = explode( '|', $hv_value );
+
+            $hv_type = intval( $hv_values_extract[ 1 ] );
+            $hv_values = [];
+            for ( $i = 2; $i < count( $hv_values_extract ); $i++ ) {
+                $hv_values[] = $hv_values_extract[ $i ];
+            }
+            switch ( $hv_type ) {
+                case 1:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] ) + intval( $hv_values[ 1 ] );
+                    break;
+                case 2:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] ) - intval( $hv_values[ 1 ] );
+                    break;
+                case 3:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] ) * intval( $hv_values[ 1 ] );
+                    break;
+                case 4:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] ) / intval( $hv_values[ 1 ] );
+                    break;
+                case 5:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] . $hv_values[ 1 ] ) + intval( $hv_values[ 2 ] );
+                    break;
+                case 6:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] . $hv_values[ 1 ] ) - intval( $hv_values[ 2 ] );
+                    break;
+                case 7:
+                    $_calc_hv_value = intval( $hv_values[ 0 ] ) + intval( $hv_values[ 1 ] ) + intval( $hv_values[ 2 ] );
+                    break;
+                // check if numeric
+                case 8:
+                    $before_target_value = $hv_values[ count( $hv_values ) - 1 ];
+                    if ( is_numeric( $before_target_value ) ) {
+                        $_calc_hv_value = intval( $before_target_value ) + 1;
+                    }
+                    else {
+                        $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
+                    }
+                    break;
+                case 9:
+                    $before_target_value = $hv_values[ count( $hv_values ) - 2 ];
+                    if ( is_numeric( $before_target_value ) ) {
+                        $_calc_hv_value = intval( $before_target_value ) + 1;
+                    }
+                    else {
+                        $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
+                    }
+                    break;
+                case 10:
+                    $before_target_value = $hv_values[ count( $hv_values ) - 3 ];
+                    if ( is_numeric( $before_target_value ) ) {
+                        $_calc_hv_value = intval( $before_target_value ) + 1;
+                    }
+                    else {
+                        $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
+                    }
+                    break;
             }
         }
-        if ( $type === 'number' ) {
-            $value = intval( $value );
-            if ( ! is_numeric( $value ) ) {
-                $validation_ok = false;
-            }
+
+        if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
+            $mail_subject = replace_placeholders( $sanitized_values[ 'subject' ], $sanitized_values );
         }
-        if ( $type === 'x' ) {
-            if ( ! $value === '' ) {
-                $validation_ok = false;
-            }
+        else {
+            // fallback subject
+            $mail_subject = 'Mail from contact form at ' . get_site_url();
         }
 
-        // validate others
-        if ( $required ) {
-            // validate non empty, allow '0'
-            if ( empty( $value ) && ! $value === '0' ) {
-                $validation_ok = false;
+        if ( ! empty( $sanitized_values[ 'template' ] ) ) {
+            $mail_content = replace_placeholders( $sanitized_values[ 'template' ], $sanitized_values );
+        }
+        else {
+            // fallback content
+            foreach ( $sanitized_values as $key => $value ) {
+                $mail_content .= $key . ': ' . $value . '\n';
             }
         }
 
-        // add to $values
-        $sanitized_values[ $name ] = $value;
+        // TEST
+        $test = '';
+        foreach ( $hv_values as $val ) {
+            $test .= $val . ', ';
+        }
 
-
-        // $response .= $name . ' (' . $type . ', required: ' . $required . '): ' . $value . '<br>';
-    }
-
-    function replace_placeholders( $text, $sanitized_values ) {
-        // $text = str_replace ( '[site-title]', get_the_title(), $text );
-        $text = str_replace ( '[site-url]', get_site_url(), $text );
+        $response .= 'HV VALUE:' . "\n\n" . $hv_value . "\n\n" . "(type: $hv_type, values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
         foreach ( $sanitized_values as $key => $value ) {
-            $text = str_replace ( '[' . $key . ']', $value, $text );
+            $response .= $key . ': ' . $value . '<br>';
         }
-        return $text;
-    }
 
-    $mail_subject = '';
-    $mail_content = '';
+        // get recipient mail
+        $recipient_mail = get_option( 'mail' );
 
-    // human verification
-    $_calc_hv_value = '';
-    if ( ! empty( $sanitized_values[ 'hv' ] ) ) {
-        $hv_value = urldecode ( $sanitized_values[ 'hv' ] );
-
-        $hv_values_extract = explode( '|', $hv_value );
-
-        $hv_type = intval( $hv_values_extract[ 1 ] );
-        $hv_values = [];
-        for ( $i = 2; $i < count( $hv_values_extract ); $i++ ) {
-            $hv_values[] = $hv_values_extract[ $i ];
+        // TODO: check hv
+        // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
+        if ( $validation_ok && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) ) {
+            // return rest_ensure_response( $response );
+            return rest_ensure_response( 'RECIPIENT: ' . $recipient_mail . "\n\n" . 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
+        } 
+        else {
+            // error 404
+            return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your request does not exist.', 'bsx-wordpress' ), array( 'status' => 404 ) );
         }
-        switch ( $hv_type ) {
-            case 1:
-                $_calc_hv_value = intval( $hv_values[ 0 ] ) + intval( $hv_values[ 1 ] );
-                break;
-            case 2:
-                $_calc_hv_value = intval( $hv_values[ 0 ] ) - intval( $hv_values[ 1 ] );
-                break;
-            case 3:
-                $_calc_hv_value = intval( $hv_values[ 0 ] ) * intval( $hv_values[ 1 ] );
-                break;
-            case 4:
-                $_calc_hv_value = intval( $hv_values[ 0 ] ) / intval( $hv_values[ 1 ] );
-                break;
-            case 5:
-                $_calc_hv_value = intval( $hv_values[ 0 ] . $hv_values[ 1 ] ) + intval( $hv_values[ 2 ] );
-                break;
-            case 6:
-                $_calc_hv_value = intval( $hv_values[ 0 ] . $hv_values[ 1 ] ) - intval( $hv_values[ 2 ] );
-                break;
-            case 7:
-                $_calc_hv_value = intval( $hv_values[ 0 ] ) + intval( $hv_values[ 1 ] ) + intval( $hv_values[ 2 ] );
-                break;
-            // check if numeric
-            case 8:
-                $before_target_value = $hv_values[ count( $hv_values ) - 1 ];
-                if ( is_numeric( $before_target_value ) ) {
-                    $_calc_hv_value = intval( $before_target_value ) + 1;
-                }
-                else {
-                    $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
-                }
-                break;
-            case 9:
-                $before_target_value = $hv_values[ count( $hv_values ) - 2 ];
-                if ( is_numeric( $before_target_value ) ) {
-                    $_calc_hv_value = intval( $before_target_value ) + 1;
-                }
-                else {
-                    $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
-                }
-                break;
-            case 10:
-                $before_target_value = $hv_values[ count( $hv_values ) - 3 ];
-                if ( is_numeric( $before_target_value ) ) {
-                    $_calc_hv_value = intval( $before_target_value ) + 1;
-                }
-                else {
-                    $_calc_hv_value = chr( ord( $before_target_value ) + 1 );
-                }
-                break;
-        }
-    }
-
-    if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
-        $mail_subject = replace_placeholders( $sanitized_values[ 'subject' ], $sanitized_values );
+     
+        // error 500
+        return new WP_Error( 'rest_api_sad', esc_html__( 'Something went horribly wrong.', 'bsx-wordpress' ), array( 'status' => 500 ) );
     }
     else {
-        // fallback subject
-        $mail_subject = 'Mail from contact form at ' . get_site_url();
+        // not ok, send forbidden
+        
+        return new WP_Error( 'rest_api_sad', esc_html__( 'There was a problem with your submission.', 'bsx-wordpress' ), array( 'status' => 403 ) );
     }
 
-    if ( ! empty( $sanitized_values[ 'template' ] ) ) {
-        $mail_content = replace_placeholders( $sanitized_values[ 'template' ], $sanitized_values );
-    }
-    else {
-        // fallback content
-        foreach ( $sanitized_values as $key => $value ) {
-            $mail_content .= $key . ': ' . $value . '\n';
-        }
-    }
-
-    // TEST
-    $test = '';
-    foreach ( $hv_values as $val ) {
-        $test .= $val . ', ';
-    }
-
-    $response .= 'HV VALUE:' . "\n\n" . $hv_value . "\n\n" . "(type: $hv_type, values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
-    foreach ( $sanitized_values as $key => $value ) {
-        $response .= $key . ': ' . $value . '<br>';
-    }
-
-    // get recipient mail
-    $recipient_mail = get_option( 'mail' );
-
-    // TODO: check hv
-    // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
-    if ( $validation_ok && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) ) {
-        // return rest_ensure_response( $response );
-        return rest_ensure_response( 'RECIPIENT: ' . $recipient_mail . "\n\n" . 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
-    } 
-    else {
-        // error 404
-        return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your request does not exist.', 'bsx-wordpress' ), array( 'status' => 404 ) );
-    }
- 
-    // error 500
-    return new WP_Error( 'rest_api_sad', esc_html__( 'Something went horribly wrong.', 'bsx-wordpress' ), array( 'status' => 500 ) );
 }
 
 

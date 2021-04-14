@@ -67,13 +67,16 @@
         <div class="form-group">
             <button class="btn btn-outline-primary" type="submit">Send</button>
         </div>
+
+        <input type="hidden" name="hv__text_r" value="">
+        <input type="hidden" name="hv_k__x_r" value="">
     </form>
 
     <div data-g-tg="message-wrapper">
 
         <div data-g-tg="success-message" aria-hidden="true" style="display: none;">
             <div class="alert alert-success lead mb-4" role="alert">
-                <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been successfully sent.', 'bsx-wordpress' ); ?>
+                <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ); ?>
                 <!-- TODO: include response here -->
             </div>
             <pre data-g-tg="response-text">

@@ -140,8 +140,8 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $classes[] = 'menu-item-' . $item->ID;
 
       if ( 
-        in_array( 'current_page_item', $item->classes, true ) 
-        || in_array( 'current_page_ancestor', $item->classes, true ) 
+        in_array( 'current_page_item', $classes, true ) 
+        || in_array( 'current_page_ancestor', $classes, true ) 
         || $item_is_blog_link && $page_is_blog_subpage
       ) {
         $classes[] = 'active';
@@ -218,8 +218,10 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $linkId = 'appnav-link-' . $item->ID;
       $dropdownId = 'appnav-dropdown-' . $item->ID;
 
+      $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+
       // check if has children (inspired from twentytwentyone)
-      if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
+      if ( in_array( 'menu-item-has-children', $classes, true ) ) {
         // add css class `bsx-appnav-dropdown-toggle` to link of dropdown item
         $atts['class']            = 'bsx-appnav-dropdown-toggle';
         // add id, data & aria attr (corresponding ul needs aria-labelledby="CORRESPONDING_LINK_ID_HERE")
@@ -280,6 +282,8 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
        */
       $title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
 
+      $args = is_object( $args ) ? $args : (object) $args;
+
       $item_output  = $args->before;
       $item_output .= '<a' . $attributes . '>';
       $item_output .= $args->link_before . $title . $args->link_after;
@@ -303,9 +307,11 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 
       // start ul here (after a is built) instead of in `start_lvl()` function
+      
+      $classes = empty( $item->classes ) ? array() : (array) $item->classes;
 
       // check if has children (inspired from twentytwentyone)
-      if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
+      if ( in_array( 'menu-item-has-children', $classes, true ) ) {
 
         // Default class.
         $classes = array( 'sub-menu' );

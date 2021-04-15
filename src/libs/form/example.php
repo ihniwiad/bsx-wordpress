@@ -68,8 +68,8 @@
             <button class="btn btn-outline-primary" type="submit">Send</button>
         </div>
 
-        <input type="hidden" name="hv__text_r" value="">
-        <input type="hidden" name="hv_k__x_r" value="">
+        <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
+        <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
     </form>
 
     <div data-g-tg="message-wrapper">
@@ -95,3 +95,4 @@
     </div>
 
 </div>
+

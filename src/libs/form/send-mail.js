@@ -5,15 +5,10 @@ import Utils from './../../js/leg-utils/utils/utils'
 
 var sendMail = function( $form ) {
 
-    console.log( 'init sendMail()' );
-
     var $hv = $form.find( '[data-g-tg="hv"]' );
     var $hvo = $hv.find( '[data-g-tg="hvo"]' );
 
-
     var prepareHv = function() {
-
-        console.log( 'prepareHv()' );
 
         function rN( n ) {
             return Math.floor( Math.random() * n ) + 1;
@@ -30,8 +25,6 @@ var sendMail = function( $form ) {
         var hvkey = parseInt( ( Math.abs( hvkey % operators.length ) + hvVal ).substring( 0, 1 ) );
         if ( hvkey == 0 ) hvkey = 1;
 
-        console.log( 'hvkey (initial): ' + hvkey )
-
         var hvo = operators[ Math.abs( hvkey % operators.length ) ];
 
         var itms = 1 + rN( 3 );
@@ -39,12 +32,9 @@ var sendMail = function( $form ) {
         var k = hvVal;
 
         if ( itms > operators.length / 2 ) {
-            console.log( '4 items' )
-            // 4 (8..10)
             hvkey = hvkey < 8 ? 7 + rN( 3 ) : hvkey;
-            var rn = rN( 3 );
+            var rn = rN( 5 );
             var tp = rN( 2 ) % 2 == 0 ? 1 : 0;
-            console.log( 'type: ' + tp )
             for ( var i = 0; i < itms; i++ ) {
                 // 8: remove 4th
                 // 9: remove 3rd
@@ -57,33 +47,39 @@ var sendMail = function( $form ) {
             }
         }
         else if ( itms % 2 == 0 ) {
-            console.log( '2 items' )
-            // 2 (1..4)
             var rns = [ rN( 8 ), rN( 4 ) ];
 
-            console.log( 'rns[ 0 ]: ' + rns[ 0 ] )
-            console.log( 'rns[ 1 ]: ' + rns[ 1 ] )
+            hvkey = hvkey > 4 || hvkey < 1 ? 0 + rN( 4 ) : hvkey;
 
-            if ( hvkey == Math.pow( itms, 2 ) ) hvkey = 1;
-            if ( rns[ 0 ] == 2 ) hvkey = Math.pow( itms, 2 ) - 1;
-            if ( rns[ 0 ] % 2 === 0 && rns[ 0 ] != 1 && rns[ 0 ] % rns[ 1 ] === 0 && rns[ 0 ] > rns[ 1 ] && rns[ 1 ] === itms ) hvkey = Math.pow( itms, 2 );
+            if ( hvkey == Math.pow( itms, 2 ) ) {
+                hvkey = 1;
+            }
+            if ( rns[ 0 ] == 2 ) {
+                hvkey = Math.pow( itms, 2 ) - 1;
+            }
+            if ( 
+                rns[ 1 ] === itms 
+                && rns[ 0 ] % 2 === 0
+                && rns[ 0 ] != 1 
+                && rns[ 0 ] % rns[ 1 ] === 0
+                && rns[ 0 ] > rns[ 1 ] 
+            ) { 
+                hvkey = Math.pow( itms, 2 );
+            }
             if ( hvkey == itms && rns[ 0 ] < rns[ 1 ] ) {
                 rns = [ rns[ 1 ], rns[ 0 ] ];
-                console.log( 'switched values' )
-                console.log( '--> rns[ 0 ]: ' + rns[ 0 ] )
-                console.log( '--> rns[ 1 ]: ' + rns[ 1 ] )
             }
-            if ( hvkey === itms && rns[ 0 ] === rns[ 1 ] ) hvkey = hvkey - 1;
-            hvkey = hvkey > 4 || hvkey < 1 ? 0 + rN( 4 ) : hvkey;
+            if ( hvkey === itms && rns[ 0 ] === rns[ 1 ] ) {
+                hvkey = hvkey - 1;
+            }
+
             for ( var i = 0; i < itms; i++ ) {
                 html += mV( hvkey, rns[ i ] );
                 hvVal += '|' + rns[ i ];
             }
         }
         else {
-            console.log( '3 items' )
-            // 3 (5..7)
-            var rns = [ rN( 2 ), rN( 4 ), rN( 6 ) ];
+            var rns = [ rN( 3 ), rN( 7 ), rN( 6 ) ];
             hvkey = hvkey < 5 || hvkey > 7 ? 4 + rN( 3 ) : hvkey;
             for ( var i = 0; i < itms; i++ ) {
                 html += mV( hvkey, rns[ i ] );
@@ -91,14 +87,12 @@ var sendMail = function( $form ) {
             }
         }
 
-        console.log( 'hvkey (final): ' + hvkey )
-
         hvVal = hvo + '|' + hvkey + hvVal;
         $hvo.html( hvo );
         $hv.html( html );
         $form
-            .find( '[name="hv__text_r"]' ).val( encodeURIComponent( hvVal ) )
-            .find( '[name="hv_k__x_r"]' ).val( k )
+            .find( '[data-g-tg="hv"]' ).val( encodeURIComponent( hvVal ) )
+            .find( '[data-g-tg="hv-k"]' ).val( k )
         ;
     }
     // /prepareHv
@@ -109,7 +103,7 @@ var sendMail = function( $form ) {
 
     $form.on( 'submit', function( event ) {
 
-        console.log( 'submit' );
+        // TODO: client side validation
 
         event.preventDefault();
         event.stopPropagation();
@@ -126,13 +120,7 @@ var sendMail = function( $form ) {
 
         options = $.extend( {}, defaults, options );
 
-        // TODO: remove – form message elem
-        // var $message = $form.parent().find( '[data-g-tg="message"]' );
-        // var $responseText = $message.find( '[data-g-tg="response-text"]' );
         var $messageWrapper = $form.parent().find( '[data-g-tg="message-wrapper"]' );
-
-
-        // TODO: refactor later
 
         var formData = $form.serialize();
 
@@ -160,17 +148,14 @@ var sendMail = function( $form ) {
 
                 Utils.WaitScreen.hide();
 
-                console.log( response );
                 // $( formMessages ).text( response );
 
-                // clear
-                // TODO: what about refresh human verification?
+                // TODO: clear
                 // $form.find( 'input:not([hidden]), textarea' ).val( '' );
-                // $responseText.html( response );
 
-                // Utils.replaceFormByMessage( $form, { $message: $message } );
-                var $$messageWrapper = $form.parent().find( '[data-g-tg="message-wrapper"]' );
-                // var $responseText = $successMessage.find( '[data-g-tg="response-text"]' );
+                // TODO: clean message
+
+                // show success
                 showMessage( $messageWrapper, 'success', response );
             } )
             .fail( function( data ) {
@@ -182,6 +167,9 @@ var sendMail = function( $form ) {
                 if ( data.responseText !== '' ) {
                     console.log( data.responseText );
 
+                    // TODO: clean message
+
+                    // show error
                     showMessage( $messageWrapper, 'error', data.responseText );
                 } 
                 else {

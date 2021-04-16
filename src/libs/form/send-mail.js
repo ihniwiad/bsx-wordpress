@@ -2,6 +2,8 @@
 import $ from "jquery"
 import Utils from './../../js/leg-utils/utils/utils'
 
+import * as formValidate from './form-validate'
+
 
 var sendMail = function( $form ) {
 
@@ -107,6 +109,10 @@ var sendMail = function( $form ) {
 
         event.preventDefault();
         event.stopPropagation();
+
+        if ( ! $form.formValidate( { successCallback: false } ) ) {
+            return false;
+        }
 
         Utils.WaitScreen.show();
 

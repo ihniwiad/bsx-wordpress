@@ -139,6 +139,10 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $classes   = empty( $item->classes ) ? array() : (array) $item->classes;
       $classes[] = 'menu-item-' . $item->ID;
 
+      // get object id (e.g. page id) and type (e.g. page)
+      $object_id = isset( $item->object_id ) ? $item->object_id : '';
+      $object_type = isset( $item->object ) ? $item->object : '';
+
       if ( 
         in_array( 'current_page_item', $classes, true ) 
         || in_array( 'current_page_ancestor', $classes, true ) 
@@ -187,8 +191,11 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
       $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
+      // add id and type
+      $item_identifier = ! empty( $object_id ) && ! empty( $object_type ) ? ' data-' . $object_type . '="' . $object_id . '"' : '';
+
       // $output .= $indent . '<li' . $id . $class_names . ' data-test-li>';
-      $output .= $indent . '<li' . $id . $class_names . '>';
+      $output .= $indent . '<li' . $id . $class_names . $item_identifier . '>';
 
       $atts           = array();
       $atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
@@ -307,7 +314,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 
       // start ul here (after a is built) instead of in `start_lvl()` function
-      
+
       $classes = empty( $item->classes ) ? array() : (array) $item->classes;
 
       // check if has children (inspired from twentytwentyone)
@@ -336,7 +343,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
         // add overview item
         if ( $createClickableParentLinkChild ) {
-          $output .= "<li class=\"auto-parent-link\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+          $output .= "<li class=\"auto-parent-link-" . $object_id . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
         }
 
       }

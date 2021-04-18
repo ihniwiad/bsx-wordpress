@@ -187,7 +187,7 @@ class Bsx_Mail_Form {
         }
         function render_theme_form_textarea_field( $args ) {
             $options = get_option( $args[ 0 ] );
-            echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '" rows="20" cols="80"></textarea>';
+            echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="20" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
         }
         add_action( 'admin_init', 'theme_form_settings_page_setup' );
 

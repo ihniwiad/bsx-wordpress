@@ -740,7 +740,7 @@ function custom_settings_page_setup() {
 // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
 function render_custom_input_field( $args ) {
     $options = get_option( $args[ 0 ] );
-    echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '"></input>';
+    echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '" />';
 }
 function render_custom_checkbox( $args ) {
     $options = get_option( $args[ 0 ] );

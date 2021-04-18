@@ -2,14 +2,199 @@
 
 class Bsx_Mail_Form {
 
-    public function register_form_settings() {
+    var $forms_count = 5;
 
-    }
+    private function register_form_settings() {
 
-    public function init() {
+        // $theme_form_settings_add_menu = function() {
+        //     theme_form_settings_add_menu( $this->forms_count );
+        // }
+
+        // register menu
+        function theme_form_settings_add_menu() {
+            // page 1
+            add_menu_page( 
+                __( 'Theme Forms', 'bsx-wordpress' ), // page title
+                __( 'Theme Forms', 'bsx-wordpress' ), // menu title
+                'manage_options', // capability
+                'theme_form_options', // menu_slug
+                'theme_form_settings_page_1', // function to show related content
+                'dashicons-email', // icon url
+                1 // position
+            );
+            // add subpage
+            add_submenu_page( 
+                'theme_form_options', // parent_slug
+                __( 'Form 2' ), // page_title
+                __( 'Form 2' ), // menu_title
+                'manage_options', // capability
+                'theme-form-settings-2', // menu_slug, 
+                'theme_form_settings_page_2', // function = '', 
+                1 // position = null
+            );
+            // pages 2...max
+            // for ( $i = 2; $i <= 5; $i++ ) {
+            //     // add subpage
+            //     add_submenu_page( 
+            //         'theme_form_options', // parent_slug
+            //         __( 'Form '. $i ), // page_title
+            //         __( 'Form '. $i ), // menu_title
+            //         'manage_options', // capability
+            //         'theme-form-settings-' . $i , // menu_slug, 
+            //         'theme_form_settings_' . $i, // function = '', 
+            //         1 // position = null
+            //     );
+            // }
+        }
+        add_action( 'admin_menu', 'theme_form_settings_add_menu' );
+
+        // pages for menu
+
+        // $function = $prefix . '_custom_type_init';
+        // if ( function_exists( $function ) ) {
+        //     $function();
+        // }
+
+        // add_action('init', function() use($args) {
+        //     //...
+        // });
+
+        // for ( $i = 2; $i <= 5; $i++ ) {
+        // }
+
+        // page 1...max, call with index $i (1...max)
+        function theme_form_settings_page_1() { ?>
+            <div class="wrap">
+                <h2><?php __( 'Form 1', 'bsx-wordpress' ); ?></h2>
+                <form method="post" action="options.php">
+                    <?php
+                        do_settings_sections( 'theme_form_1_options_form' ); // page
+                        settings_fields( 'custom-settings-theme-form-1' ); // option group (may have multiple sections)
+                        submit_button();
+                    ?>
+                </form>
+            </div>
+        <?php }
+        function theme_form_settings_page_2() { ?>
+            <div class="wrap">
+                <h2><?php __( 'Form 2', 'bsx-wordpress' ); ?></h2>
+                <form method="post" action="options.php">
+                    <?php
+                        do_settings_sections( 'theme_form_2_options_form' ); // page
+                        settings_fields( 'custom-settings-theme-form-2' ); // option group (may have multiple sections)
+                        submit_button();
+                    ?>
+                </form>
+            </div>
+        <?php }
+
+        // pages 1...max
+        // for ( $i = 1; $i <= 5; $i++ ) {
+        //     $function_name_string = '$theme_form_settings_page_' . $i;
+        //     $function_name_string = function() {
+        //         return theme_form_settings_page( $i );
+        //     };
+        // }
+
+        /**
+         * custom settings, create pages setup
+         */
+
+        function theme_form_settings_page_setup() {
+
+            // pages 1...max
+            for ( $i = 1; $i <= 2; $i++ ) {
+
+                // section
+                add_settings_section(
+                    'theme-form-' . $i . '-settings-section-form', // id
+                    __( 'Form ' . $i, 'bsx-wordpress' ), // title
+                    null, // callback function
+                    'theme_form_' . $i . '_options_form' // page
+                );
+
+                // fields for section
+                add_settings_field(
+                    'form-' . $i . '-recipient-email', // id
+                    __( 'Recipient email', 'bsx-wordpress' ), // title
+                    'render_theme_form_input_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    array(
+                        'form-' . $i . '-recipient-email',
+                        'label_for' => 'form-' . $i . '-recipient-email'
+                    ) // args = array()
+                );
+                add_settings_field(
+                    'form-' . $i . '-sender-email', // id
+                    __( 'Sender email', 'bsx-wordpress' ), // title
+                    'render_theme_form_input_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    array(
+                        'form-' . $i . '-sender-email',
+                        'label_for' => 'form-' . $i . '-sender-email'
+                    ) // args = array()
+                );
+                add_settings_field(
+                    'form-' . $i . '-subject', // id
+                    __( 'Subject', 'bsx-wordpress' ), // title
+                    'render_theme_form_input_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    array(
+                        'form-' . $i . '-subject',
+                        'label_for' => 'form-' . $i . '-subject'
+                    ) // args = array()
+                );
+                add_settings_field(
+                    'form-' . $i . '-template', // id
+                    __( 'Template', 'bsx-wordpress' ), // title
+                    'render_theme_form_textarea_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    array(
+                        'form-' . $i . '-template',
+                        'label_for' => 'form-' . $i . '-template'
+                    ) // args = array()
+                );
+
+                // register each field
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-recipient-email' // option name
+                );
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-sender-email' // option name
+                );
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-subject' // option name
+                );
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-template' // option name
+                );
+            }
+
+        }
+        // Shared  across sections
+        // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
+        function render_theme_form_input_field( $args ) {
+            $options = get_option( $args[ 0 ] );
+            echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '" size="50" />';
+        }
+        function render_theme_form_textarea_field( $args ) {
+            $options = get_option( $args[ 0 ] );
+            echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '" rows="20" cols="80"></textarea>';
+        }
+        add_action( 'admin_init', 'theme_form_settings_page_setup' );
+
+    } // /register_form_settings()
 
 
-        // REST ROUTES
+    private function register_mailer_rest_route() {
 
         /**
          * callback function for routes endpoint
@@ -208,12 +393,13 @@ class Bsx_Mail_Form {
                     // mail( $recipient_mail, $mail_subject, $mail_content, $headers );
 
                     // return rest_ensure_response( $response );
-                    return rest_ensure_response( 'RECIPIENT: ' . $recipient_mail . "\n\n" . 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
+                    // 'RECIPIENT: ' . $recipient_mail . "\n\n" . 
+                    return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
                 } 
                 else {
                     // validation not ok, send forbidden 403
 
-                    return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your request is invalid.', 'bsx-wordpress' ), array( 'status' => 403 ) );
+                    return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your data is invalid. No mail has been sent.', 'bsx-wordpress' ), array( 'status' => 403 ) );
                 }
              
                 // error 500
@@ -242,6 +428,21 @@ class Bsx_Mail_Form {
             ) );
         }
         add_action( 'rest_api_init', 'bsx_mailer_register_rest_route' );
+
+    } // /register_mailer_rest_route()
+
+
+    public function init() {
+
+
+
+
+        $this->register_form_settings();
+
+
+        $this->register_mailer_rest_route();
+
+
 
     } // /init()
 

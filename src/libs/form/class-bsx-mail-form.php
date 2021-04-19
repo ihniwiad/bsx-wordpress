@@ -14,8 +14,8 @@ class Bsx_Mail_Form {
         function theme_form_settings_add_menu() {
             // page 1
             add_menu_page( 
-                __( 'Theme Forms', 'bsx-wordpress' ), // page title
-                __( 'Theme Forms', 'bsx-wordpress' ), // menu title
+                esc_html__( 'Theme Forms', 'bsx-wordpress' ), // page title
+                esc_html__( 'Theme Forms', 'bsx-wordpress' ), // menu title
                 'manage_options', // capability
                 'theme_form_options', // menu_slug
                 'theme_form_settings_page_1', // function to show related content
@@ -23,22 +23,31 @@ class Bsx_Mail_Form {
                 1 // position
             );
             // add subpage
+            // add_submenu_page( 
+            //     'theme_form_options', // parent_slug
+            //     esc_html__( 'Form 1' ), // page_title
+            //     esc_html__( 'Form 1' ), // menu_title
+            //     'manage_options', // capability
+            //     'theme-form-settings-1', // menu_slug, 
+            //     'theme_form_settings_page_1', // function = '', 
+            //     2 // position = null
+            // );
             add_submenu_page( 
                 'theme_form_options', // parent_slug
-                __( 'Form 2' ), // page_title
-                __( 'Form 2' ), // menu_title
+                esc_html__( 'Form 2' ), // page_title
+                esc_html__( 'Form 2' ), // menu_title
                 'manage_options', // capability
                 'theme-form-settings-2', // menu_slug, 
                 'theme_form_settings_page_2', // function = '', 
-                1 // position = null
+                3 // position = null
             );
             // pages 2...max
             // for ( $i = 2; $i <= 5; $i++ ) {
             //     // add subpage
             //     add_submenu_page( 
             //         'theme_form_options', // parent_slug
-            //         __( 'Form '. $i ), // page_title
-            //         __( 'Form '. $i ), // menu_title
+            //         esc_html__( 'Form '. $i ), // page_title
+            //         esc_html__( 'Form '. $i ), // menu_title
             //         'manage_options', // capability
             //         'theme-form-settings-' . $i , // menu_slug, 
             //         'theme_form_settings_' . $i, // function = '', 
@@ -65,7 +74,7 @@ class Bsx_Mail_Form {
         // page 1...max, call with index $i (1...max)
         function theme_form_settings_page_1() { ?>
             <div class="wrap">
-                <h2><?php __( 'Form 1', 'bsx-wordpress' ); ?></h2>
+                <h2><?php esc_html__( 'Form 1', 'bsx-wordpress' ); ?></h2>
                 <form method="post" action="options.php">
                     <?php
                         do_settings_sections( 'theme_form_1_options_form' ); // page
@@ -77,7 +86,7 @@ class Bsx_Mail_Form {
         <?php }
         function theme_form_settings_page_2() { ?>
             <div class="wrap">
-                <h2><?php __( 'Form 2', 'bsx-wordpress' ); ?></h2>
+                <h2><?php esc_html__( 'Form 2', 'bsx-wordpress' ); ?></h2>
                 <form method="post" action="options.php">
                     <?php
                         do_settings_sections( 'theme_form_2_options_form' ); // page
@@ -105,10 +114,37 @@ class Bsx_Mail_Form {
             // pages 1...max
             for ( $i = 1; $i <= 2; $i++ ) {
 
-                // section
+                // section form
                 add_settings_section(
                     'theme-form-' . $i . '-settings-section-form', // id
-                    __( 'Form ' . $i, 'bsx-wordpress' ), // title
+                    sprintf( esc_html__( 'Form %d template', 'bsx-wordpress' ), $i ), // title
+                    null, // callback function
+                    'theme_form_' . $i . '_options_form' // page
+                );
+
+                add_settings_field(
+                    'form-' . $i . '-form-template', // id
+                    esc_html__( 'Form template', 'bsx-wordpress' ), // title
+                    'render_theme_form_textarea_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    array(
+                        'form-' . $i . '-form-template',
+                        'label_for' => 'form-' . $i . '-form-template'
+                    ) // args = array()
+                );
+
+                // register each field
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-form-template' // option name
+                );
+
+
+                // section mail 1
+                add_settings_section(
+                    'theme-form-' . $i . '-settings-section-mail', // id
+                    sprintf( esc_html__( 'Form %d mail', 'bsx-wordpress' ), $i ), // title
                     null, // callback function
                     'theme_form_' . $i . '_options_form' // page
                 );
@@ -116,10 +152,10 @@ class Bsx_Mail_Form {
                 // fields for section
                 add_settings_field(
                     'form-' . $i . '-recipient-email', // id
-                    __( 'Recipient email', 'bsx-wordpress' ), // title
+                    esc_html__( 'Recipient email', 'bsx-wordpress' ), // title
                     'render_theme_form_input_field', // callback, use unique function name
                     'theme_form_' . $i . '_options_form', // page
-                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    'theme-form-' . $i . '-settings-section-mail', // section = 'default'
                     array(
                         'form-' . $i . '-recipient-email',
                         'label_for' => 'form-' . $i . '-recipient-email'
@@ -127,10 +163,10 @@ class Bsx_Mail_Form {
                 );
                 add_settings_field(
                     'form-' . $i . '-sender-email', // id
-                    __( 'Sender email', 'bsx-wordpress' ), // title
+                    esc_html__( 'Sender email', 'bsx-wordpress' ), // title
                     'render_theme_form_input_field', // callback, use unique function name
                     'theme_form_' . $i . '_options_form', // page
-                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    'theme-form-' . $i . '-settings-section-mail', // section = 'default'
                     array(
                         'form-' . $i . '-sender-email',
                         'label_for' => 'form-' . $i . '-sender-email'
@@ -138,24 +174,24 @@ class Bsx_Mail_Form {
                 );
                 add_settings_field(
                     'form-' . $i . '-subject', // id
-                    __( 'Subject', 'bsx-wordpress' ), // title
+                    esc_html__( 'Subject', 'bsx-wordpress' ), // title
                     'render_theme_form_input_field', // callback, use unique function name
                     'theme_form_' . $i . '_options_form', // page
-                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    'theme-form-' . $i . '-settings-section-mail', // section = 'default'
                     array(
                         'form-' . $i . '-subject',
                         'label_for' => 'form-' . $i . '-subject'
                     ) // args = array()
                 );
                 add_settings_field(
-                    'form-' . $i . '-template', // id
-                    __( 'Template', 'bsx-wordpress' ), // title
+                    'form-' . $i . '-mail-template', // id
+                    esc_html__( 'Email template', 'bsx-wordpress' ), // title
                     'render_theme_form_textarea_field', // callback, use unique function name
                     'theme_form_' . $i . '_options_form', // page
-                    'theme-form-' . $i . '-settings-section-form', // section = 'default'
+                    'theme-form-' . $i . '-settings-section-mail', // section = 'default'
                     array(
-                        'form-' . $i . '-template',
-                        'label_for' => 'form-' . $i . '-template'
+                        'form-' . $i . '-mail-template',
+                        'label_for' => 'form-' . $i . '-mail-template'
                     ) // args = array()
                 );
 
@@ -174,7 +210,80 @@ class Bsx_Mail_Form {
                 );
                 register_setting(
                     'custom-settings-theme-form-' . $i, // option group
-                    'form-' . $i . '-template' // option name
+                    'form-' . $i . '-mail-template' // option name
+                );
+
+
+                // section mail 1
+                add_settings_section(
+                    'theme-form-' . $i . '-settings-section-mail-2', // id
+                    sprintf( esc_html__( 'Form %d mail 2 (optional)', 'bsx-wordpress' ), $i ), // title
+                    null, // callback function
+                    'theme_form_' . $i . '_options_form' // page
+                );
+
+                // fields for section
+                add_settings_field(
+                    'form-' . $i . '-recipient-email-2', // id
+                    esc_html__( 'Recipient email', 'bsx-wordpress' ), // title
+                    'render_theme_form_input_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-mail-2', // section = 'default'
+                    array(
+                        'form-' . $i . '-recipient-email-2',
+                        'label_for' => 'form-' . $i . '-recipient-email-2'
+                    ) // args = array()
+                );
+                add_settings_field(
+                    'form-' . $i . '-sender-email-2', // id
+                    esc_html__( 'Sender email', 'bsx-wordpress' ), // title
+                    'render_theme_form_input_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-mail-2', // section = 'default'
+                    array(
+                        'form-' . $i . '-sender-email-2',
+                        'label_for' => 'form-' . $i . '-sender-email-2'
+                    ) // args = array()
+                );
+                add_settings_field(
+                    'form-' . $i . '-subject-2', // id
+                    esc_html__( 'Subject', 'bsx-wordpress' ), // title
+                    'render_theme_form_input_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-mail-2', // section = 'default'
+                    array(
+                        'form-' . $i . '-subject-2',
+                        'label_for' => 'form-' . $i . '-subject-2'
+                    ) // args = array()
+                );
+                add_settings_field(
+                    'form-' . $i . '-mail-template-2', // id
+                    esc_html__( 'Email template', 'bsx-wordpress' ), // title
+                    'render_theme_form_textarea_field', // callback, use unique function name
+                    'theme_form_' . $i . '_options_form', // page
+                    'theme-form-' . $i . '-settings-section-mail-2', // section = 'default'
+                    array(
+                        'form-' . $i . '-mail-template-2',
+                        'label_for' => 'form-' . $i . '-mail-template-2'
+                    ) // args = array()
+                );
+
+                // register each field
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-recipient-email-2' // option name
+                );
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-sender-email-2' // option name
+                );
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-subject-2' // option name
+                );
+                register_setting(
+                    'custom-settings-theme-form-' . $i, // option group
+                    'form-' . $i . '-mail-template-2' // option name
                 );
             }
 

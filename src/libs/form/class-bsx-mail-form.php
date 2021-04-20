@@ -2,7 +2,134 @@
 
 class Bsx_Mail_Form {
 
-    var $forms_count = 5;
+    // var $forms_count = 5;
+
+
+    // pattern for placeholders
+    // $pattern = "/\[+(\*|)+(text|email|number|message)+::+([a-zA-Z0-9-_ =\"])+\]+/s";
+    // $matches = array();
+    // $has_matches = preg_match( $pattern, $str, $matches );
+
+    public function make_form_from_template( $index ) {
+
+        $template = get_option( 'form-' . $index . '-form-template' );
+
+        // pattern for placeholders
+        $pattern = "/\[+(\*|)+(text|email|number|message)+::+([a-zA-Z0-9-_ =\"])+\]+/s";
+        $matches = array();
+        $has_matches = preg_match_all( $pattern, $template, $matches );
+
+        $matches = $matches[ 0 ];
+        // print_r( $matches );
+
+
+        for ( $i = 0; $i < count( $matches ); $i++ ) {
+            $replace = $this->parse_input( $matches[ $i ] );
+            $template = str_replace( $matches[ $i ], $replace, $template );
+        }
+
+        ?>
+            <div data-id="form-wrapper">
+
+                <form id="ajax-contact" novalidate method="post" action="<?php echo get_bloginfo( 'url' ); ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
+
+                    <?php
+                        echo $template;
+                    ?>
+
+                    <div class="form-group">
+                        <label for="human-verification">Human verification</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <!-- div class="input-group-text"><span class="bsx-hv-1">5</span><span class="bsx-hv-1">3</span></div -->
+                                <!-- div class="input-group-text"><span class="bsx-hv-2">1</span><span class="bsx-hv-2">2</span><span class="bsx-hv-2">4</span></div -->
+                                <div class="input-group-text" data-g-tg="hv"></div>
+                            </div>
+                            <input class="form-control" type="text" id="human-verification" name="human_verification__text__r" required>
+                        </div>
+                        <div class="invalid-feedback">Please fill this field correctly.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary" type="submit">Send</button>
+                    </div>
+
+                    <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
+                    <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
+                </form>
+
+                <div data-g-tg="message-wrapper">
+
+                    <div data-g-tg="success-message" aria-hidden="true" style="display: none;">
+                        <div class="alert alert-success lead mb-4" role="alert">
+                            <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ); ?>
+                            <!-- TODO: include response here -->
+                        </div>
+                        <pre data-g-tg="response-text">
+                        </pre>
+                    </div>
+
+                    <div data-g-tg="error-message" aria-hidden="true" style="display: none;">
+                        <div class="alert alert-danger lead mb-4" role="alert">
+                            <span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' ); ?>
+                            <!-- TODO: include response here -->
+                        </div>
+                        <pre data-g-tg="response-text">
+                        </pre>
+                    </div>
+
+                </div>
+
+            </div>
+        <?php
+
+    } // /make_form_from_template()
+
+
+
+    private function parse_input( $input_string ) {
+        // from: [*text::name class="form-control" type="text" id="name"]
+        // to: <input class="form-control" type="text" id="name" name="name__text__r" required>
+        // required: [*... -> required
+        // type: [*text::... -> type="text" | [*message::... -> <textarea>...</textarea>
+        // name: ::name -> name="name__..." (name="MY-NAME__MY-TYPE__R-MEANS-REQUIRED", e.g. name="name__text__r")
+
+        // remove brackets from both sides
+        $input_string = ltrim( $input_string, '[' );
+        $input_string = rtrim( $input_string, ']' );
+
+        // devide conf data & attributes
+        $space_split = explode( ' ', $input_string );
+        $conf_data = $space_split[ 0 ];
+        array_shift( $space_split );
+        $attributes = implode( ' ', $space_split );
+
+        $first_char = substr( $conf_data, 0, 1 );
+        $required = false;
+        if ( $first_char === '*' ) {
+            $required = true;
+            $conf_data = ltrim( $conf_data, '*' );
+        }
+        $conf_split = explode( '::', $conf_data );
+        $type = $conf_split[ 0 ];
+        $name = $conf_split[ 1 ];
+
+        $return = '';
+
+        switch ( $type ) {
+            case 'message':
+                $return .= '<textarea' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="' . $type . '" name="' . $name . '__' . $type . ( $required ? '__r' : '' ) . '"' . ( $required ? ' required' : '' ) . '></textarea>';
+                break;
+            
+            default:
+                $return .= '<input' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="' . $type . '" name="' . $name . '__' . $type . ( $required ? '__r' : '' ) . '"' . ( $required ? ' required' : '' ) . '>';
+                break;
+        }
+
+        // print_r( $return );
+
+        return $return;
+    } // /parse_input()
 
     private function register_form_settings() {
 
@@ -452,20 +579,21 @@ class Bsx_Mail_Form {
                 }
 
                 if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
-                    $mail_subject = replace_placeholders( $sanitized_values[ 'subject' ], $sanitized_values );
+                    $mail_subject = replace_placeholders( get_option( 'form-1-subject' ), $sanitized_values );
                 }
                 else {
                     // fallback subject
                     $mail_subject = 'Mail from contact form at ' . get_site_url();
                 }
 
-                if ( ! empty( $sanitized_values[ 'template' ] ) ) {
-                    $mail_content = replace_placeholders( $sanitized_values[ 'template' ], $sanitized_values );
+                $mail_content = replace_placeholders( get_option( 'form-1-mail-template' ), $sanitized_values );
+                if ( ! empty( $mail_content ) ) {
+                    
                 }
                 else {
                     // fallback content
                     foreach ( $sanitized_values as $key => $value ) {
-                        $mail_content .= $key . ': ' . $value . '\n';
+                        $mail_content .= $key . ': ' . $value . "\n";
                     }
                 }
 
@@ -487,16 +615,17 @@ class Bsx_Mail_Form {
                 }
 
                 // get recipient mail
-                $recipient_mail = get_option( 'mail' );
+                $recipient_mail = get_option( 'form-1-recipient-email' );
+                $sender_mail = get_option( 'form-1-sender-email' );
                 // TODO: get from somewhere, e.g. theme config
                 $from_mail = 'noreply@example.com';
 
                 // TODO: check hv
                 // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
-                if ( $validation_ok && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) ) {
+                if ( $validation_ok && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
 
                     // prepare headers
-                    $headers = 'From: ' . $from_mail . "\r\n";
+                    $headers = 'From: ' . $sender_mail . "\r\n";
                     // $headers .= "CC: somebodyelse@example.com";
 
                     // mail( $recipient_mail, $mail_subject, $mail_content, $headers );

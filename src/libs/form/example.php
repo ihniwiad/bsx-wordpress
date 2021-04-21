@@ -4,7 +4,7 @@
 
 <div data-id="form-wrapper">
 
-    <form id="ajax-contact" novalidate method="post" action="<?php echo get_bloginfo( 'url' ); ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
+    <form novalidate method="post" action="<?php echo get_bloginfo( 'url' ); ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
         <div class="form-group">
             <label for="name">Name</label>
             <input class="form-control" type="text" id="name" name="name__text__r" required>

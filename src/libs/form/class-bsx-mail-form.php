@@ -15,44 +15,41 @@ class Bsx_Mail_Form {
         $template = get_option( 'form-' . $index . '-form-template' );
 
         // pattern for placeholders
-        $pattern = "/\[+(\*|)+(text|email|number|message)+::+([a-zA-Z0-9-_ =\"])+\]+/s";
+        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|submit)+::+([a-zA-Z0-9-_ =\"]|)+\]/s";
+        $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\).:?!])+\]/s";
+
+        // replace input placeholders
         $matches = array();
-        $has_matches = preg_match_all( $pattern, $template, $matches );
+        $has_matches = preg_match_all( $input_pattern, $template, $matches );
 
         $matches = $matches[ 0 ];
         // print_r( $matches );
-
 
         for ( $i = 0; $i < count( $matches ); $i++ ) {
             $replace = $this->parse_input( $matches[ $i ] );
             $template = str_replace( $matches[ $i ], $replace, $template );
         }
 
+        // replace translate placeholders
+        $matches = array();
+        $has_matches = preg_match_all( $translate_pattern, $template, $matches );
+
+        $matches = $matches[ 0 ];
+        // print_r( $matches );
+
+        for ( $i = 0; $i < count( $matches ); $i++ ) {
+            $replace = $this->translate( $matches[ $i ] );
+            $template = str_replace( $matches[ $i ], $replace, $template );
+        }
+
         ?>
             <div data-id="form-wrapper">
 
-                <form id="ajax-contact" novalidate method="post" action="<?php echo get_bloginfo( 'url' ); ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
+                <form novalidate method="post" action="<?php echo get_bloginfo( 'url' ); ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
 
                     <?php
                         echo $template;
                     ?>
-
-                    <div class="form-group">
-                        <label for="human-verification">Human verification</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <!-- div class="input-group-text"><span class="bsx-hv-1">5</span><span class="bsx-hv-1">3</span></div -->
-                                <!-- div class="input-group-text"><span class="bsx-hv-2">1</span><span class="bsx-hv-2">2</span><span class="bsx-hv-2">4</span></div -->
-                                <div class="input-group-text" data-g-tg="hv"></div>
-                            </div>
-                            <input class="form-control" type="text" id="human-verification" name="human_verification__text__r" required>
-                        </div>
-                        <div class="invalid-feedback">Please fill this field correctly.</div>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-outline-primary" type="submit">Send</button>
-                    </div>
 
                     <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
                     <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
@@ -85,6 +82,24 @@ class Bsx_Mail_Form {
 
     } // /make_form_from_template()
 
+
+    private function translate( $translate_string ) {
+        // from: [translate::MY TEXT EXAMPLE]
+        
+        // remove brackets from both sides
+        $translate_string = ltrim( $translate_string, '[' );
+        $translate_string = rtrim( $translate_string, ']' );
+
+        // get translatable text
+        $space_split = explode( '::', $translate_string );
+        $trans_text = $space_split[ 1 ];
+
+        $return = __( $trans_text, 'bsx-wordpress' );
+
+        // print_r( $return );
+
+        return $return;
+    } // /translate()
 
 
     private function parse_input( $input_string ) {
@@ -120,6 +135,18 @@ class Bsx_Mail_Form {
             case 'message':
                 $return .= '<textarea' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="' . $type . '" name="' . $name . '__' . $type . ( $required ? '__r' : '' ) . '"' . ( $required ? ' required' : '' ) . '></textarea>';
                 break;
+
+            case 'human-verification-input':
+                $return .= '<input' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="text" name="human_verification__text__r" required>';
+                break;
+
+            case 'human-verification-display':
+                $return .= '<div' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' data-g-tg="hv"></div>';
+                break;
+
+            case 'submit':
+                $return .= '<input' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="submit" value="' . esc_html__( 'Send', 'bsx-wordpress' ) . '">';
+                break;
             
             default:
                 $return .= '<input' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="' . $type . '" name="' . $name . '__' . $type . ( $required ? '__r' : '' ) . '"' . ( $required ? ' required' : '' ) . '>';
@@ -130,6 +157,7 @@ class Bsx_Mail_Form {
 
         return $return;
     } // /parse_input()
+
 
     private function register_form_settings() {
 
@@ -578,19 +606,14 @@ class Bsx_Mail_Form {
                     $validation_ok = false;
                 }
 
-                if ( ! empty( $sanitized_values[ 'subject' ] ) ) {
-                    $mail_subject = replace_placeholders( get_option( 'form-1-subject' ), $sanitized_values );
-                }
-                else {
+                $mail_subject = replace_placeholders( get_option( 'form-1-subject' ), $sanitized_values );
+                if ( empty( $mail_subject ) ) {
                     // fallback subject
                     $mail_subject = 'Mail from contact form at ' . get_site_url();
                 }
 
                 $mail_content = replace_placeholders( get_option( 'form-1-mail-template' ), $sanitized_values );
-                if ( ! empty( $mail_content ) ) {
-                    
-                }
-                else {
+                if ( empty( $mail_content ) ) {
                     // fallback content
                     foreach ( $sanitized_values as $key => $value ) {
                         $mail_content .= $key . ': ' . $value . "\n";

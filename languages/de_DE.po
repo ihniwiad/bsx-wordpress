@@ -191,6 +191,38 @@ msgstr "Footer Spalte 5 Menü"
 msgid "Footer Bottom Menu"
 msgstr "Footer Bottom-Menü"
 
+#: src/libs/form/class-bsx-mail.form.php:148
+msgid "Send"
+msgstr "Senden"
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "First Name"
+msgstr "Vorname"
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Last Name"
+msgstr "Nachname"
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Human verification"
+msgstr "Ich bin kein Roboter"
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Mandatory field"
+msgstr "Pflichtfeld"
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Please fill this field."
+msgstr "Bitte dieses Feld ausfüllen."
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Please provide a valid e-mail."
+msgstr "Bitte eine gültige E-Mail eingeben."
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Message"
+msgstr "Nachricht"
+
 
 
 

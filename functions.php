@@ -293,7 +293,9 @@ function custom_search_form( $form ) {
             <label class="sr-only" for="s">' . __( 'Search for:' ) . '</label>
             <div class="input-group input-group-lg">
                 <input class="form-control" type="text" value="' . get_search_query() . '" name="s" id="s" />
-                <input class="input-group-append btn btn-primary" type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
+                <div class="input-group-append">
+                    <input class="btn btn-primary" type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
+                </div>
             </div>
         </div>
     </form>';

@@ -3,7 +3,7 @@
 $consent_data = array(
   array(
     'cat' => 'analytics',
-    'cat_label' => 'Analyse',
+    'cat_label' => esc_html__( 'Analytics', 'bsx-wordpress' ),
     'items' => array(
       array(
         'type' => 'script-src',
@@ -23,7 +23,7 @@ $consent_data = array(
   ),
   array(
     'cat' => 'other-category',
-    'cat_label' => 'Other category',
+    'cat_label' => esc_html__( 'Customization', 'bsx-wordpress' ),
     'items' => array(
       array(
         'type' => 'script-src',
@@ -39,7 +39,7 @@ $consent_data = array(
   ),
   array(
     'cat' => 'empty-category',
-    'cat_label' => 'Empty category'
+    'cat_label' => esc_html__( 'Empty category', 'bsx-wordpress' )
   )
 );
 
@@ -54,7 +54,7 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
 ?>
 
 <!-- consent popup -->    
-<div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-secondary d-none" id="consent-popup" aria-labeledby="consent-popup-trigger" tabindex="-1" role="dialog" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
+<div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-light border-top shadow d-none" id="consent-popup" aria-labeledby="consent-popup-trigger" tabindex="-1" role="dialog" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
       
   <div class="container py-3">
     
@@ -63,7 +63,7 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
 
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox" id="data-processing-consent-essential" value="essential" checked disabled data-g-tg="category-input">
-          <label class="form-check-label" for="data-processing-consent-essential">Essential</label>
+          <label class="form-check-label" for="data-processing-consent-essential"><?php echo esc_html__( 'Essential', 'bsx-wordpress' ); ?></label>
         </div>
 
         <?php
@@ -72,28 +72,12 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
           }
         ?>
 
-        <!--
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="data-processing-consent-0-0" value="analytics" data-g-tg="category-input">
-          <label class="form-check-label" for="data-processing-consent-0-0">Analytics</label>
-        </div>
-
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="data-processing-consent-1-0" value="other-category" data-g-tg="category-input">
-          <label class="form-check-label" for="data-processing-consent-1-0">Other category</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="data-processing-consent-2-0" value="google-maps" data-g-tg="category-input">
-          <label class="form-check-label" for="data-processing-consent-2-0">Google Maps</label>
-        </div>
-        -->
-
         <div class="col-auto">
-          <button class="btn btn-outline-primary btn-sm" type="submit" data-fn="cookie-related-elem-close" data-g-fn="save">Save</button>
+          <button class="btn btn-outline-primary btn-sm" type="submit" data-fn="cookie-related-elem-close" data-g-fn="save"><?php echo esc_html__( 'Save', 'bsx-wordpress' ); ?></button>
         </div>
 
         <div class="col-auto">
-          <button class="btn btn-primary btn-sm" data-fn="cookie-related-elem-close" data-g-fn="allow-all">Allow all</button>
+          <button class="btn btn-primary btn-sm" data-fn="cookie-related-elem-close" data-g-fn="allow-all"><?php echo esc_html__( 'Allow all', 'bsx-wordpress' ); ?></button>
         </div>
 
       </div>
@@ -110,5 +94,3 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
     $consent_popup_manager->printData();
   }
 ?>
-
-

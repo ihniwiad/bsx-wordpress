@@ -191,6 +191,22 @@ msgstr "Footer Spalte 5 Menü"
 msgid "Footer Bottom Menu"
 msgstr "Footer Bottom-Menü"
 
+#: src-libs-data-processing-consent/example.php:92
+msgid "Save"
+msgstr "Speichern"
+
+#: src-libs-data-processing-consent/example.php:96
+msgid "Allow all"
+msgstr "Alle erlauben"
+
+#: src-libs-data-processing-consent/example.php:66
+msgid "Essential"
+msgstr "Essenziell"
+
+#: src-libs-data-processing-consent/example.php:6
+msgid "Analytics"
+msgstr "Analyse"
+
 #: src/libs/form/class-bsx-mail.form.php:148
 msgid "Send"
 msgstr "Senden"

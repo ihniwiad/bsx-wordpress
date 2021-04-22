@@ -643,9 +643,27 @@ class Bsx_Mail_Form {
                 // TODO: get from somewhere, e.g. theme config
                 $from_mail = 'noreply@example.com';
 
+
+
+                
+                // check referrer host is current host, disallow external access
+                $referrer = $_SERVER[ 'HTTP_REFERER' ];
+                $host_pattern = "/http+(s|)+:\/\/+([a-z0-9-_])+\//s";
+                $matches = array();
+                $has_matches = preg_match( $host_pattern, $referrer, $matches );
+                $referrer_host = $matches[ 0 ];
+
+                $mail_content .= "\n\n" . 'REFERER HOST: ' . $referrer_host . "\n\n";
+                $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)
+                $protocol = ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ? "https://" : "http://"; // protocol
+                $current_host = $protocol . $server_name . '/';
+                $mail_content .= 'HOST: ' . $current_host . "\n\n";
+
+
+
                 // TODO: check hv
                 // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
-                if ( $validation_ok && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
+                if ( $validation_ok && $referrer_host === $current_host && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
 
                     // prepare headers
                     $headers = 'From: ' . $sender_mail . "\r\n";
@@ -660,7 +678,7 @@ class Bsx_Mail_Form {
                 else {
                     // validation not ok, send forbidden 403
 
-                    return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your data is invalid. No mail has been sent.', 'bsx-wordpress' ), array( 'status' => 403 ) );
+                    return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your data is invalid or you are not allowed to access this server.', 'bsx-wordpress' ), array( 'status' => 403 ) );
                 }
              
                 // error 500
@@ -684,7 +702,7 @@ class Bsx_Mail_Form {
         function bsx_mailer_register_rest_route() {
             // call with POST data: http://localhost/wordpress-testing/wp-json/bsx/v1/mailer/
             register_rest_route( 'bsx/v1', '/mailer/', array(
-                'methods'  => WP_REST_Server::CREATABLE,
+                'methods'  => 'POST', // WP_REST_Server::CREATABLE
                 'callback' => 'bsx_mailer_post_endpoint',
             ) );
         }

@@ -663,7 +663,7 @@ class Bsx_Mail_Form {
 
                 // TODO: check hv
                 // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
-                if ( $validation_ok && $referrer_host === $current_host && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
+                if ( $validation_ok && ( empty( $referrer_host ) || $referrer_host === $current_host ) && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
 
                     // prepare headers
                     $headers = 'From: ' . $sender_mail . "\r\n";
@@ -704,6 +704,7 @@ class Bsx_Mail_Form {
             register_rest_route( 'bsx/v1', '/mailer/', array(
                 'methods'  => 'POST', // WP_REST_Server::CREATABLE
                 'callback' => 'bsx_mailer_post_endpoint',
+                'permission_callback' => function() { return ''; },
             ) );
         }
         add_action( 'rest_api_init', 'bsx_mailer_register_rest_route' );

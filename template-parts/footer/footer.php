@@ -13,10 +13,22 @@ global $phoneHrefRemovePatterns;
         <div class="text-center my-4">
             <a href="<?php echo get_bloginfo( 'url' ) . '/'; ?>">
                 <!-- inline svg logo -->
-        <?php 
-            $logo = file_get_contents( $logoPath );
-            echo $logo;
-        ?>
+                <?php 
+                    $logo = $mail = get_option( 'logo' );
+                    if ( is_numeric( $logo ) ) {
+                        $img_url = wp_get_attachment_url( $logo );
+                        $img_meta = wp_get_attachment_metadata( $logo );
+                        $width = round( intval( $img_meta[ 'width' ] ) / 2 );
+                        $height = round( intval( $img_meta[ 'height' ] ) / 2 );
+                        echo '<img src="' . $img_url . '" width="' . $width . '" height="' . $height . '" alt="' . __( 'Logo', 'bsx-wordpress' ) . '">';
+                    }
+                    else {
+                        if ( empty( $logo ) ) {
+                            $logo = file_get_contents( $logoPath );
+                        }
+                        echo $logo;
+                    }
+                ?>
             </a>
         </div>
 

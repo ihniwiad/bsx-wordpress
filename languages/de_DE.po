@@ -152,6 +152,10 @@ msgid "Layout"
 msgstr "Layout"
 
 #: functions.php:660
+msgid "Logo"
+msgstr "Logo"
+
+#: functions.php:660
 msgid "Footer Menu Columns Count (0...5)"
 msgstr "Anzahl Footer Menü-Spalten (0...5)"
 

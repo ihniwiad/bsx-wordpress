@@ -690,6 +690,17 @@ function custom_settings_page_setup() {
 
     // fields for section
     add_settings_field(
+        'logo', // id
+        esc_html__( 'Logo', 'bsx-wordpress' ), // title
+        'render_custom_textarea_field', // callback, use unique function name
+        'custom_options_layout', // page
+        'custom-settings-section-layout', // section = 'default'
+        array(
+            'logo',
+            'label_for' => 'logo'
+        ) // args = array()
+    );
+    add_settings_field(
         'footer_columns_count', // id
         esc_html__( 'Footer Menu Columns Count (0...5)', 'bsx-wordpress' ), // title
         'render_custom_input_field', // callback, use unique function name
@@ -726,6 +737,10 @@ function custom_settings_page_setup() {
     // register each field
     register_setting(
         'custom-settings-layout', // option group
+        'logo' // option_name
+    );
+    register_setting(
+        'custom-settings-layout', // option group
         'footer_columns_count' // option_name
     );
     register_setting(
@@ -747,6 +762,10 @@ function render_custom_input_field( $args ) {
 function render_custom_checkbox( $args ) {
     $options = get_option( $args[ 0 ] );
     echo '<label><input type="checkbox" id="'  . $args[ 0 ] . '" name="' . $args[ 0 ] . '" value="1"' . ( ( $options ) ? 'checked' : '' ) . ' />' . __( 'Yes', 'bsx-wordpress' ) . '</label>';
+}
+function render_custom_textarea_field( $args ) {
+    $options = get_option( $args[ 0 ] );
+    echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="6" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
 }
 add_action( 'admin_init', 'custom_settings_page_setup' );
 

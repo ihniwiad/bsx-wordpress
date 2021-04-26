@@ -1,0 +1,33 @@
+$bsx-text-inverse-color:      $white !default;
+$bsx-primary-inverse-color:   $white !default;
+$bsx-secondary-inverse-color: $white !default;
+$bsx-light-inverse-color:     $black !default;
+$bsx-dark-inverse-color:      $white !default;
+$bsx-info-inverse-color:      $white !default;
+
+
+// style
+
+.text-inverse {
+  color: $white;
+
+  &.bg-primary {
+    color: $bsx-primary-inverse-color;
+  }
+
+  &.bg-secondary {
+    color: $bsx-secondary-inverse-color;
+  }
+
+  &.bg-light {
+    color: $bsx-light-inverse-color;
+  }
+
+  &.bg-dark {
+    color: $bsx-dark-inverse-color;
+  }
+
+  &.bg-info {
+    color: $bsx-info-inverse-color;
+  }
+}

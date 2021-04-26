@@ -27,7 +27,9 @@
 @import "./../libs/test/index";
 
 @import "./typo/text";
+@import "./typo/text-inverse";
 @import "./typo/text-shadow";
+@import "./typo/heading";
 @import "./../libs/accordion/style";
 @import "./../libs/appear-effects/style";
 @import "./../libs/nav/style";
@@ -45,6 +47,7 @@
 @import "./../libs/grid/text-column";
 @import "./../libs/banner/background";
 @import "./../libs/banner/fixed-banner";
+@import "./../libs/banner/banner";
 @import "./../libs/banner/st-banner";
 @import "./../libs/banner/vh-banner";
 @import "./../libs/img/zoomable-img";

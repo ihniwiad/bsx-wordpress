@@ -9772,6 +9772,19 @@ a.text-dark:hover, a.text-dark:focus {
 .text-primary {
   color: "" !important; }
 
+.text-inverse {
+  color: #fff; }
+  .text-inverse.bg-primary {
+    color: #fff; }
+  .text-inverse.bg-secondary {
+    color: #fff; }
+  .text-inverse.bg-light {
+    color: #000; }
+  .text-inverse.bg-dark {
+    color: #fff; }
+  .text-inverse.bg-info {
+    color: #fff; }
+
 .text-shadow-dark {
   text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.33); }
 
@@ -9780,6 +9793,14 @@ a.text-dark:hover, a.text-dark:focus {
 
 .text-shadow-darkest {
   text-shadow: 0 0 0.5em #000, 0 0 0.1em black, 0 0 1px black; }
+
+.heading-inherit-text h1, .heading-inherit-text h2, .heading-inherit-text h3, .heading-inherit-text h4, .heading-inherit-text h5, .heading-inherit-text h6,
+.heading-inherit-text .h1, .heading-inherit-text .h2, .heading-inherit-text .h3, .heading-inherit-text .h4, .heading-inherit-text .h5, .heading-inherit-text .h6 {
+  color: inherit; }
+
+.heading-inherit-font-weight h1, .heading-inherit-font-weight h2, .heading-inherit-font-weight h3, .heading-inherit-font-weight h4, .heading-inherit-font-weight h5, .heading-inherit-font-weight h6,
+.heading-inherit-font-weight .h1, .heading-inherit-font-weight .h2, .heading-inherit-font-weight .h3, .heading-inherit-font-weight .h4, .heading-inherit-font-weight .h5, .heading-inherit-font-weight .h6 {
+  font-weight: inherit; }
 
 .bsx-acc-content {
   height: 0;
@@ -10328,7 +10349,7 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
   margin-bottom: 0.33333rem; }
 
 .below-navbar-content {
-  padding-top: 5rem !important; }
+  padding-top: 4rem !important; }
 
 .main-container-banner {
   margin-top: 0.5rem; }
@@ -11666,6 +11687,23 @@ body.is-android .bg-mobile-no-repeat {
 
 .fixed-banner-bottom {
   bottom: 0; }
+
+.banner-1 {
+  min-height: 26rem; }
+
+.banner-2 {
+  min-height: 22rem; }
+
+.banner-3 {
+  min-height: 18rem; }
+
+@media (min-width: 768px) {
+  .banner-1 {
+    min-height: 36rem; }
+  .banner-2 {
+    min-height: 30rem; }
+  .banner-3 {
+    min-height: 24rem; } }
 
 .banner-st-1 {
   padding-top: 6rem;

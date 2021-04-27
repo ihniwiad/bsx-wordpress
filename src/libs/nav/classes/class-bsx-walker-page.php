@@ -213,7 +213,7 @@ if ( ! class_exists( 'Bsx_Walker_Page' ) ) {
 			if ( ! $meta_hidden_in_main_nav ) {
 
 				$output .= $indent . sprintf(
-					'<li%s>%s<a%s>%s%s%s</a>%s',
+					'<li%s>%s<a%s><span>%s%s%s</span></a>%s',
 					$css_classes,
 					$args['list_item_before'],
 					$attributes,
@@ -242,7 +242,7 @@ if ( ! class_exists( 'Bsx_Walker_Page' ) ) {
 					$output .= "{$n}{$indent}<ul aria-labelledby=\"" . $linkId . "\">{$n}{$indent}<li class=\"bsx-appnav-back-link\">{$n}{$indent}<a href=\"#\" aria-label=\"" . __( 'Close Menu item', 'bsx-wordpress' ) . "\" data-label=\"" . __( 'Back', 'bsx-wordpress' ) . "\" data-fn=\"dropdown-multilevel-close\"></a>{$n}</li>{$n}";
 
 					if ( $createClickableParentLinkChild ) {
-						$output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+						$output .= "<li class=\"page-" . $page->ID . "\"><a href=\"" . $pageHref . "\"><span>" . __( 'Overview', 'bsx-wordpress' ) . "</span></a></li>";
 					}
 				}
 

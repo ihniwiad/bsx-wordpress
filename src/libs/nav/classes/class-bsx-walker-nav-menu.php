@@ -292,9 +292,9 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $args = is_object( $args ) ? $args : (object) $args;
 
       $item_output  = $args->before;
-      $item_output .= '<a' . $attributes . '>';
+      $item_output .= '<a' . $attributes . '><span>';
       $item_output .= $args->link_before . $title . $args->link_after;
-      $item_output .= '</a>';
+      $item_output .= '</span></a>';
       $item_output .= $args->after;
 
       /**
@@ -343,7 +343,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
         // add overview item
         if ( $createClickableParentLinkChild ) {
-          $output .= "<li class=\"auto-parent-link-" . $object_id . "\"><a href=\"" . $pageHref . "\">" . __( 'Overview', 'bsx-wordpress' ) . "</a></li>";
+          $output .= "<li class=\"auto-parent-link-" . $object_id . "\"><a href=\"" . $pageHref . "\"><span>" . __( 'Overview', 'bsx-wordpress' ) . "</span></a></li>";
         }
 
       }

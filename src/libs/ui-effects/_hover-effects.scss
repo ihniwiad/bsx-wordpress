@@ -83,8 +83,11 @@ $bsx-hover-img-zoom-transform:            scale(1.05) !default;
 .img-hover-zoom-in {
   img {
     transition: $bsx-hover-img-zoom-transition;
-    @include bsx-hover-focus {
+  }
+  @include bsx-hover-focus {
+    img {
       transform: $bsx-hover-img-zoom-transform;
     }
   }
 }
+

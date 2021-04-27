@@ -114,15 +114,6 @@ function register_my_menus() {
 }
 add_action( 'init', 'register_my_menus' );
 
-// add filter to add class name to li
-function add_additional_class_on_li( $classes, $item, $args ) {
-    if ( isset( $args->add_li_class ) ) {
-        $classes[] = $args->add_li_class;
-    }
-    return $classes;
-}
-add_filter( 'nav_menu_css_class', 'add_additional_class_on_li', 1, 3 );
-
 // add filter to add class name to li or/and class name to current li
 function add_additional_class_on_li( $classes, $item, $args ) {
     if ( isset( $args->add_li_class ) ) {

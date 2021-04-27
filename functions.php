@@ -123,6 +123,22 @@ function add_additional_class_on_li( $classes, $item, $args ) {
 }
 add_filter( 'nav_menu_css_class', 'add_additional_class_on_li', 1, 3 );
 
+// add filter to add class name to li or/and class name to current li
+function add_additional_class_on_li( $classes, $item, $args ) {
+    if ( isset( $args->add_li_class ) ) {
+        $classes[] = $args->add_li_class;
+    }
+    // useful e.g. for language switcher
+    if ( isset( $args->add_current_li_class ) ) {
+        $classes = is_array( $classes ) ? $classes : (array) $classes;
+        if ( in_array( 'current_page_item', $classes ) || in_array( 'current-lang', $classes ) ) {
+            $classes[] = $args->add_current_li_class;
+        }
+    }
+    return $classes;
+}
+add_filter( 'nav_menu_css_class', 'add_additional_class_on_li', 1, 3 );
+
 // add filter to add class name to a
 function add_additional_class_on_a( $atts, $item, $args ) {
     if ( isset( $args->add_a_class ) ) {

@@ -18,6 +18,9 @@ $img_list[ 0 ] = array(
       'height' => 150,
       'media' => '(max-width: 459.98px)'
     )
+  ),
+  'figure' => array(
+    'class_name' => 'of-hidden'
   )
 );
 

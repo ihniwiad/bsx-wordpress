@@ -49,9 +49,14 @@ class LazyImg {
   }
 
   public function print() {
+
+    $figure_class_name = '';
+    if ( isset( $this->data[ 'figure' ] ) && isset( $this->data[ 'figure' ][ 'class_name' ] ) ) {
+      $figure_class_name =  $this->data[ 'figure' ][ 'class_name' ];
+    }
     
     // list
-    $output = '<figure>';
+    $output = '<figure' . ( $figure_class_name ? ' class="' . $figure_class_name . '"' : '' ) . '>';
     $output .= '<script>';
     $output .= "document.write( '<picture>";
 

@@ -85,7 +85,7 @@ class LazyImg {
     );
 
     if ( $img_data_complete ) {
-      $output .= '<img class="img-fluid" src="data:image/svg+xml;base64,' . $this->createPlaceholder( $this->data[ 'img' ][ 'width' ], $this->data[ 'img' ][ 'height' ] ) . '" alt="' . $this->data[ 'img' ][ 'alt' ] . '" data-src="' . $this->data[ 'img' ][ 'url' ] . '" width="' . $this->data[ 'img' ][ 'width' ] . '" height="' . $this->data[ 'img' ][ 'height' ] . '" data-fn="lazyload"/>';
+      $output .= '<img class="img-fluid' . ( isset( $this->data[ 'img' ][ 'class_name' ] ) ? ' ' . $this->data[ 'img' ][ 'class_name' ] : '' ). '" src="data:image/svg+xml;base64,' . $this->createPlaceholder( $this->data[ 'img' ][ 'width' ], $this->data[ 'img' ][ 'height' ] ) . '" alt="' . $this->data[ 'img' ][ 'alt' ] . '" data-src="' . $this->data[ 'img' ][ 'url' ] . '" width="' . $this->data[ 'img' ][ 'width' ] . '" height="' . $this->data[ 'img' ][ 'height' ] . '" data-fn="lazyload"/>';
     }
 
     $output .= "</picture>' );";
@@ -93,7 +93,7 @@ class LazyImg {
     $output .= '<noscript>';
 
     if ( $img_data_complete ) {
-      $output .= '<img loading="lazy" class="img-fluid" src="' . $this->data[ 'img' ][ 'url' ] . '" alt="' . $this->data[ 'img' ][ 'alt' ] . '" width="' . $this->data[ 'img' ][ 'width' ] . '" height="' . $this->data[ 'img' ][ 'height' ] . '"/>';
+      $output .= '<img class="img-fluid' . ( isset( $this->data[ 'img' ][ 'class_name' ] ) ? ' ' . $this->data[ 'img' ][ 'class_name' ] : '' ). '" src="' . $this->data[ 'img' ][ 'url' ] . '" alt="' . $this->data[ 'img' ][ 'alt' ] . '" width="' . $this->data[ 'img' ][ 'width' ] . '" height="' . $this->data[ 'img' ][ 'height' ] . '" loading="lazy"/>';
     }
 
     $output .= '</noscript>';

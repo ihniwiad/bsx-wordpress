@@ -11867,4 +11867,22 @@ img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
 .hover-text-primary:hover, .hover-text-primary:focus {
   color: #0275D8 !important; }
 
+.hover-text-secondary:hover, .hover-text-secondary:focus {
+  color: #7FC5FF !important; }
+
+[class*="hover-bg"] {
+  transition: all 0.3s ease; }
+
+.hover-bg-light:hover, .hover-bg-light:focus {
+  background-color: #f8f9fa; }
+
+.hover-bg-white:hover, .hover-bg-white:focus {
+  background-color: #fff; }
+
+.img-hover-zoom-in img {
+  transition: all 0.4s ease-in-out; }
+
+.img-hover-zoom-in:hover img, .img-hover-zoom-in:focus img {
+  transform: scale(1.05); }
+
 /*# sourceMappingURL=style.css.map */

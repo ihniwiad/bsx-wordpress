@@ -1,17 +1,43 @@
 $bsx-text-primary: "" !default;
+$bsx-bold-font-weight: 500 !default;
+$bsx-container-word-wrap: break-word !default;
 
+
+
+// style
 
 
 // better use .text-reset ?
 .text-inherit {
   color: inherit !important;
 }
+.no-underline {
+	text-decoration: none !important;
+	@include bsx-hover-focus {
+		text-decoration: none !important;
+	}
+}
 .font-size-inherit {
   font-size: inherit !important;
 }
 
+b, strong {
+	font-weight: $bsx-bold-font-weight;
+}
+
+
+// primary
+
 @if $bsx-text-primary {
-  .text-primary {
-    color: $bsx-text-primary !important;
-  }
+	.text-primary {
+		color: $bsx-text-primary !important;
+	}
+}
+
+
+// avoid text overflow in container
+
+.container,
+.container-fluid {
+	word-wrap: $bsx-container-word-wrap;
 }

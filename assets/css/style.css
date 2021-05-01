@@ -9766,11 +9766,28 @@ a.text-dark:hover, a.text-dark:focus {
 .text-inherit {
   color: inherit !important; }
 
+.no-underline {
+  text-decoration: none !important; }
+  .no-underline:hover, .no-underline:focus {
+    text-decoration: none !important; }
+
 .font-size-inherit {
   font-size: inherit !important; }
 
+b,
+strong {
+  font-weight: 500; }
+
 .text-primary {
   color: "" !important; }
+
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  word-wrap: break-word; }
 
 .text-inverse {
   color: #fff; }

@@ -11855,6 +11855,28 @@ body.ioslte7 .banner-vh-1 {
 img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
   background: rgba(0, 0, 0, 0.05); }
 
+.line-label {
+  text-align: center;
+  overflow: hidden;
+  text-transform: "";
+  font-weight: ""; }
+  .line-label > span {
+    max-width: 75%;
+    position: relative;
+    display: inline-block; }
+    .line-label > span:before, .line-label > span:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 5000px;
+      height: 0;
+      top: 50%;
+      border-bottom: 1px solid #6c757d; }
+    .line-label > span:before {
+      right: calc(100% + 0.33rem); }
+    .line-label > span:after {
+      left: calc(100% + 0.33rem); }
+
 .wait-screen {
   display: none;
   position: fixed;

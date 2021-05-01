@@ -1,0 +1,48 @@
+// example: <div class="line-label"><span>Some label text</span></div>
+
+
+$bsx-line-label-color: 			$text-muted !default;
+$bsx-line-label-text-transform: '' !default;
+$bsx-line-label-font-weight: 	'' !default;
+$bsx-line-label-border-color: 	$text-muted !default;
+$bsx-line-label-border-width: 	1px !default;
+$bsx-line-label-px: 			.33rem !default;
+$bsx-line-label-max-width: 		75% !default;
+$bsx-line-label-line-length: 	5000px !default; // overflow will be hidden
+
+
+// style
+
+.line-label {
+    text-align: center;
+    overflow: hidden;
+    @if $bsx-line-label-text-transform {
+	    text-transform: $bsx-line-label-text-transform;
+	}
+    @if $bsx-line-label-font-weight {
+	    font-weight: $bsx-line-label-font-weight;
+	}
+
+    & > span {
+	    max-width: $bsx-line-label-max-width;
+	    position: relative;
+	    display: inline-block;
+
+		&:before, 
+		&:after {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    width: $bsx-line-label-line-length;
+		    height: 0;
+		    top: 50%;
+		    border-bottom: $bsx-line-label-border-width solid $bsx-line-label-border-color;
+		}
+		&:before {
+		    right: calc(100% + #{$bsx-line-label-px});
+		}
+		&:after {
+		    left: calc(100% + #{$bsx-line-label-px});
+		}
+	}
+}

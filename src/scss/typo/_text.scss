@@ -1,13 +1,13 @@
 $bsx-text-primary: "" !default;
 $bsx-bold-font-weight: 500 !default;
 $bsx-container-word-wrap: break-word !default;
+$bsx-container-hyphens: auto !default;
 
 
 
 // style
 
 
-// better use .text-reset ?
 .text-inherit {
   color: inherit !important;
 }
@@ -39,5 +39,6 @@ b, strong {
 
 .container,
 .container-fluid {
+	hyphens: $bsx-container-hyphens;
 	word-wrap: $bsx-container-word-wrap;
 }

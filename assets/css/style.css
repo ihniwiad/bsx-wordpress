@@ -9787,6 +9787,9 @@ strong {
 .container-md,
 .container-lg,
 .container-xl {
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
   word-wrap: break-word; }
 
 .text-inverse {

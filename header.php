@@ -79,6 +79,8 @@ global $logoPath;
     
     <body>
 
+        <script>document.documentElement.classList.remove( 'no-js' );</script>
+
         <a class="sr-only sr-only-focusable" href="#main"><?php echo __( 'Skip to main content', 'bsx-wordpress' ); ?></a>
     
         <div class="wrapper" id="top">

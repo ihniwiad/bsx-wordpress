@@ -41,7 +41,14 @@ const paths = {
         watchSrc: 'src/js/vendor-js.json',
     },
     publish: {
-        watchSrc: [ 'src/**/*.php', '*.php', 'template-parts/**/*.php', 'languages/*.mo' ],
+        watchSrc: [ 
+            'src/**/*.php', 
+            '*.php', 
+            'template-parts/**/*.php', 
+            'inc/**/*.php' 
+            'languages/*.mo', 
+            'img/**/*'  
+        ],
     },
 };
 

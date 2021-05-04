@@ -2,6 +2,7 @@
 
 
 $bsx-zoomable-img-display:            inline-block !default;
+$bsx-zoomable-img-line-height:        1.5 !default;
 
 $bsx-zoomable-img-after-color:          rgba( $white, 0.8 ) !default;
 $bsx-zoomable-img-after-hover-color:      $white !default;
@@ -30,6 +31,7 @@ $bsx-zoomable-img-after-transition:       $bsx-basic-transition !default;
     position: relative;
     cursor: pointer;
     display: $bsx-zoomable-img-display;
+    line-height: $bsx-zoomable-img-line-height;
 
     &:after {
       content: $bsx-zoomable-img-after-content;

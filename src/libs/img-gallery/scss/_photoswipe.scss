@@ -23,3 +23,11 @@
 .pswp__button > * {
   pointer-events: none;
 }
+
+
+// remove sprite img
+.pswp--svg .pswp__button,
+.pswp--svg .pswp__button--arrow--left:before,
+.pswp--svg .pswp__button--arrow--right:before {
+	background-image: none;
+}

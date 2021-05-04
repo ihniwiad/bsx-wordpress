@@ -172,9 +172,20 @@ $custom-select-focus-box-shadow:    0 0 0 $input-btn-focus-width rgba($primary, 
 
 // BREADCRUMB
 
-$breadcrumb-divider:              "»" !default;
-$breadcrumb-item-padding:         0.25rem !default;
-$breadcrumb-link-color:           $gray-600 !default;
+$breadcrumb-divider:                "»" !default;
+$breadcrumb-item-padding:           0.25rem !default;
+$breadcrumb-link-color:             $gray-700 !default;
+
+$breadcrumb-padding-y:              0 !default;
+$breadcrumb-padding-x:              0 !default;
+
+$breadcrumb-margin-bottom:          0 !default;
+
+$breadcrumb-bg:                     transparent !default;
+$breadcrumb-divider-color:          $breadcrumb-link-color !default;
+$breadcrumb-active-color:           $breadcrumb-link-color !default;
+
+$breadcrumb-border-radius:          0 !default;
 
 
 // TABLE

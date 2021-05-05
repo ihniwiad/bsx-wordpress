@@ -5900,18 +5900,18 @@ input[type="button"].btn-block {
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+  padding: 0 0;
+  margin-bottom: 0;
   list-style: none;
-  background-color: #e9ecef;
-  border-radius: 0.25rem; }
+  background-color: transparent;
+  border-radius: 0; }
 
 .breadcrumb-item + .breadcrumb-item {
   padding-left: 0.25rem; }
   .breadcrumb-item + .breadcrumb-item::before {
     float: left;
     padding-right: 0.25rem;
-    color: #6c757d;
+    color: #495057;
     content: "»"; }
 
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -5921,7 +5921,7 @@ input[type="button"].btn-block {
   text-decoration: none; }
 
 .breadcrumb-item.active {
-  color: #6c757d; }
+  color: #495057; }
 
 .pagination {
   display: flex;
@@ -11114,6 +11114,11 @@ a.pswp__share--download:hover {
 .pswp__button > * {
   pointer-events: none; }
 
+.pswp--svg .pswp__button,
+.pswp--svg .pswp__button--arrow--left:before,
+.pswp--svg .pswp__button--arrow--right:before {
+  background-image: none; }
+
 .bsx-floating-gallery-inner {
   margin: -0.25rem; }
 
@@ -11466,6 +11471,23 @@ a.pswp__share--download:hover {
 
 .owl-carousel .owl-item .owl-lazy {
   opacity: 1; }
+
+.bsx-slider-fadeout {
+  position: relative; }
+  .bsx-slider-fadeout:before, .bsx-slider-fadeout:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    height: 100%;
+    width: 3rem; }
+  .bsx-slider-fadeout:before {
+    left: 0;
+    background-image: linear-gradient(to right, #fff 0%,transparent 100%); }
+  .bsx-slider-fadeout:after {
+    right: 0;
+    background-image: linear-gradient(to left, #fff 0%,transparent 100%); }
 
 .column-row {
   flex-basis: 0;
@@ -11831,7 +11853,8 @@ body.ioslte7 .banner-vh-1 {
 .zoomable-img {
   position: relative;
   cursor: pointer;
-  display: inline-block; }
+  display: inline-block;
+  line-height: 1.5; }
   .zoomable-img:after {
     content: "";
     display: block;
@@ -11931,5 +11954,20 @@ img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
 
 .img-hover-zoom-in:hover img, .img-hover-zoom-in:focus img {
   transform: scale(1.05); }
+
+.breadcrumb {
+  display: block;
+  flex-wrap: unset;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.breadcrumb-item {
+  display: inline; }
+  .breadcrumb-item > a {
+    color: #495057; }
+
+.breadcrumb-item + .breadcrumb-item::before {
+  float: none; }
 
 /*# sourceMappingURL=style.css.map */

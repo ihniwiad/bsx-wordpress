@@ -24,6 +24,14 @@ $owl-nav-top-t:     1em !default;
 $owl-dot-margin:    5px !default;
 
 
+// fadeout
+$bsx-slider-fadeout-zindex:           1 !default;
+$bsx-slider-fadeout-width:            3rem !default;
+$bsx-slider-fadeout-color:            $body-bg !default;
+$bsx-slider-fadeout-left-gradient:    "linear-gradient(to right, #{$bsx-slider-fadeout-color} 0%,transparent 100%)" !default;
+$bsx-slider-fadeout-right-gradient:   "linear-gradient(to left, #{$bsx-slider-fadeout-color} 0%,transparent 100%)" !default;
+
+
 
 // INFO
 //
@@ -179,3 +187,30 @@ $owl-dot-margin:    5px !default;
   opacity: 1;
 }
 
+
+
+// fadeout
+
+.bsx-slider-fadeout {
+    position: relative;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: $bsx-slider-fadeout-zindex;
+      display: block;
+      top: 0;
+      height: 100%;
+      width: $bsx-slider-fadeout-width;
+    }
+
+    &:before {
+      left: 0;
+      background-image: #{$bsx-slider-fadeout-left-gradient};
+    }
+    &:after {
+      right: 0;
+      background-image: #{$bsx-slider-fadeout-right-gradient};
+    }
+}

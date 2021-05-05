@@ -11970,4 +11970,17 @@ img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
 .breadcrumb-item + .breadcrumb-item::before {
   float: none; }
 
+.checklist {
+  list-style: none;
+  padding-left: 2em; }
+  .checklist li:before {
+    content: "";
+    font-family: FontAwesome;
+    display: inline-block;
+    width: 2em;
+    margin-left: -2em;
+    color: #0275D8; }
+  .checklist li + li {
+    padding-top: 0.25em; }
+
 /*# sourceMappingURL=style.css.map */

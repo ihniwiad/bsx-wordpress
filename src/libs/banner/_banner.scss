@@ -4,6 +4,10 @@ $bsx-banner-2-min-height: 22rem !default;
 $bsx-banner-2-desktop-min-height: 30rem !default; // calc(15rem + 16vw)
 $bsx-banner-3-min-height: 18rem !default;
 $bsx-banner-3-desktop-min-height: 24rem !default; // calc(12rem + 12vw)
+$bsx-banner-4-min-height: 15rem !default;
+$bsx-banner-4-desktop-min-height: 18rem !default;
+$bsx-banner-5-min-height: 13rem !default;
+$bsx-banner-6-min-height: 11rem !default;
 
 
 
@@ -18,6 +22,15 @@ $bsx-banner-3-desktop-min-height: 24rem !default; // calc(12rem + 12vw)
 .banner-3 {
   min-height: $bsx-banner-3-min-height;
 }
+.banner-4 {
+  min-height: $bsx-banner-4-min-height;
+}
+.banner-5 {
+  min-height: $bsx-banner-5-min-height;
+}
+.banner-6 {
+  min-height: $bsx-banner-6-min-height;
+}
 
 @include bsx-media-breakpoint-up(md) {
   .banner-1 {
@@ -28,5 +41,8 @@ $bsx-banner-3-desktop-min-height: 24rem !default; // calc(12rem + 12vw)
   }
   .banner-3 {
     min-height: $bsx-banner-3-desktop-min-height;
+  }
+  .banner-4 {
+    min-height: $bsx-banner-4-desktop-min-height;
   }
 }

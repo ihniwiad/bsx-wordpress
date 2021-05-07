@@ -5,6 +5,7 @@
 
 // NOTE: this configuration inverts your default color with your hover color on darker backgrounds of desktop dropdown or mobile active link (try if it fits to your choosen colors)
 $bsx-appnav-use-inverse-color:				false !default; // false
+$bsx-appnav-use-active-inverse-bg:    false !default; // true
 
 // NOTE: this configuration puts an underline to the desktop current link instead of changing color and background
 $bsx-appnav-use-current-link-underline:		true !default; // true
@@ -137,6 +138,7 @@ $bsx-appnav-icon-active-color:								$bsx-appnav-quickstart-icon-hover-color !d
 
 // link appearance
 $bsx-appnav-link-text-decoration:							none !default;
+$bsx-appnav-link-transition:                  $bsx-basic-transition !default;
 
 // font weight
 $bsx-appnav-basic-font-weight:						400 !default;
@@ -159,14 +161,16 @@ $bsx-appnav-link-icon-text-spacer:		0.5em !default;
 $bsx-appnav-link-text-caret-spacer:		0.5em !default;
 
 // link padding
-$bsx-appnav-link-px:							0.66667em !default;
-$bsx-appnav-link-py:							0.66667em !default;
-
-$bsx-appnav-desktop-level-1-link-py:			1em !default;
+$bsx-appnav-link-px:							            0.66667em !default;
+$bsx-appnav-link-py:							            0.66667em !default;
+$bsx-appnav-desktop-level-1-link-lg-down-px:  '' !default;
+$bsx-appnav-desktop-level-1-link-py:          1em !default;
 
 // link level 1 display & alignment
-$bsx-appnav-desktop-level-1-link-display:		flex !default;
-$bsx-appnav-desktop-level-1-link-align-items:	center !default;
+$bsx-appnav-desktop-level-1-link-display:		        flex !default;
+$bsx-appnav-desktop-level-1-link-align-items:	      center !default;
+$bsx-appnav-desktop-level-1-link-justify-content:   space-around !default;
+$bsx-appnav-desktop-level-1-link-text-align:        center !default;
 
 // bigmenu link padding
 $bsx-appnav-desktop-bigmenu-level-2-link-px:	1.33333em !default;

@@ -67,7 +67,9 @@
 
 		&.active > a {
 			color: $bsx-appnav-active-color;
-			background-color: $bsx-appnav-nav-link-mobile-hover-bg-color;
+			@if $bsx-appnav-use-active-inverse-bg {
+				background-color: $bsx-appnav-nav-link-mobile-hover-bg-color;
+			}
 
 			// icon hover style
 
@@ -205,7 +207,9 @@
 					// use basic color
 					color: $bsx-appnav-active-color;
 				}
-				background-color: $bsx-appnav-nav-desktop-level-2-hover-link-bg-color;
+				@if $bsx-appnav-use-active-inverse-bg {
+					background-color: $bsx-appnav-nav-desktop-level-2-hover-link-bg-color;
+				}
 			}
 		}
 
@@ -231,14 +235,18 @@
 		// only level 1
 
 		li.active > a {
-			background-color: $bsx-appnav-nav-desktop-level-1-hover-link-bg-color;;
+			@if $bsx-appnav-use-active-inverse-bg {
+				background-color: $bsx-appnav-nav-desktop-level-1-hover-link-bg-color;
+			}
 		}
 
 		// only level 2..n
 
 		li {
 			ul > li.active > a {
-				background-color: $bsx-appnav-nav-desktop-level-2-hover-link-bg-color;
+				@if $bsx-appnav-use-active-inverse-bg {
+					background-color: $bsx-appnav-nav-desktop-level-2-hover-link-bg-color;
+				}
 			}
 		}
 

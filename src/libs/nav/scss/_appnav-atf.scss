@@ -43,6 +43,14 @@
 		font-size: $bsx-font-size-base;
 		color: transparent;
 
+		// optional reduces lg down padding x
+		@if $bsx-appnav-desktop-level-1-link-lg-down-px {
+			@include bsx-media-breakpoint-down(lg) {
+				padding-left: $bsx-appnav-desktop-level-1-link-lg-down-px;
+				padding-right: $bsx-appnav-desktop-level-1-link-lg-down-px;
+			}
+		}
+
 		// atf text bubble
 		&::before {
 			content: "";
@@ -238,12 +246,24 @@
 
 				padding-top: $bsx-appnav-desktop-level-1-link-py;
 				padding-bottom: $bsx-appnav-desktop-level-1-link-py;
+				text-align: $bsx-appnav-desktop-level-1-link-text-align;
 
 				@if $bsx-appnav-desktop-level-1-link-display != '' {
 					display: $bsx-appnav-desktop-level-1-link-display;
 				}
 				@if $bsx-appnav-desktop-level-1-link-align-items != '' {
 					align-items: $bsx-appnav-desktop-level-1-link-align-items;
+				}
+				@if $bsx-appnav-desktop-level-1-link-justify-content {
+					justify-content: $bsx-appnav-desktop-level-1-link-justify-content;
+				}
+
+				// optional reduces lg down padding x
+				@if $bsx-appnav-desktop-level-1-link-lg-down-px {
+					@include bsx-media-breakpoint-down(lg) {
+						padding-left: $bsx-appnav-desktop-level-1-link-lg-down-px;
+						padding-right: $bsx-appnav-desktop-level-1-link-lg-down-px;
+					}
 				}
 
 			}
@@ -302,12 +322,24 @@
 
 			padding-top: $bsx-appnav-desktop-level-1-link-py;
 			padding-bottom: $bsx-appnav-desktop-level-1-link-py;
+			text-align: $bsx-appnav-desktop-level-1-link-text-align;
 
 			@if $bsx-appnav-desktop-level-1-link-display != '' {
 				display: $bsx-appnav-desktop-level-1-link-display;
 			}
 			@if $bsx-appnav-desktop-level-1-link-align-items != '' {
 				align-items: $bsx-appnav-desktop-level-1-link-align-items;
+			}
+			@if $bsx-appnav-desktop-level-1-link-justify-content {
+				justify-content: $bsx-appnav-desktop-level-1-link-justify-content;
+			}
+
+			// optional reduces lg down padding x
+			@if $bsx-appnav-desktop-level-1-link-lg-down-px {
+				@include bsx-media-breakpoint-down(lg) {
+					padding-left: $bsx-appnav-desktop-level-1-link-lg-down-px;
+					padding-right: $bsx-appnav-desktop-level-1-link-lg-down-px;
+				}
 			}
 
 		}

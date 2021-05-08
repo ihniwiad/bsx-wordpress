@@ -190,9 +190,10 @@
 
 	}
 
-	@if $bsx-appnav-use-current-link-underline {
+	@if $bsx-appnav-use-desktop-level-1-active-link-underline or $bsx-appnav-use-desktop-level-1-active-disable-inverse-bg {
 
-		// use current link underline
+		// do not colorize text on active level 1 
+		// do not invert bg on active level 1
 
 		// only level 2..n
 

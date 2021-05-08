@@ -10148,18 +10148,20 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
       overflow-y: auto; } }
 
 @media (min-width: 992px) {
-  .bsx-appnav-navbar-nav > li > a > span::before {
-    content: "";
-    position: absolute;
-    left: 0.61667em;
-    right: 0.61667em;
-    bottom: 0.625em;
-    height: 0.125em;
-    background: #0275D8;
-    border-radius: 0.125em;
-    transform: scaleX(0);
-    transition: transform 0.2s ease-in-out 0s; }
-  .bsx-appnav-navbar-nav > li.active a > span::before {
+  .bsx-appnav-navbar-nav > li > a span {
+    position: relative; }
+    .bsx-appnav-navbar-nav > li > a span::before {
+      content: "";
+      position: absolute;
+      left: -0.05em;
+      right: -0.05em;
+      bottom: -0.375em;
+      height: 0.125em;
+      background: #0275D8;
+      border-radius: 0.125em;
+      transform: scaleX(0);
+      transition: transform 0.2s ease-in-out 0s; }
+  .bsx-appnav-navbar-nav > li.active > a span::before {
     transform: scaleX(1); } }
 
 @media (max-width: 991.98px) {

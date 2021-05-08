@@ -5,10 +5,12 @@
 
 // NOTE: this configuration inverts your default color with your hover color on darker backgrounds of desktop dropdown or mobile active link (try if it fits to your choosen colors)
 $bsx-appnav-use-inverse-color:				false !default; // false
-$bsx-appnav-use-active-inverse-bg:    false !default; // true
+$bsx-appnav-use-active-inverse-bg:                          false !default; // true
+$bsx-appnav-use-desktop-level-1-active-disable-inverse-bg:  false !default; // true
 
-// NOTE: this configuration puts an underline to the desktop current link instead of changing color and background
-$bsx-appnav-use-current-link-underline:		true !default; // true
+$bsx-appnav-use-desktop-level-1-active-link-underline:      true !default; // true
+$bsx-appnav-use-desktop-level-1-hover-link-underline:       false !default; // false
+$bsx-appnav-use-active-link-underline:		                  false !default; // false
 
 $bsx-appnav-quickstart-bg-color: 			$white !default;
 $bsx-appnav-quickstart-dropdown-bg-color: 	$gray-200 !default;

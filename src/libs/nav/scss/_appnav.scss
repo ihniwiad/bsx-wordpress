@@ -299,9 +299,9 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 }
 
 
-// desktop main navbar nav (current link underline)
+// desktop main navbar nav (desktop level 1 active link underline)
 
-@if $bsx-appnav-use-current-link-underline {
+@if $bsx-appnav-use-desktop-level-1-active-link-underline {
 
 	@include bsx-appnav-navigation(desktop) {
 
@@ -314,43 +314,82 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 				// link (level 1)
 				& > a {
 
-					//position: relative;
+					span {
 
-					// nav line
-					> span::before {
-						content: "";
-						position: absolute;
-						left: $bsx-appnav-link-px - $bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
-						right: $bsx-appnav-link-px - $bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
-						bottom: $bsx-appnav-desktop-level-1-active-link-underline-bottom;
-						height: $bsx-appnav-desktop-level-1-active-link-underline-height;
-						background: $bsx-appnav-desktop-level-1-active-link-underline-color;
-						border-radius: 0.125em;
-						transform: scaleX(0);
-						transition: transform 0.2s ease-in-out 0s;
+						position: relative;
+
+						// nav line
+						&::before {
+							content: "";
+							position: absolute;
+							left: -$bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
+							right: -$bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
+							bottom: - $bsx-appnav-desktop-level-1-link-py + $bsx-appnav-desktop-level-1-active-link-underline-bottom;
+							height: $bsx-appnav-desktop-level-1-active-link-underline-height;
+							background: $bsx-appnav-desktop-level-1-active-link-underline-color;
+							border-radius: 0.125em;
+							transform: scaleX(0);
+							transition: transform 0.2s ease-in-out 0s;
+						}
+
+					}
+
+					@if $bsx-appnav-use-desktop-level-1-hover-link-underline {
+						@include bsx-hover-focus {
+							span::before {
+								transform: scaleX(1);
+							}
+						}
 					}
 
 				}
 
-				&.active a {
-					// nav line
-					> span::before {
+				&.active > a span::before {
 						transform: scaleX(1);
-					}
 				}
 
-				// a.bsx-appnav-dropdown-toggle {
-				// 	// nav line
-				// 	&::before {
-				// 		right: $bsx-appnav-link-px - $bsx-appnav-desktop-level-1-active-link-underline-overlap-x + ( ($bsx-appnav-caret-width + $bsx-appnav-link-text-caret-spacer) * $bsx-appnav-caret-scale );
-				// 	}
-				// }
 			}
 
 		}
 		
 	}
 
+}
+
+@if $bsx-appnav-use-active-link-underline {
+
+	.bsx-appnav-navbar-nav {
+
+		// all level
+
+		li.active {
+
+			// link
+			> a {
+
+				span {
+					position: relative;
+
+					// nav line
+					&::before {
+						content: "";
+						position: absolute;
+						left: -$bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
+						right: -$bsx-appnav-desktop-level-1-active-link-underline-overlap-x;
+						bottom: - $bsx-appnav-desktop-level-1-link-py + $bsx-appnav-desktop-level-1-active-link-underline-bottom;
+						height: $bsx-appnav-desktop-level-1-active-link-underline-height;
+						background: $bsx-appnav-desktop-level-1-active-link-underline-color;
+						border-radius: 0.125em;
+						// transform: scaleX(0);
+						transition: transform 0.2s ease-in-out 0s;
+					}
+				}
+
+			}
+		}
+
+	}
+	
 }
 
 

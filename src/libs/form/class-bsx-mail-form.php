@@ -44,46 +44,42 @@ class Bsx_Mail_Form {
             $template = str_replace( $matches[ $i ], $replace, $template );
         }
 
-        ?>
-            <div data-id="form-wrapper">
+        $html = '<div data-id="form-wrapper">';
+            $html .= '<form novalidate method="post" action="' . get_bloginfo( 'url' ) . '/wp-json/bsx/v1/mailer/" data-fn="mail-form">';
+                $html .= $template;
+                $html .= '<input type="hidden" name="hv__text__r" value="" data-g-tg="hv">';
+                $html .= '<input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">';
+                $html .= '<input type="hidden" name="idh__text__r" value="' . $hash . '">';
+            $html .= '</form>';
+            $html .= '<div data-g-tg="message-wrapper">';
+                $html .= '<div data-g-tg="success-message" aria-hidden="true" style="display: none;">';
+                    $html .= '<div class="alert alert-success lead mb-4" role="alert">';
+                        // TODO: include response here
+                        $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> ' . esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' );
+                    $html .= '</div>';
+                    // TODO: remove next line
+                    $html .= '<pre data-g-tg="response-text"></pre>';
+                $html .= '</div>';
+                $html .= '<div data-g-tg="error-message" aria-hidden="true" style="display: none;">';
+                    $html .= '<div class="alert alert-danger lead mb-4" role="alert">';
+                        // TODO: include response here
+                        $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> ' . esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' );
+                    // TODO: remove next line
+                    $html .= '<pre data-g-tg="response-text"></pre>';
+                $html .= '</div>';
+            $html .= '</div>';
+        $html .= '</div>';
 
-                <form novalidate method="post" action="<?php echo get_bloginfo( 'url' ); ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
-
-                    <?php
-                        echo $template;
-                    ?>
-
-                    <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
-                    <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
-                    <input type="hidden" name="idh__r" value="<?php echo $hash; ?>">
-                </form>
-
-                <div data-g-tg="message-wrapper">
-
-                    <div data-g-tg="success-message" aria-hidden="true" style="display: none;">
-                        <div class="alert alert-success lead mb-4" role="alert">
-                            <span class="fa fa-check fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ); ?>
-                            <!-- TODO: include response here -->
-                        </div>
-                        <pre data-g-tg="response-text">
-                        </pre>
-                    </div>
-
-                    <div data-g-tg="error-message" aria-hidden="true" style="display: none;">
-                        <div class="alert alert-danger lead mb-4" role="alert">
-                            <span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <?php echo esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' ); ?>
-                            <!-- TODO: include response here -->
-                        </div>
-                        <pre data-g-tg="response-text">
-                        </pre>
-                    </div>
-
-                </div>
-
-            </div>
-        <?php
+        return $html;
 
     } // /make_form_from_template()
+
+
+    public function print_form_from_template( $index ) {
+
+        echo $this->make_form_from_template( $index );
+
+    }
 
 
     private function translate( $translate_string ) {
@@ -657,11 +653,12 @@ class Bsx_Mail_Form {
 
                 // get recipient mail
                 $recipient_mail = get_option( 'form-' . $form_index . '-recipient-email' );
+
                 $sender_mail = get_option( 'form-' . $form_index . '-sender-email' );
-                // TODO: get from somewhere, e.g. theme config
-                $from_mail = 'noreply@example.com';
 
 
+                // TODO: check for mail 2 filled
+                // TODO: allow placeholder [email] in mail 2
 
                 
                 // check referrer host is current host, disallow external access
@@ -687,11 +684,19 @@ class Bsx_Mail_Form {
                     $headers = 'From: ' . $sender_mail . "\r\n";
                     // $headers .= "CC: somebodyelse@example.com";
 
-                    // mail( $recipient_mail, $mail_subject, $mail_content, $headers );
+                    if (
+                        true // mail( $recipient_mail, $mail_subject, $mail_content, $headers );
+                        // && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2)
+                    ) {
+                        // TEST RETURN – TODO: remove
+                        return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
 
-                    // return rest_ensure_response( $response );
-                    // 'RECIPIENT: ' . $recipient_mail . "\n\n" . 
-                    return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
+                        // TODO: enable following line
+                        // return rest_ensure_response( esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ) );
+                    }
+                    else {
+                        return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );
+                    } 
                 } 
                 else {
                     // validation not ok, send forbidden 403
@@ -730,17 +735,37 @@ class Bsx_Mail_Form {
     } // /register_mailer_rest_route()
 
 
+
+
+    // [theme-form id="1"]
+    public function add_shortcode() {
+
+        function add_form_shortcode( $atts = [] ) {
+
+            $data = shortcode_atts( array(
+                'id' => '',
+            ), $atts );
+
+            // no cats defined
+            if ( empty( $data[ 'id' ] ) ){
+                return "";
+            }
+
+            return ( new Bsx_Mail_Form )->make_form_from_template( $data[ 'id' ] );
+            // return 'TEST ' . $data[ 'id' ];
+        }
+        add_shortcode( 'theme-form', 'add_form_shortcode' );
+
+    }
+
+
     public function init() {
-
-
-
 
         $this->register_form_settings();
 
-
         $this->register_mailer_rest_route();
 
-
+        $this->add_shortcode();
 
     } // /init()
 

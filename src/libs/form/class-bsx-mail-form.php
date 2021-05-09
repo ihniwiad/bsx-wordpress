@@ -12,6 +12,8 @@ class Bsx_Mail_Form {
 
     public function make_form_from_template( $index ) {
 
+        $hash = hash( 'md5', 'x' . $index );
+
         $template = get_option( 'form-' . $index . '-form-template' );
 
         // pattern for placeholders
@@ -53,6 +55,7 @@ class Bsx_Mail_Form {
 
                     <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
                     <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
+                    <input type="hidden" name="idh__r" value="<?php echo $hash; ?>">
                 </form>
 
                 <div data-g-tg="message-wrapper">
@@ -267,7 +270,8 @@ class Bsx_Mail_Form {
         function theme_form_settings_page_setup() {
 
             // pages 1...max
-            for ( $i = 1; $i <= 2; $i++ ) {
+            $forms_count = 2;
+            for ( $i = 1; $i <= $forms_count; $i++ ) {
 
                 // section form
                 add_settings_section(
@@ -519,6 +523,20 @@ class Bsx_Mail_Form {
                     // $response .= $name . ' (' . $type . ', required: ' . $required . '): ' . $value . '<br>';
                 }
 
+
+                // TODO: get template kex by secret form value (hash)
+                // $index = 1;
+                // $hash = hash( 'md5', 'x' . $index );
+
+                $forms_count = 2;
+                $form_index = '';
+                for ( $i = 1; $i <= $forms_count; $i++ ) {
+                    if ( hash( 'md5', 'x' . $i ) === $sanitized_values[ 'idh' ] ) {
+                        $form_index = 1;
+                    }
+                }
+
+
                 function replace_placeholders( $text, $sanitized_values ) {
                     // $text = str_replace ( '[site-title]', get_the_title(), $text );
                     $text = str_replace ( '[site-url]', get_site_url(), $text );
@@ -606,13 +624,13 @@ class Bsx_Mail_Form {
                     $validation_ok = false;
                 }
 
-                $mail_subject = replace_placeholders( get_option( 'form-1-subject' ), $sanitized_values );
+                $mail_subject = replace_placeholders( get_option( 'form-' . $form_index . '-subject' ), $sanitized_values );
                 if ( empty( $mail_subject ) ) {
                     // fallback subject
                     $mail_subject = 'Mail from contact form at ' . get_site_url();
                 }
 
-                $mail_content = replace_placeholders( get_option( 'form-1-mail-template' ), $sanitized_values );
+                $mail_content = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template' ), $sanitized_values );
                 if ( empty( $mail_content ) ) {
                     // fallback content
                     foreach ( $sanitized_values as $key => $value ) {
@@ -632,14 +650,14 @@ class Bsx_Mail_Form {
                 }
                 // /TEST
 
-                $response .= 'HV VALUE:' . "\n\n" . ( isset( $hv_value ) ? $hv_value : 'undefined' ) . "\n\n" . "(type: " . ( isset( $hv_type ) ? $hv_type : 'undefined' ) .", values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
+                $response .= 'FORM INDEX: ' . ( isset( $form_index ) ? $form_index : 'undefined' ) . "\n\n" . 'HV VALUE:' . "\n\n" . ( isset( $hv_value ) ? $hv_value : 'undefined' ) . "\n\n" . "(type: " . ( isset( $hv_type ) ? $hv_type : 'undefined' ) .", values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
                 foreach ( $sanitized_values as $key => $value ) {
                     $response .= $key . ': ' . $value . '<br>';
                 }
 
                 // get recipient mail
-                $recipient_mail = get_option( 'form-1-recipient-email' );
-                $sender_mail = get_option( 'form-1-sender-email' );
+                $recipient_mail = get_option( 'form-' . $form_index . '-recipient-email' );
+                $sender_mail = get_option( 'form-' . $form_index . '-sender-email' );
                 // TODO: get from somewhere, e.g. theme config
                 $from_mail = 'noreply@example.com';
 

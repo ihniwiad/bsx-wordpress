@@ -156,10 +156,8 @@ var sendMail = function( $form ) {
 
                 // $( formMessages ).text( response );
 
-                // TODO: clear
-                // $form.find( 'input:not([hidden]), textarea' ).val( '' );
-
-                // TODO: clean message
+                // clear
+                $form.find( 'input:not([type="hidden"]), textarea' ).val( '' );
 
                 // show success
                 showMessage( $messageWrapper, 'success', response );
@@ -171,9 +169,9 @@ var sendMail = function( $form ) {
                 Utils.WaitScreen.hide();
 
                 if ( data.responseText !== '' ) {
-                    console.log( data.responseText );
+                    // console.log( data.responseText );
 
-                    // TODO: clean message
+                    // TODO: clean message ?
 
                     // show error
                     showMessage( $messageWrapper, 'error', data.responseText );

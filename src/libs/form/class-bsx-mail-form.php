@@ -16,8 +16,8 @@ class Bsx_Mail_Form {
 
         $template = get_option( 'form-' . $index . '-form-template' );
 
-        // pattern for placeholders
-        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|submit)+::+([a-zA-Z0-9-_ =\"]|)+\]/s";
+        // pattern for placeholders (allow css selectors for js)
+        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|submit)+::+([a-zA-Z0-9-_ =\".#\[\]\(\)]|)+\]/s";
         $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\).:?!])+\]/s";
 
         // replace input placeholders
@@ -55,17 +55,19 @@ class Bsx_Mail_Form {
                 $html .= '<div data-g-tg="success-message" aria-hidden="true" style="display: none;">';
                     $html .= '<div class="alert alert-success lead mb-4" role="alert">';
                         // TODO: include response here
-                        $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> ' . esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' );
+                        $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>';
+                        // $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> ' . esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' );
                     $html .= '</div>';
                     // TODO: remove next line
-                    $html .= '<pre data-g-tg="response-text"></pre>';
+                    // $html .= '<pre data-g-tg="response-text"></pre>';
                 $html .= '</div>';
                 $html .= '<div data-g-tg="error-message" aria-hidden="true" style="display: none;">';
                     $html .= '<div class="alert alert-danger lead mb-4" role="alert">';
                         // TODO: include response here
-                        $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> ' . esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' );
+                        $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>';
+                        // $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> ' . esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' );
                     // TODO: remove next line
-                    $html .= '<pre data-g-tg="response-text"></pre>';
+                    // $html .= '<pre data-g-tg="response-text"></pre>';
                 $html .= '</div>';
             $html .= '</div>';
         $html .= '</div>';
@@ -723,7 +725,13 @@ class Bsx_Mail_Form {
 
                 // TODO: check hv
                 // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
-                if ( $validation_ok && ( empty( $referrer_host ) || $referrer_host === $current_host ) && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
+                if ( 
+                    $validation_ok 
+                    && ( empty( $referrer_host ) || $referrer_host === $current_host ) 
+                    && $sanitized_values[ 'human_verification' ] == $_calc_hv_value 
+                    && ! empty( $recipient_mail ) 
+                    && filter_var( $sender_mail, FILTER_VALIDATE_EMAIL ) 
+                ) {
                     // validation ok, try sending
 
                     // prepare headers
@@ -733,14 +741,18 @@ class Bsx_Mail_Form {
                     $headers_2 = 'From: ' . $sender_mail_2 . "\r\n";
 
                     if (
-                        true // mail( $recipient_mail, $mail_subject, $mail_content, $headers );
-                        // && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2)
+                        // true 
+                        mail( $recipient_mail, $mail_subject, $mail_content, $headers )
+                        && ( 
+                            ! $mail_2_ok
+                            || ( $mail_2_ok && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
+                        )
                     ) {
                         // TEST RETURN – TODO: remove
-                        return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
+                        // return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
 
                         // TODO: enable following line
-                        // return rest_ensure_response( esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ) );
+                        return rest_ensure_response( esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ) );
                     }
                     else {
                         return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );

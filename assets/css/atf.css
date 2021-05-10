@@ -39,13 +39,7 @@ body {
     padding-top: 1em;
     padding-bottom: 1em;
     font-size: 1rem;
-    color: transparent; } }
-  @media (max-width: 991.98px) and (max-width: 1199.98px) {
-    .bsx-appnav-navbar-toggler {
-      padding-left: "";
-      padding-right: ""; } }
-
-@media (max-width: 991.98px) {
+    color: transparent; }
     .bsx-appnav-navbar-toggler::before {
       content: "";
       position: absolute;
@@ -139,10 +133,6 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-around; } }
-  @media (min-width: 992px) and (max-width: 1199.98px) {
-    .bsx-appnav-navbar-nav > li > a {
-      padding-left: "";
-      padding-right: ""; } }
     .bsx-appnav-navbar-nav > li > a::before {
       content: "";
       position: absolute;
@@ -167,10 +157,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around; }
-    @media (max-width: 1199.98px) {
-      .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav > li > a {
-        padding-left: "";
-        padding-right: ""; } }
 
 [class*="banner-st-"] {
   background-color: #dee2e6; }

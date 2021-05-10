@@ -44,7 +44,7 @@
 		color: transparent;
 
 		// optional reduces lg down padding x
-		@if $bsx-appnav-desktop-level-1-link-lg-down-px {
+		@if $bsx-appnav-desktop-level-1-link-lg-down-px != '' {
 			@include bsx-media-breakpoint-down(lg) {
 				padding-left: $bsx-appnav-desktop-level-1-link-lg-down-px;
 				padding-right: $bsx-appnav-desktop-level-1-link-lg-down-px;
@@ -259,7 +259,7 @@
 				}
 
 				// optional reduces lg down padding x
-				@if $bsx-appnav-desktop-level-1-link-lg-down-px {
+				@if $bsx-appnav-desktop-level-1-link-lg-down-px != '' {
 					@include bsx-media-breakpoint-down(lg) {
 						padding-left: $bsx-appnav-desktop-level-1-link-lg-down-px;
 						padding-right: $bsx-appnav-desktop-level-1-link-lg-down-px;
@@ -335,7 +335,7 @@
 			}
 
 			// optional reduces lg down padding x
-			@if $bsx-appnav-desktop-level-1-link-lg-down-px {
+			@if $bsx-appnav-desktop-level-1-link-lg-down-px != '' {
 				@include bsx-media-breakpoint-down(lg) {
 					padding-left: $bsx-appnav-desktop-level-1-link-lg-down-px;
 					padding-right: $bsx-appnav-desktop-level-1-link-lg-down-px;

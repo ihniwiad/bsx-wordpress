@@ -2,7 +2,7 @@
 
 class Bsx_Mail_Form {
 
-    // var $forms_count = 5;
+    public static $global_forms_count = 2;
 
 
     // pattern for placeholders
@@ -75,7 +75,7 @@ class Bsx_Mail_Form {
     } // /make_form_from_template()
 
 
-    public function print_form_from_template( $index ) {
+    public function print_form( $index ) {
 
         echo $this->make_form_from_template( $index );
 
@@ -263,10 +263,13 @@ class Bsx_Mail_Form {
          * custom settings, create pages setup
          */
 
-        function theme_form_settings_page_setup() {
+        $forms_count = self::$global_forms_count;
+
+        add_action( 'admin_init', function() use ( $forms_count ) {
+        // function theme_form_settings_page_setup() {
 
             // pages 1...max
-            $forms_count = 2;
+            // $forms_count = 2;
             for ( $i = 1; $i <= $forms_count; $i++ ) {
 
                 // section form
@@ -442,7 +445,8 @@ class Bsx_Mail_Form {
                 );
             }
 
-        }
+        // }
+        } );
         // Shared  across sections
         // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
         function render_theme_form_input_field( $args ) {
@@ -453,7 +457,7 @@ class Bsx_Mail_Form {
             $options = get_option( $args[ 0 ] );
             echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="20" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
         }
-        add_action( 'admin_init', 'theme_form_settings_page_setup' );
+        // add_action( 'admin_init', 'theme_form_settings_page_setup' );
 
     } // /register_form_settings()
 
@@ -464,10 +468,12 @@ class Bsx_Mail_Form {
          * callback function for routes endpoint
          */
         function bsx_mailer_post_endpoint( $request ) {
+        // add_action( 'admin_init', function() use ( $forms_count ) {
 
             if ( $_SERVER[ "REQUEST_METHOD" ] == "POST" ) {
                 // ok, try send mail
 
+                // TEST ($response is used only for testing)
                 $response = '';
 
                 // $response .= var_dump( $request );
@@ -627,12 +633,54 @@ class Bsx_Mail_Form {
                 }
 
                 $mail_content = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template' ), $sanitized_values );
+
                 if ( empty( $mail_content ) ) {
                     // fallback content
                     foreach ( $sanitized_values as $key => $value ) {
                         $mail_content .= $key . ': ' . $value . "\n";
                     }
                 }
+
+                // get recipient mail
+                $recipient_mail = get_option( 'form-' . $form_index . '-recipient-email' );
+                $recipient_mail_2 = get_option( 'form-' . $form_index . '-recipient-email-2' );
+
+                $sender_mail = get_option( 'form-' . $form_index . '-sender-email' );
+
+                // ckeck if $recipient_mail_2 is filled
+                $mail_2_ok = false;
+
+                if ( ! empty( $recipient_mail_2 ) ) {
+
+                    $sender_mail_2 = get_option( 'form-' . $form_index . '-sender-email-2' );
+
+                    // ckeck if $recipient_mail_2 is mail or placeholder
+                    if ( substr( $recipient_mail_2, 0, 1 ) === '[' && substr( $recipient_mail_2, -1 ) === ']' ) {
+                        // is placeholder, get placeholder name
+                        $placeholder_name = ltrim( $recipient_mail_2, '[' );
+                        $placeholder_name = rtrim( $placeholder_name, ']' );
+                        // get placeholder value
+                        $recipient_mail_2 = isset( $sanitized_values[ $placeholder_name ] ) ? $sanitized_values[ $placeholder_name ] : '';
+                    }
+
+                    $mail_subject_2 = replace_placeholders( get_option( 'form-' . $form_index . '-subject-2' ), $sanitized_values );
+                    $mail_content_2 = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template-2' ), $sanitized_values );
+
+
+                    // check all mail 2 variables to be valid
+                    if ( 
+                        filter_var( $recipient_mail_2, FILTER_VALIDATE_EMAIL )
+                        && filter_var( $sender_mail_2, FILTER_VALIDATE_EMAIL )
+                        && ! empty( $mail_subject_2 )
+                        && ! empty( $mail_content_2 )
+                    ) {
+                        $mail_2_ok = true;
+                    }
+                }
+                // TODO: check for mail 2 filled
+                // TODO: allow placeholder [email] in mail 2
+
+
 
                 // TEST
                 $test = '';
@@ -644,21 +692,17 @@ class Bsx_Mail_Form {
                 else {
                     $test = 'undefiened $hv_values';
                 }
-                // /TEST
 
+                $response .= '$recipient_mail_2: ' . $recipient_mail_2 . "\n\n";
+                $response .= '$sender_mail_2: ' . $sender_mail_2 . "\n\n";
+                $response .= '$mail_subject_2: ' . $mail_subject_2 . "\n\n";
+                $response .= '$mail_content_2: ' . $mail_content_2 . "\n\n";
+                $response .= '$mail_2_ok: ' . $mail_2_ok . "\n\n";
                 $response .= 'FORM INDEX: ' . ( isset( $form_index ) ? $form_index : 'undefined' ) . "\n\n" . 'HV VALUE:' . "\n\n" . ( isset( $hv_value ) ? $hv_value : 'undefined' ) . "\n\n" . "(type: " . ( isset( $hv_type ) ? $hv_type : 'undefined' ) .", values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
                 foreach ( $sanitized_values as $key => $value ) {
                     $response .= $key . ': ' . $value . '<br>';
                 }
-
-                // get recipient mail
-                $recipient_mail = get_option( 'form-' . $form_index . '-recipient-email' );
-
-                $sender_mail = get_option( 'form-' . $form_index . '-sender-email' );
-
-
-                // TODO: check for mail 2 filled
-                // TODO: allow placeholder [email] in mail 2
+                // /TEST
 
                 
                 // check referrer host is current host, disallow external access
@@ -668,21 +712,25 @@ class Bsx_Mail_Form {
                 $has_matches = preg_match( $host_pattern, $referrer, $matches );
                 $referrer_host = $matches[ 0 ];
 
-                $mail_content .= "\n\n" . 'REFERER HOST: ' . $referrer_host . "\n\n";
+                // check referrer, must be empty or same host
+                // $mail_content .= "\n\n" . 'REFERER HOST: ' . $referrer_host . "\n\n";
                 $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)
                 $protocol = ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ? "https://" : "http://"; // protocol
                 $current_host = $protocol . $server_name . '/';
-                $mail_content .= 'HOST: ' . $current_host . "\n\n";
+                // $mail_content .= 'HOST: ' . $current_host . "\n\n";
 
 
 
                 // TODO: check hv
                 // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
                 if ( $validation_ok && ( empty( $referrer_host ) || $referrer_host === $current_host ) && $sanitized_values[ 'human_verification' ] == $_calc_hv_value && ! empty( $recipient_mail ) && ! empty( $sender_mail ) ) {
+                    // validation ok, try sending
 
                     // prepare headers
                     $headers = 'From: ' . $sender_mail . "\r\n";
                     // $headers .= "CC: somebodyelse@example.com";
+
+                    $headers_2 = 'From: ' . $sender_mail_2 . "\r\n";
 
                     if (
                         true // mail( $recipient_mail, $mail_subject, $mail_content, $headers );

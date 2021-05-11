@@ -3,7 +3,8 @@
 @import "./variables";
 
 
-// background
-[class*="banner-st-"] {
+// background (TODO: replace 2nd selector by 1st, update markup)
+.bsx-banner,
+[class*="banner-"]:not(.banner-inner) {
   background-color: $bsx-banner-atf-bg-color;
 }

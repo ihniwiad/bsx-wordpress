@@ -496,7 +496,7 @@ class Bsx_Mail_Form {
                 // ok, try send mail
 
                 // TEST ($response is used only for testing)
-                $response = '';
+                // $response = '';
 
                 // $response .= var_dump( $request );
 
@@ -552,11 +552,13 @@ class Bsx_Mail_Form {
                 // $index = 1;
                 // $hash = hash( 'md5', 'x' . $index );
 
-                $forms_count = 3;
+                // workaround since not knowing forms count here, assuming max 30 forms
+                $forms_count = 30;
                 $form_index = '';
                 for ( $i = 1; $i <= $forms_count; $i++ ) {
                     if ( hash( 'md5', 'x' . $i ) === $sanitized_values[ 'idh' ] ) {
                         $form_index = $i;
+                        break;
                     }
                 }
 
@@ -705,25 +707,25 @@ class Bsx_Mail_Form {
 
 
                 // TEST
-                $test = '';
-                if ( isset( $hv_values ) && ! empty( $hv_values ) ) {
-                    foreach ( $hv_values as $val ) {
-                        $test .= $val . ', ';
-                    }
-                }
-                else {
-                    $test = 'undefiened $hv_values';
-                }
+                // $test = '';
+                // if ( isset( $hv_values ) && ! empty( $hv_values ) ) {
+                //     foreach ( $hv_values as $val ) {
+                //         $test .= $val . ', ';
+                //     }
+                // }
+                // else {
+                //     $test = 'undefiened $hv_values';
+                // }
 
-                $response .= '$recipient_mail_2: ' . $recipient_mail_2 . "\n\n";
-                $response .= '$sender_mail_2: ' . $sender_mail_2 . "\n\n";
-                $response .= '$mail_subject_2: ' . $mail_subject_2 . "\n\n";
-                $response .= '$mail_content_2: ' . $mail_content_2 . "\n\n";
-                $response .= '$mail_2_ok: ' . $mail_2_ok . "\n\n";
-                $response .= 'FORM INDEX: ' . ( isset( $form_index ) ? $form_index : 'undefined' ) . "\n\n" . 'HV VALUE:' . "\n\n" . ( isset( $hv_value ) ? $hv_value : 'undefined' ) . "\n\n" . "(type: " . ( isset( $hv_type ) ? $hv_type : 'undefined' ) .", values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
-                foreach ( $sanitized_values as $key => $value ) {
-                    $response .= $key . ': ' . $value . '<br>';
-                }
+                // $response .= '$recipient_mail_2: ' . $recipient_mail_2 . "\n\n";
+                // $response .= '$sender_mail_2: ' . $sender_mail_2 . "\n\n";
+                // $response .= '$mail_subject_2: ' . $mail_subject_2 . "\n\n";
+                // $response .= '$mail_content_2: ' . $mail_content_2 . "\n\n";
+                // $response .= '$mail_2_ok: ' . $mail_2_ok . "\n\n";
+                // $response .= 'FORM INDEX: ' . ( isset( $form_index ) ? $form_index : 'undefined' ) . "\n\n" . 'HV VALUE:' . "\n\n" . ( isset( $hv_value ) ? $hv_value : 'undefined' ) . "\n\n" . "(type: " . ( isset( $hv_type ) ? $hv_type : 'undefined' ) .", values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
+                // foreach ( $sanitized_values as $key => $value ) {
+                //     $response .= $key . ': ' . $value . '<br>';
+                // }
                 // /TEST
 
                 
@@ -758,7 +760,9 @@ class Bsx_Mail_Form {
                     $headers = 'From: ' . $sender_mail . "\r\n";
                     // $headers .= "CC: somebodyelse@example.com";
 
-                    $headers_2 = 'From: ' . $sender_mail_2 . "\r\n";
+                    if ( isset( $sender_mail_2 ) ) {
+                        $headers_2 = 'From: ' . $sender_mail_2 . "\r\n";
+                    }
 
                     if (
                         // true 
@@ -772,7 +776,7 @@ class Bsx_Mail_Form {
                         // return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
 
                         // TODO: enable following line
-                        return rest_ensure_response( esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' ) );
+                        return rest_ensure_response( esc_html__( 'Thank you. Your message has been sent successfully.', 'bsx-wordpress' ) );
                     }
                     else {
                         return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );

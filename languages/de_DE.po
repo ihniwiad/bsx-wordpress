@@ -251,6 +251,20 @@ msgstr "Nachricht"
 msgid "Load other security code"
 msgstr "Anderen Sicherheitscode laden"
 
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Thank you. Your message has been sent successfully."
+msgstr "Vielen Dank. Ihre Nachricht wurde erfolgreich gesendet."
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Something went wrong while trying to send email."
+msgstr "Beim Versuch die Nachricht zu senden ist ein Fehler aufgetreten."
+
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Your data is invalid or you are not allowed to access this server."
+msgstr "Ihre Daten sind ungültig oder Sie haben keine Berechtigung, auf diesen Server zuzugreifen."
+
+
+
 
 
 

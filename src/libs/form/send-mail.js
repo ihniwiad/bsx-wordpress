@@ -197,7 +197,7 @@ var sendMail = function( $form ) {
                     // TODO: clean message ?
 
                     // show error
-                    showMessage( $messageWrapper, 'error', data.responseText );
+                    showMessage( $messageWrapper, 'error', ( typeof ( JSON.parse( data.responseText ) ).message !== 'undefined' ) ? ( JSON.parse( data.responseText ) ).message : data.responseText );
                 } 
                 else {
                     console.log( 'An unknown error occured. Your message could not be sent.' );

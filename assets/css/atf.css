@@ -158,7 +158,8 @@ body {
     align-items: center;
     justify-content: space-around; }
 
-[class*="banner-st-"] {
+.bsx-banner,
+[class*="banner-"]:not(.banner-inner) {
   background-color: #dee2e6; }
 
 /*# sourceMappingURL=atf.css.map */

@@ -11775,9 +11775,6 @@ body.is-android .bg-mobile-no-repeat {
   padding-top: 1rem;
   padding-bottom: 1rem; }
 
-[class*="banner-vh-"] {
-  background-color: #dee2e6; }
-
 .banner-inner {
   width: 100%; }
 

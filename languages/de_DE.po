@@ -247,6 +247,10 @@ msgstr "Bitte eine gültige E-Mail eingeben."
 msgid "Message"
 msgstr "Nachricht"
 
+#: src/libs/form/class-bsx-mail.form.php:97
+msgid "Load other security code"
+msgstr "Anderen Sicherheitscode laden"
+
 
 
 

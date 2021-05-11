@@ -103,6 +103,15 @@ var sendMail = function( $form ) {
     prepareHv();
 
 
+    // refresh hv
+
+    var $refreshHvTrigger = $form.find( '[data-g-fn="refresh-hv"]' );
+
+    $refreshHvTrigger.on( 'click', function() {
+        prepareHv();
+    } );
+
+
     $form.on( 'submit', function( event ) {
 
         // TODO: client side validation
@@ -143,6 +152,13 @@ var sendMail = function( $form ) {
             $responseText.html( message );
         }
 
+        var hideMessage = function( $messageWrapper, state ) {
+            var $message = $messageWrapper.find( '[data-g-tg="' + state + '-message"]' );
+
+            $message.hide();
+            Utils.aria( $message, 'hidden', true );
+        }
+
         $.ajax( {
             type: 'POST',
             url: $form.attr( 'action' ),
@@ -156,8 +172,15 @@ var sendMail = function( $form ) {
 
                 // $( formMessages ).text( response );
 
-                // clear
-                $form.find( 'input:not([type="hidden"]), textarea' ).val( '' );
+                // clear inputs, remove success message on input click
+                var $visibleInputs = $form.find( 'input:not([type="hidden"]), textarea' );
+                $visibleInputs
+                    .val( '' )
+                    .one( 'focus.removeMessage', function() {
+                        hideMessage( $messageWrapper, 'success' );
+                        $visibleInputs.off( 'focus.removeMessage' );
+                    } )
+                ;
 
                 // show success
                 showMessage( $messageWrapper, 'success', response );

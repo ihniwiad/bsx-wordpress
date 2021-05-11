@@ -311,7 +311,18 @@ class Bsx_Mail_Form {
                     'theme-form-' . $i . '-settings-section-form', // section = 'default'
                     array(
                         'form-' . $i . '-form-template',
-                        'label_for' => 'form-' . $i . '-form-template'
+                        'label_for' => 'form-' . $i . '-form-template',
+                        'description'  => sprintf( 
+                            __( '%sUse input placeholders:%sMandatory field: %sOptional field: %sTranslation: %sHuman verification display: %sHuman verification input: %s', 
+                            'bsx-wordpress' ),
+                            '<p><strong>',
+                            '</strong></p><p><small>',
+                            '<code>[*email::email class="form-control" id="email"]</code> (type: email, name: <b>email</b>)<br>',
+                            '<code>[text::name class="form-control" id="name"]</code> (type: text, name: <b>name</b><br>',
+                            '<code>[translate::Email]</code><br>',
+                            '<code>[human-verification-display:: class="input-group-text"]</code><br>',
+                            '<code>[*human-verification-input:: class="form-control" id="human-verification"]</code><br></small></p>',
+                        ),
                     ) // args = array()
                 );
 
@@ -371,7 +382,13 @@ class Bsx_Mail_Form {
                     'theme-form-' . $i . '-settings-section-mail', // section = 'default'
                     array(
                         'form-' . $i . '-mail-template',
-                        'label_for' => 'form-' . $i . '-mail-template'
+                        'label_for' => 'form-' . $i . '-mail-template',
+                        'description'  => sprintf( 
+                            __( '%sUse placeholders (Subject and Email template):%s', 
+                            'bsx-wordpress' ),
+                            '<p><strong>',
+                            '</strong></p><p><small><code>[email]</code>, <code>[name]</code>, <code>[site-url]</code>, ...</small></p>',
+                        ),
                     ) // args = array()
                 );
 
@@ -473,10 +490,16 @@ class Bsx_Mail_Form {
         // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
         function render_theme_form_input_field( $args ) {
             $options = get_option( $args[ 0 ] );
+            if ( isset( $args[ 'description' ] ) ) {
+                echo '<div>' . $args[ 'description' ] . '</div>';
+            }
             echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '" size="50" />';
         }
         function render_theme_form_textarea_field( $args ) {
             $options = get_option( $args[ 0 ] );
+            if ( isset( $args[ 'description' ] ) ) {
+                echo '<div>' . $args[ 'description' ] . '</div>';
+            }
             echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="20" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
         }
         // add_action( 'admin_init', 'theme_form_settings_page_setup' );

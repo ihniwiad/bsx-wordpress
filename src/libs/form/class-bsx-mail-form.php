@@ -2,7 +2,7 @@
 
 class Bsx_Mail_Form {
 
-    public static $global_forms_count = 2;
+    public static $global_forms_count = 3;
 
 
     // pattern for placeholders
@@ -195,6 +195,15 @@ class Bsx_Mail_Form {
                 'manage_options', // capability
                 'theme-form-settings-2', // menu_slug, 
                 'theme_form_settings_page_2', // function = '', 
+                2 // position = null
+            );
+            add_submenu_page( 
+                'theme_form_options', // parent_slug
+                esc_html__( 'Form 3' ), // page_title
+                esc_html__( 'Form 3' ), // menu_title
+                'manage_options', // capability
+                'theme-form-settings-3', // menu_slug, 
+                'theme_form_settings_page_3', // function = '', 
                 3 // position = null
             );
             // pages 2...max
@@ -252,6 +261,18 @@ class Bsx_Mail_Form {
                 </form>
             </div>
         <?php }
+        function theme_form_settings_page_3() { ?>
+            <div class="wrap">
+                <h2><?php esc_html__( 'Form 3', 'bsx-wordpress' ); ?></h2>
+                <form method="post" action="options.php">
+                    <?php
+                        do_settings_sections( 'theme_form_3_options_form' ); // page
+                        settings_fields( 'custom-settings-theme-form-3' ); // option group (may have multiple sections)
+                        submit_button();
+                    ?>
+                </form>
+            </div>
+        <?php }
 
         // pages 1...max
         // for ( $i = 1; $i <= 5; $i++ ) {
@@ -299,7 +320,6 @@ class Bsx_Mail_Form {
                     'custom-settings-theme-form-' . $i, // option group
                     'form-' . $i . '-form-template' // option name
                 );
-
 
                 // section mail 1
                 add_settings_section(
@@ -532,11 +552,11 @@ class Bsx_Mail_Form {
                 // $index = 1;
                 // $hash = hash( 'md5', 'x' . $index );
 
-                $forms_count = 2;
+                $forms_count = 3;
                 $form_index = '';
                 for ( $i = 1; $i <= $forms_count; $i++ ) {
                     if ( hash( 'md5', 'x' . $i ) === $sanitized_values[ 'idh' ] ) {
-                        $form_index = 1;
+                        $form_index = $i;
                     }
                 }
 

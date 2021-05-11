@@ -313,7 +313,7 @@ class Bsx_Mail_Form {
                         'form-' . $i . '-form-template',
                         'label_for' => 'form-' . $i . '-form-template',
                         'description'  => sprintf( 
-                            __( '%sUse input placeholders:%sMandatory field: %sOptional field: %sTranslation: %sHuman verification display: %sHuman verification input: %s', 
+                            __( '%sUse input placeholders:%sMandatory input: %sOptional input: %sTranslation: %sHuman verification display: %sHuman verification input: %s', 
                             'bsx-wordpress' ),
                             '<p><strong>',
                             '</strong></p><p><small>',

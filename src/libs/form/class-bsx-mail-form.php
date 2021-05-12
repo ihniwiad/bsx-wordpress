@@ -780,11 +780,20 @@ class Bsx_Mail_Form {
                     // validation ok, try sending
 
                     // prepare headers
-                    $headers = 'From: ' . $sender_mail . "\r\n";
+                    $global_headers = 'MIME-Version: 1.0' . "\r\n";
+                    $global_headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+                    // Content-type: text/html; charset=UTF-8
+                    $headers = $global_headers . 'From: ' . $sender_mail . "\r\n";
                     // $headers .= "CC: somebodyelse@example.com";
 
+                    // make utf-8 compatible
+                    $mail_subject = '=?UTF-8?B?'.base64_encode( $mail_subject ).'?=';
+
                     if ( isset( $sender_mail_2 ) ) {
-                        $headers_2 = 'From: ' . $sender_mail_2 . "\r\n";
+                        $headers_2 = $global_headers . 'From: ' . $sender_mail_2 . "\r\n";
+                        
+                        // make utf-8 compatible
+                        $mail_subject_2 = '=?UTF-8?B?'.base64_encode( $mail_subject_2 ).'?=';
                     }
 
                     if (

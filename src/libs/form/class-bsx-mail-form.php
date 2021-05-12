@@ -681,6 +681,7 @@ class Bsx_Mail_Form {
                 }
 
                 $mail_content = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template' ), $sanitized_values );
+                $mail_content = str_replace ( "\n", "<br/>", $mail_content );
 
                 if ( empty( $mail_content ) ) {
                     // fallback content

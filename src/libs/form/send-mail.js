@@ -123,6 +123,10 @@ var sendMail = function( $form ) {
         $formSubmit.prop( 'disabled', true );
 
         if ( ! $form.formValidate( { successCallback: false } ) ) {
+
+            // enable submit button
+            $formSubmit.prop( 'disabled', false );
+        
             return false;
         }
 

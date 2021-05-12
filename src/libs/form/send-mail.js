@@ -114,10 +114,13 @@ var sendMail = function( $form ) {
 
     $form.on( 'submit', function( event ) {
 
-        // TODO: client side validation
-
         event.preventDefault();
         event.stopPropagation();
+
+        var $formSubmit = $form.find( '[type="submit"]' );
+
+        // disable submit button
+        $formSubmit.prop( 'disabled', true );
 
         if ( ! $form.formValidate( { successCallback: false } ) ) {
             return false;
@@ -159,6 +162,31 @@ var sendMail = function( $form ) {
             Utils.aria( $message, 'hidden', true );
         }
 
+        var scrollMessageIntoViewport = function( $messageWrapper ) {
+
+            var distanceTop = function() {
+                return Utils.anchorOffsetTop;
+            };
+            var messageOffset = $messageWrapper.offset().top;
+            var messageHeight = $messageWrapper.outerHeight( true );
+            var distanceBottom = 20;
+            var $scrollTarget = Utils.$scrollRoot;
+
+            // only scroll if error is outside of viewport
+            if ( messageOffset - distanceTop() < window.pageYOffset ) {
+                // above the fold
+                $scrollTarget.animate( {
+                    scrollTop: messageOffset - distanceTop()
+                } );
+            }
+            else if ( messageOffset + messageHeight + distanceBottom > ( window.pageYOffset + window.innerHeight ) ) {
+                // below the fold
+                $scrollTarget.animate( {
+                    scrollTop: messageOffset - window.innerHeight + messageHeight + distanceBottom
+                } );
+            }
+        }
+
         $.ajax( {
             type: 'POST',
             url: $form.attr( 'action' ),
@@ -184,6 +212,11 @@ var sendMail = function( $form ) {
 
                 // show success
                 showMessage( $messageWrapper, 'success', response );
+
+                scrollMessageIntoViewport( $messageWrapper );
+
+                // enable submit button
+                $formSubmit.prop( 'disabled', false );
             } )
             .fail( function( data ) {
 
@@ -198,10 +231,15 @@ var sendMail = function( $form ) {
 
                     // show error
                     showMessage( $messageWrapper, 'error', ( typeof ( JSON.parse( data.responseText ) ).message !== 'undefined' ) ? ( JSON.parse( data.responseText ) ).message : data.responseText );
+
+                    scrollMessageIntoViewport( $messageWrapper );
                 } 
                 else {
                     console.log( 'An unknown error occured. Your message could not be sent.' );
                 }
+
+                // enable submit button
+                $formSubmit.prop( 'disabled', false );
             } )
         ;
 

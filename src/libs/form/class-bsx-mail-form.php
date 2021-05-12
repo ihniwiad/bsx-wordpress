@@ -68,9 +68,10 @@ class Bsx_Mail_Form {
                         // $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> ' . esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' );
                     // TODO: remove next line
                     // $html .= '<pre data-g-tg="response-text"></pre>';
+                    $html .= '</div>';
                 $html .= '</div>';
-            $html .= '</div>';
-        $html .= '</div>';
+            $html .= '</div><!-- /[data-g-tg="message-wrapper"] -->';
+        $html .= '</div><!-- /[data-id="form-wrapper"] -->';
 
         return $html;
 

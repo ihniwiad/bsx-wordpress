@@ -105,12 +105,7 @@ class Bsx_Mail_Form {
 
 
     private function parse_input( $input_string ) {
-        // from: [*text::name class="form-control" type="text" id="name"]
-        // to: <input class="form-control" type="text" id="name" name="name__text__r" required>
-        // required: [*... -> required
-        // type: [*text::... -> type="text" | [*message::... -> <textarea>...</textarea>
-        // name: ::name -> name="name__..." (name="MY-NAME__MY-TYPE__R-MEANS-REQUIRED", e.g. name="name__text__r")
-
+        
         // remove brackets from both sides
         $input_string = ltrim( $input_string, '[' );
         $input_string = rtrim( $input_string, ']' );
@@ -163,9 +158,7 @@ class Bsx_Mail_Form {
 
     private function register_form_settings() {
 
-        // $theme_form_settings_add_menu = function() {
-        //     theme_form_settings_add_menu( $this->forms_count );
-        // }
+        // TODO: what about automation from page 1...n with n = self::$global_forms_count ?
 
         // register menu
         function theme_form_settings_add_menu() {
@@ -179,20 +172,10 @@ class Bsx_Mail_Form {
                 'dashicons-email', // icon url
                 1 // position
             );
-            // add subpage
-            // add_submenu_page( 
-            //     'theme_form_options', // parent_slug
-            //     esc_html__( 'Form 1' ), // page_title
-            //     esc_html__( 'Form 1' ), // menu_title
-            //     'manage_options', // capability
-            //     'theme-form-settings-1', // menu_slug, 
-            //     'theme_form_settings_page_1', // function = '', 
-            //     2 // position = null
-            // );
             add_submenu_page( 
                 'theme_form_options', // parent_slug
-                esc_html__( 'Form 2' ), // page_title
-                esc_html__( 'Form 2' ), // menu_title
+                sprintf( esc_html__( 'Form %d' ), 2 ), // page_title
+                sprintf( esc_html__( 'Form %d' ), 2 ), // menu_title
                 'manage_options', // capability
                 'theme-form-settings-2', // menu_slug, 
                 'theme_form_settings_page_2', // function = '', 
@@ -200,47 +183,26 @@ class Bsx_Mail_Form {
             );
             add_submenu_page( 
                 'theme_form_options', // parent_slug
-                esc_html__( 'Form 3' ), // page_title
-                esc_html__( 'Form 3' ), // menu_title
+                sprintf( esc_html__( 'Form %d' ), 3 ), // page_title
+                sprintf( esc_html__( 'Form %d' ), 3 ), // menu_title
                 'manage_options', // capability
                 'theme-form-settings-3', // menu_slug, 
                 'theme_form_settings_page_3', // function = '', 
                 3 // position = null
             );
-            // pages 2...max
-            // for ( $i = 2; $i <= 5; $i++ ) {
-            //     // add subpage
-            //     add_submenu_page( 
-            //         'theme_form_options', // parent_slug
-            //         esc_html__( 'Form '. $i ), // page_title
-            //         esc_html__( 'Form '. $i ), // menu_title
-            //         'manage_options', // capability
-            //         'theme-form-settings-' . $i , // menu_slug, 
-            //         'theme_form_settings_' . $i, // function = '', 
-            //         1 // position = null
-            //     );
-            // }
         }
         add_action( 'admin_menu', 'theme_form_settings_add_menu' );
 
         // pages for menu
 
-        // $function = $prefix . '_custom_type_init';
-        // if ( function_exists( $function ) ) {
-        //     $function();
-        // }
-
-        // add_action('init', function() use($args) {
+        // add_action( 'init', function() use( $args ) {
         //     //...
-        // });
-
-        // for ( $i = 2; $i <= 5; $i++ ) {
-        // }
+        // } );
 
         // page 1...max, call with index $i (1...max)
         function theme_form_settings_page_1() { ?>
             <div class="wrap">
-                <h2><?php esc_html__( 'Form 1', 'bsx-wordpress' ); ?></h2>
+                <h2><?php sprintf( esc_html__( 'Form %d' ), 1 ); ?></h2>
                 <form method="post" action="options.php">
                     <?php
                         do_settings_sections( 'theme_form_1_options_form' ); // page
@@ -252,7 +214,7 @@ class Bsx_Mail_Form {
         <?php }
         function theme_form_settings_page_2() { ?>
             <div class="wrap">
-                <h2><?php esc_html__( 'Form 2', 'bsx-wordpress' ); ?></h2>
+                <h2><?php sprintf( esc_html__( 'Form %d' ), 2 ); ?></h2>
                 <form method="post" action="options.php">
                     <?php
                         do_settings_sections( 'theme_form_2_options_form' ); // page
@@ -264,7 +226,7 @@ class Bsx_Mail_Form {
         <?php }
         function theme_form_settings_page_3() { ?>
             <div class="wrap">
-                <h2><?php esc_html__( 'Form 3', 'bsx-wordpress' ); ?></h2>
+                <h2><?php sprintf( esc_html__( 'Form %d' ), 3 ); ?></h2>
                 <form method="post" action="options.php">
                     <?php
                         do_settings_sections( 'theme_form_3_options_form' ); // page
@@ -274,14 +236,6 @@ class Bsx_Mail_Form {
                 </form>
             </div>
         <?php }
-
-        // pages 1...max
-        // for ( $i = 1; $i <= 5; $i++ ) {
-        //     $function_name_string = '$theme_form_settings_page_' . $i;
-        //     $function_name_string = function() {
-        //         return theme_form_settings_page( $i );
-        //     };
-        // }
 
         /**
          * custom settings, create pages setup
@@ -293,7 +247,6 @@ class Bsx_Mail_Form {
         // function theme_form_settings_page_setup() {
 
             // pages 1...max
-            // $forms_count = 2;
             for ( $i = 1; $i <= $forms_count; $i++ ) {
 
                 // section form
@@ -314,12 +267,14 @@ class Bsx_Mail_Form {
                         'form-' . $i . '-form-template',
                         'label_for' => 'form-' . $i . '-form-template',
                         'description'  => sprintf( 
-                            __( '%sUse input placeholders:%sMandatory input: %sOptional input: %sTranslation: %sHuman verification display: %sHuman verification input: %s', 
+                            __( '%sUse input placeholders:%sInput structure:%sLanguage structure:%sMandatory input example: %sOptional input example: %sTranslation example: %sHuman verification display: %sHuman verification input: %s', 
                             'bsx-wordpress' ),
-                            '<p><strong>',
-                            '</strong></p><p><small>',
-                            '<code>[*email::email class="form-control" id="email"]</code> (type: email, name: <b>email</b>)<br>',
-                            '<code>[text::name class="form-control" id="name"]</code> (type: text, name: <b>name</b><br>',
+                            '<p>',
+                            '</p><p><small>',
+                            '<code>[*</code> required, <code>[</code> non-required, <code>my_type::</code> type, <code>::my_name</code> name, <code> id="some-id" class="foo" data-foo="bar"]</code> attributes (optional)<br>',
+                            '<code>[translate::my_text]</code><br>',
+                            '<code>[*email::email class="form-control" id="email"]</code> type: email, name: email<br>',
+                            '<code>[text::name class="form-control" id="name"]</code> type: text, name: name<br>',
                             '<code>[translate::Email]</code><br>',
                             '<code>[human-verification-display:: class="input-group-text"]</code><br>',
                             '<code>[*human-verification-input:: class="form-control" id="human-verification"]</code><br></small></p>',
@@ -387,8 +342,8 @@ class Bsx_Mail_Form {
                         'description'  => sprintf( 
                             __( '%sUse placeholders (Subject and Email template):%s', 
                             'bsx-wordpress' ),
-                            '<p><strong>',
-                            '</strong></p><p><small><code>[email]</code>, <code>[name]</code>, <code>[site-url]</code>, ...</small></p>',
+                            '<p>',
+                            '</p><p><small><code>[email]</code>, <code>[name]</code>, <code>[site-url]</code>, ...</small></p>',
                         ),
                     ) // args = array()
                 );
@@ -411,7 +366,6 @@ class Bsx_Mail_Form {
                     'form-' . $i . '-mail-template' // option name
                 );
 
-
                 // section mail 1
                 add_settings_section(
                     'theme-form-' . $i . '-settings-section-mail-2', // id
@@ -429,7 +383,13 @@ class Bsx_Mail_Form {
                     'theme-form-' . $i . '-settings-section-mail-2', // section = 'default'
                     array(
                         'form-' . $i . '-recipient-email-2',
-                        'label_for' => 'form-' . $i . '-recipient-email-2'
+                        'label_for' => 'form-' . $i . '-recipient-email-2',
+                        'description'  => sprintf( 
+                            __( '%sOptional use email placeholder, e.g.:%s', 
+                            'bsx-wordpress' ),
+                            '<p>',
+                            '</p><p><small><code>[email]</code></small></p>',
+                        ),
                     ) // args = array()
                 );
                 add_settings_field(
@@ -485,7 +445,6 @@ class Bsx_Mail_Form {
                 );
             }
 
-        // }
         } );
         // Shared  across sections
         // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
@@ -503,7 +462,6 @@ class Bsx_Mail_Form {
             }
             echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="20" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
         }
-        // add_action( 'admin_init', 'theme_form_settings_page_setup' );
 
     } // /register_form_settings()
 
@@ -514,15 +472,9 @@ class Bsx_Mail_Form {
          * callback function for routes endpoint
          */
         function bsx_mailer_post_endpoint( $request ) {
-        // add_action( 'admin_init', function() use ( $forms_count ) {
 
             if ( $_SERVER[ "REQUEST_METHOD" ] == "POST" ) {
-                // ok, try send mail
-
-                // TEST ($response is used only for testing)
-                // $response = '';
-
-                // $response .= var_dump( $request );
+                // ok, validate, try sending
 
                 $sanitized_values = array();
                 $validation_ok = true;
@@ -566,15 +518,9 @@ class Bsx_Mail_Form {
 
                     // add to $values
                     $sanitized_values[ $name ] = $value;
-
-
-                    // $response .= $name . ' (' . $type . ', required: ' . $required . '): ' . $value . '<br>';
                 }
 
-
-                // TODO: get template kex by secret form value (hash)
-                // $index = 1;
-                // $hash = hash( 'md5', 'x' . $index );
+                // get template key by hash
 
                 // workaround since not knowing forms count here, assuming max 30 forms
                 $forms_count = 30;
@@ -585,7 +531,6 @@ class Bsx_Mail_Form {
                         break;
                     }
                 }
-
 
                 function replace_placeholders( $text, $sanitized_values ) {
                     // $text = str_replace ( '[site-title]', get_the_title(), $text );
@@ -676,7 +621,7 @@ class Bsx_Mail_Form {
 
                 $mail_subject = replace_placeholders( get_option( 'form-' . $form_index . '-subject' ), $sanitized_values );
                 if ( empty( $mail_subject ) ) {
-                    // fallback subject
+                    // fallback subject (only mail 1)
                     $mail_subject = 'Mail from contact form at ' . get_site_url();
                 }
 
@@ -684,7 +629,7 @@ class Bsx_Mail_Form {
                 $mail_content = str_replace ( "\n", "<br/>", $mail_content );
 
                 if ( empty( $mail_content ) ) {
-                    // fallback content
+                    // fallback content (only mail 1)
                     foreach ( $sanitized_values as $key => $value ) {
                         $mail_content .= $key . ': ' . $value . "\n";
                     }
@@ -714,6 +659,7 @@ class Bsx_Mail_Form {
 
                     $mail_subject_2 = replace_placeholders( get_option( 'form-' . $form_index . '-subject-2' ), $sanitized_values );
                     $mail_content_2 = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template-2' ), $sanitized_values );
+                    $mail_content_2 = str_replace ( "\n", "<br/>", $mail_content_2 );
 
 
                     // check all mail 2 variables to be valid
@@ -726,33 +672,6 @@ class Bsx_Mail_Form {
                         $mail_2_ok = true;
                     }
                 }
-                // TODO: check for mail 2 filled
-                // TODO: allow placeholder [email] in mail 2
-
-
-
-                // TEST
-                // $test = '';
-                // if ( isset( $hv_values ) && ! empty( $hv_values ) ) {
-                //     foreach ( $hv_values as $val ) {
-                //         $test .= $val . ', ';
-                //     }
-                // }
-                // else {
-                //     $test = 'undefiened $hv_values';
-                // }
-
-                // $response .= '$recipient_mail_2: ' . $recipient_mail_2 . "\n\n";
-                // $response .= '$sender_mail_2: ' . $sender_mail_2 . "\n\n";
-                // $response .= '$mail_subject_2: ' . $mail_subject_2 . "\n\n";
-                // $response .= '$mail_content_2: ' . $mail_content_2 . "\n\n";
-                // $response .= '$mail_2_ok: ' . $mail_2_ok . "\n\n";
-                // $response .= 'FORM INDEX: ' . ( isset( $form_index ) ? $form_index : 'undefined' ) . "\n\n" . 'HV VALUE:' . "\n\n" . ( isset( $hv_value ) ? $hv_value : 'undefined' ) . "\n\n" . "(type: " . ( isset( $hv_type ) ? $hv_type : 'undefined' ) .", values: $test) (calc_hv_value: $_calc_hv_value)" . "\n\n" . 'SANITIZED OUTPUT:' . "\n\n";
-                // foreach ( $sanitized_values as $key => $value ) {
-                //     $response .= $key . ': ' . $value . '<br>';
-                // }
-                // /TEST
-
                 
                 // check referrer host is current host, disallow external access
                 $referrer = $_SERVER[ 'HTTP_REFERER' ];
@@ -762,16 +681,11 @@ class Bsx_Mail_Form {
                 $referrer_host = $matches[ 0 ];
 
                 // check referrer, must be empty or same host
-                // $mail_content .= "\n\n" . 'REFERER HOST: ' . $referrer_host . "\n\n";
                 $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)
                 $protocol = ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ? "https://" : "http://"; // protocol
                 $current_host = $protocol . $server_name . '/';
-                // $mail_content .= 'HOST: ' . $current_host . "\n\n";
 
-
-
-                // TODO: check hv
-                // && $sanitized_values[ 'human_verification' ] === $_calc_hv_value 
+                // check if all valid 
                 if ( 
                     $validation_ok 
                     && ( empty( $referrer_host ) || $referrer_host === $current_host ) 
@@ -781,10 +695,10 @@ class Bsx_Mail_Form {
                 ) {
                     // validation ok, try sending
 
-                    // prepare headers
+                    // prepare headers (both mails)
                     $global_headers = 'MIME-Version: 1.0' . "\r\n";
                     $global_headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-                    // Content-type: text/html; charset=UTF-8
+
                     $headers = $global_headers . 'From: ' . $sender_mail . "\r\n";
                     // $headers .= "CC: somebodyelse@example.com";
 
@@ -806,10 +720,6 @@ class Bsx_Mail_Form {
                             || ( $mail_2_ok && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
                         )
                     ) {
-                        // TEST RETURN – TODO: remove
-                        // return rest_ensure_response( 'SUBJECT' . "\n\n" . $mail_subject . "\n\n\n" . 'CONTENT' . "\n\n" . $mail_content . "\n\n\n" . $response );
-
-                        // TODO: enable following line
                         return rest_ensure_response( esc_html__( 'Thank you. Your message has been sent successfully.', 'bsx-wordpress' ) );
                     }
                     else {
@@ -823,7 +733,7 @@ class Bsx_Mail_Form {
                 }
              
                 // error 500
-                return new WP_Error( 'rest_api_sad', esc_html__( 'Something went horribly wrong.', 'bsx-wordpress' ), array( 'status' => 500 ) );
+                return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );
             }
             else {
                 // not ok, send forbidden 403

@@ -1,0 +1,38 @@
+<div class="form-group">
+    <label for="name">[translate::Name]*</label>
+    [*text::name class="form-control" id="name"]
+    <div class="invalid-feedback">[translate::Please fill this field.]</div>
+</div>
+
+<div class="form-group">
+    <label for="email">[translate::Email]*</label>
+    [*email::email class="form-control" id="email"]
+    <div class="invalid-feedback">[translate::Please provide a valid e-mail.]</div>
+</div>
+
+<div class="form-group">
+    <label for="phone">[translate::Phone]*</label>
+    [*tel::phone class="form-control" id="phone"]
+    <div class="invalid-feedback">[translate::Please fill this field.]</div>
+</div>
+
+<div class="form-group">
+    <label for="message">[translate::Message]*</label>
+    [*message::message class="form-control" id="message" rows="4"]
+    <div class="invalid-feedback">[translate::Please fill this field.]</div>
+</div>
+
+<div class="form-group">
+    <label class="mr-3" for="human-verification">[translate::Human verification]*</label><a class="d-inline-block small" href="javascript:void( 0 );" data-g-fn="refresh-hv">[translate::Load other security code]</a>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            [human-verification-display:: class="input-group-text"]
+        </div>
+        [*human-verification-input:: class="form-control" id="human-verification" data-clone-error=".input-group"]
+    </div>
+    <div class="invalid-feedback">[translate::Please fill this field.]</div>
+</div>
+
+<div class="form-group">
+    <button class="btn btn-outline-primary" type="submit">[translate::Send]</button>
+</div>

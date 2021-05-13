@@ -763,8 +763,6 @@ class Bsx_Mail_Form {
     } // /register_mailer_rest_route()
 
 
-
-
     // [theme-form id="1"]
     public function add_shortcode() {
 
@@ -774,13 +772,11 @@ class Bsx_Mail_Form {
                 'id' => '',
             ), $atts );
 
-            // no cats defined
             if ( empty( $data[ 'id' ] ) ){
                 return "";
             }
 
             return ( new Bsx_Mail_Form )->make_form_from_template( $data[ 'id' ] );
-            // return 'TEST ' . $data[ 'id' ];
         }
         add_shortcode( 'theme-form', 'add_form_shortcode' );
 

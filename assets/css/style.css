@@ -2354,6 +2354,9 @@
 .fa-stack {
   width: 1.75em; }
 
+a[href].fa {
+  text-decoration: none; }
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors

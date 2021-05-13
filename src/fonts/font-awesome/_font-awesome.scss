@@ -10,3 +10,10 @@
 .#{$fa-css-prefix}-stack {
   width: $fa-stack-wisth;
 }
+
+
+// remove underline from icon links
+
+a[href].#{$fa-css-prefix} {
+  text-decoration: none;
+}

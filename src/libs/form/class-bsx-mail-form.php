@@ -17,7 +17,7 @@ class Bsx_Mail_Form {
         $template = get_option( 'form-' . $index . '-form-template' );
 
         // pattern for placeholders (allow css selectors for js)
-        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|submit)+::+([a-zA-Z0-9-_ =\".#\[\]\(\)]|)+\]/s";
+        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\".#\[\]\(\)]|)+\]/s";
         $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\).:?!])+\]/s";
 
         // replace input placeholders
@@ -122,9 +122,15 @@ class Bsx_Mail_Form {
             $required = true;
             $conf_data = ltrim( $conf_data, '*' );
         }
-        $conf_split = explode( '::', $conf_data );
-        $type = $conf_split[ 0 ];
-        $name = $conf_split[ 1 ];
+        $separator = '::';
+        if ( strpos( $conf_data, $separator ) !== false ) {
+            $conf_split = explode( $separator, $conf_data );
+            $type = $conf_split[ 0 ];
+            $name = isset( $conf_split[ 1 ] ) ? $conf_split[ 1 ] : '';
+        }
+        else {
+            $type = $conf_data;
+        }
 
         $return = '';
 
@@ -139,6 +145,10 @@ class Bsx_Mail_Form {
 
             case 'human-verification-display':
                 $return .= '<div' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' data-g-tg="hv"></div>';
+                break;
+
+            case 'human-verification-refresh-attr':
+                $return .= 'data-g-fn="refresh-hv"';
                 break;
 
             case 'submit':
@@ -267,7 +277,7 @@ class Bsx_Mail_Form {
                         'form-' . $i . '-form-template',
                         'label_for' => 'form-' . $i . '-form-template',
                         'description'  => sprintf( 
-                            __( '%sUse input placeholders:%sInput structure:%sLanguage structure:%sMandatory input example: %sOptional input example: %sTranslation example: %sHuman verification display: %sHuman verification input: %s', 
+                            __( '%sUse input placeholders:%sInput structure:%sLanguage structure:%sMandatory input example: %sOptional input example: %sTranslation example: %sHuman verification display: %sHuman verification input: %sHuman verification refresh code attribute: %s', 
                             'bsx-wordpress' ),
                             '<p>',
                             '</p><p><small>',
@@ -277,7 +287,8 @@ class Bsx_Mail_Form {
                             '<code>[text::name class="form-control" id="name"]</code> type: text, name: name<br>',
                             '<code>[translate::Email]</code><br>',
                             '<code>[human-verification-display:: class="input-group-text"]</code><br>',
-                            '<code>[*human-verification-input:: class="form-control" id="human-verification"]</code><br></small></p>',
+                            '<code>[*human-verification-input:: class="form-control" id="human-verification"]</code><br>',
+                            '<code>&lt;button [human-verification-refresh-attr]&gt;[translate::Refresh code]&lt;/button&gt;</code></small></p>',
                         ),
                     ) // args = array()
                 );

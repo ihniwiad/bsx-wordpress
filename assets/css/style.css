@@ -9879,7 +9879,8 @@ strong {
     min-width: unset;
     min-height: unset;
     display: inline-block;
-    padding: 0.66667em 0.66667em;
+    padding-left: 0.66667em;
+    padding-right: 0.66667em;
     font-size: 1.25rem;
     line-height: 1;
     color: #495057;
@@ -10085,7 +10086,7 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
       position: absolute;
       left: -0.05em;
       right: -0.05em;
-      bottom: -0.375em;
+      bottom: -0.2rem;
       height: 0.125em;
       background: #0275D8;
       border-radius: 0.125em;

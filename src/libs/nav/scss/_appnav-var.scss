@@ -165,8 +165,8 @@ $bsx-appnav-link-text-caret-spacer:		0.5em !default;
 // link padding
 $bsx-appnav-link-px:							            0.66667em !default;
 $bsx-appnav-link-py:							            0.66667em !default;
-$bsx-appnav-desktop-level-1-link-lg-down-px:  '' !default;
-$bsx-appnav-desktop-level-1-link-py:          1em !default;
+$bsx-appnav-desktop-level-1-link-lg-down-px:  	'' !default;
+$bsx-appnav-desktop-level-1-link-py:         	1rem !default; // use rem since having different font sizes for text and icons
 
 // link level 1 display & alignment
 $bsx-appnav-desktop-level-1-link-display:		        flex !default;
@@ -189,7 +189,7 @@ $bsx-appnav-level-1-link-responsive-py: (
 // desktop level 1 active (current) link underline
 $bsx-appnav-desktop-level-1-active-link-underline-color:		$bsx-appnav-quickstart-highlight-color !default; 
 $bsx-appnav-desktop-level-1-active-link-underline-height:		0.125em !default;
-$bsx-appnav-desktop-level-1-active-link-underline-bottom:		$bsx-appnav-desktop-level-1-link-py * 0.5 + $bsx-appnav-desktop-level-1-active-link-underline-height !default;
+$bsx-appnav-desktop-level-1-active-link-underline-bottom:		$bsx-appnav-desktop-level-1-link-py * 0.8 !default;
 $bsx-appnav-desktop-level-1-active-link-underline-overlap-x:	0.05em !default;
 
 // mobile link border

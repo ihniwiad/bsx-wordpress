@@ -36,8 +36,8 @@ body {
     align-items: center;
     background: transparent;
     border: none;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     font-size: 1rem;
     color: transparent; }
     .bsx-appnav-navbar-toggler::before {
@@ -127,8 +127,8 @@ body {
     color: transparent; }
     @media (min-width: 992px) {
       .bsx-appnav-navbar-nav > li > a {
-        padding-top: 1em;
-        padding-bottom: 1em;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
         text-align: center;
         display: flex;
         align-items: center;
@@ -151,8 +151,8 @@ body {
   display: inline-flex;
   flex-direction: row; }
   .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav > li > a {
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     text-align: center;
     display: flex;
     align-items: center;

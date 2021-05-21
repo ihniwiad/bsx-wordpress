@@ -136,7 +136,7 @@ class Bsx_Mail_Form {
 
         switch ( $type ) {
             case 'message':
-                $return .= '<textarea' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' type="' . $type . '" name="' . $name . '__' . $type . ( $required ? '__r' : '' ) . '"' . ( $required ? ' required' : '' ) . '></textarea>';
+                $return .= '<textarea' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' name="' . $name . '__' . $type . ( $required ? '__r' : '' ) . '"' . ( $required ? ' required' : '' ) . '></textarea>';
                 break;
 
             case 'human-verification-input':

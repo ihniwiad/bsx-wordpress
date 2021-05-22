@@ -1,0 +1,260 @@
+
+// var
+
+// size basic
+$logo-list-md-line-heigh:     4em !default;
+$logo-list-py:         1em !default;
+$logo-list-px:         1em !default;
+$logo-list-md-img-max-height:   3.8em !default;
+
+// size lg
+$logo-list-lg-line-heigh:     5em !default;
+$logo-list-lg-img-max-height:   4.8em !default;
+
+// size xl
+$logo-list-xl-line-heigh:     7em !default;
+$logo-list-xl-img-max-height:   6.8em !default;
+
+// all
+$logo-list-overlay-start-height:    1px !default;
+$logo-list-overlay-arrow-width:     0.4em !default;
+$logo-list-inverse-img-opacity:     0.75 !default;
+$logo-list-transition-duration:     .4s !default;
+$logo-list-touch-transition-duration: .6s !default;
+
+$logo-list-overlay-bg-start-color:    rgba($black, 0.1) !default;
+$logo-list-overlay-bg-show-color:   rgba($black, 0.5) !default;
+$logo-list-overlay-icon-color:      $gray-300 !default;
+
+// close
+$logo-list-overlay-close-font-size:   2em !default;
+$logo-list-overlay-close-line-height: 1 !default;
+$logo-list-overlay-close-px:      0.33333em !default;
+$logo-list-overlay-close-pt:      0 !default;
+$logo-list-overlay-close-pb:      0.25em !default;
+
+$logo-list-overlay-close-color:     $white !default;
+$logo-list-overlay-close-content:   "\00d7" !default;
+
+// img alt (icon & text)
+$logo-list-img-alt-icon-font-size:    0.75em !default;
+$logo-list-img-alt-text-font-size:    0.20em !default;
+
+
+
+
+// style
+
+
+.logo-list-item {
+  &.has-overlay {
+    position: relative;
+  }
+}
+
+// inner container
+
+.logo-list-inner {
+  position: relative;
+  display: block;
+  box-sizing: content-box;
+  padding: $logo-list-py $logo-list-px;
+  text-align: center;
+}
+.logo-list-item-md .logo-list-inner {
+  // padding: $logo-list-md-py $logo-list-md-px;
+  height: $logo-list-md-line-heigh;
+  line-height: $logo-list-md-line-heigh;
+
+  .logo-list-img-alt {
+    font-size: $logo-list-md-line-heigh;
+  }
+}
+.logo-list-item-lg .logo-list-inner {
+  height: $logo-list-lg-line-heigh;
+  line-height: $logo-list-lg-line-heigh;
+
+  .logo-list-img-alt {
+    font-size: $logo-list-lg-line-heigh;
+  }
+}
+.logo-list-item-xl .logo-list-inner {
+  height: $logo-list-xl-line-heigh;
+  line-height: $logo-list-xl-line-heigh;
+
+  .logo-list-img-alt {
+    font-size: $logo-list-xl-line-heigh;
+  }
+}
+
+// overlay
+
+.logo-list-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $logo-list-overlay-start-height;
+  display: block;
+  background-color: $logo-list-overlay-bg-start-color;
+  transition: all $logo-list-transition-duration ease;
+}
+// touch
+#{$touchDeviceIdentifier} .logo-list-overlay {
+  transition-duration: $logo-list-touch-transition-duration;
+}
+.logo-list-item.has-overlay .logo-list-inner:hover .logo-list-overlay {
+  height: 100%;
+  background-color: $logo-list-overlay-bg-show-color;
+}
+.logo-list-overlay.has-arrow::before {
+  content: "";
+  position: absolute;
+  bottom: $logo-list-overlay-start-height;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-color: $logo-list-overlay-bg-start-color transparent;
+  border-width: $logo-list-overlay-arrow-width;
+  border-style: none solid solid;
+/*
+  content: "\f0d8";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  font-family: FontAwesome;
+  color: $logo-list-overlay-bg-start-color;
+*/
+  line-height: 0.33em;
+  transform: translate(-50%, 0);
+}
+.logo-list-item.has-overlay .logo-list-inner:hover .logo-list-overlay::before {
+  opacity: 0;
+}
+
+// a
+
+.logo-list-item {
+  a {
+    @include hover-focus {
+      text-decoration: none;
+    }
+  }
+}
+
+// img
+
+.logo-list-img {
+  display: inline-block;
+  max-width: 100%;
+  transition: all $logo-list-transition-duration ease;
+  pointer-events: none;
+}
+.logo-list-item-md .logo-list-img {
+  max-height: $logo-list-md-img-max-height;
+}
+.logo-list-item-lg .logo-list-img {
+  max-height: $logo-list-lg-img-max-height;
+}
+.logo-list-item-xl .logo-list-img {
+  max-height: $logo-list-xl-img-max-height;
+}
+.logo-list-item.has-grayscale-inverse-img .logo-list-img {
+  filter: grayscale(1) brightness(1) invert(0);
+}
+.logo-list-item.has-grayscale-color-img .logo-list-img {
+  filter: grayscale(1);
+}
+.logo-list-item.has-grayscale-img .logo-list-img {
+  filter: grayscale(1) brightness(1) invert(0);
+}
+.logo-list-item.has-color-inverse-img .logo-list-img {
+  filter: brightness(1) invert(0);
+}
+.logo-list-item.has-overlay .logo-list-img {
+  position: relative;
+  opacity: 1;
+}
+.logo-list-item.has-grayscale-color-img .logo-list-inner:hover .logo-list-img {
+  filter: grayscale(0);
+}
+.logo-list-item.has-grayscale-inverse-img .logo-list-inner:hover .logo-list-img {
+  filter: grayscale(0) brightness(0) invert(1);
+}
+.logo-list-item.has-color-inverse-img .logo-list-inner:hover .logo-list-img {
+  filter: brightness(0) invert(1);
+}
+.logo-list-item.has-grayscale-inverse-img .logo-list-inner:hover .logo-list-img,
+.logo-list-item.has-color-inverse-img .logo-list-inner:hover .logo-list-img {
+  opacity: $logo-list-inverse-img-opacity;
+}
+
+
+// img alt
+.logo-list-img-alt-icon {
+  display: block;
+  font-size: $logo-list-img-alt-icon-font-size;
+}
+.logo-list-img-alt-text {
+  display: block;
+  font-size: $logo-list-img-alt-text-font-size;
+  margin-left: -$logo-list-px;
+  margin-right: -$logo-list-px;
+}
+
+// overlay inner container
+
+.logo-list-overlay-inner,
+a.logo-list-overlay-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: block;
+  overflow: hidden;
+  opacity: 0;
+  text-align: center;
+  line-height: $line-height-base;
+  color: #fff;
+  text-decoration: none;
+}
+.logo-list-item .logo-list-inner:hover .logo-list-overlay-inner {
+  opacity: 1;
+}
+
+// icon
+
+.logo-list-overlay-icon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: $logo-list-overlay-icon-color;
+  transition: all $logo-list-transition-duration ease;
+}
+.logo-list-overlay-icon.is-only-touch {
+  display: none;
+}
+#{$touchDeviceIdentifier} .logo-list-overlay-icon.is-only-touch {
+  display: block;
+}
+.logo-list-item.has-icon .logo-list-inner:hover .logo-list-overlay-icon {
+  opacity: 0;
+}
+
+// overlay close
+
+#{$touchDeviceIdentifier} .logo-list-overlay-close {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    right: ($grid-gutter-width / 2);
+    font-size: $logo-list-overlay-close-font-size;
+    line-height: $logo-list-overlay-close-line-height;
+    padding: $logo-list-overlay-close-pt $logo-list-overlay-close-px $logo-list-overlay-close-pb;
+    color: $logo-list-overlay-close-color;
+}
+#{$touchDeviceIdentifier} .logo-list-overlay-close::before {
+    content: $logo-list-overlay-close-content;
+}

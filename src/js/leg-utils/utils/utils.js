@@ -322,8 +322,21 @@ Utils.getElementFromSelector = function( selector ) {
 // /get elem from selector
 
 // check touch
-Utils.hasTouch = function() { 
-    return 'ontouchstart' in window || navigator.maxTouchPoints
+Utils.hasTouch = function() {
+    return (
+            ( 'ontouchstart' in window )
+            || ( navigator.maxTouchPoints > 0 )
+            || ( navigator.msMaxTouchPoints > 0 )
+    );
+}
+if ( Utils.hasTouch() ) {
+    document.documentElement.classList.add( 'touchevents' );
+}
+Utils.hasTouchNotMouse = function() {
+    return (
+        Utils.hasTouch()
+        && ! ( 'onmousemove' in window )
+    );
 }
 // /check touch
 

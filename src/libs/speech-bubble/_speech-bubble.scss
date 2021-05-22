@@ -1,0 +1,60 @@
+// code example
+// <div class="speech-bubble">Some text inside.</div>
+
+
+// var
+
+$bsx-speech-bubble-padding:         .5rem 1rem !default;
+$bsx-speech-bubble-border-radius:   $bsx-border-radius !default;
+$bsx-speech-bubble-color:           $white !default;
+$bsx-speech-bubble-bg-color:        $primary !default;
+
+$bsx-speech-bubble-arrow-size:      1.75rem !default;
+$bsx-speech-bubble-arrow-sm-size:      1.25rem !default;
+$bsx-speech-bubble-arrow-lg-size:      2.5rem !default;
+$bsx-speech-bubble-arrow-distance:  '' !default;
+
+
+
+
+// style
+
+
+.speech-bubble {
+    position: relative;
+    padding: $bsx-speech-bubble-padding;
+    border-radius: $bsx-speech-bubble-border-radius;
+    color: $bsx-speech-bubble-color;
+    background-color: $bsx-speech-bubble-bg-color;
+
+    &:before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 100%;
+        @if $bsx-speech-bubble-arrow-distance != '' {
+            // if empty left orientation will follow padding 
+            left: $bsx-speech-bubble-arrow-distance;
+        }
+        background-color: inherit;
+        width: $bsx-speech-bubble-arrow-size;
+        height: $bsx-speech-bubble-arrow-size;
+        clip-path: polygon(0% 0%, 100% 0%, 0% 100%); // bottom left rectangle 
+        // border-color: transparent $bsx-speech-bubble-bg-color transparent $bsx-speech-bubble-bg-color;
+        // border-width: $bsx-speech-bubble-arrow-size;
+        // border-style: none none solid solid; // bottom left rectangle
+    }
+
+    &.speech-bubble-sm {
+        &:before {
+            width: $bsx-speech-bubble-arrow-sm-size;
+            height: $bsx-speech-bubble-arrow-sm-size;
+        }
+    }
+    &.speech-bubble-lg {
+        &:before {
+            width: $bsx-speech-bubble-arrow-lg-size;
+            height: $bsx-speech-bubble-arrow-lg-size;
+        }
+    }
+}

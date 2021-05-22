@@ -12074,6 +12074,8 @@ html.touchevents .logo-list-overlay {
 .logo-list-img {
   display: inline-block;
   max-width: 100%;
+  width: auto;
+  height: auto;
   transition: all 0.4s ease;
   pointer-events: none; }
 

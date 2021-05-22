@@ -147,6 +147,8 @@ $logo-list-img-alt-text-font-size:    0.20em !default;
 .logo-list-img {
   display: inline-block;
   max-width: 100%;
+  width: auto; // overwrite widh if set
+  height: auto; // overwrite height if set
   transition: all $logo-list-transition-duration ease;
   pointer-events: none;
 }

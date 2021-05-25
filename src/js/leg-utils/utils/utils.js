@@ -362,7 +362,7 @@ if ( isIos ) {
         .replace( 'undefined', '3_2' ) || false;
     if ( iosVersion !== false ) {
         document.body.className += ' ios' + iosVersion;
-        for ( i = iosVersion; i <= iosMaxVersion; i++ ) {
+        for ( var i = iosVersion; i <= iosMaxVersion; i++ ) {
             document.body.className += ' ioslte' + i;
         }
     }

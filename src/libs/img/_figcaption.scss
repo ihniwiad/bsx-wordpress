@@ -1,0 +1,20 @@
+
+// var
+
+$bsx-figcaption-line-height: 		1.25 !default;
+$bsx-figcaption-padding: 			.25rem 0 !default;
+$bsx-figcaption-font-style: 		italic !default;
+$bsx-figcaption-color: 				'' !default;
+
+
+
+// style
+
+figcaption {
+    line-height: $bsx-figcaption-line-height;
+    padding: $bsx-figcaption-padding;
+    font-style: $bsx-figcaption-line-height;
+    @if $bsx-figcaption-color != '' {
+    	color: $bsx-figcaption-color;
+    }
+}

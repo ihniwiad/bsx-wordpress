@@ -7,8 +7,8 @@ import * as formValidate from './form-validate'
 
 var sendMail = function( $form ) {
 
-    var $hv = $form.find( '[data-g-tg="hv"]' );
-    var $hvo = $hv.find( '[data-g-tg="hvo"]' );
+    var $hvd = $form.find( '[data-g-tg="hvd"]' );
+    var $hvo = $hvd.find( '[data-g-tg="hvo"]' );
 
     var prepareHv = function() {
 
@@ -91,7 +91,7 @@ var sendMail = function( $form ) {
 
         hvVal = hvo + '|' + hvkey + hvVal;
         $hvo.html( hvo );
-        $hv.html( html );
+        $hvd.html( html );
         $form
             .find( '[data-g-tg="hv"]' ).val( encodeURIComponent( hvVal ) )
             .find( '[data-g-tg="hv-k"]' ).val( k )
@@ -126,7 +126,7 @@ var sendMail = function( $form ) {
 
             // enable submit button
             $formSubmit.prop( 'disabled', false );
-        
+
             return false;
         }
 

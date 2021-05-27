@@ -47,6 +47,8 @@ class Bsx_Mail_Form {
         $html = '<div data-id="form-wrapper">';
             $html .= '<form novalidate method="post" action="' . get_bloginfo( 'url' ) . '/wp-json/bsx/v1/mailer/" data-fn="mail-form">';
                 $html .= $template;
+                // $current_url = ( isset( $_SERVER[ 'HTTPS' ] ) ? "https://" : "http://" ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+                // $html .= '<input type="hidden" name="current_url__text__r" value="' . $current_url . '">';
                 $html .= '<input type="hidden" name="hv__text__r" value="" data-g-tg="hv">';
                 $html .= '<input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">';
                 $html .= '<input type="hidden" name="idh__text__r" value="' . $hash . '">';
@@ -144,7 +146,8 @@ class Bsx_Mail_Form {
                 break;
 
             case 'human-verification-display':
-                $return .= '<div' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' data-g-tg="hv"></div>';
+                // TODO: rename attr since having duplicate
+                $return .= '<div' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' data-g-tg="hvd"></div>';
                 break;
 
             case 'human-verification-refresh-attr':

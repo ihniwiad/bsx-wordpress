@@ -7,7 +7,7 @@ const FUNCTION_ATTR = Selectors.functionAttr
 let functionElems = document.querySelectorAll( '[' + FUNCTION_ATTR + ']' )
 
 // add to DomData
-if ( typeof functionElems !== 'undefines' && functionElems.length > 0 ) {
+if ( typeof functionElems !== 'undefined' && functionElems.length > 0 ) {
   functionElems.forEach( elem => {
     const key = elem.getAttribute( FUNCTION_ATTR )
     DomData.addElem( elem, key )

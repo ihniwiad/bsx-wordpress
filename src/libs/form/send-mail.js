@@ -8,7 +8,9 @@ import * as formValidate from './form-validate'
 var sendMail = function( $form ) {
 
     var $hvd = $form.find( '[data-g-tg="hvd"]' );
-    var $hvo = $hvd.find( '[data-g-tg="hvo"]' );
+    var $hvk = $form.find( '[data-g-tg="hv-k"]' );
+    var $hv = $form.find( '[data-g-tg="hv"]' );
+    var $hvo = $form.find( '[data-g-tg="hvo"]' );
 
     var prepareHv = function() {
 
@@ -38,9 +40,6 @@ var sendMail = function( $form ) {
             var rn = rN( 5 );
             var tp = rN( 2 ) % 2 == 0 ? 1 : 0;
             for ( var i = 0; i < itms; i++ ) {
-                // 8: remove 4th
-                // 9: remove 3rd
-                // 10: remove 2nd
                 var x = tp ? ( String.fromCharCode( 65 + rn + i ) ).toLowerCase() : rn + i;
                 if ( ( hvkey == nc && i != 1 ) || ( hvkey == nc - 1 && i != 2 ) || ( hvkey == nc - 2 && i != 3 ) ) {
                     html += mV( hvkey, x );
@@ -90,12 +89,12 @@ var sendMail = function( $form ) {
         }
 
         hvVal = hvo + '|' + hvkey + hvVal;
-        $hvo.html( hvo );
+        // $hvo.html( hvo );
         $hvd.html( html );
-        $form
-            .find( '[data-g-tg="hv"]' ).val( encodeURIComponent( hvVal ) )
-            .find( '[data-g-tg="hv-k"]' ).val( k )
-        ;
+        // $form.find( '[data-g-tg="hv"]' ).val( encodeURIComponent( hvVal ) );
+        $hv.val( encodeURIComponent( hvVal ) );
+        // $form.find( '[data-g-tg="hv-k"]' ).val( k );
+        $hvk.val( k );
     }
     // /prepareHv
 

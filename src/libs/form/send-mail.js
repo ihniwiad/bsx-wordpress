@@ -230,10 +230,17 @@ var sendMail = function( $form ) {
                 if ( data.responseText !== '' ) {
                     // console.log( data.responseText );
 
-                    // TODO: clean message ?
+                    // clean message
+                    function isJSON( str ) {
+                        try {
+                            return ( JSON.parse( str ) && !! str );
+                        } catch ( e ) {
+                            return false;
+                        }
+                    }
 
                     // show error
-                    showMessage( $messageWrapper, 'error', ( typeof ( JSON.parse( data.responseText ) ).message !== 'undefined' ) ? ( JSON.parse( data.responseText ) ).message : data.responseText );
+                    showMessage( $messageWrapper, 'error', ( isJSON( data.responseText ) && typeof ( JSON.parse( data.responseText ) ).message !== 'undefined' ) ? ( JSON.parse( data.responseText ) ).message : data.responseText );
 
                     scrollMessageIntoViewport( $messageWrapper );
                 } 

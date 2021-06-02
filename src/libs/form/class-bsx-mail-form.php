@@ -703,7 +703,7 @@ class Bsx_Mail_Form {
                 $host_pattern = "/http+(s|)+:\/\/+([a-z0-9-_])+\//s";
                 $matches = array();
                 $has_matches = preg_match( $host_pattern, $referrer, $matches );
-                $referrer_host = $matches[ 0 ];
+                $referrer_host = ! empty( $matches ) ? $matches[ 0 ] : '';
 
                 // check referrer, must be empty or same host
                 $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)

@@ -34,7 +34,7 @@ const getTargetByAriaControls = ( trigger, closest ) => {
 
 const getTransitionDuration = ( elem ) => {
   let { transitionDuration } = window.getComputedStyle( elem )
-  const floatTransitionDuration = Number.parseFloat( transitionDuration )
+  let floatTransitionDuration = Number.parseFloat( transitionDuration )
   if ( ! floatTransitionDuration ) {
     floatTransitionDuration = 0
   }

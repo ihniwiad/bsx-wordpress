@@ -28,7 +28,7 @@ class Accordion {
     // DomFn.ariaExpanded( trigger, true )
     trigger.classList.add( this.TRIGGER_OPENED_CLASS )
     const target = DomFn.getTargetByAriaControls( trigger, trigger.closest( '[data-acc-itm]' ) )
-    const targetInner = target.querySelector( '[acc-cnt-inr]' )
+    const targetInner = target.querySelector( '[data-acc-cnt-inr]' )
     const targetInnerHeight = targetInner.offsetHeight
     target.classList.add( this.TARGET_OPENED_CLASS )
     target.style.height = targetInnerHeight + 'px'
@@ -59,7 +59,7 @@ class Accordion {
       trigger.setAttribute( 'aria-expanded', 'false' )
       trigger.classList.remove( this.TRIGGER_OPENED_CLASS )
       const target = DomFn.getTargetByAriaControls( trigger, trigger.closest( '[data-acc-itm]' ) )
-      const targetInner = target.querySelector( '[acc-cnt-inr]' )
+      const targetInner = target.querySelector( '[data-acc-cnt-inr]' )
       const targetInnerHeight = targetInner.offsetHeight
       const transitionDuration = DomFn.getTransitionDuration( target ) + TRANSITION_TOLERANCE_DELAY
       // set height before remove opened class

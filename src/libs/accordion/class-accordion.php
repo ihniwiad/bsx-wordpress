@@ -80,7 +80,7 @@ class Accordion {
               $target_opened_class = $item[ 'opened' ] ? ( isset( $this->data[ 'config' ][ 'target_opened_class' ] ) ? ' ' . $this->data[ 'config' ][ 'target_opened_class' ] : ' ' . self::DEFAULT_TARGET_OPENED_CLASS )  : '';
               $output .= '<div class="bsx-acc-content' . $target_opened_class . '" id="acc-' . $this->id . '-' . $index . '-cont" role="region" aria-labeledby="acc-' . $this->id . '-' . $index . '-trig">';
               
-                $output .= '<div acc-cnt-inr>';
+                $output .= '<div data-acc-cnt-inr>';
                   $output .= $item[ 'content' ];
                 $output .= '</div>';
               $output .= '</div>';

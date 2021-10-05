@@ -8,7 +8,8 @@ let functionElems = document.querySelectorAll( '[' + FUNCTION_ATTR + ']' )
 
 // add to DomData
 if ( typeof functionElems !== 'undefined' && functionElems.length > 0 ) {
-  functionElems.forEach( elem => {
+  // stay compatile with older Safari
+  Array.from( functionElems ).forEach( elem => {
     const key = elem.getAttribute( FUNCTION_ATTR )
     DomData.addElem( elem, key )
   } )

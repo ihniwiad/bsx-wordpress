@@ -8,24 +8,28 @@ $bsx-acc-transition-effect:     ease !default;
 // accordion styling
 
 // (main)
-$bsx-acc-header-padding:            .25em .5em !default;
+$bsx-acc-header-padding:            .25rem .5rem !default;
 $bsx-acc-header-background:         rgba(#0275d8, .25) !default;
+$bsx-acc-header-open-background:    rgba(#0275d8, .25) !default;
 $bsx-acc-header-border-style:       none !default;
-$bsx-acc-header-border-width:        !default;
-$bsx-acc-header-border-color:        !default;
+$bsx-acc-header-border-width:       1px !default;
+$bsx-acc-header-border-color:       $bsx-border-color !default;
 $bsx-acc-header-font-size:          inherit !default;
 $bsx-acc-header-text-align:         left !default;
+$bsx-acc-header-transition:         $bsx-basic-transition !default;
 
-$bsx-acc-header-icon-after-width:         .25em !default;
+$bsx-acc-header-icon-after-width:         .5rem !default;
 $bsx-acc-header-icon-padding-x:           $bsx-acc-header-icon-after-width / 5 !default;
 $bsx-acc-header-icon-after-margin-value:  $bsx-acc-header-icon-after-width / 5 * 3 !default;
 $bsx-acc-header-icon-after-border-width:  1px !default;
 $bsx-acc-header-icon-after-border-style:  none none solid solid !default;
 $bsx-acc-header-icon-after-border-color:  inherit !default;
 
-$bsx-acc-content-border-style:       none none solid !default;
-$bsx-acc-content-border-width:       1px !default;
-$bsx-acc-content-border-color:       inherit !default;
+$bsx-acc-content-border-style:        none none solid !default;
+$bsx-acc-content-border-width:        1px !default;
+$bsx-acc-content-border-color:        inherit !default;
+
+$bsx-acc-content-inner-padding:       1rem .5rem 0 !default;
 
 // (optional)
 $bsx-acc-header-icon-after-content:           "" !default;
@@ -46,10 +50,13 @@ $bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
 .bsx-acc-content.show {
   height: unset;
 }
-.bsx-acc-content > [acc-cnt-inr]::before,
-.bsx-acc-content > [acc-cnt-inr]::after {
-  content: "";
-  display: table;
+.bsx-acc-content > [data-acc-cnt-inr] {
+  padding: $bsx-acc-content-inner-padding;
+
+  &::after {
+    content: "";
+    display: table;
+  }
 }
 
 // /accordion function
@@ -69,6 +76,11 @@ $bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
   font-size: $bsx-acc-header-font-size;
   padding: $bsx-acc-header-padding;
   background: $bsx-acc-header-background;
+  transition: $bsx-acc-header-transition;
+
+  &.open {
+    background: $bsx-acc-header-open-background;
+  }
 }
 .acc-header-text {
   flex-basis: 0;

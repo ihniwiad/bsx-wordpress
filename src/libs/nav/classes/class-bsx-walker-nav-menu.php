@@ -265,6 +265,12 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
           $value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
           $attributes .= ' ' . $attr . '="' . $value . '"';
+
+          // check if hash or url
+          if ( 'href' === $attr && substr( $value, 0, 1 ) === '#' ) {
+            // is hash, add attributes for closing main nav on click
+            $attributes .= ' data-fn="remote-event" data-fn-options="{ target: \'#toggle-navbar-collapse\' }" data-tg="dropdown-multilevel-excluded"';
+          }
         }
       }
 

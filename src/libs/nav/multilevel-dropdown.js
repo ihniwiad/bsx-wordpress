@@ -217,7 +217,7 @@ $.fn.dropdownMultilevel = function( options ) {
 
     $elems.each( function() {
 
-        var $elem = $(this);
+        var $elem = $( this );
         var targetSelector = $elem.attr( Utils.attributes.target ) || '';
         var $target = $elem._getTarget(); // ( targetSelector != '' ) ? $( targetSelector ) : $elem.parent();
         var $list = $elem._getList(); // $target.find( '[aria-labelledby="' + $elem.attr( 'id' ) + '"]' );

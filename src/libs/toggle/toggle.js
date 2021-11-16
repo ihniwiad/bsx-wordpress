@@ -37,7 +37,8 @@ $.fn.toggle = function() {
         openCallback: function() {},
         closeCallback: function() {},
         openedCallback: function() {},
-        closedCallback: function() {}
+        closedCallback: function() {},
+        reset: false // reset to initial state whatever current state might be
     };
 
     var $elems = $( this );
@@ -106,7 +107,7 @@ $.fn.toggle = function() {
 
                 // toggle 'options.openedClass' & aria-expanded (use 'options.openedClass' to check visibility since element might be ':visible' but out of viewport)
                 // allow multiple classes (which would be separated by space)
-                if ( ! $target.is( '.' + options.openedClass.replace( ' ', '.') ) ) {
+                if ( ! options.reset && ! $target.is( '.' + options.openedClass.replace( ' ', '.' ) ) ) {
                     _show()
                 }
                 else {

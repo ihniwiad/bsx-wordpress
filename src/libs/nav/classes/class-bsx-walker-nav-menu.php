@@ -269,7 +269,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
           // check if hash or url
           if ( 'href' === $attr && substr( $value, 0, 1 ) === '#' ) {
             // is hash, add attributes for closing main nav on click
-            $attributes .= ' data-fn="remote-event" data-fn-options="{ target: \'#toggle-navbar-collapse\' }" data-tg="dropdown-multilevel-excluded"';
+            $attributes .= ' data-fn="toggle" data-fn-options="{ bodyOpenedClass: \'nav-open\', reset: true }" data-fn-target="[data-tg=\'navbar-collapse\']"';
           }
         }
       }

@@ -9752,6 +9752,9 @@ strong {
 .heading-inherit-font-weight .h1, .heading-inherit-font-weight .h2, .heading-inherit-font-weight .h3, .heading-inherit-font-weight .h4, .heading-inherit-font-weight .h5, .heading-inherit-font-weight .h6 {
   font-weight: inherit; }
 
+.p {
+  margin-bottom: 1rem; }
+
 blockquote {
   border-left: 0.5rem solid #dee2e6;
   padding-left: 1rem; }

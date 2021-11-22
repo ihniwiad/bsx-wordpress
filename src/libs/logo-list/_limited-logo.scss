@@ -30,6 +30,8 @@ $bsx-limited-logo-lg-width:       13rem !default;
   width: 100%;
 
   img {
+    width: auto; // overwrite width to keep ratio
+    height: auto; // overwrite height to keep ratio
     max-width: 100%;
   }
 }

@@ -12200,6 +12200,8 @@ html.touchevents .logo-list-overlay-close::before {
   display: inline-block;
   width: 100%; }
   [class*="limited-logo-"] img {
+    width: auto;
+    height: auto;
     max-width: 100%; }
 
 .limited-logo-xs {

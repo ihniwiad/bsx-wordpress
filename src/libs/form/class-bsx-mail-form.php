@@ -17,8 +17,8 @@ class Bsx_Mail_Form {
         $template = get_option( 'form-' . $index . '-form-template' );
 
         // pattern for placeholders (allow css selectors for js)
-        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\".#\[\]\(\)]|)+\]/s";
-        $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\).:?!])+\]/s";
+        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\"\,.#\[\]\(\)]|)+\]/s";
+        $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\)\,.:?!])+\]/s";
 
         // replace input placeholders
         $matches = array();

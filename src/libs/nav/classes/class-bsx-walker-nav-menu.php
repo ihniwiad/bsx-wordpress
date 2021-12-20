@@ -110,7 +110,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $createClickableParentLinkChild = true;
 
       // check if current url is subfolder of blog url
-      $blog_url = get_permalink( get_option( 'page_for_posts' ) );
+      $blog_url = (string) get_permalink( get_option( 'page_for_posts' ) );
       $path = $_SERVER[ 'REQUEST_URI' ]; // path after domain
       $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)
       $protocol = ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ? "https://" : "http://"; // protocol
@@ -198,15 +198,15 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $output .= $indent . '<li' . $id . $class_names . $item_identifier . '>';
 
       $atts           = array();
-      $atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
-      $atts['target'] = ! empty( $item->target ) ? $item->target : '';
+      $atts[ 'title' ]  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+      $atts[ 'target' ] = ! empty( $item->target ) ? $item->target : '';
       if ( '_blank' === $item->target && empty( $item->xfn ) ) {
-        $atts['rel'] = 'noopener';
+        $atts[ 'rel' ] = 'noopener';
       } else {
-        $atts['rel'] = $item->xfn;
+        $atts[ 'rel' ] = $item->xfn;
       }
-      $atts['href']         = ! empty( $item->url ) ? $item->url : '';
-      $atts['aria-current'] = $item->current ? 'page' : '';
+      $atts[ 'href' ]         = ! empty( $item->url ) ? $item->url : '';
+      $atts[ 'aria-current' ] = $item->current ? 'page' : '';
 
 
       // TEST
@@ -230,13 +230,13 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       // check if has children (inspired from twentytwentyone)
       if ( in_array( 'menu-item-has-children', $classes, true ) ) {
         // add css class `bsx-appnav-dropdown-toggle` to link of dropdown item
-        $atts['class']            = 'bsx-appnav-dropdown-toggle';
+        $atts[ 'class' ]            = 'bsx-appnav-dropdown-toggle';
         // add id, data & aria attr (corresponding ul needs aria-labelledby="CORRESPONDING_LINK_ID_HERE")
-        $atts['id']               = $linkId;
-        $atts['data-fn']          = 'dropdown-multilevel';
-        $atts['aria-haspopup']    = 'true';
-        $atts['aria-controls']    = $dropdownId;
-        $atts['aria-expanded']    = 'false';
+        $atts[ 'id' ]               = $linkId;
+        $atts[ 'data-fn' ]          = 'dropdown-multilevel';
+        $atts[ 'aria-haspopup' ]    = 'true';
+        $atts[ 'aria-controls' ]    = $dropdownId;
+        $atts[ 'aria-expanded' ]    = 'false';
       }
 
       /**
@@ -260,16 +260,34 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
        */
       $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
 
-      $attributes = '';
+      $new_atts = '';
       foreach ( $atts as $attr => $value ) {
         if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
           $value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-          $attributes .= ' ' . $attr . '="' . $value . '"';
 
-          // check if hash or url
-          if ( 'href' === $attr && substr( $value, 0, 1 ) === '#' ) {
-            // is hash, add attributes for closing main nav on click
-            $attributes .= ' data-fn="toggle" data-fn-options="{ bodyOpenedClass: \'nav-open\', reset: true }" data-fn-target="[data-tg=\'navbar-collapse\']"';
+          if ( 'href' === $attr ) {
+            // is href
+
+            // check if hash or url
+            if ( substr( $value, 0, 1 ) === '#' ) {
+              // is hash, add attributes for closing main nav on click or add homepage url before hast
+
+              // check if home page
+              if ( is_front_page() ) {
+                $new_atts .= ' ' . $attr . '="' . $value . '"';
+                // is hash, add attributes for closing main nav on click
+                $new_atts .= ' data-fn="toggle" data-fn-options="{ bodyOpenedClass: \'nav-open\', reset: true }" data-fn-target="[data-tg=\'navbar-collapse\']"';
+              }
+              else {
+                // add homepage url before hash url, do not add additional attributes
+                $new_atts .= ' ' . $attr . '="' . get_home_url() . '/' . $value . '"';
+              }
+            }
+          }
+          else {
+            // is not href
+
+            $new_atts .= ' ' . $attr . '="' . $value . '"';
           }
         }
       }
@@ -298,7 +316,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $args = is_object( $args ) ? $args : (object) $args;
 
       $item_output  = $args->before;
-      $item_output .= '<a' . $attributes . '><span>';
+      $item_output .= '<a' . $new_atts . '><span>';
       $item_output .= $args->link_before . $title . $args->link_after;
       $item_output .= '</span></a>';
       $item_output .= $args->after;

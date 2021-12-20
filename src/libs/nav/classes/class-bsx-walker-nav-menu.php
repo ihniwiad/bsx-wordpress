@@ -283,6 +283,11 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
                 $new_atts .= ' ' . $attr . '="' . get_home_url() . '/' . $value . '"';
               }
             }
+            else {
+              // is not hash
+              
+              $new_atts .= ' ' . $attr . '="' . $value . '"';
+            }
           }
           else {
             // is not href

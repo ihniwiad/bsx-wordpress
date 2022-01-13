@@ -148,7 +148,7 @@ $bsx-appnav-desktop-bigmenu-level-2-font-weight:	500 !default;
 $bsx-appnav-desktop-level-1-uppercase:        		false !default;
 
 // link icons
-$bsx-appnav-icon-font-family:			FontAwesome !default;
+$bsx-appnav-icon-font-family:			$bsx-icon-font-family !default;
 $bsx-appnav-arrow-left-icon:			"\f060" !default;
 $bsx-appnav-arrow-right-icon:			"\f061" !default;
 $bsx-appnav-caret-down-icon:			"\f078" !default;

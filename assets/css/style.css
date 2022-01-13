@@ -12080,7 +12080,7 @@ html.touchevents .logo-list-overlay {
   position: absolute;
   bottom: 0;
   left: 50%;
-  font-family: FontAwesome;
+  font-family: $bsx-icon-font-family;
   color: $logo-list-overlay-bg-start-color;
 */
   line-height: 0.33em;

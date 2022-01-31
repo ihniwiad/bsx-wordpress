@@ -65,9 +65,9 @@ $acc_data[ 1 ] = array(
 <section>
   <h2>Test accordion (multipleOpen: false)</h2>
 
+
   <?php
-    $accordion_0 = new Accordion( $acc_data[ 0 ], 0 );
-    $accordion_0->print()
+    ( new Accordion( $acc_data[ 0 ], 0 ) )->print();
   ?>
 
 </section>
@@ -76,8 +76,7 @@ $acc_data[ 1 ] = array(
   <h2>Test accordion (multipleOpen not set, default true)</h2>
 
   <?php
-    $accordion_1 = new Accordion( $acc_data[ 1 ], 1 );
-    $accordion_1->print()
+    ( new Accordion( $acc_data[ 1 ], 1 ) )->print();
   ?>
 
 </section>

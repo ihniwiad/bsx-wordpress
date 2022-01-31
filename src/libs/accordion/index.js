@@ -7,6 +7,8 @@ import DomFn from './../../js/utilities/dom-functions'
 
 const KEY = 'acc'
 const DEFAULT_TARGET_OPENED_CLASS = 'open'
+const DEFAULT_TARGET_ANIMATIN_IN_CLASS = 'animating-in'
+const DEFAULT_TARGET_ANIMATIN_OUT_CLASS = 'animating-out'
 const DEFAULT_TRIGGER_OPENED_CLASS = 'open'
 const DEFAULT_ALLOW_MULTI_OPEN = true
 const TRANSITION_TOLERANCE_DELAY = 10 // required to enable clean css transition, e.g. add class containing transition, then change style triggering transition
@@ -21,6 +23,8 @@ class Accordion {
     this.conf = DomFn.getConfigFromAttr( this.acc, KEY )
     this.ALLOW_MULTI_OPEN = ( this.conf != null && typeof this.conf.multipleOpen ) !== 'undefined' ? this.conf.multipleOpen : DEFAULT_ALLOW_MULTI_OPEN
     this.TARGET_OPENED_CLASS = ( this.conf != null && typeof this.conf.targetOpenedClass ) !== 'undefined' ? this.conf.targetOpenedClass : DEFAULT_TARGET_OPENED_CLASS
+    this.TARGET_ANIMATIN_IN_CLASS = ( this.conf != null && typeof this.conf.targetAnimatingInClass ) !== 'undefined' ? this.conf.targetAnimatingInClass : DEFAULT_TARGET_ANIMATIN_IN_CLASS
+    this.TARGET_ANIMATIN_OUT_CLASS = ( this.conf != null && typeof this.conf.targetAnimatingOutClass ) !== 'undefined' ? this.conf.targetAnimatingOutClass : DEFAULT_TARGET_ANIMATIN_OUT_CLASS
     this.TRIGGER_OPENED_CLASS = ( this.conf != null && typeof this.conf.triggerOpenedClass ) !== 'undefined' ? this.conf.triggerOpenedClass : DEFAULT_TRIGGER_OPENED_CLASS
   }
   _open( trigger ) {
@@ -31,11 +35,13 @@ class Accordion {
     const targetInner = target.querySelector( '[data-acc-cnt-inr]' )
     const targetInnerHeight = targetInner.offsetHeight
     target.classList.add( this.TARGET_OPENED_CLASS )
+    target.classList.add( this.TARGET_ANIMATIN_IN_CLASS )
     target.style.height = targetInnerHeight + 'px'
     // remove height after transition ended
     const transitionDuration = DomFn.getTransitionDuration( target ) + TRANSITION_TOLERANCE_DELAY
     setTimeout( () => {
       target.style.height = ''
+      target.classList.remove( this.TARGET_ANIMATIN_IN_CLASS )
       DomFn.triggerEvent( window, 'scroll' )
       // TODO: trigger update event to all data-bsx elems within target (e.g. appear)
     }, transitionDuration )
@@ -64,6 +70,7 @@ class Accordion {
       const transitionDuration = DomFn.getTransitionDuration( target ) + TRANSITION_TOLERANCE_DELAY
       // set height before remove opened class
       target.style.height = targetInnerHeight + 'px'
+      target.classList.add( this.TARGET_ANIMATIN_OUT_CLASS )
       setTimeout( () => {
         // remove opened class
         target.classList.remove( this.TARGET_OPENED_CLASS )
@@ -71,6 +78,8 @@ class Accordion {
           // remove height to init transition
           target.style.height = ''
           setTimeout( () => {
+            // after transition ended
+            target.classList.remove( this.TARGET_ANIMATIN_OUT_CLASS )
             DomFn.triggerEvent( window, 'scroll' )
           }, transitionDuration )
         }, TRANSITION_TOLERANCE_DELAY )

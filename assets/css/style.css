@@ -9766,13 +9766,15 @@ blockquote {
   height: 0;
   overflow: hidden;
   transition: height 0.4s ease; }
+  .bsx-acc-content.open:not(.animating-in):not(.animating-out) {
+    overflow: visible; }
 
 .bsx-acc-content.open,
 .bsx-acc-content.show {
   height: unset; }
 
 .bsx-acc-content > [data-acc-cnt-inr] {
-  padding: 1rem 0.5rem 0; }
+  padding: 1rem 0 0; }
   .bsx-acc-content > [data-acc-cnt-inr]::after {
     content: "";
     display: table; }
@@ -9787,11 +9789,11 @@ blockquote {
   border-width: 1px;
   border-color: #dee2e6;
   font-size: inherit;
-  padding: 0.25rem 0.5rem;
-  background: rgba(2, 117, 216, 0.25);
+  padding: 0.25rem 0;
+  background: transparent;
   transition: all 0.3s ease; }
   .acc-header.open {
-    background: rgba(2, 117, 216, 0.25); }
+    background: transparent; }
 
 .acc-header-text {
   flex-basis: 0;
@@ -9802,29 +9804,29 @@ blockquote {
   flex-grow: 0;
   display: flex;
   align-items: center;
-  padding: 0.1rem; }
+  padding: 0.15rem; }
 
 .acc-header-icon::after {
   content: "";
   display: block;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.75rem;
+  height: 0.75rem;
   border-color: inherit;
   border-style: none none solid solid;
-  border-width: 1px;
+  border-width: 2px;
   transform: rotate(-45deg);
-  margin-top: -0.3rem;
+  margin-top: -0.45rem;
   transition: all 0.4s ease; }
 
 .open > .acc-header-icon::after,
 .active > .acc-header-icon::after {
   transform: rotate(135deg);
-  margin-top: 0.3rem; }
+  margin-top: 0.45rem; }
 
 .bsx-acc-content {
   border-style: none none solid;
   border-width: 1px;
-  border-color: inherit; }
+  border-color: #dee2e6; }
 
 .of-hidden {
   overflow: hidden; }

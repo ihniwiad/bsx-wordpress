@@ -19,6 +19,7 @@ $bsx-checklist-item-spacing:        .25em !default;
   li {
     &:before {
       content: $bsx-checklist-icon-content;
+      //position: absolute;
       font-family: $bsx-checklist-icon-font-family;
       display: inline-block;
       width: $bsx-checklist-indent;

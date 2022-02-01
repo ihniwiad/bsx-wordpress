@@ -1,9 +1,10 @@
 $bsx-checklist-indent:              2em !default;
 
 
-$bsx-checklist-icon-content:        "\f00c" !default;
+$bsx-checklist-icon-content:        \f00c !default; // unquoted
 $bsx-checklist-icon-font-family:    $bsx-icon-font-family !default;
 $bsx-checklist-icon-color:          $primary !default;
+$bsx-checklist-icon-font-weight:    normal !default;
 
 
 $bsx-checklist-item-spacing:        .25em !default;
@@ -18,13 +19,17 @@ $bsx-checklist-item-spacing:        .25em !default;
 
   li {
     &:before {
-      content: $bsx-checklist-icon-content;
+      content: unquote("\"#{$bsx-checklist-icon-content}\"");
       //position: absolute;
       font-family: $bsx-checklist-icon-font-family;
       display: inline-block;
       width: $bsx-checklist-indent;
       margin-left: -$bsx-checklist-indent;
       color: $bsx-checklist-icon-color;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: auto;
+      font-weight: $bsx-checklist-icon-font-weight;
     }
 
     & + li {

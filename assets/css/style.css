@@ -7954,6 +7954,7 @@ button.bg-dark:focus {
   position: fixed !important; }
 
 .position-sticky {
+  position: -webkit-sticky !important;
   position: sticky !important; }
 
 .fixed-top {
@@ -7970,8 +7971,9 @@ button.bg-dark:focus {
   left: 0;
   z-index: 1030; }
 
-@supports (position: sticky) {
+@supports ((position: -webkit-sticky) or (position: sticky)) {
   .sticky-top {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 1020; } }
@@ -11937,12 +11939,16 @@ img[data-fn="lazyload"][src*="data:image/svg+xml;base64"] {
   list-style: none;
   padding-left: 2em; }
   .checklist li:before {
-    content: "";
+    content: "\f00c ";
     font-family: FontAwesome;
     display: inline-block;
     width: 2em;
     margin-left: -2em;
-    color: #0275D8; }
+    color: #0275D8;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: auto;
+    font-weight: normal; }
   .checklist li + li {
     padding-top: 0.25em; }
 

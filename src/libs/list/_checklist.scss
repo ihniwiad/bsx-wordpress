@@ -4,7 +4,7 @@ $bsx-checklist-indent:              2em !default;
 $bsx-checklist-icon-content:        \f00c !default; // unquoted
 $bsx-checklist-icon-font-family:    $bsx-icon-font-family !default;
 $bsx-checklist-icon-color:          $primary !default;
-$bsx-checklist-icon-font-weight:    normal !default;
+$bsx-checklist-icon-font-weight:    $bsx-icon-font-weight !default;
 
 
 $bsx-checklist-item-spacing:        .25em !default;

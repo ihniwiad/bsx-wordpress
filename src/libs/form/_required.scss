@@ -1,0 +1,12 @@
+
+// add .required to .form-group or to single checkbox/radio label
+
+
+// avoid all radios/checkboxes having *
+// allow single check having *
+// do not destroy custom file input using additional label with pseudo
+.form-group.required label:not(.form-check-label):not(.custom-control-label):not(.custom-file-label):after,
+.form-check-label.required:after,
+.custom-control-label.required:after {
+	content: "\2009*";
+}

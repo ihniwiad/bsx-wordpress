@@ -1,0 +1,107 @@
+// VAR
+
+$bsx-toc-list-level-1-indent: 2.5rem !default; // 2rem
+$bsx-toc-list-level-2-indent: 3rem !default; // 3rem
+$bsx-toc-list-level-3-indent: 4rem !default; // 4rem
+$bsx-toc-list-small-device-indent: 1rem !default; // 1rem
+
+$bsx-toc-list-li-before-padding-right: .5rem !default;
+
+
+
+// STYLE
+
+.bsx-toc-list {
+
+	counter-reset: level_1;
+
+	list-style-type: none;
+	margin-left: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+
+	// all sublevels
+	ul,
+	ol {
+		list-style-type: none;
+		margin-left: 0;
+		margin-bottom: 0;
+		padding-left: 0;
+	}
+
+	li {
+		//position: relative;
+		//padding-left: $bsx-toc-list-level-1-indent;
+
+		&:before {
+			//position: absolute;
+			//left: 0;
+			//font-weight: 700;
+			display: inline-block;
+			width: $bsx-toc-list-level-1-indent;
+			padding-right: $bsx-toc-list-li-before-padding-right;
+			text-align: right;
+		}
+
+	}
+
+    a {
+		//color: inherit;
+    }
+
+	// level 1
+	> li {
+		counter-reset: level_2;
+		counter-increment: level_1;
+
+		&:before {
+			content: counter(level_1) ".";
+		}
+
+		// level 2
+		> ul,
+		> ol {
+
+			// level 2
+			> li {
+				counter-reset: level_3;
+				counter-increment: level_2;
+				//padding-left: $bsx-toc-list-level-2-indent;
+
+				&:before {
+					content: counter(level_1) "." counter(level_2);
+					width: $bsx-toc-list-level-1-indent + $bsx-toc-list-level-2-indent;
+				}
+
+				// level 3
+				> ul,
+				> ol {
+
+					// level 3
+					> li {
+						counter-increment: level_3;
+						//padding-left: $bsx-toc-list-level-3-indent;
+
+						&:before {
+							content: counter(level_1) "." counter(level_2) "." counter(level_3);
+							width: $bsx-toc-list-level-1-indent + $bsx-toc-list-level-2-indent + $bsx-toc-list-level-3-indent;
+						}
+					}
+
+				}
+			}
+
+		}
+
+    }
+
+
+	// reduce indent for small devices
+	@media (max-width: 419.98px) {
+		ul {
+			margin-left: $bsx-toc-list-small-device-indent;
+		}
+	}
+}
+
+

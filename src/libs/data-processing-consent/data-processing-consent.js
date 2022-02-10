@@ -38,6 +38,13 @@
     </div>
     
 </div>
+
+
+<!-- consent related data (hidden) -->
+<div data-tg="data-processing-consent-content" data-category="analytics" data-position="header" data-script-content="console.log( 'analytics script 1 activated' )" aria-hidden="true"></div>
+<div data-tg="data-processing-consent-content" data-category="analytics" data-position="footer" data-script-content="console.log( 'analytics script 2 activated' )" aria-hidden="true"></div>
+<div data-tg="data-processing-consent-content" data-category="analytics" data-position="header" data-script-src="https://example.com/analytics.js?id=123" aria-hidden="true"></div>
+
 */
 
 
@@ -284,6 +291,20 @@ $showConsentBannerButton.on( 'click', function() {
 
 // functions
 
+function filterScriptPosition( position ) {
+    switch ( position ) {
+        case 'header':
+            position = 'head';
+            break;
+        case 'head':
+            position = 'head';
+            break;
+        default: 
+            position = 'body';
+    }
+    return position;
+}
+
 function applyCategory( category ) {
     
     // find related templates
@@ -294,11 +315,17 @@ function applyCategory( category ) {
         var $elem = $( this );
 
         if ( typeof $elem.attr( 'data-script-src' ) !== 'undefined' ) {
-            appendSrcScript( $elem.attr( 'data-script-src' ) );
+            appendSrcScript( 
+                $elem.attr( 'data-script-src' ), 
+                $elem.attr( 'data-position' ) 
+            );
         }
         else if ( typeof $elem.attr( 'data-script-content' ) !== 'undefined' ) {
             // console.log( 'append inline script \n' + decodeURIComponent( $elem.attr( 'data-script-content' ) ) )
-            appendInlineScript( decodeURIComponent( $elem.attr( 'data-script-content' ) ) );
+            appendInlineScript( 
+                decodeURIComponent( $elem.attr( 'data-script-content' ) ), 
+                $elem.attr( 'data-position' ) 
+            );
         }
         else if ( typeof $elem.attr( 'data-html' ) !== 'undefined' ) {
             // console.log( 'append html \n' + decodeURIComponent( $elem.attr( 'data-html' ) ) )
@@ -309,17 +336,15 @@ function applyCategory( category ) {
 }
 
 function appendSrcScript( src, appendTo ) {
-    var currentAppendTo = ( !! appendTo ) ? appendTo : 'body';
     var script = document.createElement( 'script' );
     script.setAttribute( 'src', src );
-    document[ currentAppendTo ].appendChild( script );
+    document[ filterScriptPosition( appendTo ) ].appendChild( script );
 }
 
 function appendInlineScript( textContent, appendTo ) {
-    var currentAppendTo = ( !! appendTo ) ? appendTo : 'body';
     var script = document.createElement( 'script' );
     script.textContent = textContent;
-    document[ currentAppendTo ].appendChild( script );
+    document[ filterScriptPosition( appendTo ) ].appendChild( script );
 }
 
 function appendHtml( elem, htmlContent ) {

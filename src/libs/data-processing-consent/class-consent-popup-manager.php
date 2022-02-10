@@ -8,15 +8,15 @@ class Consent_Popup_Manager {
     $this->data = $data;
   }
 
-  private function consentApplyScriptBySrc( $cat, $src, $pos = 'footer' ) {
+  private static function consentApplyScriptBySrc( $cat, $src, $pos = 'footer' ) {
     echo '<div data-tg="data-processing-consent-content" data-category="' . $cat . '" data-position="' . $pos . '" data-script-src="' . $src . '" aria-hidden="true"></div>' . "\n";
   }
 
-  private function consentApplyScriptByContent( $cat, $content, $pos = 'footer' ) {
+  private static function consentApplyScriptByContent( $cat, $content, $pos = 'footer' ) {
     echo '<div data-tg="data-processing-consent-content" data-category="' . $cat . '" data-position="' . $pos . '" data-script-content="' . htmlspecialchars( $content ) . '" aria-hidden="true"></div>' . "\n";
   }
 
-  private function consentApplyHtml( $cat, $html ) {
+  public static function consentApplyHtml( $cat, $html ) {
     echo '<div data-tg="data-processing-consent-content" data-category="' . $cat . '" data-html="' . htmlspecialchars( $html ) . '" aria-hidden="true"></div>' . "\n";
   }
 

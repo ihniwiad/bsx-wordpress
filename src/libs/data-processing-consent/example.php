@@ -38,8 +38,8 @@ $consent_data = array(
     )
   ),
   array(
-    'cat' => 'empty-category',
-    'cat_label' => esc_html__( 'Empty category', 'bsx-wordpress' )
+    'cat' => 'html-content',
+    'cat_label' => esc_html__( 'HTML content', 'bsx-wordpress' )
   )
 );
 
@@ -103,6 +103,7 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
     // build consent data
     $consent_popup_manager->printData();
   }
+
 
 }
 

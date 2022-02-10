@@ -45,6 +45,10 @@
 <div data-tg="data-processing-consent-content" data-category="analytics" data-position="footer" data-script-content="console.log( 'analytics script 2 activated' )" aria-hidden="true"></div>
 <div data-tg="data-processing-consent-content" data-category="analytics" data-position="header" data-script-src="https://example.com/analytics.js?id=123" aria-hidden="true"></div>
 
+
+<!-- single cat activation trigger -->
+<button class="btn pm-btn-outline-primary" data-fn="data-processing-cat-consent-trigger" data-fn-options="{ cat: 'analytics' }">Activate Analytics</button>
+
 */
 
 

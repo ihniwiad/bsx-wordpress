@@ -1,0 +1,26 @@
+@import "./variables";
+
+
+
+@import "./../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "./../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "./../../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
+
+
+// remove unwanted spacing left & right
+
+.#{$fa-css-prefix}-stack {
+  width: $fa-stack-width;
+}
+
+
+// remove underline from icon links
+
+a[href].#{$fa-css-prefix} {
+  text-decoration: none;
+}
+
+// fallback
+.#{$fa-css-prefix} {
+  @extend .fa-solid;
+}

@@ -28,6 +28,11 @@ const paths = {
         fileName: 'style.css',
         watchSrc: 'src/**/*.scss',
     },
+    fonts: {
+        srcMatch: [ 'node_modules/', 'src/' ],
+        dest: 'assets/fonts/',
+        relativePath: '../fonts',
+    },
     js: {
         src: 'src/js/**/*.js',
         dest: 'assets/js/',
@@ -68,6 +73,12 @@ const replacePatterns = {
         match: /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])*/g,
         check: 'font-display:',
         add: ' \n  font-display: fallback; ',
+    },
+    cssFontsSrc: {
+        match: /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])+url\((\"|'|)(node_modules|src)\/+([a-zA-Z0-9-/-_@.:;,"'/(){ ?=#&\n\t])*/g,
+        // innerMatch: /node_modules|src+([a-zA-Z0-9-/-_/])+\/*/g,
+        innerMatch: /url\((\"|'|)(node_modules|src)\/+([a-zA-Z0-9-/-_/@])+.*/g,
+        replace: paths.fonts.relativePath,
     }
 }
 
@@ -101,7 +112,6 @@ const cssFolderClean = ( cb ) => {
 }
 
 exports.css_clean = cssFolderClean;
-
 
 
 const jsFolderClean = ( cb ) => {
@@ -214,6 +224,123 @@ const makeFontsPreloads = ( cb ) => {
     fs.writeFileSync( templates.fontPreload.destPath + templates.fontPreload.fileName, preloadsFileContent );
 
     cb();
+}
+
+
+const fontsFolderClean = ( cb ) => { 
+
+    return gulp.src( paths.fonts.dest, { read: false, allowEmpty: true } )
+        .pipe( clean() )
+    ;
+
+    cb();
+}
+
+
+const copyFontsToFolder = ( cb ) => {
+    // this function needs to be executed after css has been built
+
+    // get fonts from minimized css file
+    const cssFileContent = String( fs.readFileSync( paths.css.dest + 'style.min.css' ) );
+    const copyFontsStack = [];
+    const fontfaceSnippets = cssFileContent.match( replacePatterns.cssFonts.match );
+
+    fontfaceSnippets.forEach( ( fontfaceSnippet, index ) => {
+
+        // extract font sources – get content between `src:` and `;`
+        const fontSrcList = fontfaceSnippet.split( 'src:' );
+        const lastFontSrc = fontSrcList[ fontSrcList.length - 1 ].split( ';' )[ 0 ];
+        const singleFontExplode = lastFontSrc.split( ',' );
+
+        for ( let j = 0; j < singleFontExplode.length; j++ ) {
+
+            // extract each font’s url and format
+            const urlFormatExplode = singleFontExplode[ j ].split( ' ' );
+            let url = urlFormatExplode[ 0 ].replace( 'url(', '' ).replace( ')', '' );
+
+            console.log( 'url: ' + url );
+
+            // check if copy files into fonts folder
+
+            // TODO: check array paths.fonts.srcMatch
+            if ( url.indexOf( 'node_modules' ) === 0 || url.indexOf( 'src' ) === 0 ) {
+                console.log( 'copy' );
+
+                // remember font to (later) copy font into fonts folder
+                copyFontsStack.push( url );
+
+                //update font src
+
+            }
+            else {
+                // do nothing
+            }
+
+        }
+
+    } ); 
+
+    // copy fonts into fonts folder
+    if ( copyFontsStack.length > 0 ) {
+        let stream;
+        copyFontsStack.forEach ( ( fontPath ) => {
+            stream = gulp.src( fontPath );
+            stream = stream.pipe( gulp.dest( paths.fonts.dest ) );
+            //LOG += fontPath + ' ––> ' + paths.fonts.dest + '\n';
+        } );
+        //fs.writeFileSync( LOG_FILE_PATH, LOG );
+        return stream;
+    }
+
+    cb();
+}
+
+
+const cssChangeFontsPathsToFolder = ( cb ) => {
+
+    return gulp.src( paths.css.dest + '/**/*.css' )
+        .pipe( replace( replacePatterns.cssFontsSrc.match, ( match ) => {
+
+            // get url: url("...") / url('...') / url(...)
+            // match.replace( match, ( replacePatterns.cssFontsSrc.match ) => {
+
+            // } );
+
+            console.log( 'match: ' + match )
+
+            const innerMatch = replacePatterns.cssFontsSrc.innerMatch.test( match )
+
+            if ( innerMatch ) {
+                console.log( 'innerMatch: ' + innerMatch )
+            }
+            else {
+                console.log( 'NO innerMatch' )
+            }
+
+            // if ( match.indexOf( replacePatterns.cssFontsSrc.innerMatch ) > -1 ) {
+            // if ( replacePatterns.cssFontsSrc.innerMatch.test( match ) ) {
+            //     //test
+            //     // return match + replacePatterns.cssFontsSrc.replace;
+            //     console.log( 'replace – match: ' + match );
+
+            //     if () {
+
+            //     }
+
+
+            //     return match;
+            // }
+            // else {
+            //     console.log( 'NOT replace – match: ' + match );
+            //     return match;
+            // }
+            return match;
+        } ) )
+        .pipe( gulp.dest( paths.css.dest ) )
+    ;
+
+    cb();
+
 }
 
 
@@ -418,6 +545,13 @@ const build = series(
 );
 
 exports.build = build;
+
+
+exports.test = series (
+    // fontsFolderClean,
+    copyFontsToFolder,
+    cssChangeFontsPathsToFolder,
+);
 
 
 

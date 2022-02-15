@@ -28,6 +28,10 @@ const paths = {
         fileName: 'style.css',
         watchSrc: 'src/**/*.scss',
     },
+    fonts: {
+        dest: 'assets/fonts/',
+        relativePath: '../fonts',
+    },
     js: {
         src: 'src/js/**/*.js',
         dest: 'assets/js/',
@@ -68,6 +72,9 @@ const replacePatterns = {
         match: /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])*/g,
         check: 'font-display:',
         add: ' \n  font-display: fallback; ',
+    },
+    cssFontsSrc: {
+        match: /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])+url\((\"|'|)(node_modules|src)\/+([a-zA-Z0-9-/-_@.:;,"'/(){ ?=#&\n\t])*/g,
     }
 }
 
@@ -101,7 +108,6 @@ const cssFolderClean = ( cb ) => {
 }
 
 exports.css_clean = cssFolderClean;
-
 
 
 const jsFolderClean = ( cb ) => {
@@ -217,6 +223,115 @@ const makeFontsPreloads = ( cb ) => {
 }
 
 
+const fontsFolderClean = ( cb ) => { 
+
+    return gulp.src( paths.fonts.dest, { read: false, allowEmpty: true } )
+        .pipe( clean() )
+    ;
+
+    cb();
+}
+
+
+const copyFontsToFolder = ( cb ) => {
+    // this function needs to be executed after css has been built and minified
+
+    // get fonts from minimized css file
+    const cssFileContent = String( fs.readFileSync( paths.css.dest + 'style.min.css' ) );
+    const copyFontsStack = [];
+    const fontfaceSnippets = cssFileContent.match( replacePatterns.cssFonts.match );
+
+    fontfaceSnippets.forEach( ( fontfaceSnippet, index ) => {
+
+        // extract font sources – get content between `src:` and `;`
+        const fontSrcList = fontfaceSnippet.split( 'src:' );
+        const lastFontSrc = fontSrcList[ fontSrcList.length - 1 ].split( ';' )[ 0 ];
+        const singleFontExplode = lastFontSrc.split( ',' );
+
+        for ( let j = 0; j < singleFontExplode.length; j++ ) {
+
+            // extract each font’s url and format
+            const urlFormatExplode = singleFontExplode[ j ].split( ' ' );
+            let url = urlFormatExplode[ 0 ].replace( 'url(', '' ).replace( ')', '' );
+            if ( url.indexOf( '?' ) > -1 ) {
+                url = url.split( '?' )[ 0 ]
+            }
+
+            // check if copy files into fonts folder
+            if ( url.indexOf( 'node_modules' ) === 0 || url.indexOf( 'src' ) === 0 ) {
+                // remember font to (later) copy font into fonts folder
+                copyFontsStack.push( url );
+            }
+            else {
+                // do nothing
+            }
+        }
+
+    } ); 
+
+    // copy fonts into fonts folder
+    if ( copyFontsStack.length > 0 ) {
+        let stream;
+        copyFontsStack.forEach ( ( fontPath ) => {
+            stream = gulp.src( fontPath );
+            stream = stream.pipe( gulp.dest( paths.fonts.dest ) );
+            //LOG += fontPath + ' ––> ' + paths.fonts.dest + '\n';
+        } );
+        //fs.writeFileSync( LOG_FILE_PATH, LOG );
+        return stream;
+    }
+
+    cb();
+}
+
+
+const cssChangeFontsPathsToFolder = ( cb ) => {
+
+    return gulp.src( paths.css.dest + '/**/*.css' )
+        .pipe( replace( replacePatterns.cssFontsSrc.match, ( match ) => {
+
+            // get url: url("...") / url('...') / url(...)
+            const fontFaceExplode = match.split( 'url(' )
+            let rebuildFontFace = fontFaceExplode[ 0 ]
+
+            // ignore 1st item since not containing any src
+            for ( let i = 1; i < fontFaceExplode.length; i++ ) {
+                const srcListExplode = fontFaceExplode[ i ].split( ')' )
+                const src = srcListExplode[ 0 ]
+
+                // get only file name from src path (might contain closing double or single quote and params)
+                const fontFileExplode = src.split( '/' )
+                const fontFile = fontFileExplode[ fontFileExplode.length - 1 ]
+                const relativeSrc = paths.fonts.relativePath + '/' + fontFile
+
+                rebuildFontFace += 'url('
+
+                // keep opening double or single quote if contained
+                if ( fontFileExplode[ 0 ].substring( 0, 1 ) === '"' ) {
+                    rebuildFontFace += '"'
+                }
+                else if ( fontFileExplode[ 0 ].substring( 0, 1 ) === "'" ) {
+                    rebuildFontFace += "'"
+                }
+
+                rebuildFontFace += relativeSrc
+
+                // add rest after url, ignore 1st item since already rebuilt by src
+                for ( let i = 1; i < srcListExplode.length; i++ ) {
+                    rebuildFontFace += ')' + srcListExplode[ i ]
+                }
+            }
+
+            return rebuildFontFace;
+        } ) )
+        .pipe( gulp.dest( paths.css.dest ) )
+    ;
+
+    cb();
+
+}
+
+
 const cssFontsOptimize = ( cb ) => {
 
     return gulp.src( paths.css.dest + '/**/*.css' )
@@ -236,11 +351,19 @@ const cssFontsOptimize = ( cb ) => {
 }
 
 
+const makeAndLinkFontsFolder = series (
+    fontsFolderClean,
+    copyFontsToFolder,
+    cssChangeFontsPathsToFolder,
+);
+
+
 const css = series( 
     cssFolderClean,
     makeCss, 
     cssFontsOptimize, 
     cssCleanAndMinify,
+    makeAndLinkFontsFolder,
     makeFontsPreloads,
 );
 

@@ -29,7 +29,6 @@ const paths = {
         watchSrc: 'src/**/*.scss',
     },
     fonts: {
-        srcMatch: [ 'node_modules/', 'src/' ],
         dest: 'assets/fonts/',
         relativePath: '../fonts',
     },
@@ -76,9 +75,6 @@ const replacePatterns = {
     },
     cssFontsSrc: {
         match: /@font-face+([a-zA-Z0-9-/-_.:;,"'/(){ ?=#&\n\t])+url\((\"|'|)(node_modules|src)\/+([a-zA-Z0-9-/-_@.:;,"'/(){ ?=#&\n\t])*/g,
-        // innerMatch: /node_modules|src+([a-zA-Z0-9-/-_/])+\/*/g,
-        innerMatch: /url\((\"|'|)(node_modules|src)\/+([a-zA-Z0-9-/-_/@])+.*/g,
-        replace: paths.fonts.relativePath,
     }
 }
 
@@ -257,6 +253,9 @@ const copyFontsToFolder = ( cb ) => {
             // extract each font’s url and format
             const urlFormatExplode = singleFontExplode[ j ].split( ' ' );
             let url = urlFormatExplode[ 0 ].replace( 'url(', '' ).replace( ')', '' );
+            if ( url.indexOf( '?' ) > -1 ) {
+                url = url.split( '?' )[ 0 ]
+            }
 
             console.log( 'url: ' + url );
 
@@ -302,39 +301,53 @@ const cssChangeFontsPathsToFolder = ( cb ) => {
         .pipe( replace( replacePatterns.cssFontsSrc.match, ( match ) => {
 
             // get url: url("...") / url('...') / url(...)
-            // match.replace( match, ( replacePatterns.cssFontsSrc.match ) => {
 
-            // } );
+            // console.log( 'match: \n' + match )
 
-            console.log( 'match: ' + match )
+            // const innerMatch = replacePatterns.cssFontsSrc.innerMatch.test( match )
 
-            const innerMatch = replacePatterns.cssFontsSrc.innerMatch.test( match )
-
-            if ( innerMatch ) {
-                console.log( 'innerMatch: ' + innerMatch )
-            }
-            else {
-                console.log( 'NO innerMatch' )
-            }
-
-            // if ( match.indexOf( replacePatterns.cssFontsSrc.innerMatch ) > -1 ) {
-            // if ( replacePatterns.cssFontsSrc.innerMatch.test( match ) ) {
-            //     //test
-            //     // return match + replacePatterns.cssFontsSrc.replace;
-            //     console.log( 'replace – match: ' + match );
-
-            //     if () {
-
-            //     }
-
-
-            //     return match;
+            // if ( innerMatch ) {
+            //     console.log( 'innerMatch: ' + innerMatch )
             // }
             // else {
-            //     console.log( 'NOT replace – match: ' + match );
-            //     return match;
+            //     console.log( 'NO innerMatch' )
             // }
-            return match;
+
+            const fontFaceExplode = match.split( 'url(' )
+            let rebuildFontFace = fontFaceExplode[ 0 ]
+
+            // ignore 1st item since not containing any src
+            for ( let i = 1; i < fontFaceExplode.length; i++ ) {
+                const srcListExplode = fontFaceExplode[ i ].split( ')' )
+                const src = srcListExplode[ 0 ]
+
+                // console.log( 'src: ' + src )
+                // get only file name from src path (might contain closing double or single quote)
+                const fontFileExplode = src.split( '/' )
+                const fontFile = fontFileExplode[ fontFileExplode.length - 1 ]
+                const relativeSrc = paths.fonts.relativePath + '/' + fontFile
+                // console.log( 'relativeSrc: ' + relativeSrc )
+
+                rebuildFontFace += 'url('
+
+                // keep opening double or single quote if contained
+                if ( fontFileExplode[ 0 ].substring( 0, 1 ) === '"' ) {
+                    rebuildFontFace += '"'
+                }
+                else if ( fontFileExplode[ 0 ].substring( 0, 1 ) === "'" ) {
+                    rebuildFontFace += "'"
+                }
+
+                rebuildFontFace += relativeSrc
+
+                // add rest after url, ignore 1st item since already rebuilt by src
+                for ( let i = 1; i < srcListExplode.length; i++ ) {
+                    rebuildFontFace += ')' + srcListExplode[ i ]
+                }
+            }
+            console.log( 'rebuildFontFace: \n' + rebuildFontFace )
+
+            return rebuildFontFace;
         } ) )
         .pipe( gulp.dest( paths.css.dest ) )
     ;
@@ -363,11 +376,19 @@ const cssFontsOptimize = ( cb ) => {
 }
 
 
+const makeAndLinkFontsFolder = series (
+    fontsFolderClean,
+    copyFontsToFolder,
+    cssChangeFontsPathsToFolder,
+);
+
+
 const css = series( 
     cssFolderClean,
     makeCss, 
     cssFontsOptimize, 
     cssCleanAndMinify,
+    makeAndLinkFontsFolder,
     makeFontsPreloads,
 );
 
@@ -545,13 +566,6 @@ const build = series(
 );
 
 exports.build = build;
-
-
-exports.test = series (
-    // fontsFolderClean,
-    copyFontsToFolder,
-    cssChangeFontsPathsToFolder,
-);
 
 
 

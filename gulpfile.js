@@ -234,7 +234,7 @@ const fontsFolderClean = ( cb ) => {
 
 
 const copyFontsToFolder = ( cb ) => {
-    // this function needs to be executed after css has been built
+    // this function needs to be executed after css has been built and minified
 
     // get fonts from minimized css file
     const cssFileContent = String( fs.readFileSync( paths.css.dest + 'style.min.css' ) );
@@ -257,24 +257,14 @@ const copyFontsToFolder = ( cb ) => {
                 url = url.split( '?' )[ 0 ]
             }
 
-            console.log( 'url: ' + url );
-
             // check if copy files into fonts folder
-
-            // TODO: check array paths.fonts.srcMatch
             if ( url.indexOf( 'node_modules' ) === 0 || url.indexOf( 'src' ) === 0 ) {
-                console.log( 'copy' );
-
                 // remember font to (later) copy font into fonts folder
                 copyFontsStack.push( url );
-
-                //update font src
-
             }
             else {
                 // do nothing
             }
-
         }
 
     } ); 
@@ -301,18 +291,6 @@ const cssChangeFontsPathsToFolder = ( cb ) => {
         .pipe( replace( replacePatterns.cssFontsSrc.match, ( match ) => {
 
             // get url: url("...") / url('...') / url(...)
-
-            // console.log( 'match: \n' + match )
-
-            // const innerMatch = replacePatterns.cssFontsSrc.innerMatch.test( match )
-
-            // if ( innerMatch ) {
-            //     console.log( 'innerMatch: ' + innerMatch )
-            // }
-            // else {
-            //     console.log( 'NO innerMatch' )
-            // }
-
             const fontFaceExplode = match.split( 'url(' )
             let rebuildFontFace = fontFaceExplode[ 0 ]
 
@@ -321,12 +299,10 @@ const cssChangeFontsPathsToFolder = ( cb ) => {
                 const srcListExplode = fontFaceExplode[ i ].split( ')' )
                 const src = srcListExplode[ 0 ]
 
-                // console.log( 'src: ' + src )
-                // get only file name from src path (might contain closing double or single quote)
+                // get only file name from src path (might contain closing double or single quote and params)
                 const fontFileExplode = src.split( '/' )
                 const fontFile = fontFileExplode[ fontFileExplode.length - 1 ]
                 const relativeSrc = paths.fonts.relativePath + '/' + fontFile
-                // console.log( 'relativeSrc: ' + relativeSrc )
 
                 rebuildFontFace += 'url('
 
@@ -345,7 +321,6 @@ const cssChangeFontsPathsToFolder = ( cb ) => {
                     rebuildFontFace += ')' + srcListExplode[ i ]
                 }
             }
-            console.log( 'rebuildFontFace: \n' + rebuildFontFace )
 
             return rebuildFontFace;
         } ) )

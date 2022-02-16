@@ -91,6 +91,26 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
           //   </div>
           // </div>
           ?>
+
+
+          <div class="col-sm col-sm-auto d-flex align-items-end">
+            <?php
+              echo '<!-- Consent Popup Menu -->';
+              wp_nav_menu( 
+                array( 
+                  'theme_location' => 'consent-popup-menu',
+                  'menu' => '',
+                  'container' => '',
+                  'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                  'menu_class' => 'bsx-footer-bottom-nav list-unstyled w-100 small text-right pt-1 mb-0',
+                  'menu_id' => '',
+                  'add_li_class' => 'footer-bottom-menu-li', // custom filter add_additional_class_on_li(), see functions.php 
+                  'add_a_class' => 'footer-link' // custom filteradd_additional_class_on_a(), see functions.php 
+                ) 
+              ); 
+            ?>
+          </div>
+
         </div>
         
       </div>

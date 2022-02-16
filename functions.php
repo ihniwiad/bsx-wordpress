@@ -108,7 +108,8 @@ function register_my_menus() {
             'footer-column-3-menu' => __( 'Footer Column 3 Menu', 'bsx-wordpress' ),
             'footer-column-4-menu' => __( 'Footer Column 4 Menu', 'bsx-wordpress' ),
             'footer-column-5-menu' => __( 'Footer Column 5 Menu', 'bsx-wordpress' ),
-            'footer-bottom-menu' => __( 'Footer Bottom Menu', 'bsx-wordpress' )
+            'footer-bottom-menu' => __( 'Footer Bottom Menu', 'bsx-wordpress' ),
+            'consent-popup-menu' => __( 'Consent Popup Menu', 'bsx-wordpress' )
         )
     );
 }

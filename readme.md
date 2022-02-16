@@ -32,7 +32,7 @@ Example:
 
 ```
 FOLDER_NAME=bsx-wordpress
-PUBLISH_PATH=../../../../../Applications/MAMP/htdocs/wordpress-testing/wp-content/themes/
+PUBLISH_PATH=../../../../../../Applications/MAMP/htdocs/wordpress-testing/wp-content/themes/
 ```
 
 All of your Plugin’s files but `node_modules` will be copied to this folder (as `bsx-blocks` folder) each time you build.

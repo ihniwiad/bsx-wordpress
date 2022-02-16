@@ -197,7 +197,11 @@ msgstr "Footer Spalte 5 Menü"
 
 #: functions.php:111
 msgid "Footer Bottom Menu"
-msgstr "Footer Bottom-Menü"
+msgstr "Footer Bottom Menü"
+
+#: functions.php:112
+msgid "Consent Popup Menu"
+msgstr "Consent Popup Menü"
 
 #: src-libs-data-processing-consent/example.php:92
 msgid "Save"

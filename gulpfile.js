@@ -81,8 +81,10 @@ const replacePatterns = {
 
 // PUBLISH HOWTO: 
 // If you like to copy your files to another folder after build make 
-// `.env` file with content `PUBLISH_PATH=path_to_your_folder`, 
-// e.g. `PUBLISH_PATH=../../../../../Applications/MAMP/htdocs/`
+// `.env` file with content `FOLDER_NAME=your_folder_name` and `PUBLISH_PATH=path_to_your_folder`, 
+// e.g.: 
+// `FOLDER_NAME=my_project`
+// `PUBLISH_PATH=../../../../../Applications/MAMP/htdocs/`
 // Have a look at `publishConfig` which files to include / exclude
 // and how to name your created destination folder
 // 
@@ -94,7 +96,7 @@ const publishConfig = {
         "!**/node_modules/**", 
     ],
     "base": ".",
-    "folderName": "bsx-wordpress"
+    "folderName": ( !! envConfig.FOLDER_NAME ? envConfig.FOLDER_NAME : '' )
 };
 
 
@@ -255,6 +257,9 @@ const copyFontsToFolder = ( cb ) => {
             let url = urlFormatExplode[ 0 ].replace( 'url(', '' ).replace( ')', '' );
             if ( url.indexOf( '?' ) > -1 ) {
                 url = url.split( '?' )[ 0 ]
+            }
+            if ( url.indexOf( '#' ) > -1 ) {
+                url = url.split( '#' )[ 0 ]
             }
 
             // check if copy files into fonts folder

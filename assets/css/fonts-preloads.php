@@ -4,5 +4,5 @@
 <link rel="preload" href="' . $assetsPath . 'fonts/Roboto-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="' . $assetsPath . 'fonts/Roboto-Light.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="' . $assetsPath . 'fonts/Roboto-Medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="' . $assetsPath . 'fonts/fontawesome-webfont.woff2?v=4.5.0" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="' . $assetsPath . 'fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" type="font/woff2" crossorigin>
 ' );

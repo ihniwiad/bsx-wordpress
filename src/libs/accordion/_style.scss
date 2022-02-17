@@ -11,6 +11,7 @@ $bsx-acc-transition-effect:     ease !default;
 // (main)
 $bsx-acc-header-padding:            .25rem 0 !default;
 $bsx-acc-header-background:         transparent !default;
+$bsx-acc-header-color:              inherit !default;
 $bsx-acc-header-open-background:    transparent !default;
 $bsx-acc-header-border-style:       none !default;
 $bsx-acc-header-border-width:       1px !default;
@@ -81,6 +82,7 @@ $bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
   border-color: $bsx-acc-header-border-color;
   font-size: $bsx-acc-header-font-size;
   padding: $bsx-acc-header-padding;
+  color: $bsx-acc-header-color;
   background: $bsx-acc-header-background;
   transition: $bsx-acc-header-transition;
 

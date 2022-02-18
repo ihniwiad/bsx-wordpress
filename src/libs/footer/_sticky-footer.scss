@@ -1,0 +1,12 @@
+
+
+.page-wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.page-wrapper > main,
+.page-main {
+	flex: 1;
+}

@@ -47,10 +47,6 @@ class Bsx_Mail_Form {
         $html = '<div data-id="form-wrapper">';
             $html .= '<form novalidate method="post" action="' . get_bloginfo( 'url' ) . '/wp-json/bsx/v1/mailer/" data-fn="mail-form">';
                 $html .= $template;
-                $current_url = ( isset( $_SERVER[ 'HTTPS' ] ) ? "https://" : "http://" ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
-                $html .= '<input type="hidden" name="current_url__text__r" value="' . $current_url . '">';
-                $html .= '<input type="hidden" name="post_title__text__r" value="' . get_the_title() . '">';
-                $html .= '<input type="hidden" name="post_id__number__r" value="' . get_the_ID() . '">';
                 $html .= '<input type="hidden" name="hv__text__r" value="" data-g-tg="hv">';
                 $html .= '<input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">';
                 $html .= '<input type="hidden" name="idh__text__r" value="' . $hash . '">';
@@ -148,7 +144,6 @@ class Bsx_Mail_Form {
                 break;
 
             case 'human-verification-display':
-                // TODO: rename attr since having duplicate
                 $return .= '<div' . ( $attributes != '' ? ' ' . $attributes : '' ) . ' data-g-tg="hvd"></div>';
                 break;
 
@@ -359,7 +354,7 @@ class Bsx_Mail_Form {
                             __( '%sUse placeholders (Subject and Email template):%s', 
                             'bsx-wordpress' ),
                             '<p>',
-                            '</p><p><small><code>[email]</code>, <code>[name]</code>, <code>[site-url]</code>, <code>[current-url]</code>, <code>[post-title]</code>, <code>[post-id]</code>, ...</small></p>',
+                            '</p><p><small><code>[email]</code>, <code>[name]</code>, <code>[site-url]</code>, ...</small></p>',
                         ),
                     ) // args = array()
                 );
@@ -549,10 +544,8 @@ class Bsx_Mail_Form {
                 }
 
                 function replace_placeholders( $text, $sanitized_values ) {
+                    // $text = str_replace ( '[site-title]', get_the_title(), $text );
                     $text = str_replace ( '[site-url]', get_site_url(), $text );
-                    $text = str_replace ( '[current-url]', $sanitized_values[ 'current_url' ], $text );
-                    $text = str_replace ( '[post-title]', $sanitized_values[ 'post_title' ], $text );
-                    $text = str_replace ( '[post-id]', $sanitized_values[ 'post_id' ], $text );
                     foreach ( $sanitized_values as $key => $value ) {
                         $text = str_replace ( '[' . $key . ']', $value, $text );
                     }
@@ -643,13 +636,6 @@ class Bsx_Mail_Form {
                     $mail_subject = 'Mail from contact form at ' . get_site_url();
                 }
 
-                // TEST
-                // $test = '';
-                // foreach ( $sanitized_values as $key => $value ) {
-                //     $test .= $key . ': ' . $value . '<br>';
-                // }
-                // /TEST
-
                 $mail_content = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template' ), $sanitized_values );
                 $mail_content = str_replace ( "\n", "<br/>", $mail_content );
 
@@ -703,7 +689,7 @@ class Bsx_Mail_Form {
                 $host_pattern = "/http+(s|)+:\/\/+([a-z0-9-_])+\//s";
                 $matches = array();
                 $has_matches = preg_match( $host_pattern, $referrer, $matches );
-                $referrer_host = ! empty( $matches ) ? $matches[ 0 ] : '';
+                $referrer_host = ( isset( $matches[ 0 ] ) ) ? $matches[ 0 ] : '';
 
                 // check referrer, must be empty or same host
                 $server_name = $_SERVER[ 'SERVER_NAME' ]; // domain (not protocol)

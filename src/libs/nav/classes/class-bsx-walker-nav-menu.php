@@ -117,7 +117,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $current_url = $protocol . $server_name . $path;
 
       $page_is_blog_subpage = false;
-      if ( strrpos( ( $current_url ), $blog_url ) === 0 && $current_url != $blog_url ) {
+      if ( ! empty( $blog_url ) && strrpos( ( $current_url ), $blog_url ) === 0 && $current_url != $blog_url ) {
         $page_is_blog_subpage = true;
       }
 

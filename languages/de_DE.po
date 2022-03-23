@@ -175,6 +175,10 @@ msgstr "Social Media Brand-Farben benutzen"
 msgid "Yes"
 msgstr "Ja"
 
+#: functions.php:105
+msgid "Primary Menu"
+msgstr "Hauptmenü"
+
 #: functions.php:106
 msgid "Footer Column 1 Menu"
 msgstr "Footer Spalte 1 Menü"

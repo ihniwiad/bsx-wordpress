@@ -9746,6 +9746,12 @@ strong {
 .text-shadow-darkest {
   text-shadow: 0 0 0.5em #000, 0 0 0.1em black, 0 0 1px black; }
 
+.text-shadow-light {
+  text-shadow: 0 0 0.1em rgba(255, 255, 255, 0.6); }
+
+.text-shadow-primary {
+  text-shadow: 0 0 0.1em rgba(2, 117, 216, 0.6); }
+
 .heading-inherit-text h1, .heading-inherit-text h2, .heading-inherit-text h3, .heading-inherit-text h4, .heading-inherit-text h5, .heading-inherit-text h6,
 .heading-inherit-text .h1, .heading-inherit-text .h2, .heading-inherit-text .h3, .heading-inherit-text .h4, .heading-inherit-text .h5, .heading-inherit-text .h6 {
   color: inherit; }

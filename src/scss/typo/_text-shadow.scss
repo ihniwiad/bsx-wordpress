@@ -5,6 +5,9 @@ $bsx-dark-text-shadow:              0 0 0.1em rgba(0, 0, 0, 0.33) !default;
 $bsx-darker-text-shadow:            0 0 0.5em rgba(0, 0, 0, 0.8), 0 0 0.1em rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.5) !default;
 $bsx-darkest-text-shadow:           0 0 0.5em #000, 0 0 0.1em rgba(0, 0, 0, 1), 0 0 1px rgba(0, 0, 0, 1) !default;
 
+$bsx-light-text-shadow:           	0 0 .1em rgba(255, 255, 255, .6) !default;
+$bsx-primary-text-shadow:           0 0 .1em rgba($primary, .6) !default;
+
 
 
 // style
@@ -20,4 +23,12 @@ $bsx-darkest-text-shadow:           0 0 0.5em #000, 0 0 0.1em rgba(0, 0, 0, 1), 
 }
 .text-shadow-darkest {
   text-shadow: $bsx-darkest-text-shadow;
+}
+
+.text-shadow-light {
+  text-shadow: $bsx-light-text-shadow;
+}
+
+.text-shadow-primary {
+  text-shadow: $bsx-primary-text-shadow;
 }

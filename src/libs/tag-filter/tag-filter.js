@@ -74,6 +74,8 @@ class TagFilter {
     if ( this.TARGET_INACTIVE_CLASS ) {
       targetItem.classList.remove( this.TARGET_INACTIVE_CLASS )
     }
+    // trigger window scroll to trigger lazyload on appearing filter elems
+    window.dispatchEvent( new CustomEvent( 'scroll' ) )
   }
 
   _deactivate( targetItem ) {

@@ -57,7 +57,7 @@ class TagFilter {
     this.triggers = this.form.querySelectorAll( '[data-tgf-tri]' )
     this.submit = this.form.querySelector( '[type="submit"]' )
     this.reset = this.form.querySelector( '[type="reset"]' )
-    this.target = typeof this.conf.bsxTarget !== 'undefined' ? DomData.getElems( this.conf.bsxTarget )[ 0 ] : undefined // use key for `data-bsx` attr, get first elem of array
+    this.target = ( typeof this.conf.bsxTarget !== 'undefined' && DomData.getElems( this.conf.bsxTarget ) != null ) ? DomData.getElems( this.conf.bsxTarget )[ 0 ] : undefined // use key for `data-bsx` attr, get first elem of array
     this.targetItems = typeof this.target === 'object' ? this.target.querySelectorAll( '[data-tgf-id]' ) : []
     this.TARGET_ACTIVE_CLASS = ( this.conf != null && typeof this.conf.targetActiveClass ) !== 'undefined' ? this.conf.targetActiveClass : DEFAULT_TARGET_ACTIVE_CLASS
     this.TARGET_INACTIVE_CLASS = ( this.conf != null && typeof this.conf.targetInactiveClass ) !== 'undefined' ? this.conf.targetInactiveClass : DEFAULT_TARGET_INACTIVE_CLASS
@@ -154,7 +154,9 @@ class TagFilter {
           // has murtiple tags, check for 1st active
           for ( let itemKey of itemKeyList ) {
             const configIndex = this._getConfigIndex( triggersConfig, itemKey )
-            if ( triggersConfig[ configIndex ].status === true ) {
+            
+            // configIndex might be -1 if post has category not containend in triggers config
+            if ( typeof triggersConfig[ configIndex ] !== 'undefined' && triggersConfig[ configIndex ].status === true ) {
               itemIsActive = true
               break
             }

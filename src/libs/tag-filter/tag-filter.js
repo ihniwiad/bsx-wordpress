@@ -3,7 +3,7 @@
 MARKUP:
 
 
-<form class="bsx-tgf-form" data-bsx="tgf" data-tgf-conf="{ bsxTarget: 'tgf-tar-1' }">
+<form class="bsx-tgf-form" data-bsx="tgf" data-tgf-conf="{ bsxTarget: 'tgf-tar-1', filterLogic: 'AND' }">
 
   <ul class="list-inline">
     <li class="list-inline-item"><input class="bsx-tgf-trigger" id="tgf-1-1" type="checkbox" value="1" data-tgf-tri><label class="bsx-tgf-label" for="tgf-1-1">Tag 1</label></li>
@@ -44,6 +44,7 @@ const DEFAULT_TARGET_INACTIVE_CLASS = 'inactive'
 // const DEFAULT_TRIGGER_INACTIVE_CLASS = ''
 const DEFAULT_SUBMIT_ON_CHANGE = true
 const DEFAULT_SHOW_ALL_IF_NOTHING_SELECTED = true
+const DEFALT_FILTER_LOGIC = 'OR'
 
 
 
@@ -65,6 +66,7 @@ class TagFilter {
     // this.TRIGGER_INACTIVE_CLASS = ( this.conf != null && typeof this.conf.triggerInactiveClass ) !== 'undefined' ? this.conf.triggerInactiveClass : DEFAULT_TRIGGER_INACTIVE_CLASS
     this.SUBMIT_ON_CHANGE = ( this.conf != null && typeof this.conf.submitOnChange ) !== 'undefined' ? this.conf.submitOnChange : DEFAULT_SUBMIT_ON_CHANGE
     this.SHOW_ALL_IF_NOTHING_SELECTED = ( this.conf != null && typeof this.conf.showAllIfNothingSelected ) !== 'undefined' ? this.conf.showAllIfNothingSelected : DEFAULT_SHOW_ALL_IF_NOTHING_SELECTED
+    this.FILTER_LOGIC = ( this.conf != null && typeof this.conf.filterLogic ) !== 'undefined' ? this.conf.filterLogic : DEFALT_FILTER_LOGIC
   }
 
   _activate( targetItem ) {
@@ -116,6 +118,16 @@ class TagFilter {
     return triggersConfig
   }
 
+  _getActiveFilterKeys( triggersConfig ) {
+    const activeKeys = []
+    triggersConfig.forEach( ( triggersConfigItem ) => {
+      if ( triggersConfigItem.status == true ) {
+        activeKeys.push( triggersConfigItem.id )
+      }
+    } )
+    return activeKeys
+  }
+
   _getConfigIndex( triggersConfig, itemKey ) {
     const configIndex = triggersConfig.findIndex( item => {
       if ( item.id === itemKey ) {
@@ -138,6 +150,9 @@ class TagFilter {
       }
     }
     else {
+
+      // console.log( 'triggersConfig: ' + JSON.stringify( triggersConfig, null, 2 ) )
+
       // show selected
       targetItems.forEach( ( targetItem ) => {
         // allow multiple tagging (e.g. data-tgf-id="foo bar"), get list
@@ -147,28 +162,74 @@ class TagFilter {
           // has multiple tags
           itemKeyList = itemKey.split( ' ' )
         }
+        else {
+          itemKeyList.push( itemKey )
+        }
 
         // check config for current item key(s)
         let itemIsActive = false
-        if ( itemKeyList.length > 0 ) {
-          // has murtiple tags, check for 1st active
-          for ( let itemKey of itemKeyList ) {
+
+        // TODO: separate FILTER_LOGIC == 'OR' (one or more must match) / 'AND' (all must match)
+
+        if ( this.FILTER_LOGIC.toLowerCase() == 'or' ) {
+          // filter item must match one or more keys
+
+          if ( itemKeyList.length > 0 ) {
+            // has murtiple tags, check for 1st active
+            for ( let itemKey of itemKeyList ) {
+              const configIndex = this._getConfigIndex( triggersConfig, itemKey )
+
+              // console.log( 'configIndex: ' + JSON.stringify( configIndex, null, 2 ) )
+              // console.log( 'itemKey: ' + itemKey )
+              
+              // configIndex might be -1 if post has category not containend in triggers config
+              if ( typeof triggersConfig[ configIndex ] !== 'undefined' && triggersConfig[ configIndex ].status === true ) {
+                // first match found
+                itemIsActive = true
+                break
+              }
+            }
+          }
+          else {
+            // has one tag, check if active
             const configIndex = this._getConfigIndex( triggersConfig, itemKey )
-            
-            // configIndex might be -1 if post has category not containend in triggers config
-            if ( typeof triggersConfig[ configIndex ] !== 'undefined' && triggersConfig[ configIndex ].status === true ) {
+            if ( triggersConfig[ configIndex ].status === true ) {
               itemIsActive = true
-              break
             }
           }
         }
         else {
-          // has one tag, check if active
-          const configIndex = this._getConfigIndex( triggersConfig, itemKey )
-          if ( triggersConfig[ configIndex ].status === true ) {
-            itemIsActive = true
+          // filter item must match all keys
+
+          itemIsActive = true
+
+          // iterate all selectet filter items, remember keys
+          // then iterate target items & check all keys
+
+          const activeFilterKeys = this._getActiveFilterKeys( triggersConfig )
+          // console.log( 'activeFilterKeys: ' + JSON.stringify( activeFilterKeys, null, 2 ) )
+
+
+          // console.log( 'test item: activeFilterKeys: ' + JSON.stringify( activeFilterKeys, null, null ) )
+          // console.log( 'test item: itemKeyList: ' + JSON.stringify( itemKeyList, null, null ) )
+
+          if ( itemKeyList.length > 0 ) {
+            for ( let activeFilterKey of activeFilterKeys ) {
+
+              // console.log( '-----> activeFilterKey: ' + activeFilterKey )
+
+              if ( itemKeyList.indexOf( activeFilterKey ) == -1 ) {
+                // 
+                itemIsActive = false
+              }
+            }
           }
+          else {
+            itemIsActive = false
+          }
+
         }
+
 
         if ( itemIsActive ) {
           this._activate( targetItem )

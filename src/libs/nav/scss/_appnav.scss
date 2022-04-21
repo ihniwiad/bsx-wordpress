@@ -29,6 +29,11 @@
 	}
 }
 
+// dropdown toggle button – remove atf style
+button.bsx-appnav-dropdown-toggle {
+	display: inline-block;
+}
+
 
 // SCROLL TOGGLE APPNAV (requires scroll-class-names.js)
 
@@ -104,7 +109,8 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 	li {
 
 		// link (all)
-		a {
+		a,
+		button {
 			transition: $bsx-appnav-link-transition;
 		}
 	}
@@ -145,7 +151,8 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 	li {
 
 		// link (all)
-		a {
+		a,
+		button {
 			font-weight: $bsx-appnav-basic-font-weight;
 			color: $bsx-appnav-color;
 
@@ -174,7 +181,8 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 	> li {
 
 		// link (level 1)
-		> a {
+		> a,
+		> button {
 
 			// reset atf text bubble
 			&::before {
@@ -195,6 +203,12 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 			#{$bsx-icon-font-selector} {
 				width: 16px;
 				color: $bsx-appnav-icon-color;
+
+			//	&:after {
+			//		// remove atf style
+			//		content: none;
+			//		display: none;
+			//	}
 			}
 
 			@include bsx-hover-focus {
@@ -257,6 +271,14 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 			a {
 				border-bottom: $bsx-appnav-mobile-link-border-width solid $bsx-appnav-mobile-link-border-color;
 				//background-clip: padding-box;
+			}
+
+			&.has-dropdown-button {
+				& > button.bsx-appnav-dropdown-toggle {
+					border-width: 1px;
+					border-style: none none solid solid;
+					border-color: $bsx-appnav-mobile-link-border-color;
+				}
 			}
 		}
 
@@ -442,12 +464,12 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 // DROPDOWN TOGGLE
 
 .bsx-appnav-dropdown-toggle {
-	&::after {
+	&:after {
 		display: inline-block;
 		//width: 0;
-		height: $font-size-base;
-		vertical-align: middle;
-		margin-left: $bsx-appnav-link-icon-text-spacer;
+		//height: $font-size-base;
+		//vertical-align: middle;
+		//margin-left: $bsx-appnav-link-icon-text-spacer;
 		content: $bsx-appnav-arrow-right-icon;
 		font-family: $bsx-appnav-icon-font-family;
 		color: $bsx-appnav-icon-color;

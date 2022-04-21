@@ -107,7 +107,9 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
      */
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
 
+      // $createClickableParentLinkChild = true;
       $createClickableParentLinkChild = true;
+      $createDropdownButtonBesidesLink = false;
 
       // check if current url is subfolder of blog url
       $blog_url = (string) get_permalink( get_option( 'page_for_posts' ) );
@@ -136,7 +138,10 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       }
       $indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
 
-      $classes   = empty( $item->classes ) ? array() : (array) $item->classes;
+      $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+
+      $is_dropdown = in_array( 'menu-item-has-children', $classes, true );
+
       $classes[] = 'menu-item-' . $item->ID;
 
       // get object id (e.g. page id) and type (e.g. page)
@@ -149,6 +154,10 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
         || $item_is_blog_link && $page_is_blog_subpage
       ) {
         $classes[] = 'active';
+      }
+
+      if ( $is_dropdown && $createDropdownButtonBesidesLink ) {
+        $classes[] = 'has-dropdown-button';
       }
 
 
@@ -189,7 +198,9 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
        * @param int      $depth   Depth of menu item. Used for padding.
        */
       $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
-      $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+      // $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+      // remove id
+      $id = '';
 
       // add id and type
       $item_identifier = ! empty( $object_id ) && ! empty( $object_type ) ? ' data-' . $object_type . '="' . $object_id . '"' : '';
@@ -197,16 +208,45 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       // $output .= $indent . '<li' . $id . $class_names . ' data-test-li>';
       $output .= $indent . '<li' . $id . $class_names . $item_identifier . '>';
 
-      $atts           = array();
-      $atts[ 'title' ]  = ! empty( $item->attr_title ) ? $item->attr_title : '';
-      $atts[ 'target' ] = ! empty( $item->target ) ? $item->target : '';
+      $link_atts = array();
+      $overview_link_atts = array();;
+      $link_atts[ 'title' ] = ! empty( $item->attr_title ) ? $item->attr_title : '';
+      $link_atts[ 'target' ] = ! empty( $item->target ) ? $item->target : '';
       if ( '_blank' === $item->target && empty( $item->xfn ) ) {
-        $atts[ 'rel' ] = 'noopener';
+        $link_atts[ 'rel' ] = 'noopener';
       } else {
-        $atts[ 'rel' ] = $item->xfn;
+        $link_atts[ 'rel' ] = $item->xfn;
       }
-      $atts[ 'href' ]         = ! empty( $item->url ) ? $item->url : '';
-      $atts[ 'aria-current' ] = $item->current ? 'page' : '';
+      $href = ! empty( $item->url ) ? $item->url : '';
+      $link_atts[ 'href' ] = $href;
+      $overview_link_atts[ 'href' ] = $href;
+      // check if anchor link
+      // check if hash or url
+      if ( substr( $href, 0, 1 ) === '#' ) {
+        // is hash, add attributes for closing main nav on click or add homepage url before hast
+
+        // check if home page
+        if ( is_front_page() ) {
+          if ( ! $is_dropdown) {
+            // is hash, add attributes for closing main nav on click
+            $link_atts[ 'data-fn' ] = 'toggle';
+            $link_atts[ 'data-fn-options' ] = '{ bodyOpenedClass: \'nav-open\', reset: true }';
+            $link_atts[ 'data-fn-target' ] = '[data-tg=\'navbar-collapse\']';
+          }
+          else {
+            $overview_link_atts[ 'data-fn' ] = 'toggle';
+            $overview_link_atts[ 'data-fn-options' ] = '{ bodyOpenedClass: \'nav-open\', reset: true }';
+            $overview_link_atts[ 'data-fn-target' ] = '[data-tg=\'navbar-collapse\']';
+          }
+        }
+        else {
+          // add homepage url before hash url, do not add additional attributes
+          $link_atts[ 'href' ] = get_home_url() . '/' . $href;
+          $overview_link_atts[ 'href' ] = get_home_url() . '/' . $href;
+        }
+      }
+
+      $link_atts[ 'aria-current' ] = $item->current ? 'page' : '';
 
 
       // TEST
@@ -225,18 +265,21 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $linkId = 'appnav-link-' . $item->ID;
       $dropdownId = 'appnav-dropdown-' . $item->ID;
 
-      $classes = empty( $item->classes ) ? array() : (array) $item->classes;
-
-      // check if has children (inspired from twentytwentyone)
-      if ( in_array( 'menu-item-has-children', $classes, true ) ) {
+      $dropdown_atts = array();
+      if ( $is_dropdown ) {
         // add css class `bsx-appnav-dropdown-toggle` to link of dropdown item
-        $atts[ 'class' ]            = 'bsx-appnav-dropdown-toggle';
+        $dropdown_atts[ 'class' ]            = 'bsx-appnav-dropdown-toggle';
         // add id, data & aria attr (corresponding ul needs aria-labelledby="CORRESPONDING_LINK_ID_HERE")
-        $atts[ 'id' ]               = $linkId;
-        $atts[ 'data-fn' ]          = 'dropdown-multilevel';
-        $atts[ 'aria-haspopup' ]    = 'true';
-        $atts[ 'aria-controls' ]    = $dropdownId;
-        $atts[ 'aria-expanded' ]    = 'false';
+        $dropdown_atts[ 'id' ]               = $linkId;
+        $dropdown_atts[ 'data-fn' ]          = 'dropdown-multilevel';
+        $dropdown_atts[ 'aria-haspopup' ]    = 'true';
+        $dropdown_atts[ 'aria-controls' ]    = $dropdownId;
+        $dropdown_atts[ 'aria-expanded' ]    = 'false';
+      }
+
+      if ( ! $createDropdownButtonBesidesLink ) {
+        // merge $link_atts & $dropdown_atts since is same elem (link is dropdown toggle)
+        $link_atts = array_merge( $link_atts, $dropdown_atts );
       }
 
       /**
@@ -258,50 +301,38 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
        * @param stdClass $args  An object of wp_nav_menu() arguments.
        * @param int      $depth Depth of menu item. Used for padding.
        */
-      $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+      $link_atts = apply_filters( 'nav_menu_link_attributes', $link_atts, $item, $args, $depth );
 
-      $new_atts = '';
-      foreach ( $atts as $attr => $value ) {
+      // TEST
+      // echo "\n<br>"; print_r( $atts );
+
+      $link_atts_str = '';
+      foreach ( $link_atts as $attr => $value ) {
         if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
           $value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-
-          if ( 'href' === $attr ) {
-            // is href
-
-            // check if hash or url
-            if ( substr( $value, 0, 1 ) === '#' ) {
-              // is hash, add attributes for closing main nav on click or add homepage url before hast
-
-              // check if home page
-              if ( is_front_page() ) {
-                $new_atts .= ' ' . $attr . '="' . $value . '"';
-                // is hash, add attributes for closing main nav on click
-                $new_atts .= ' data-fn="toggle" data-fn-options="{ bodyOpenedClass: \'nav-open\', reset: true }" data-fn-target="[data-tg=\'navbar-collapse\']"';
-              }
-              else {
-                // add homepage url before hash url, do not add additional attributes
-                $new_atts .= ' ' . $attr . '="' . get_home_url() . '/' . $value . '"';
-              }
-            }
-            else {
-              // is not hash
-              
-              $new_atts .= ' ' . $attr . '="' . $value . '"';
-            }
-          }
-          else {
-            // is not href
-
-            $new_atts .= ' ' . $attr . '="' . $value . '"';
-          }
+          $link_atts_str .= ' ' . $attr . '="' . $value . '"';
+        }
+      }
+      $overview_link_atts_str = '';
+      foreach ( $overview_link_atts as $attr => $value ) {
+        if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
+          $value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+          $overview_link_atts_str .= ' ' . $attr . '="' . $value . '"';
+        }
+      }
+      $dropdown_atts_str = '';
+      foreach ( $dropdown_atts as $attr => $value ) {
+        if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
+          $value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+          $dropdown_atts_str .= ' ' . $attr . '="' . $value . '"';
         }
       }
 
       // remember href for overview subitem
-      $pageHref = '';
-      if ( isset( $atts[ 'href' ] ) ) {
-          $pageHref = $atts[ 'href' ];
-      }
+      // $link_href = '';
+      // if ( isset( $link_atts[ 'href' ] ) ) {
+      //     $link_href = $link_atts[ 'href' ];
+      // }
 
       /** This filter is documented in wp-includes/post-template.php */
       $title = apply_filters( 'the_title', $item->title, $item->ID );
@@ -321,9 +352,22 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
       $args = is_object( $args ) ? $args : (object) $args;
 
       $item_output  = $args->before;
-      $item_output .= '<a' . $new_atts . '><span>';
-      $item_output .= $args->link_before . $title . $args->link_after;
-      $item_output .= '</span></a>';
+
+      // TODO: build likn item or 2 link items, 1st links to sublevel parent, 2nd opens sublevel
+      if ( $is_dropdown && $createDropdownButtonBesidesLink ) {
+        // is dropdown link
+        // $item_output .= '<a href="' . $link_href . '"><span>' . $args->link_before . $title . $args->link_after . '</span></a>';
+        // $item_output .= '<button' . $link_atts_str . '></button>';
+        $item_output .= '<a' . $link_atts_str . '><span>' . $args->link_before . $title . $args->link_after . '</span></a>';
+        $item_output .= '<button' . $dropdown_atts_str . '></button>';
+      }
+      else {
+        // normal link
+        $item_output .= '<a' . $link_atts_str . '><span>';
+        $item_output .= $args->link_before . $title . $args->link_after;
+        $item_output .= '</span></a>';
+      }
+
       $item_output .= $args->after;
 
       /**
@@ -344,13 +388,15 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
       // start ul here (after a is built) instead of in `start_lvl()` function
 
-      $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+      // $classes = empty( $item->classes ) ? array() : (array) $item->classes;
 
       // check if has children (inspired from twentytwentyone)
-      if ( in_array( 'menu-item-has-children', $classes, true ) ) {
+      if ( $is_dropdown ) {
 
         // Default class.
-        $classes = array( 'sub-menu' );
+        // $classes = array( 'sub-menu' );
+        // remove default class
+        $classes = array();
 
         /**
          * Filters the CSS class(es) applied to a menu list element.
@@ -372,7 +418,9 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
         // add overview item
         if ( $createClickableParentLinkChild ) {
-          $output .= "<li class=\"auto-parent-link-" . $object_id . "\"><a href=\"" . $pageHref . "\"><span>" . __( 'Overview', 'bsx-wordpress' ) . "</span></a></li>";
+          // $output .= "<li class=\"auto-parent-link-" . $object_id . "\"><a href=\"" . $link_href . "\"><span>" . __( 'Overview', 'bsx-wordpress' ) . "</span></a></li>";
+          $output .= "<li class=\"auto-parent-link-" . $object_id . "\"><a " . $overview_link_atts_str . "\"><span>" . __( 'Overview', 'bsx-wordpress' ) . "</span></a></li>";
+          
         }
 
       }

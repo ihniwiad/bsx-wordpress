@@ -108,8 +108,8 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
 
       // $createClickableParentLinkChild = true;
-      $createClickableParentLinkChild = true;
-      $createDropdownButtonBesidesLink = false;
+      $createClickableParentLinkChild = false;
+      $createDropdownButtonBesidesLink = true;
 
       // check if current url is subfolder of blog url
       $blog_url = (string) get_permalink( get_option( 'page_for_posts' ) );
@@ -227,7 +227,7 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
         // check if home page
         if ( is_front_page() ) {
-          if ( ! $is_dropdown) {
+          if ( $createClickableParentLinkChild && ! $is_dropdown ) {
             // is hash, add attributes for closing main nav on click
             $link_atts[ 'data-fn' ] = 'toggle';
             $link_atts[ 'data-fn-options' ] = '{ bodyOpenedClass: \'nav-open\', reset: true }';

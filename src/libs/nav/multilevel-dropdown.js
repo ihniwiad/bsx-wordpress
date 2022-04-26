@@ -112,6 +112,11 @@ $.fn.dropdownMultilevel = function( options ) {
         var $this = $( this );
         return $this._getTarget().find( '[aria-labelledby="' + $this.attr( 'id' ) + '"]' );
     };
+    $.fn._getHashLinks = function() {
+        // gets all hash links (not having dropdown) of given elem
+        var $list = $( this );
+        return $list.find( 'a[href^="#"]:not([' + Utils.attributes.functionElement + '~="dropdown-multilevel"])' );
+    };
     $.fn._getCloseElem = function() {
         // gets close link (must be placed within first list element)
         var $this = $( this );
@@ -127,6 +132,7 @@ $.fn.dropdownMultilevel = function( options ) {
         var $this = $( this );
         var $thisTarget = $this._getTarget();
         var $thisParentList = $this._getParentList();
+        var $thisHashLinks = $thisTarget._getHashLinks();
         $thisTarget
             .addClass( options.openedClass );
         Utils.setRemoveAnimationClass( $thisTarget, options.animatingClass );
@@ -139,12 +145,18 @@ $.fn.dropdownMultilevel = function( options ) {
 
         // remember
         openedElems.push( $this );
+
+        // add event listeners to all hash links to close menu after hast link clicked (since no site change)
+        $thisHashLinks.one( 'click.hash', function() {
+            _closeAllDropdowns();
+        } );
     };
     $.fn._closeDropdown = function() {
 
         var $this = $( this );
         var $thisTarget = $this._getTarget();
         var $thisParentList = $this._getParentList();
+        var $thisHashLinks = $thisTarget._getHashLinks();
         $thisTarget
             .removeClass( options.openedClass );
         Utils.setRemoveAnimationClass( $thisTarget, options.animatingClass );
@@ -153,6 +165,9 @@ $.fn.dropdownMultilevel = function( options ) {
 
         // remember
         openedElems.pop();
+
+        // remove event listeners from all hash links
+        $thisHashLinks.off( 'click.hash' );
     };
     function _closeAllDropdowns() {
 

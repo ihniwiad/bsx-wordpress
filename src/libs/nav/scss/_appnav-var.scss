@@ -124,6 +124,9 @@ $bsx-appnav-link-atf-min-width:								2rem !default;
 $bsx-appnav-link-atf-min-height:							1.25em !default;
 $bsx-appnav-link-atf-margin-top:							(1.5em - $bsx-appnav-link-atf-min-height) / 2 !default;
 
+// link
+$bsx-appnav-link-bg-color:									transparent !default;
+
 // link hover bg
 $bsx-appnav-nav-desktop-level-1-hover-link-bg-color:        $gray-200 !default; // desktop level 1 hover bg color (equal desktop dropdown bg color)
 $bsx-appnav-nav-desktop-level-2-hover-link-bg-color:        $bsx-appnav-navbar-bg-color !default; // desktop level 2..n hover bg color (equal navbar bg color)
@@ -156,7 +159,12 @@ $bsx-appnav-caret-right-icon:			"\f054" !default;
 $bsx-appnav-caret-right-mt:				0.75em !default;
 $bsx-appnav-caret-scale:				0.5 !default;
 $bsx-appnav-caret-font-size:			#{$bsx-appnav-caret-scale}em !default; // use scale factor above for better calculation of dependent elements
-$bsx-appnav-caret-width:				1em !default;
+$bsx-appnav-caret-width:					1em !default;
+//$bsx-appnav-caret-button-desktop-width:	1.5em !default;
+$bsx-appnav-caret-button-mobile-width:		50px !default;
+$bsx-appnav-caret-button-desktop-width:		20px !default;
+$bsx-appnav-caret-button-line-desktop-height:			100% !default;
+$bsx-appnav-caret-button-line-desktop-level-1-height:	60% !default;
 
 // link spacer
 $bsx-appnav-link-icon-text-spacer:		0.5em !default;
@@ -165,8 +173,9 @@ $bsx-appnav-link-text-caret-spacer:		0.5em !default;
 // link padding
 $bsx-appnav-link-px:							            0.66667em !default;
 $bsx-appnav-link-py:							            0.66667em !default;
-$bsx-appnav-desktop-level-1-link-lg-down-px:  	'' !default;
-$bsx-appnav-desktop-level-1-link-py:         	1rem !default; // use rem since having different font sizes for text and icons
+$bsx-appnav-desktop-level-1-has-button-link-padding-right: 	.3rem !default;
+$bsx-appnav-desktop-level-1-link-lg-down-px:  				'' !default;
+$bsx-appnav-desktop-level-1-link-py:         				1rem !default; // use rem since having different font sizes for text and icons
 
 // link level 1 display & alignment
 $bsx-appnav-desktop-level-1-link-display:		        flex !default;

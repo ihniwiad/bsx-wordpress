@@ -227,7 +227,10 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
 
         // check if home page
         if ( is_front_page() ) {
-          if ( $createClickableParentLinkChild && ! $is_dropdown ) {
+          if ( 
+            ( $createClickableParentLinkChild && ! $is_dropdown )
+            || $createDropdownButtonBesidesLink
+          ) {
             // is hash, add attributes for closing main nav on click
             $link_atts[ 'data-fn' ] = 'toggle';
             $link_atts[ 'data-fn-options' ] = '{ bodyOpenedClass: \'nav-open\', reset: true }';

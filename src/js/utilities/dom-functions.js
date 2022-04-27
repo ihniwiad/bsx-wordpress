@@ -127,6 +127,33 @@ const ariaExpanded = ( elem, value ) => {
 }
 
 
+// hide
+const hide = ( elems ) => {
+  // console.log( 'typeof elem: ' + ( typeof elem ) )
+  // console.log( 'elem.length: ' + elem.length )
+  if ( typeof elems !== 'undefined' ) {
+    elems.forEach( ( elem ) => {
+      elem.setAttribute( 'aria-hidden', 'true' )
+      elem.style.display = 'none'
+    } )
+  }
+}
+// show
+const show = ( elems, displayValue ) => {
+  if ( typeof elems !== 'undefined' ) {
+    elems.forEach( ( elem ) => {
+      elem.removeAttribute( 'aria-hidden' )
+      if ( typeof value !== 'undefined' ) {
+        elem.style.display = displayValue
+      }
+      else {
+        elem.style.display = 'block'
+      }
+    } )
+  }
+}
+
+
 const DomFn = {
   addClassNames,
   convertType,
@@ -138,6 +165,8 @@ const DomFn = {
   removeClassNames,
   setRemoveAnimationClassName,
   triggerEvent,
+  hide,
+  show,
 }
 
 export default DomFn

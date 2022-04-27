@@ -3,7 +3,7 @@
 MARKUP:
 
 
-<form class="bsx-tgf-form" data-bsx="tgf" data-tgf-conf="{ bsxTarget: 'tgf-tar-1', filterLogic: 'AND' }">
+<form class="bsx-tgf-form" data-bsx="tgf" data-tgf-conf="{ bsxTarget: 'tgf-tar-1', filterLogic: 'AND', activeItemsCount: 'tgf-cnt-1' }">
 
   <ul class="list-inline">
     <li class="list-inline-item"><input class="bsx-tgf-trigger" id="tgf-1-1" type="checkbox" value="1" data-tgf-tri><label class="bsx-tgf-label" for="tgf-1-1">Tag 1</label></li>
@@ -16,6 +16,7 @@ MARKUP:
 </form>
 
 <!-- multiple tags within `data-tgf-id="..."` must be space-separated -->
+<div data-bsx="tgf-cnt-1"><span data-tgf-cnt-lab><span data-tgf-cnt-num></span> results</span><span data-tgf-cnt-lab-sgl style="display: none;"><span data-tgf-cnt-num></span> result</span></div>
 <ul class="bsx-tgf-target list-unstyled" data-bsx="tgf-tar-1">
   <li class="bsx-tgf-target-item is-grayscale" data-tgf-id="1">Tag 1 content a</li>
   <li class="bsx-tgf-target-item is-grayscale" data-tgf-id="2">Tag 2 content a</li>
@@ -59,6 +60,7 @@ class TagFilter {
     this.submit = this.form.querySelector( '[type="submit"]' )
     this.reset = this.form.querySelector( '[type="reset"]' )
     this.target = ( typeof this.conf.bsxTarget !== 'undefined' && DomData.getElems( this.conf.bsxTarget ) != null ) ? DomData.getElems( this.conf.bsxTarget )[ 0 ] : undefined // use key for `data-bsx` attr, get first elem of array
+    this.activeItemsCount = ( typeof this.conf.activeItemsCount !== 'undefined' && DomData.getElems( this.conf.activeItemsCount ) != null ) ? DomData.getElems( this.conf.activeItemsCount ) : [] // use key for `data-bsx` attr, get all elems
     this.targetItems = typeof this.target === 'object' ? this.target.querySelectorAll( '[data-tgf-id]' ) : []
     this.TARGET_ACTIVE_CLASS = ( this.conf != null && typeof this.conf.targetActiveClass ) !== 'undefined' ? this.conf.targetActiveClass : DEFAULT_TARGET_ACTIVE_CLASS
     this.TARGET_INACTIVE_CLASS = ( this.conf != null && typeof this.conf.targetInactiveClass ) !== 'undefined' ? this.conf.targetInactiveClass : DEFAULT_TARGET_INACTIVE_CLASS
@@ -137,15 +139,36 @@ class TagFilter {
     return configIndex
   }
 
+  _updateActiveItemsCount( activeItemsCount ) {
+    // update multiple count elems
+    this.activeItemsCount.forEach( ( countItem ) => {
+      // update count number
+      countItem.querySelectorAll( '[data-tgf-cnt-num]' ).forEach( ( countItemNumber ) => {
+        countItemNumber.innerHTML = activeItemsCount
+      } )
+      // manage singular/plural labels
+      if ( activeItemsCount == 1 ) {
+        DomFn.hide( countItem.querySelectorAll( '[data-tgf-cnt-lab]' ) )
+        DomFn.show( countItem.querySelectorAll( '[data-tgf-cnt-lab-sgl]' ) )
+      }
+      else {
+        DomFn.hide( countItem.querySelectorAll( '[data-tgf-cnt-lab-sgl]' ) )
+        DomFn.show( countItem.querySelectorAll( '[data-tgf-cnt-lab]' ) )
+      }
+    } )
+  }
+
   _updateTargetItems( targetItems, triggersConfig ) {
 
     const isNothingSelected = this._isNothingSelected()
+    let activeItemsCount = 0
 
     if ( isNothingSelected ) {
       if ( this.SHOW_ALL_IF_NOTHING_SELECTED ) {
         // show all while nothing is filtered
         targetItems.forEach( ( targetItem ) => {
           this._activate( targetItem )
+          activeItemsCount++
         } )
       }
     }
@@ -233,6 +256,7 @@ class TagFilter {
 
         if ( itemIsActive ) {
           this._activate( targetItem )
+          activeItemsCount++
         }
         else {
           this._deactivate( targetItem )
@@ -241,6 +265,7 @@ class TagFilter {
       } )
     }
 
+    this._updateActiveItemsCount( activeItemsCount )
 
   }
 

@@ -191,6 +191,9 @@ add_action( 'init', function() {
     remove_filter( 'oembed_dataparse', 'wp_filter_oembed_result', 10 );
     remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
     remove_action( 'wp_head', 'wp_oembed_add_host_js' );
+    // remove global-styles-inline-css
+    remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+    remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
 }, PHP_INT_MAX - 1 );
 
 

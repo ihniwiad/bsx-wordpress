@@ -1,8 +1,7 @@
 require( 'dotenv' ).config();
 const envConfig = process.env;
 
-const gulp = require( 'gulp' );
-const { series, parallel } = require( 'gulp' );
+const { src, dest, watch, series, parallel } = require( 'gulp' );
 const sass = require( 'gulp-sass' );
 // const babel = require( 'gulp-babel' );
 const concat = require( 'gulp-concat' );
@@ -102,7 +101,7 @@ const publishConfig = {
 
 const cssFolderClean = ( cb ) => { 
 
-    return gulp.src( paths.css.dest, { read: false, allowEmpty: true } )
+    return src( paths.css.dest, { read: false, allowEmpty: true } )
         .pipe( clean() )
     ;
 
@@ -114,7 +113,7 @@ exports.css_clean = cssFolderClean;
 
 const jsFolderClean = ( cb ) => {
 
-    return gulp.src( paths.js.dest, { read: false, allowEmpty: true } )
+    return src( paths.js.dest, { read: false, allowEmpty: true } )
         .pipe( clean() )
     ;
 
@@ -125,7 +124,7 @@ exports.js_clean = jsFolderClean;
 
 
 // const css = ( cb ) => {
-//   return gulp.src( paths.css.src, { sourcemaps: true } )
+//   return src( paths.css.src, { sourcemaps: true } )
 //     .pipe( sass() )
 //     .pipe( cleanCSS() )
 //     // pass in options to the stream
@@ -133,7 +132,7 @@ exports.js_clean = jsFolderClean;
 //       basename: 'style',
 //       suffix: '.min'
 //     } ) )
-//     .pipe( gulp.dest( paths.css.dest ) );
+//     .pipe( dest( paths.css.dest ) );
 
 //   cb();
 // }
@@ -143,12 +142,12 @@ exports.js_clean = jsFolderClean;
 
 const makeCss = ( cb ) => {
 
-    return gulp.src( paths.css.src, { sourcemaps: true } )
+    return src( paths.css.src, { sourcemaps: true } )
         .pipe( sourcemaps.init() )
         .pipe( sass().on( 'error', sass.logError ) )
         .pipe( autoprefixer() )
         .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( paths.css.dest ) )
+        .pipe( dest( paths.css.dest ) )
     ;
 
     cb();
@@ -156,7 +155,7 @@ const makeCss = ( cb ) => {
 
 const cssCleanAndMinify = ( cb ) => {
 
-    return gulp.src( paths.css.dest + '/**/*.css' )
+    return src( paths.css.dest + '/**/*.css' )
         .pipe( cleanCSS( { debug: true }, ( details ) => {
             console.log( details.name + ': ' + details.stats.originalSize );
             console.log( details.name + ': ' + details.stats.minifiedSize );
@@ -164,7 +163,7 @@ const cssCleanAndMinify = ( cb ) => {
         .pipe( rename( ( path ) => {
             path.basename += '.min';
         } ) )
-        .pipe( gulp.dest( paths.css.dest ) )
+        .pipe( dest( paths.css.dest ) )
     ;
 
     cb();
@@ -227,7 +226,7 @@ const makeFontsPreloads = ( cb ) => {
 
 const fontsFolderClean = ( cb ) => { 
 
-    return gulp.src( paths.fonts.dest, { read: false, allowEmpty: true } )
+    return src( paths.fonts.dest, { read: false, allowEmpty: true } )
         .pipe( clean() )
     ;
 
@@ -278,8 +277,8 @@ const copyFontsToFolder = ( cb ) => {
     if ( copyFontsStack.length > 0 ) {
         let stream;
         copyFontsStack.forEach ( ( fontPath ) => {
-            stream = gulp.src( fontPath );
-            stream = stream.pipe( gulp.dest( paths.fonts.dest ) );
+            stream = src( fontPath );
+            stream = stream.pipe( dest( paths.fonts.dest ) );
             //LOG += fontPath + ' ––> ' + paths.fonts.dest + '\n';
         } );
         //fs.writeFileSync( LOG_FILE_PATH, LOG );
@@ -292,7 +291,7 @@ const copyFontsToFolder = ( cb ) => {
 
 const cssChangeFontsPathsToFolder = ( cb ) => {
 
-    return gulp.src( paths.css.dest + '/**/*.css' )
+    return src( paths.css.dest + '/**/*.css' )
         .pipe( replace( replacePatterns.cssFontsSrc.match, ( match ) => {
 
             // get url: url("...") / url('...') / url(...)
@@ -329,7 +328,7 @@ const cssChangeFontsPathsToFolder = ( cb ) => {
 
             return rebuildFontFace;
         } ) )
-        .pipe( gulp.dest( paths.css.dest ) )
+        .pipe( dest( paths.css.dest ) )
     ;
 
     cb();
@@ -339,7 +338,7 @@ const cssChangeFontsPathsToFolder = ( cb ) => {
 
 const cssFontsOptimize = ( cb ) => {
 
-    return gulp.src( paths.css.dest + '/**/*.css' )
+    return src( paths.css.dest + '/**/*.css' )
         .pipe( replace( replacePatterns.cssFonts.match, ( match ) => {
             if ( match.indexOf( replacePatterns.cssFonts.check ) == -1 ) {
                 return match + replacePatterns.cssFonts.add;
@@ -348,7 +347,7 @@ const cssFontsOptimize = ( cb ) => {
                 return match;
             }
         } ) )
-        .pipe( gulp.dest( paths.css.dest ) )
+        .pipe( dest( paths.css.dest ) )
     ;
 
     cb();
@@ -377,10 +376,10 @@ exports.css = css;
 
 const jsMinify = ( cb ) => {
 
-    return gulp.src( paths.js.dest + '*.js' )
+    return src( paths.js.dest + '*.js' )
         .pipe( uglify() )
         .pipe( rename( { suffix: '.min' } ) )
-        .pipe( gulp.dest( paths.js.dest ) )
+        .pipe( dest( paths.js.dest ) )
     ;
 
     cb();
@@ -389,10 +388,10 @@ const jsMinify = ( cb ) => {
 
 // const js = ( cb ) => {
 
-//   return gulp.src( paths.js.src, { sourcemaps: true } )
+//   return src( paths.js.src, { sourcemaps: true } )
 //     .pipe( babel() )
 //     .pipe( concat( paths.js.fileName ) )
-//     .pipe( gulp.dest( paths.js.dest ) )
+//     .pipe( dest( paths.js.dest ) )
 //   ;
 
 //    cb();
@@ -409,7 +408,7 @@ const makeJs = ( cb ) => {
         } )
         .bundle()
         .pipe( source( 'scripts.js' ) )
-        .pipe( gulp.dest( paths.js.dest ) )
+        .pipe( dest( paths.js.dest ) )
         .pipe( buffer() )
         // .pipe( sourcemaps.init() )
         // .pipe( sourcemaps.write() )
@@ -423,11 +422,11 @@ const makeVendorJs = ( cb ) => {
     const srcJsonFileContent = JSON.parse( fs.readFileSync( paths.vendorJs.srcJsonFile ) );
     const VENDOR_STACK = ( typeof srcJsonFileContent !== 'undefined' && typeof srcJsonFileContent.use !== 'undefined' ) ? srcJsonFileContent.use : [];
 
-    return gulp.src( VENDOR_STACK )
+    return src( VENDOR_STACK )
         .pipe( sourcemaps.init() )
         .pipe( concat( paths.vendorJs.fileName ) )
         .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( paths.vendorJs.dest ) )
+        .pipe( dest( paths.vendorJs.dest ) )
     ;
 
     cb();
@@ -452,7 +451,7 @@ const publishFolderDelete = ( cb ) => {
 
     if ( !! envConfig.PUBLISH_PATH && !! publishConfig.folderName ) {
         // console.log( 'delete: ' + publishFullPath );
-        return gulp.src( publishFullPath, { read: false, allowEmpty: true } )
+        return src( publishFullPath, { read: false, allowEmpty: true } )
             .pipe( clean( { force: true } ) ) // NOTE: take care at this command since you’re deleting files outside your project
         ;
     }
@@ -467,8 +466,8 @@ const publishFolderCreate = ( cb ) => {
 
     if ( !! envConfig.PUBLISH_PATH && !! publishConfig.folderName ) {
         // console.log( 'create: ' + publishFullPath + ' (src: ' + publishConfig.src + ', base: ' + publishConfig.base + ')' );
-        return gulp.src( publishConfig.src, { base: publishConfig.base } )
-            .pipe( gulp.dest( publishFullPath ) )
+        return src( publishConfig.src, { base: publishConfig.base } )
+            .pipe( dest( publishFullPath ) )
         ;
     }
     else {
@@ -490,7 +489,7 @@ exports.publish = publish;
 
 
 function cssWatch() {
-    gulp.watch( paths.css.watchSrc, 
+    watch( paths.css.watchSrc, 
         series(
             css,
             publish,
@@ -501,7 +500,7 @@ function cssWatch() {
 exports.css_watch = cssWatch;
 
 function jsWatch() {
-    gulp.watch( [ paths.js.watchSrc, paths.vendorJs.watchSrc ],
+    watch( [ paths.js.watchSrc, paths.vendorJs.watchSrc ],
         series(
             js,
             publish,
@@ -513,25 +512,25 @@ exports.js_watch = jsWatch;
 
 
 function allWatch() {
-    gulp.watch( paths.css.watchSrc, 
+    watch( paths.css.watchSrc, 
         series(
             css,
             publish,
         ) 
     );
-    gulp.watch( paths.js.watchSrc, 
+    watch( paths.js.watchSrc, 
         series(
             js,
             publish,
         ) 
     );
-    gulp.watch( paths.vendorJs.watchSrc, 
+    watch( paths.vendorJs.watchSrc, 
         series(
             js,
             publish,
         ) 
     );
-    gulp.watch( paths.publish.watchSrc, publish );
+    watch( paths.publish.watchSrc, publish );
 }
 
 exports.watch = allWatch;

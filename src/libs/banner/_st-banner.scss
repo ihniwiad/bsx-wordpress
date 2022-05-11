@@ -1,18 +1,27 @@
+// var
 
+$bsx-banner-st-1-py: 6rem !default;
+$bsx-banner-st-2-py: 4rem !default;
+$bsx-banner-st-3-py: 2rem !default;
+$bsx-banner-st-4-py: 1rem !default;
+
+
+
+// style
 
 .banner-st-1 {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-top: $bsx-banner-st-1-py;
+  padding-bottom: $bsx-banner-st-1-py;
 }
 .banner-st-2 {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-top: $bsx-banner-st-2-py;
+  padding-bottom: $bsx-banner-st-2-py;
 }
 .banner-st-3 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: $bsx-banner-st-3-py;
+  padding-bottom: $bsx-banner-st-3-py;
 }
 .banner-st-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: $bsx-banner-st-4-py;
+  padding-bottom: $bsx-banner-st-4-py;
 }

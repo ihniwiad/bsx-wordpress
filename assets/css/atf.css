@@ -217,4 +217,32 @@ button.bsx-appnav-dropdown-toggle {
 [class*="banner-"]:not(.banner-inner) {
   background-color: #dee2e6; }
 
+.banner-1 {
+  min-height: 26rem; }
+
+.banner-2 {
+  min-height: 22rem; }
+
+.banner-3 {
+  min-height: 18rem; }
+
+.banner-4 {
+  min-height: 15rem; }
+
+.banner-5 {
+  min-height: 13rem; }
+
+.banner-6 {
+  min-height: 11rem; }
+
+@media (min-width: 768px) {
+  .banner-1 {
+    min-height: 36rem; }
+  .banner-2 {
+    min-height: 30rem; }
+  .banner-3 {
+    min-height: 24rem; }
+  .banner-4 {
+    min-height: 18rem; } }
+
 /*# sourceMappingURL=atf.css.map */

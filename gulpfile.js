@@ -32,7 +32,8 @@ const paths = {
         relativePath: '../fonts',
     },
     js: {
-        src: 'src/js/**/*.js',
+        // src: 'src/js/**/*.js',
+        // src: 'src/js/index.js',
         dest: 'assets/js/',
         fileName: 'scripts.js',
         watchSrc: 'src/**/*.js',
@@ -400,6 +401,7 @@ const jsMinify = ( cb ) => {
 const makeJs = ( cb ) => {
 
     return browserify( {
+            // entries: [ './' . paths.js.src ],
             entries: [ './src/js/index.js' ],
             debug: true,
             transform: [

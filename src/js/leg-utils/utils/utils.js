@@ -342,18 +342,16 @@ Utils.hasTouchNotMouse = function() {
 
 // check browser
 // detect ios / android
-var isIos = function() {
-    return [
-        'iPad Simulator',
-        'iPhone Simulator',
-        'iPod Simulator',
-        'iPad',
-        'iPhone',
-        'iPod'
-    ].includes( navigator.platform )
-    // iPad on iOS 13 detection
-    || ( navigator.userAgent.includes( "Mac" ) && "ontouchend" in document )
-}
+var isIos = [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+].includes( navigator.platform )
+// iPad on iOS 13 detection
+|| ( navigator.userAgent.includes( "Mac" ) && "ontouchend" in document );
 var iosVersion = null;
 var iosFullVersion = null;
 var isAndroid = /(android)/i.test( navigator.userAgent );

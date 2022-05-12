@@ -1,6 +1,23 @@
+// NOTE: This file is currently NOT in use. 
+// Browser analytics is currently done in `/js/leg-utils/utils/utils.js` (see `Utils.AnalyzeBrowser`).
+
+
 class BrowserAnalytics {
+  // isIos() {
+  //   return /iPad|iPhone|iPod/.test( navigator.platform ) && ! window.MSStream
+  // }
+  // update for iOS 13 up
   isIos() {
-    return /iPad|iPhone|iPod/.test( navigator.platform ) && ! window.MSStream
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes( navigator.platform )
+    // iPad on iOS 13 detection
+    || ( navigator.userAgent.includes( "Mac" ) && "ontouchend" in document )
   }
   isAndroid() {
     return /(android)/i.test( navigator.userAgent )

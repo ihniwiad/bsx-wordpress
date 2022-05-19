@@ -88,6 +88,7 @@ button.bsx-appnav-dropdown-toggle {
 	line-height: $bsx-appnav-navbar-brand-line-height;
 	white-space: nowrap;
 	max-width: $bsx-appnav-navbar-brand-max-width;
+	min-height: $bsx-appnav-navbar-brand-min-height;
 
 	@include bsx-hover-focus {
 		text-decoration: none;

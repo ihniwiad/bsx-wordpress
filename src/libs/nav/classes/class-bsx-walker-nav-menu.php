@@ -107,9 +107,22 @@ if ( ! class_exists( 'Bsx_Walker_Nav_Menu' ) ) {
      */
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
 
-      // $createClickableParentLinkChild = true;
-      $createClickableParentLinkChild = false;
-      $createDropdownButtonBesidesLink = true;
+      // echo 'TEST:<br>';
+      // print_r( $args );
+
+      // menu defaults
+      $createClickableParentLinkChild = true;
+      $createDropdownButtonBesidesLink = false;
+      // check menu args configuration
+      if ( is_object( $args ) ) {
+        if ( isset( $args->create_clickable_parent_link_child ) ) {
+          $createClickableParentLinkChild = $args->create_clickable_parent_link_child;
+        }
+
+        if ( isset( $args->create_dropdown_button_besides_link ) ) {
+          $createDropdownButtonBesidesLink = $args->create_dropdown_button_besides_link;
+        }
+      }
 
       // check if current url is subfolder of blog url
       $blog_url = (string) get_permalink( get_option( 'page_for_posts' ) );

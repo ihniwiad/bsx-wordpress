@@ -53,7 +53,7 @@ global $phoneHrefRemovePatterns;
                             'after' => '', // in <li> after <a>
                             'link_before' => '', // in <a> before text
                             'link_after' => '', // in <a> after text
-                            'create_clickable_parent_link_child' => false, // create ”Overview“ link for each dropdown parent (in dropdown list)
+                            'create_clickable_parent_link_child' => true, // create ”Overview“ link for each dropdown parent (in dropdown list)
                             'create_dropdown_button_besides_link' => false, // split dropdown parent link and dropdown opening button
                         ) 
                     ); 

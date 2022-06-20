@@ -145,6 +145,15 @@ var sendMail = function( $form ) {
         var $messageWrapper = $form.parent().find( '[data-g-tg="message-wrapper"]' );
 
         var formData = $form.serialize();
+        // var formData = Utils.getFormValues( $form );
+
+
+        // DEBUG
+        // console.log( 'typeof formData: ' + typeof formData )
+        // console.log( 'TEST:' + formData )
+
+        // console.log( 'TEST:' + JSON.stringify( formData, null, 2 ) )
+
 
         var showMessage = function( $messageWrapper, state, message ) {
             var $message = $messageWrapper.find( '[data-g-tg="' + state + '-message"]' );
@@ -206,13 +215,30 @@ var sendMail = function( $form ) {
 
                 // clear inputs, remove success message on input click
                 var $visibleInputs = $form.find( 'input:not([type="hidden"]), textarea' );
-                $visibleInputs
-                    .val( '' )
-                    .one( 'focus.removeMessage', function() {
+                // $visibleInputs
+                //     .val( '' )
+                //     .one( 'focus.removeMessage', function() {
+                //         hideMessage( $messageWrapper, 'success' );
+                //         $visibleInputs.off( 'focus.removeMessage' );
+                //     } )
+                // ;
+
+                // keep values of radio & chekboxes untouched
+                $visibleInputs.each( function() {
+                    var $currentInput = $( this );
+                    if ( $currentInput.attr( 'type' ) == 'radio' || $currentInput.attr( 'type' ) == 'checkbox' ) {
+                        // do NOT manipulate value, just set unselected
+                        $currentInput.prop('checked', false)
+                    }
+                    else {
+                        // reset to ""
+                        $currentInput.val( '' );
+                    }
+                    $currentInput.one( 'focus.removeMessage', function() {
                         hideMessage( $messageWrapper, 'success' );
                         $visibleInputs.off( 'focus.removeMessage' );
                     } )
-                ;
+                } );
 
                 // show success
                 showMessage( $messageWrapper, 'success', response );

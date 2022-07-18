@@ -176,8 +176,9 @@ const makeFontsPreloads = ( cb ) => {
 
     // get fonts from minimized css file
     const cssFileContent = String( fs.readFileSync( paths.css.dest + 'style.min.css' ) );
-    const allowedFormats = [ 'woff2' ]; //, 'woff'
+    const allowedFormats = [ 'woff2', 'woff' ]; //, ordered, add woff2 if available, else add woff if availabe, else do nothing
     const fontsList = [];
+    const addedFontsUrlTruncs = [];
     const fontsSnippets = cssFileContent.match( replacePatterns.cssFonts.match );
 
     fontsSnippets.forEach( ( fontSnippet, index ) => {
@@ -194,15 +195,20 @@ const makeFontsPreloads = ( cb ) => {
             let url = urlFormatExplode[ 0 ].replace( 'url(', '' ).replace( ')', '' ).replace( '../', '' );
             const format = urlFormatExplode[ 1 ].replace( 'format("', '' ).replace( '")', '' );
 
-            // check if allowed format, then push to list
-            if ( allowedFormats.indexOf( format ) != -1 ) {
+            // get url trunc to avoid duplication when woff2 & woff available
+            const urlTrunc = url.split( '.' )[ 0 ];
+
+            // check if allowed format and not added yet, then push to list
+            if ( allowedFormats.indexOf( format ) != -1 && addedFontsUrlTruncs.indexOf( urlTrunc ) == -1 ) {
                 fontsList.push(
                     {
                         url: url,
                         format: format,
                     }
                 );
-            } 
+                // remember to avoid duplication when woff2 & woff available
+                addedFontsUrlTruncs.push( urlTrunc );
+            }
         }
 
     } ); 

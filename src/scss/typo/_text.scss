@@ -28,7 +28,7 @@ b, strong {
 
 // primary
 
-@if $bsx-text-primary {
+@if $bsx-text-primary != "" {
 	.text-primary {
 		color: $bsx-text-primary !important;
 	}

@@ -1,7 +1,9 @@
 {
   "name": "bsx-wordpress",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Bootstrap based WordPress Theme.",
+  "author": "ihniwiad",
+  "license": "GPL-2.0-or-later",
   "main": "scripts.js",
   "scripts": {
     "build": "gulp build",

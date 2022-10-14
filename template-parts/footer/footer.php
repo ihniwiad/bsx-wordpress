@@ -14,7 +14,7 @@ global $phoneHrefRemovePatterns;
             <a href="<?php echo get_bloginfo( 'url' ) . '/'; ?>">
                 <!-- inline svg logo -->
                 <?php 
-                    $logo = $mail = get_option( 'logo' );
+                    $logo = get_option( 'logo' );
                     if ( is_numeric( $logo ) ) {
                         $img_url = wp_get_attachment_url( $logo );
                         $img_meta = wp_get_attachment_metadata( $logo );

@@ -857,6 +857,11 @@ function add_meta_tag_meta_box() {
 }
 add_action( 'add_meta_boxes', 'add_meta_tag_meta_box' );
 
+// Include jQuery to admin only (used in `show_meta_tag_meta_box()`)
+add_action( 'admin_enqueue_scripts', function() {
+    wp_enqueue_script( 'jquery' );
+} );
+
 function show_meta_tag_meta_box() {
     global $post;
     $meta = get_post_meta( $post->ID, 'meta_tag', true ); 
@@ -875,21 +880,28 @@ function show_meta_tag_meta_box() {
         </p>
 
         <script>
-( function( $ ) {
-    $( document.currentScript ).parent().find( '[ data-bsxui="counting-input"]' ).each( function() {
-        $input = $( this );
-        $.fn.updateCount = function() {
-            $input = $( this );
-            $counter = $input.parent().find( '[data-bsxui="char-counter"]' );
-            var charCount = $input.val().length;
-            $counter.html( charCount );
-        }
-        $input.updateCount();
-        $input.on( 'change input paste keyup', function() {
-            $( this ).updateCount();
-        } );
-    } );
-} )( jQuery );
+window.onload = function() {
+    if ( window.jQuery ) {  
+        ( function( $ ) {
+            $( document.currentScript ).parent().find( '[ data-bsxui="counting-input"]' ).each( function() {
+                $input = $( this );
+                $.fn.updateCount = function() {
+                    $input = $( this );
+                    $counter = $input.parent().find( '[data-bsxui="char-counter"]' );
+                    var charCount = $input.val().length;
+                    $counter.html( charCount );
+                }
+                $input.updateCount();
+                $input.on( 'change input paste keyup', function() {
+                    $( this ).updateCount();
+                } );
+            } );
+        } )( jQuery );
+    }
+    else {
+        console.error( 'Missing jQuery plugin.' );
+    }
+}
         </script>
     <?php 
 }

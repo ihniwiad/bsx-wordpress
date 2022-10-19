@@ -194,6 +194,9 @@ add_action( 'init', function() {
     // remove global-styles-inline-css
     remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
     remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
+    remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
+    wp_dequeue_style( 'global-styles' );
+    wp_deregister_style( 'global-styles' );
 }, PHP_INT_MAX - 1 );
 
 

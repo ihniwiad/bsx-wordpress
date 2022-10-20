@@ -26,6 +26,10 @@ load_theme_textdomain( 'bsx-wordpress', get_template_directory() . '/languages' 
 
 // paths
 
+if ( ! defined( 'BSX_THEME_BASENAME_FILE' ) ) {
+    define( 'BSX_THEME_BASENAME_FILE', basename( __FILE__ ) );
+}
+
 $serverName = $_SERVER[ 'SERVER_NAME' ];
 $homeUrl = get_bloginfo( 'url' ) . '/';
 

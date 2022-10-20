@@ -495,7 +495,7 @@ class Bsx_Mail_Form {
                     $split_key = explode( '__', $key);
                     $name = $split_key[ 0 ];
                     $type = $split_key[ 1 ];
-                    $required = ( isset( $split_key[ 2 ] ) && $split_key[ 2 ] === 'r') ? true : false;
+                    $required = ( isset( $split_key[ 2 ] ) && $split_key[ 2 ] === 'r' ) ? true : false;
 
                     $value = trim( $value );
 
@@ -533,6 +533,7 @@ class Bsx_Mail_Form {
 
                 // get template key by hash
 
+                // TODO: fix!
                 // workaround since not knowing forms count here, assuming max 30 forms
                 $forms_count = 30;
                 $form_index = '';
@@ -696,52 +697,62 @@ class Bsx_Mail_Form {
                 $protocol = ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ? "https://" : "http://"; // protocol
                 $current_host = $protocol . $server_name . '/';
 
-                // check if all valid 
-                if ( 
-                    $validation_ok 
-                    && ( empty( $referrer_host ) || $referrer_host === $current_host ) 
-                    && $sanitized_values[ 'human_verification' ] == $_calc_hv_value 
-                    && ! empty( $recipient_mail ) 
+                // check form backend config
+                if (
+                    filter_var( $recipient_mail, FILTER_VALIDATE_EMAIL ) 
                     && filter_var( $sender_mail, FILTER_VALIDATE_EMAIL ) 
                 ) {
-                    // validation ok, try sending
+                    // backend config ok, check validation
 
-                    // prepare headers (both mails)
-                    $global_headers = 'MIME-Version: 1.0' . "\r\n";
-                    $global_headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-
-                    $headers = $global_headers . 'From: ' . $sender_mail . "\r\n";
-                    // $headers .= "CC: somebodyelse@example.com";
-
-                    // make utf-8 compatible
-                    $mail_subject = '=?UTF-8?B?'.base64_encode( $mail_subject ).'?=';
-
-                    if ( isset( $sender_mail_2 ) ) {
-                        $headers_2 = $global_headers . 'From: ' . $sender_mail_2 . "\r\n";
-                        
-                        // make utf-8 compatible
-                        $mail_subject_2 = '=?UTF-8?B?'.base64_encode( $mail_subject_2 ).'?=';
-                    }
-
-                    if (
-                        // true 
-                        mail( $recipient_mail, $mail_subject, $mail_content, $headers )
-                        && ( 
-                            ! $mail_2_ok
-                            || ( $mail_2_ok && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
-                        )
+                    if ( 
+                        $validation_ok 
+                        && ( empty( $referrer_host ) || $referrer_host === $current_host ) 
+                        && $sanitized_values[ 'human_verification' ] == $_calc_hv_value 
                     ) {
-                        return rest_ensure_response( esc_html__( 'Thank you. Your message has been sent successfully.', 'bsx-wordpress' ) );
-                    }
-                    else {
-                        return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );
-                    } 
-                } 
-                else {
-                    // validation not ok, send forbidden 403
+                        // validation ok, try sending
 
-                    return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your data is invalid or you are not allowed to access this server.', 'bsx-wordpress' ), array( 'status' => 403 ) );
+                        // prepare headers (both mails)
+                        $global_headers = 'MIME-Version: 1.0' . "\r\n";
+                        $global_headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+
+                        $headers = $global_headers . 'From: ' . $sender_mail . "\r\n";
+                        // $headers .= "CC: somebodyelse@example.com";
+
+                        // make utf-8 compatible
+                        $mail_subject = '=?UTF-8?B?'.base64_encode( $mail_subject ).'?=';
+
+                        if ( isset( $sender_mail_2 ) ) {
+                            $headers_2 = $global_headers . 'From: ' . $sender_mail_2 . "\r\n";
+                            
+                            // make utf-8 compatible
+                            $mail_subject_2 = '=?UTF-8?B?'.base64_encode( $mail_subject_2 ).'?=';
+                        }
+
+                        if (
+                            // true 
+                            mail( $recipient_mail, $mail_subject, $mail_content, $headers )
+                            && ( 
+                                ! $mail_2_ok
+                                || ( $mail_2_ok && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
+                            )
+                        ) {
+                            return rest_ensure_response( esc_html__( 'Thank you. Your message has been sent successfully.', 'bsx-wordpress' ) );
+                        }
+                        else {
+                            return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );
+                        } 
+                    } 
+                    else {
+                        // validation not ok, send forbidden 403
+
+                        return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your data is invalid or you are not allowed to access this server.', 'bsx-wordpress' ), array( 'status' => 403 ) );
+                    }
                 }
+                else {
+                    // missing form config, send forbidden 403
+                    return new WP_Error( 'rest_api_sad', esc_html__( 'Unable to send email. Missing configuration data.', 'bsx-wordpress' ), array( 'status' => 403 ) );
+                }
+
              
                 // error 500
                 return new WP_Error( 'rest_api_sad', esc_html__( 'Something went wrong while trying to send email.', 'bsx-wordpress' ), array( 'status' => 500 ) );

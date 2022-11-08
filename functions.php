@@ -767,16 +767,16 @@ function custom_settings_page_setup() {
 // Shared  across sections
 // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
 function render_custom_input_field( $args ) {
-    $options = get_option( $args[ 0 ] );
-    echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . htmlspecialchars( $options ) . '" />';
+    $option_val = get_option( $args[ 0 ] );
+    echo '<input type="text" id="'  . esc_attr( $args[ 0 ] ) . '" name="'  . esc_attr( $args[ 0 ] ) . '" value="' . esc_attr(  $option_val ) . '" />';
 }
 function render_custom_checkbox( $args ) {
-    $options = get_option( $args[ 0 ] );
-    echo '<label><input type="checkbox" id="'  . $args[ 0 ] . '" name="' . $args[ 0 ] . '" value="1"' . ( ( $options ) ? 'checked' : '' ) . ' />' . __( 'Yes', 'bsx-wordpress' ) . '</label>';
+    $option_val = get_option( $args[ 0 ] );
+    echo '<label><input type="checkbox" id="'  . esc_attr( $args[ 0 ] ) . '" name="' . esc_attr( $args[ 0 ] ) . '" value="1"' . ( ( $option_val ) ? 'checked' : '' ) . ' />' . esc_html_e( 'Yes', 'bsx-wordpress' ) . '</label>';
 }
 function render_custom_textarea_field( $args ) {
-    $options = get_option( $args[ 0 ] );
-    echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="6" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
+    $option_val = get_option( $args[ 0 ] );
+    echo '<textarea  id="'  . esc_attr( $args[ 0 ] ) . '" name="'  . esc_attr( $args[ 0 ] ) . '" rows="6" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . esc_textarea( $option_val ) . '</textarea>';
 }
 add_action( 'admin_init', 'custom_settings_page_setup' );
 

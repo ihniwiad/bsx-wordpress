@@ -4,6 +4,11 @@ class Bsx_Mail_Form {
 
     public static $global_forms_count = 3;
 
+    public static function get_forms_count() {
+        // TODO: replace later by (custom) post id
+        return self::$global_forms_count;
+    }
+
 
     // pattern for placeholders
     // $pattern = "/\[+(\*|)+(text|email|number|message)+::+([a-zA-Z0-9-_ =\"])+\]+/s";
@@ -14,7 +19,9 @@ class Bsx_Mail_Form {
 
         $hash = hash( 'md5', 'x' . $index );
 
-        $template = get_option( 'form-' . $index . '-form-template' );
+        // TODO: better sanitation possible?
+        $sanitized_template = filter_var( get_option( 'form-' . $index . '-form-template' ), FILTER_UNSAFE_RAW );
+        $template = $sanitized_template;
 
         // pattern for placeholders (allow css selectors for js)
         $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\"\,.#\[\]\(\)]|)+\]/s";
@@ -54,20 +61,16 @@ class Bsx_Mail_Form {
             $html .= '<div data-g-tg="message-wrapper">';
                 $html .= '<div data-g-tg="success-message" aria-hidden="true" style="display: none;">';
                     $html .= '<div class="alert alert-success lead mb-4" role="alert">';
-                        // TODO: include response here
+                        // include response here
                         $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>';
                         // $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> ' . esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' );
                     $html .= '</div>';
-                    // TODO: remove next line
-                    // $html .= '<pre data-g-tg="response-text"></pre>';
                 $html .= '</div>';
                 $html .= '<div data-g-tg="error-message" aria-hidden="true" style="display: none;">';
                     $html .= '<div class="alert alert-danger lead mb-4" role="alert">';
-                        // TODO: include response here
+                        // include response here
                         $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>';
                         // $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> ' . esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' );
-                    // TODO: remove next line
-                    // $html .= '<pre data-g-tg="response-text"></pre>';
                     $html .= '</div>';
                 $html .= '</div>';
             $html .= '</div><!-- /[data-g-tg="message-wrapper"] -->';
@@ -168,7 +171,7 @@ class Bsx_Mail_Form {
 
     private function register_form_settings() {
 
-        // TODO: what about automation from page 1...n with n = self::$global_forms_count ?
+        // TODO: what about automation from page 1...n with – $forms_count = Bsx_Mail_Form::get_forms_count();
 
         // register menu
         function theme_form_settings_add_menu() {
@@ -276,20 +279,25 @@ class Bsx_Mail_Form {
                     array(
                         'form-' . $i . '-form-template',
                         'label_for' => 'form-' . $i . '-form-template',
-                        'description'  => sprintf( 
-                            __( '%sUse input placeholders:%sInput structure:%sLanguage structure:%sMandatory input example: %sOptional input example: %sTranslation example: %sHuman verification display: %sHuman verification input: %sHuman verification refresh code attribute: %s', 
-                            'bsx-wordpress' ),
-                            '<p>',
-                            '</p><p><small>',
-                            '<code>[*</code> required, <code>[</code> non-required, <code>my_type::</code> type, <code>::my_name</code> name, <code> id="some-id" class="foo" data-foo="bar"]</code> attributes (optional)<br>',
-                            '<code>[translate::my_text]</code><br>',
-                            '<code>[*email::email class="form-control" id="email"]</code> type: email, name: email<br>',
-                            '<code>[text::name class="form-control" id="name"]</code> type: text, name: name<br>',
-                            '<code>[translate::Email]</code><br>',
-                            '<code>[human-verification-display:: class="input-group-text"]</code><br>',
-                            '<code>[*human-verification-input:: class="form-control" id="human-verification"]</code><br>',
-                            '<code>&lt;button [human-verification-refresh-attr]&gt;[translate::Refresh code]&lt;/button&gt;</code></small></p>',
-                        ),
+                        'description'  => '<h4>' . __( 'Input placeholder syntax', 'bsx-wordpress' ) . '</h4>'
+                            . '<p><small>'
+                            . __( 'Input', 'bsx-wordpress' ) . ': <code>[*my_type::my_name class="form-control" id="some-id" class="foo" data-foo="bar"]</code><br>'
+                            . __( 'Syntax', 'bsx-wordpress' ) . ': <code>[*</code> required, <code>[</code> non-required, <code>my_type::</code> input type, <code>::my_name</code> name, <code> id="some-id" class="foo" data-foo="bar"]</code> attributes (optional)<br>'
+                            . __( 'Translation', 'bsx-wordpress' ) . ': <code>[translate::My translatable text.]</code> (using Theme translations)<br>'
+                            . '</small></p>'
+                            . '<h4>' . __( 'Input examples', 'bsx-wordpress' ) . '</h4>'
+                            . '<p><small>'
+                            . '</small></p>'
+                            . '<p><small>'
+                            . __( 'Mandatory input example', 'bsx-wordpress' ) . ': <code>[*email::email class="form-control" id="email"]</code> type: email, name: email<br>'
+                            . __( 'Optional input example', 'bsx-wordpress' ) . ': <code>[text::name class="form-control" id="name"]</code> type: text, name: name<br>'
+                            . __( 'Textarea example', 'bsx-wordpress' ) . ': <code>[*message::message class="form-control" id="message" rows="4"]</code><br>'
+                            . __( 'Translation example', 'bsx-wordpress' ) . ': <code>[translate::Email]</code><br>'
+                            . __( 'Human verification display', 'bsx-wordpress' ) . ': <code>[human-verification-display:: class="input-group-text"]</code><br>'
+                            . __( 'Human verification input', 'bsx-wordpress' ) . ': <code>[*human-verification-input:: class="form-control" id="human-verification"]</code><br>'
+                            . __( 'Human verification refresh code attribute', 'bsx-wordpress' ) . ': <code>&lt;button [human-verification-refresh-attr]&gt;[translate::Refresh code]&lt;/button&gt;</code>'
+                            . '</small></p>'
+                            . '<h4>' . __( 'Embed shortcode', 'bsx-wordpress' ) . '<h4><p><code>[theme-form id="' . $i . '"]</code></p>',
                     ) // args = array()
                 );
 
@@ -460,18 +468,20 @@ class Bsx_Mail_Form {
         // Shared  across sections
         // modified from https://wordpress.stackexchange.com/questions/129180/add-multiple-custom-fields-to-the-general-settings-page
         function render_theme_form_input_field( $args ) {
-            $options = get_option( $args[ 0 ] );
+            $option = get_option( $args[ 0 ] );
             if ( isset( $args[ 'description' ] ) ) {
+                // no user input, no need to escape
                 echo '<div>' . $args[ 'description' ] . '</div>';
             }
-            echo '<input type="text" id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" value="' . $options . '" size="50" />';
+            echo '<input type="text" id="'  . esc_attr( $args[ 0 ] ) . '" name="'  . esc_attr( $args[ 0 ] ) . '" value="' . esc_attr( $option ) . '" size="50" />';
         }
         function render_theme_form_textarea_field( $args ) {
-            $options = get_option( $args[ 0 ] );
+            $option = get_option( $args[ 0 ] );
             if ( isset( $args[ 'description' ] ) ) {
+                // no user input, no need to escape
                 echo '<div>' . $args[ 'description' ] . '</div>';
             }
-            echo '<textarea  id="'  . $args[ 0 ] . '" name="'  . $args[ 0 ] . '" rows="20" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . $options . '</textarea>';
+            echo '<textarea  id="'  . esc_attr( $args[ 0 ] ) . '" name="'  . esc_attr( $args[ 0 ] ) . '" rows="20" cols="80" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace;">' . esc_textarea( $option ) . '</textarea>';
         }
 
     } // /register_form_settings()
@@ -492,6 +502,7 @@ class Bsx_Mail_Form {
 
                 foreach ( $_POST as $key => $value ) {
                     // extract type for validation from input name `mytype__myname`
+                    $key = filter_var( $key, FILTER_SANITIZE_STRING );
                     $split_key = explode( '__', $key);
                     $name = $split_key[ 0 ];
                     $type = $split_key[ 1 ];
@@ -512,6 +523,11 @@ class Bsx_Mail_Form {
                             $validation_ok = false;
                         }
                     }
+                    else {
+                        // better use strip_tags()
+                        // $value = filter_var( $value, FILTER_SANITIZE_STRING );
+                        $value = strip_tags( $value );
+                    }
 
                     // validate others
                     if ( $required ) {
@@ -531,11 +547,9 @@ class Bsx_Mail_Form {
                     $sanitized_values[ $name ] = $value;
                 }
 
+                // TODO: replace later by (custom) post id
                 // get template key by hash
-
-                // TODO: fix!
-                // workaround since not knowing forms count here, assuming max 30 forms
-                $forms_count = 30;
+                $forms_count = Bsx_Mail_Form::get_forms_count();
                 $form_index = '';
                 for ( $i = 1; $i <= $forms_count; $i++ ) {
                     if ( hash( 'md5', 'x' . $i ) === $sanitized_values[ 'idh' ] ) {
@@ -631,13 +645,18 @@ class Bsx_Mail_Form {
                     $validation_ok = false;
                 }
 
-                $mail_subject = replace_placeholders( get_option( 'form-' . $form_index . '-subject' ), $sanitized_values );
+                // better use strip_tags()
+                // $sanitized_mail_subject = filter_var( get_option( 'form-' . $form_index . '-subject' ), FILTER_SANITIZE_STRING );
+                $sanitized_mail_subject = strip_tags( get_option( 'form-' . $form_index . '-subject' ) );
+                $mail_subject = replace_placeholders( $sanitized_mail_subject, $sanitized_values );
                 if ( empty( $mail_subject ) ) {
                     // fallback subject (only mail 1)
                     $mail_subject = 'Mail from contact form at ' . get_site_url();
                 }
 
-                $mail_content = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template' ), $sanitized_values );
+                // TODO: better sanitation possible?
+                $sanitized_mail_content = filter_var( get_option( 'form-' . $form_index . '-mail-template' ), FILTER_UNSAFE_RAW );
+                $mail_content = replace_placeholders( $sanitized_mail_content, $sanitized_values );
                 $mail_content = str_replace ( "\n", "<br/>", $mail_content );
 
                 if ( empty( $mail_content ) ) {
@@ -669,8 +688,13 @@ class Bsx_Mail_Form {
                         $recipient_mail_2 = isset( $sanitized_values[ $placeholder_name ] ) ? $sanitized_values[ $placeholder_name ] : '';
                     }
 
-                    $mail_subject_2 = replace_placeholders( get_option( 'form-' . $form_index . '-subject-2' ), $sanitized_values );
-                    $mail_content_2 = replace_placeholders( get_option( 'form-' . $form_index . '-mail-template-2' ), $sanitized_values );
+                    // sanitize
+                    $sanitized_mail_subject_2 = strip_tags( get_option( 'form-' . $form_index . '-subject-2' ) );
+                    $mail_subject_2 = replace_placeholders( $sanitized_mail_subject_2, $sanitized_values );
+
+                    // TODO: better sanitation possible?
+                    $sanitized_mail_content_2 = filter_var( get_option( 'form-' . $form_index . '-mail-template-2' ), FILTER_UNSAFE_RAW );
+                    $mail_content_2 = replace_placeholders( $sanitized_mail_content_2, $sanitized_values );
                     $mail_content_2 = str_replace ( "\n", "<br/>", $mail_content_2 );
 
 

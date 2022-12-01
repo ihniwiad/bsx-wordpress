@@ -1,5 +1,8 @@
 <?php
 
+// check if polylang plugin available
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 class Bsx_Mail_Form {
 
     public static $global_forms_count = 3;
@@ -51,8 +54,20 @@ class Bsx_Mail_Form {
             $template = str_replace( $matches[ $i ], $replace, $template );
         }
 
+        // action url must be independent of language urls
+        $action_url_trunc = get_bloginfo( 'url' );
+        if ( is_plugin_active( 'polylang/polylang.php' ) ) {
+            $default_lang = pll_default_language();
+            // get dafault language home url instead of current language home url
+            $action_url_trunc = pll_home_url( $default_lang );
+        }
+        // remove slash if ixists
+        if ( substr( $action_url_trunc, -1 ) === '/' ) {
+            $action_url_trunc = substr( $action_url_trunc, 0, strlen( $action_url_trunc ) - 1 );
+        }
+
         $html = '<div data-id="form-wrapper">';
-            $html .= '<form novalidate method="post" action="' . get_bloginfo( 'url' ) . '/wp-json/bsx/v1/mailer/" data-fn="mail-form">';
+            $html .= '<form novalidate method="post" action="' . $action_url_trunc . '/wp-json/bsx/v1/mailer/" data-fn="mail-form">';
                 $html .= $template;
                 $html .= '<input type="hidden" name="hv__text__r" value="" data-g-tg="hv">';
                 $html .= '<input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">';

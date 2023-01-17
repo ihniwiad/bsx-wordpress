@@ -889,7 +889,7 @@ function show_meta_tag_meta_box() {
         <script>
 if ( window.jQuery ) {  
     ( function( $ ) {
-        $( document.currentScript ).parent().find( '[ data-bsxui="counting-input"]' ).each( function() {
+        $( document.currentScript ).parent().find( '[data-bsxui="counting-input"]' ).each( function() {
             $input = $( this );
             $.fn.updateCount = function() {
                 $input = $( this );

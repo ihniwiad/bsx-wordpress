@@ -15,6 +15,7 @@ import './../libs/data-processing-consent/data-processing-consent';
 import './../libs/img-gallery/init-photoswipe';
 import './../libs/slider/init-owl-carousel';
 import './../libs/form/send-mail';
+import './../libs/form/ajax-form';
 
 
 // test scripts

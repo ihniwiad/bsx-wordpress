@@ -769,10 +769,10 @@ class Bsx_Mail_Form {
 
                         if (
                             // true 
-                            mail( $recipient_mail, $mail_subject, $mail_content, $headers )
+                            wp_mail( $recipient_mail, $mail_subject, $mail_content, $headers )
                             && ( 
                                 ! $mail_2_ok
-                                || ( $mail_2_ok && mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
+                                || ( $mail_2_ok && wp_mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
                             )
                         ) {
                             return rest_ensure_response( esc_html__( 'Thank you. Your message has been sent successfully.', 'bsx-wordpress' ) );

@@ -38,8 +38,8 @@ $.fn._createMt = function( options, index ) {
         ) {
             $( this )
                 .attr( 'href', href )
-                .off( 'mouseenter.' + index )
-                .off( 'touchstart.' + index )
+                // .off( 'mouseenter.' + index )
+                // .off( 'touchstart.' + index )
             ;
             // console.log( 'added: ' + href );
         }
@@ -54,17 +54,21 @@ $.fn._createMt = function( options, index ) {
     var href = p + addr;
 
     // add href
-    if ( Utils.hasTouch() ) {
-        $elem.on( 'touchstart.' + index, function() {
-            $( this )._addHref( href, index );
-        } );
-    }
-    else {
-        $elem.on( 'mouseenter.' + index, function() {
-            $( this )._addHref( href, index );
-        } );
-    }
+    // if ( Utils.hasTouch() ) {
+    //     $elem.one( 'touchstart', function() {
+    //         $( this )._addHref( href, index );
+    //     } );
+    // }
+    // else {
+    //     $elem.one( 'mouseenter mousedown', function() {
+    //         $( this )._addHref( href, index );
+    //     } );
+    // }
 
+    // do not separate touch devices since some browsers support `Utils.hasTouch()` but do NOT trigger `touchstart`
+    $elem.one( 'mouseenter mousedown touchstart', function() {
+        $( this )._addHref( href, index );
+    } );
 };
 
 $.fn._initCreateMt = function( options ) {

@@ -27,7 +27,10 @@ CookieRelatedElem.init = function( elem, options ) {
         cookieExpiresDays: 365, 
         cookiePath: '/',
         focusOnOpen: true,
-        remoteOpenable: false
+        remoteOpenable: false,
+        hiddenClass: '',
+        shownClass: '',
+        shownBodyClass: null
     };
 
     options = $.extend( {}, defaults, options );
@@ -57,13 +60,23 @@ CookieRelatedElem.init = function( elem, options ) {
         }
 
         // open dialog
-        $elem.removeClass( options.hiddenClass );
+        if ( !! options.hiddenClass ) {
+            $elem.removeClass( options.hiddenClass );
+        }
+        if ( !! options.shownClass ) {
+            $elem.addClass( options.shownClass );
+        }
 
         $elem.removeAttr( 'hidden' );
 
         // set focus to first focussable elem
         if ( options.focusOnOpen ) {
             CookieRelatedElem.$focussableChildren.first().focus();
+        }
+
+        // add class to body elem
+        if ( options.shownBodyClass ) {
+            $( 'body' ).addClass( options.shownBodyClass );
         }
     };
 
@@ -84,6 +97,9 @@ CookieRelatedElem.init = function( elem, options ) {
         else {
             $elem.hide();
         }
+        if ( !! options.shownClass ) {
+            $elem.removeClass( options.shownClass );
+        }
 
         $elem.attr( 'hidden', '' );
 
@@ -91,6 +107,11 @@ CookieRelatedElem.init = function( elem, options ) {
         if ( options.focusOnOpen && !! CookieRelatedElem.$focussedElem ) {
             CookieRelatedElem.$focussedElem.focus();
             CookieRelatedElem.$focussedElem = null;
+        }
+
+        // remove class to body elem
+        if ( options.shownBodyClass ) {
+            $( 'body' ).removeClass( options.shownBodyClass );
         }
     };
 
@@ -121,7 +142,7 @@ CookieRelatedElem.init = function( elem, options ) {
     // TODO: if following condition is true click handler to close will be missing – apply method to open & close?
     if ( !! options.cookieName && !! Utils.CookieHandler.getCookie( options.cookieName ) && Utils.CookieHandler.getCookie( options.cookieName ) == options.hiddenCookieValue ) {
 
-        // hide elem im visible
+        // hide elem if visible
         if ( ! $elem.is( '.' + options.hiddenClass ) ) {
             $elem._hideElem();
         }

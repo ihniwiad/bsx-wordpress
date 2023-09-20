@@ -140,6 +140,7 @@ const hide = ( elems ) => {
 }
 // show
 const show = ( elems, displayValue ) => {
+  const inlineElems = [ 'span' ]
   if ( typeof elems !== 'undefined' ) {
     elems.forEach( ( elem ) => {
       elem.removeAttribute( 'aria-hidden' )
@@ -147,7 +148,12 @@ const show = ( elems, displayValue ) => {
         elem.style.display = displayValue
       }
       else {
-        elem.style.display = 'block'
+        if ( inlineElems.includes( elem.nodeName.toLowerCase() ) ) {
+          elem.style.display = 'inline'
+        }
+        else {
+          elem.style.display = 'block'
+        }
       }
     } )
   }

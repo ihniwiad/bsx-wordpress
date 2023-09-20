@@ -25,7 +25,11 @@
                 </div>
 
                 <div class="col-auto">
-                    <button class="btn btn-outline-primary btn-sm" type="submit" data-fn="cookie-related-elem-close" data-g-fn="save">Save</button>
+                    <button class="btn btn-outline-primary btn-sm" data-fn="cookie-related-elem-close" data-g-fn="reject-all">Reject all</button>
+                </div>
+
+                <div class="col-auto">
+                    <button class="btn btn-outline-primary btn-sm" type="submit" data-fn="cookie-related-elem-close" data-g-fn="save">Save my choice</button>
                 </div>
 
                 <div class="col-auto">
@@ -66,7 +70,8 @@ var showConsentHint = false;
 
 var $consentForm = Utils.$functionElems.filter( '[' + Utils.attributes.functionElement + '~="data-processing-form"]' );
 var $consentBanner = Utils.$targetElems.filter( '[data-tg="data-processing-popup"]' );
-var $saveAllButton = $consentForm.find( '[data-g-fn="allow-all"]' );
+var $allowAllButton = $consentForm.find( '[data-g-fn="allow-all"]' );
+var $rejectAllButton = $consentForm.find( '[data-g-fn="reject-all"]' );
 var $singleCatConsentTriggers = Utils.$functionElems.filter( '[' + Utils.attributes.functionElement + '~="data-processing-cat-consent-trigger"]' );
 
 // get categories, read cookie, set checkboxes according to cookie value
@@ -125,12 +130,28 @@ if ( renewCookie ) {
 
 
 // bind allow all button (before bind form submit)
-$saveAllButton.on( 'click', function( event ) {
+$allowAllButton.on( 'click', function( event ) {
     
     event.preventDefault();
     
     $categoryIputs.each( function() {
         $( this ).prop( 'checked', true );
+    } );
+    
+    $consentForm.trigger( 'submit' );
+} );
+
+
+// bind reject all button (before bind form submit)
+$rejectAllButton.on( 'click', function( event ) {
+    
+    event.preventDefault();
+    
+    $categoryIputs.each( function() {
+        if ( ! $( this ).prop( 'disabled' ) ) {
+            // uncheck all non disabled checkboxes
+            $( this ).prop( 'checked', false );
+        }
     } );
     
     $consentForm.trigger( 'submit' );

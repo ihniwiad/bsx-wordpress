@@ -2,7 +2,10 @@ require( 'dotenv' ).config();
 const envConfig = process.env;
 
 const { src, dest, watch, series, parallel } = require( 'gulp' );
+
 const sass = require( 'gulp-sass' );
+sass.compiler = require( 'sass' );
+
 // const babel = require( 'gulp-babel' );
 const concat = require( 'gulp-concat' );
 const uglify = require( 'gulp-uglify' );

@@ -758,21 +758,69 @@ class Bsx_Mail_Form {
                         // $headers .= "CC: somebodyelse@example.com";
 
                         // make utf-8 compatible
-                        $mail_subject = '=?UTF-8?B?'.base64_encode( $mail_subject ).'?=';
+                        $encoded_mail_subject = '=?UTF-8?B?'.base64_encode( $mail_subject ).'?=';
 
                         if ( isset( $sender_mail_2 ) ) {
                             $headers_2 = $global_headers . 'From: ' . $sender_mail_2 . "\r\n";
                             
                             // make utf-8 compatible
-                            $mail_subject_2 = '=?UTF-8?B?'.base64_encode( $mail_subject_2 ).'?=';
+                            $encoded_mail_subject_2 = '=?UTF-8?B?'.base64_encode( $mail_subject_2 ).'?=';
                         }
+
+
+                        // TODO: write into database @ table $wpdb->prefix . 'bsx_themeforms_entries'
+
+
+                        global $wpdb;
+                        $table = $wpdb->prefix . 'bsx_themeforms_entries';
+                        $data = array( 
+                            'date' => current_time( 'mysql' ),
+                            'data_gmt' => current_time( 'mysql', 1 ),
+                            'form_id' => $form_index,
+                            'form_title' => 'Theme Form ' . $form_index,
+                            'title' => $mail_subject,
+
+                            'content' => $mail_content,
+                            'status' => 'auto-logged',
+                            'fields' => serialize( $sanitized_values ),
+                            'comment' => '',
+                            'ip_address' => $_SERVER[ 'REMOTE_ADDR' ],
+
+                            'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ]
+                        );
+                        $format = array(
+                            '%s',
+                            '%s',
+                            '%d',
+                            '%s',
+                            '%s',
+
+                            '%s',
+                            '%s',
+                            '%s',
+                            '%s',
+                            '%s',
+
+                            '%s'
+                        );
+                        $wpdb->insert( $table, $data, $format );
+                        $insert_id = $wpdb->insert_id;
+
+                        // TODO: what if error?
+
+
+                            
+
+
+
 
                         if (
                             // true 
-                            wp_mail( $recipient_mail, $mail_subject, $mail_content, $headers )
+                            $insert_id
+                            && wp_mail( $recipient_mail, $encoded_mail_subject, $mail_content, $headers )
                             && ( 
                                 ! $mail_2_ok
-                                || ( $mail_2_ok && wp_mail( $recipient_mail_2, $mail_subject_2, $mail_content_2, $headers_2 ) ) 
+                                || ( $mail_2_ok && wp_mail( $recipient_mail_2, $encoded_mail_subject_2, $mail_content_2, $headers_2 ) ) 
                             )
                         ) {
                             return rest_ensure_response( esc_html__( 'Thank you. Your message has been sent successfully.', 'bsx-wordpress' ) );

@@ -218,6 +218,15 @@ class Bsx_Mail_Form {
                 'theme_form_settings_page_3', // function = '', 
                 3 // position = null
             );
+            add_submenu_page( 
+                'theme_form_options', // parent_slug
+                esc_html__( 'Theme Forms Entries', 'bsx-wordpress' ), // page_title
+                esc_html__( 'Theme Forms Entries', 'bsx-wordpress' ), // menu_title
+                'manage_options', // capability
+                'theme-form-entries', // menu_slug, 
+                'theme_form_show_entries', // function = '', 
+                3 // position = null
+            );
         }
         add_action( 'admin_menu', 'theme_form_settings_add_menu' );
 
@@ -262,6 +271,156 @@ class Bsx_Mail_Form {
                         submit_button();
                     ?>
                 </form>
+            </div>
+        <?php }
+        function theme_form_show_entries() { ?>
+            <div class="wrap">
+                <h2><?php esc_html_e( 'Theme Forms Entries', 'bsx-wordpress' ); ?></h2>
+                <?php
+
+                    global $wpdb;
+                    $table = $wpdb->prefix . 'bsx_themeforms_entries';
+
+
+                    // show single entry
+
+
+
+
+                    // show list
+
+                    $entries = $wpdb->get_results( "SELECT * FROM $table" );
+
+                    // echo '<pre style="width: 100%; overflow: auto;">';
+                    // print_r( $entries );
+                    // echo '</pre>';
+
+                    foreach( $entries as &$entry ) {
+
+                        printf(
+                            '<div><a href="%s">%s</a></div>',
+                            esc_url(
+                                add_query_arg(
+                                    [
+                                        // 'view'     => 'edit',
+                                        'id' => $entry->id,
+                                    ],
+                                    admin_url( 'admin.php?page=theme-form-entries' )
+                                )
+                            ),
+                            esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
+                        );
+                    }
+
+
+                    // table
+
+
+                    if ( ! class_exists( 'WP_List_Table' ) ) {
+                        require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+                    }
+
+                    class Theme_Forms_List_Table extends WP_List_Table {
+
+                        /** Class constructor */
+                        public function __construct() {
+
+                            parent::__construct( [
+                                'singular' => __( 'Theme Form Enty', 'bsx-wordpress' ), //singular name of the listed records
+                                'plural' => __( 'Theme Form Enties', 'bsx-wordpress' ), //plural name of the listed records
+                                'ajax' => false //should this table support ajax?
+                            ] );
+
+                        }
+
+                        // var $example_data = array(
+                        // array('ID' => 1,'booktitle' => 'Quarter Share', 'author' => 'Nathan Lowell', 'isbn' => '978-0982514542'),
+                        // array('ID' => 2, 'booktitle' => '7th Son: Descent','author' => 'J. C. Hutchins', 'isbn' => '0312384378'),
+                        // array('ID' => 3, 'booktitle' => 'Shadowmagic', 'author' => 'John Lenahan', 'isbn' => '978-1905548927'),
+                        // array('ID' => 4, 'booktitle' => 'The Crown Conspiracy', 'author' => 'Michael J. Sullivan', 'isbn' => '978-0979621130'),
+                        // array('ID' => 5, 'booktitle'     => 'Max Quick: The Pocket and the Pendant', 'author'    => 'Mark Jeffrey', 'isbn' => '978-0061988929'),
+                        // array('ID' => 6, 'booktitle' => 'Jack Wakes Up: A Novel', 'author' => 'Seth Harwood', 'isbn' => '978-0307454355')
+                        // );
+
+
+                        function get_data() {
+
+                            global $wpdb;
+                            $table = $wpdb->prefix . 'bsx_themeforms_entries';
+
+                            $entries = $wpdb->get_results( "SELECT * FROM $table" );
+                            $entries_array = json_decode( json_encode( $entries ), true );
+
+                            return $entries_array;
+                        }
+/*
+
+                            'date' => current_time( 'mysql' ),
+                            'data_gmt' => current_time( 'mysql', 1 ),
+                            'form_id' => $form_index,
+                            'form_title' => 'Theme Form ' . $form_index,
+                            'title' => $mail_subject,
+
+                            'content' => $mail_content,
+                            'status' => 'auto-logged',
+                            'fields' => serialize( $sanitized_values ),
+                            'comment' => '',
+                            'ip_address' => $_SERVER[ 'REMOTE_ADDR' ],
+
+                            'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ]
+*/
+
+                        function get_columns() {
+                            $columns = array(
+                                'date' => esc_html__( 'Date', 'bsx-wordpress' ),
+                                'title' => esc_html__( 'Title', 'bsx-wordpress' ),
+                                'form_title' => esc_html__( 'Form Title', 'bsx-wordpress' ),
+                                'status' => esc_html__( 'Status', 'bsx-wordpress' ),
+                                'content' => esc_html__( 'Content', 'bsx-wordpress' )
+                            );
+                            return $columns;
+                        }
+
+                        function prepare_items() {
+                            $columns = $this->get_columns();
+                            $hidden = array();
+                            $sortable = array();
+                            $this->_column_headers = array( $columns, $hidden, $sortable );
+                            // $this->items = $this->example_data;
+                            $this->items = $this->get_data();
+                        }
+
+                        function column_default( $item, $column_name ) {
+                            switch ( $column_name ) { 
+                                case 'date':
+                                case 'title':
+                                case 'form_title':
+                                case 'status':
+                                case 'content':
+                                return $item[ $column_name ];
+                            default:
+                                return print_r( $item, true ) ; // show for debugging purposes
+                            }
+                        }
+
+
+                    }
+
+
+
+                    // /table
+
+                    $myListTable = new Theme_Forms_List_Table();
+
+                    // echo '<pre style="width: 100%; overflow: auto;">';
+                    // print_r( $myListTable );
+                    // echo '</pre>';
+
+
+                    $myListTable->prepare_items(); 
+                    $myListTable->display();
+
+                ?>
             </div>
         <?php }
 

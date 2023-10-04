@@ -61,45 +61,51 @@ get_header();
 
             global $wpdb;
             $table = $wpdb->prefix . 'bsx_themeforms_entries';
-            $data = array( 
-                'date' => current_time( 'mysql' ),
-                'data_gmt' => current_time( 'mysql', 1 ),
-                'form_id' => 77777,
-                'form_title' => 'Test from PHP page',
-                'title' => 'Some title',
 
-                'content' => 'Some (long) content.',
-                'status' => 'unread',
-                'fields' => serialize( [ 'field_1' => 'foo', 'field_2' => 'bar', 'count_1' => 7 ] ),
-                'comment' => '',
-                'ip_address' => $_SERVER[ 'REMOTE_ADDR' ],
+            // $data = array( 
+            //     'date' => current_time( 'mysql' ),
+            //     'data_gmt' => current_time( 'mysql', 1 ),
+            //     'form_id' => 77777,
+            //     'form_title' => 'Test from PHP page',
+            //     'title' => 'Some title',
 
-                'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ]
-            );
-            $format = array(
-                '%s',
-                '%s',
-                '%d',
-                '%s',
-                '%s',
+            //     'content' => 'Some (long) content.',
+            //     'status' => 'unread',
+            //     'fields' => serialize( [ 'field_1' => 'foo', 'field_2' => 'bar', 'count_1' => 7 ] ),
+            //     'comment' => '',
+            //     'ip_address' => $_SERVER[ 'REMOTE_ADDR' ],
 
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
+            //     'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ]
+            // );
+            // $format = array(
+            //     '%s',
+            //     '%s',
+            //     '%d',
+            //     '%s',
+            //     '%s',
 
-                '%s'
-            );
-            $wpdb->insert( $table, $data, $format );
-            $insert_id = $wpdb->insert_id;
+            //     '%s',
+            //     '%s',
+            //     '%s',
+            //     '%s',
+            //     '%s',
 
-            echo '<br>Succesfully inserted in ' . $table . ' @ ' . $insert_id;
+            //     '%s'
+            // );
+            // $wpdb->insert( $table, $data, $format );
+            // $insert_id = $wpdb->insert_id;
 
-
-
+            // echo '<br>Succesfully inserted in ' . $table . ' @ ' . $insert_id;
 
 
+
+            // $query = new WP_Query( array( 'author' => -12 ) );
+            // $myrows = $wpdb->get_results( "SELECT id, title FROM $table" );
+            $myrows = $wpdb->get_results( "SELECT * FROM $table" );
+
+            echo '<pre style="width: 100%; overflow: auto;">';
+            print_r( $myrows );
+            echo '</pre>';
 
 
             // include 'src/libs/form/example.php';

@@ -962,6 +962,7 @@ add_shortcode( 'consent-trigger-button', 'add_consent_button_shortcode' );
  * include mail form
  */
 
+require_once( __DIR__ . '/inc/theme-forms/class-theme-forms-list-table.php' );
 require_once( __DIR__ . '/src/libs/form/class-bsx-mail-form.php' );
 if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' ) ) {
     ( new Bsx_Mail_Form() )->init();
@@ -973,6 +974,11 @@ if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' 
  */
 
 // require get_template_directory() . '/src/libs/yoast-meta/class-yoast-multilang-og-image.php';
+
+
+
+
+
 
 
 

@@ -1001,6 +1001,11 @@ function bsx_theme_activation() {
 
     // see data types: https://www.w3schools.com/sql/sql_datatypes.asp
 
+    // TODO: add
+    // - email (extract from field type email)
+    // - date_modified
+    // - history (modified)
+
     $table_name = $wpdb->prefix . 'bsx_themeforms_entries';
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
         id BIGINT(20) AUTO_INCREMENT primary key NOT NULL,

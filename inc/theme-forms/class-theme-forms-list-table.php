@@ -27,7 +27,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
         global $wpdb;
         $table_name = $wpdb->prefix . "bsx_themeforms_entries";
         // $result = $wpdb->get_results( "SELECT * FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-        $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
+        $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
 
         return $result;
     }
@@ -36,6 +36,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
         $columns = array(
             'date' => esc_html__( 'Date', 'bsx-wordpress' ),
             'title' => esc_html__( 'Title', 'bsx-wordpress' ),
+            'email' => esc_html__( 'Email', 'bsx-wordpress' ),
+            'name' => esc_html__( 'Name', 'bsx-wordpress' ),
             'form_title' => esc_html__( 'Form Title', 'bsx-wordpress' ),
             'status' => esc_html__( 'Status', 'bsx-wordpress' ),
             'content' => esc_html__( 'Content', 'bsx-wordpress' )
@@ -56,6 +58,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
         switch ( $column_name ) { 
             case 'date':
             case 'title':
+            case 'email':
+            case 'name':
             case 'form_title':
             case 'status':
             case 'content':
@@ -68,6 +72,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
     function get_sortable_columns() {
         $sortable_columns = array(
             'date'  => array( 'date', false ),
+            'email'  => array( 'email', false ),
+            'name'  => array( 'name', false ),
             'form_title' => array( 'form_title', false ),
             'status'   => array( 'status' ,false )
         );

@@ -962,6 +962,7 @@ add_shortcode( 'consent-trigger-button', 'add_consent_button_shortcode' );
  * include mail form
  */
 
+require_once( __DIR__ . '/inc/theme-forms/database.php' );
 require_once( __DIR__ . '/inc/theme-forms/class-theme-forms-list-table.php' );
 require_once( __DIR__ . '/src/libs/form/class-bsx-mail-form.php' );
 if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' ) ) {
@@ -989,7 +990,7 @@ if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' 
  * TEST – store custom data in wp database
  */
 
-
+/*
 add_action( 'after_switch_theme', 'bsx_theme_activation' );
 
 function bsx_theme_activation() {
@@ -1035,7 +1036,7 @@ function bsx_theme_activation() {
 
     dbDelta( $sql );
 }
-
+*/
 
 
 

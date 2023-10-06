@@ -283,11 +283,22 @@ class Bsx_Mail_Form {
                     $table_name = $wpdb->prefix . 'bsx_themeforms_entries';
 
 
+                    // echo '<pre style="width: 100%; overflow: auto;">';
+                    // print_r( $wpdb->tables );
+                    // echo '</pre>';
+
+                    // TODO: check if missing database table
+                    // show_message( __( 'Missing database table – Please deactivate and activate your Theme to create the missing table.', 'bsx-wordpress' ) );
+
+
+
+
                     // check url if show list or action
 
                     if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] == 'view' && isset( $_GET[ 'id' ] ) && is_numeric( $_GET[ 'id' ] ) ) {
                         // show single entry
                         $id = $_GET[ 'id' ];
+
 
                         // $result = $wpdb->get_results( "SELECT * FROM `$table_name` WHERE `id` = $id", ARRAY_A );
                         $result = $wpdb->get_results( "SELECT * FROM `$table_name` WHERE `id` = $id" );
@@ -1020,7 +1031,10 @@ class Bsx_Mail_Form {
                             'comment' => '',
                             'ip_address' => $_SERVER[ 'REMOTE_ADDR' ],
 
-                            'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ]
+                            'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ],
+                            'email' => $sanitized_values[ 'email' ],
+                            'name' => $sanitized_values[ 'name' ],
+                            'phone' => $sanitized_values[ 'phone' ]
                         );
                         $format = array(
                             '%s',
@@ -1035,6 +1049,9 @@ class Bsx_Mail_Form {
                             '%s',
                             '%s',
 
+                            '%s',
+                            '%s',
+                            '%s',
                             '%s'
                         );
                         $wpdb->insert( $table, $data, $format );

@@ -11,9 +11,9 @@ class Theme_Forms_List_Table extends WP_List_Table {
     public function __construct() {
 
         parent::__construct( [
-            'singular' => __( 'Theme Form Enty', 'bsx-wordpress' ), //singular name of the listed records
-            'plural' => __( 'Theme Form Enties', 'bsx-wordpress' ), //plural name of the listed records
-            'ajax' => false //should this table support ajax?
+            'singular' => __( 'Theme Form Entry', 'bsx-wordpress' ), // singular name of the listed records
+            'plural' => __( 'Theme Form Enties', 'bsx-wordpress' ), // plural name of the listed records
+            'ajax' => false // should this table support ajax?
         ] );
 
     }
@@ -27,7 +27,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
         global $wpdb;
         $table_name = $wpdb->prefix . "bsx_themeforms_entries";
         // $result = $wpdb->get_results( "SELECT * FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-        $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
+        // $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
+        $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
 
         return $result;
     }
@@ -40,7 +41,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
             'name' => esc_html__( 'Name', 'bsx-wordpress' ),
             'form_title' => esc_html__( 'Form Title', 'bsx-wordpress' ),
             'status' => esc_html__( 'Status', 'bsx-wordpress' ),
-            'content' => esc_html__( 'Content', 'bsx-wordpress' )
+            // 'content' => esc_html__( 'Content', 'bsx-wordpress' )
         );
         return $columns;
     }
@@ -62,7 +63,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
             case 'name':
             case 'form_title':
             case 'status':
-            case 'content':
+            // case 'content':
             return $item[ $column_name ];
         default:
             return print_r( $item, true ) ; // show for debugging purposes
@@ -75,7 +76,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
             'email'  => array( 'email', false ),
             'name'  => array( 'name', false ),
             'form_title' => array( 'form_title', false ),
-            'status'   => array( 'status' ,false )
+            'status'   => array( 'status', false )
         );
         return $sortable_columns;
     }
@@ -103,5 +104,10 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
         return sprintf( '%1$s %2$s', sprintf( '<a href="?page=%s&action=%s&id=%s">' . $item[ 'title' ] . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ), $this->row_actions( $actions ) );
     }
+
+    function column_date( $item ) {
+        return DateTime::createFromFormat( 'Y-m-d H:i:s', $item[ 'date' ] )->format( "D, j. F Y H:i:s" );
+    }
+
 
 }

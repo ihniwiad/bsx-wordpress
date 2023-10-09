@@ -278,234 +278,7 @@ class Bsx_Mail_Form {
             ?>
             <div class="wrap">
                 <?php
-
-                    global $wpdb;
-                    $table_name = $wpdb->prefix . 'bsx_themeforms_entries';
-
-
-                    // echo '<pre style="width: 100%; overflow: auto;">';
-                    // print_r( $wpdb->tables );
-                    // echo '</pre>';
-
-                    // TODO: check if missing database table
-                    // show_message( __( 'Missing database table – Please deactivate and activate your Theme to create the missing table.', 'bsx-wordpress' ) );
-
-
-
-
-                    // check url if show list or action
-
-                    if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] == 'view' && isset( $_GET[ 'id' ] ) && is_numeric( $_GET[ 'id' ] ) ) {
-                        // show single entry
-                        $id = $_GET[ 'id' ];
-
-
-                        // $result = $wpdb->get_results( "SELECT * FROM `$table_name` WHERE `id` = $id", ARRAY_A );
-                        $result = $wpdb->get_results( "SELECT * FROM `$table_name` WHERE `id` = $id" );
-
-
-                        ?>
-                            <h1 class="page-title"><?php echo esc_html__( 'View Theme Form Entry', 'bsx-wordpress' ) . ' ' . $id; ?></h1>
-                            <div class="">
-                                <?php
-                                    printf( '<a class="button" href="?page=%s">%s</a>', esc_attr( $_REQUEST[ 'page' ] ), '&larr; ' . esc_html__( 'Entries List', 'bsx-wordpress' ) );
-                                ?>
-                            </div>
-
-                            <div id="poststuff" class="">
-                                <div id="post-body" class="metabox-holder columns-2">
-
-                                    <!-- left column -->
-                                    <div id="post-body-content">
-                                        <div class="postbox">
-                                            <div class="postbox-header">
-                                                <h2 class="hndle">
-                                                    <?php echo esc_html( $result[ 0 ]->title ) ; ?>
-                                                </h2>
-                                            </div>
-                                            <div class="inside">
-
-                                                <h3 class=""><?php esc_html_e( 'Content', 'bsx-wordpress' ); ?></h3>
-                                                <p>
-                                                    <?php echo $result[ 0 ]->content; ?>
-                                                </p>
-
-                                                <hr>
-
-                                                <h3 class=""><?php esc_html_e( 'Fields', 'bsx-wordpress' ); ?></h3>
-                                                <div>
-                                                    <?php 
-                                                        $fields = unserialize( $result[ 0 ]->fields );
-
-                                                        echo '<table style="width: 100%;">';
-                                                        printf(
-                                                            '<thead style="background: #f0f0f1; height: 2.5em;"><th>%s</th><th>%s</th></thead>',
-                                                            esc_html__( 'Field Name', 'bsx-wordpress' ),
-                                                            esc_html__( 'Field Value', 'bsx-wordpress' ),
-                                                        );
-                                                        echo '<body>';
-                                                        $count = 0;
-                                                        foreach ( $fields as $key => $value ) {
-                                                            printf(
-                                                                '<tr%s><td><b>%s</b></td><td>%s</td></tr>',
-                                                                ( $count % 2 == 0 ) ? '' : ' style="background: #f6f6f6;"',
-                                                                $key,
-                                                                $value,
-                                                            );
-                                                            $count += 1;
-                                                        }
-                                                        echo '</tbody>';
-                                                        echo '</table>';
-                                                    ?>
-                                                </div>
-
-                                                <hr>
-
-                                                <?php 
-                                                    // echo '<pre style="width: 100%; overflow: auto;">';
-                                                    // print_r( $result );
-                                                    // echo '</pre>';
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- right column -->
-                                    <div id="postbox-container-1" class="postbox-container">
-                            
-                                        <!-- details box -->
-                                        <div class="postbox">
-
-                                            <div class="postbox-header">
-                                                <h2 class="hndle"><?php esc_html_e( 'Details', 'bsx-wordpress' ); ?></h2>
-                                            </div>
-
-                                            <div class="inside">
-                                                <?php
-                                                    $detail_template = '<p><strong>%s:</strong> <span>%s</span></p>';
-
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'ID', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->id,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'Date', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->date,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'Form ID', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->form_id,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'Form Title', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->form_title,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'Status', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->status,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'IP Address', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->ip_address,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'User Agent', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->user_agent,
-                                                    );
-                                                    printf( 
-                                                        $detail_template, 
-                                                        esc_html__( 'Comment', 'bsx-wordpress' ),
-                                                        $result[ 0 ]->comment,
-                                                    );
-                                                ?>
-                                            </div>
-
-                                        </div>
-                                        
-                                        <!-- actions box -->
-                                        <div class="postbox">
-
-                                            <div class="postbox-header">
-                                                <h2 class="hndle"><?php esc_html_e( 'Actions', 'bsx-wordpress' ); ?></h2>
-                                            </div>
-
-                                            <div class="inside">
-                                                <?php
-/*
-        // create nonces
-        $edit_nonce = wp_create_nonce( 'edit' . $functions_file_basename );
-        // $delete_nonce = wp_create_nonce( 'delete' . $functions_file_basename );
-
-        $actions = [
-            'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">' . esc_html__( 'View' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ),
-            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Edit' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'edit', absint( $item[ 'id' ] ), $edit_nonce ),
-            // 'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Delete' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'delete', absint( $item[ 'id' ] ), $delete_nonce ),
-        ];
-*/
-                                                    // create nonces
-                                                    $edit_nonce = wp_create_nonce( 'edit' . $functions_file_basename );
-
-                                                    printf( '<a class="button button-primary button-large" href="?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Edit' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'edit', absint( $id ), $edit_nonce );
-                                                ?>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        <?php
-
-
-                    }
-                    else {
-                        // show list
-                        ?>
-                            <h1><?php esc_html_e( 'Theme Form Entries', 'bsx-wordpress' ); ?></h1>
-                        <?php
-
-                        // $entries = $wpdb->get_results( "SELECT * FROM $table" );
-
-                        // echo '<pre style="width: 100%; overflow: auto;">';
-                        // print_r( $entries );
-                        // echo '</pre>';
-
-                        // TEST
-                        // foreach( $entries as &$entry ) {
-
-                        //     printf(
-                        //         '<div><a href="%s">%s</a></div>',
-                        //         esc_url(
-                        //             add_query_arg(
-                        //                 [
-                        //                     // 'view'     => 'edit',
-                        //                     'id' => $entry->id,
-                        //                 ],
-                        //                 admin_url( 'admin.php?page=theme-form-entries' )
-                        //             )
-                        //         ),
-                        //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
-                        //     );
-                        // }
-
-
-
-                        // list contents in table
-
-                        $theme_forms_list_table = new Theme_Forms_List_Table();
-                        $theme_forms_list_table->prepare_items(); 
-                        $theme_forms_list_table->display();
-
-                    }
-
+                    ( new Theme_Forms_Admin_Pages )->init();
                 ?>
             </div>
         <?php }
@@ -753,6 +526,7 @@ class Bsx_Mail_Form {
          * callback function for routes endpoint
          */
         function bsx_mailer_post_endpoint( $request ) {
+            global $theme_forms_database_handler;
 
             if ( $_SERVER[ "REQUEST_METHOD" ] == "POST" ) {
                 // ok, validate, try sending
@@ -1013,12 +787,14 @@ class Bsx_Mail_Form {
                         }
 
 
-                        // TODO: write into database @ table $wpdb->prefix . 'bsx_themeforms_entries'
+                        // write into database
 
+                        if ( ! ( isset( $theme_forms_database_handler ) && $theme_forms_database_handler instanceof Theme_Forms_Database_Handler ) ) {
 
-                        global $wpdb;
-                        $table = $wpdb->prefix . 'bsx_themeforms_entries';
-                        $data = array( 
+                            return new WP_Error( 'rest_api_sad', esc_html__( 'Error while trying to connect database.', 'bsx-wordpress' ), array( 'status' => 403 ) );
+                        }
+
+                        $data = array(
                             'date' => current_time( 'mysql' ),
                             'data_gmt' => current_time( 'mysql', 1 ),
                             'form_id' => $form_index,
@@ -1054,20 +830,13 @@ class Bsx_Mail_Form {
                             '%s',
                             '%s'
                         );
-                        $wpdb->insert( $table, $data, $format );
-                        $insert_id = $wpdb->insert_id;
 
-                        // TODO: what if error?
-
-
-                            
-
-
-
+                        // returns false if error
+                        $inserted = $theme_forms_database_handler->create_row( $data, $format );
 
                         if (
                             // true 
-                            $insert_id
+                            $inserted
                             && wp_mail( $recipient_mail, $encoded_mail_subject, $mail_content, $headers )
                             && ( 
                                 ! $mail_2_ok

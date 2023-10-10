@@ -251,9 +251,14 @@ class Theme_Forms_Admin_Pages {
         global $functions_file_basename;
         global $theme_forms_database_handler;
 
+        $fields_prefix = 'field_';
 
         // check if post data
 
+
+        // echo '<pre style="width: 100%; overflow: auto;">';
+        // print_r( $_POST );
+        // echo '</pre>';
 
 
         // verify nonce
@@ -264,9 +269,29 @@ class Theme_Forms_Admin_Pages {
         ) {
             // check all fields
 
+            $data = [];
+            $format = [];
 
-            // $fields_prefix = 'field_';
+            // get fields, serialize
+            $fields = [];
+            foreach ( $_POST as $key => $value ) {
+                // echo '<br>' . $key;
+                if ( substr( $key, 0, strlen( $fields_prefix ) ) === $fields_prefix ) {
+                    $shorted_key = substr( $key, strlen( $fields_prefix ) );
+                    // echo '<br>' . $shorted_key;
+                    $fields[ $shorted_key ] = $value;
+                }
+            }
 
+            // echo '<pre style="width: 100%; overflow: auto;">';
+            // print_r( $fields );
+            // echo '</pre>';
+
+            $data[ 'fields' ] = serialize( $fields );
+            $format[] = '%s';
+
+
+            // get other data but fields
             $allowed_keys = [
                 'title',
                 'content',
@@ -279,16 +304,15 @@ class Theme_Forms_Admin_Pages {
                 '%s',
                 '%s',
             ];
-            $data = [];
-            $format = [];
+
 
             $index = 0;
             foreach ( $_POST as $key => $value ) {
                 if ( in_array( $key, $allowed_keys ) ) {
                     $data[ $key ] = $value;
                     $format[] = $allowed_format[ $index ];
+                    $index++;
                 }
-                $index++;
             }
 
 
@@ -300,6 +324,12 @@ class Theme_Forms_Admin_Pages {
 
                 // echo '</br>SAVE comment:<br>' . $_POST[ 'comment' ];
 
+                // echo '<pre style="width: 100%; overflow: auto;">';
+                // print_r( $data );
+                // echo '</pre>';
+                // echo '<pre style="width: 100%; overflow: auto;">';
+                // print_r( $format );
+                // echo '</pre>';
 
                 $updated = $theme_forms_database_handler->update_row( 
                     $_POST[ 'id' ],
@@ -359,7 +389,10 @@ class Theme_Forms_Admin_Pages {
                     <?php
                         $detail_template = '<p><strong>%s:</strong> <span>%s</span></p>';
 
-                        $detail_textarea_template = '<div><label for="edit-%1$s">%2$s:</label></div><div><textarea id="edit-%1$s" name="%1$s" style="width: 100%%;">%3$s</textarea></div>';
+                        $detail_textarea_template = '<div><label for="edit-%1$s">%2$s:</label></div><div><textarea id="edit-%1$s" name="%1$s" rows="%4$d" style="width: 100%%;">%3$s</textarea></div>';
+
+                        $detail_select_template = '<div><label for="edit-%1$s">%2$s:</label></div><div><select id="edit-%1$s" name="%1$s" style="width: 100%%;">%3$s</select></div>';
+                        $detail_select_option_template = '<option value="%1$s"%3$s>%2$s</option>';
                     ?>
 
                     <!-- left column -->
@@ -381,7 +414,17 @@ class Theme_Forms_Admin_Pages {
 
                                 <h3 class=""><?php esc_html_e( 'Content', 'bsx-wordpress' ); ?></h3>
                                 <p>
-                                    <?php echo $result[ 0 ]->content; ?>
+                                    <?php
+                                        // echo $result[ 0 ]->content;
+                                        printf( 
+                                            $detail_textarea_template, 
+                                            'content',
+                                            esc_html__( 'Content', 'bsx-wordpress' ),
+                                            esc_textarea( $result[ 0 ]->content ),
+                                            12,
+                                        );
+                                    ?>
+
                                 </p>
 
                                 <hr>
@@ -390,6 +433,14 @@ class Theme_Forms_Admin_Pages {
                                 <div>
                                     <?php 
                                         $fields = unserialize( $result[ 0 ]->fields );
+
+                                        // TODO: movi into text/config class
+                                        $readonly_field_values = [
+                                            'human_verification',
+                                            'hv',
+                                            'hv_k',
+                                            'idh',
+                                        ];
 
                                         echo '<table style="width: 100%;">';
                                         printf(
@@ -401,10 +452,11 @@ class Theme_Forms_Admin_Pages {
                                         $count = 0;
                                         foreach ( $fields as $key => $value ) {
                                             printf(
-                                                '<tr%s><td><b>%s</b></td><td>%s</td></tr>',
-                                                ( $count % 2 == 0 ) ? '' : ' style="background: #f6f6f6;"',
+                                                '<tr%3$s><td><b><label for="edit-%1$s">%1$s</label></b></td><td><input id="edit-%1$s" name="' . $fields_prefix . '%1$s" value="%2$s" style="width: 100%%;"%4$s></td></tr>',
                                                 $key,
                                                 $value,
+                                                ( $count % 2 == 0 ) ? '' : ' style="background: #f6f6f6;"',
+                                                ( in_array( $key, $readonly_field_values ) ) ? ' readonly' : '',
                                             );
                                             $count += 1;
                                         }
@@ -456,11 +508,31 @@ class Theme_Forms_Admin_Pages {
                                         esc_html__( 'Form Title', 'bsx-wordpress' ),
                                         $result[ 0 ]->form_title,
                                     );
+
+                                    // prepare options
+                                    // TODO: movi into text/config class
+                                    $options_values = [
+                                        'auto-logged' => esc_html__( 'Auto logged', 'bsx-wordpress' ),
+                                        'to-do' => esc_html__( 'To do', 'bsx-wordpress' ),
+                                        'done' => esc_html__( 'Done', 'bsx-wordpress' ),
+                                    ];
+                                    $options = '';
+                                    foreach ( $options_values as $key => $value ) {
+                                        $options .= sprintf( 
+                                            $detail_select_option_template, 
+                                            $key,
+                                            $value,
+                                            ( $key == $result[ 0 ]->status ) ? ' selected' : '',
+                                        );
+                                    }
+                                    // display select
                                     printf( 
-                                        $detail_template, 
+                                        $detail_select_template,
+                                        'status',
                                         esc_html__( 'Status', 'bsx-wordpress' ),
-                                        $result[ 0 ]->status,
+                                        $options,
                                     );
+
                                     printf( 
                                         $detail_template, 
                                         esc_html__( 'IP Address', 'bsx-wordpress' ),
@@ -472,10 +544,11 @@ class Theme_Forms_Admin_Pages {
                                         $result[ 0 ]->user_agent,
                                     );
                                     printf( 
-                                        $detail_textarea_template, 
+                                        $detail_textarea_template,
                                         'comment',
                                         esc_html__( 'Comment', 'bsx-wordpress' ),
                                         esc_textarea( $result[ 0 ]->comment ),
+                                        3,
                                     );
                                 ?>
                             </div>

@@ -3,8 +3,8 @@
 class Theme_Forms_Admin_Pages {
 
     public function init() {
-
         global $functions_file_basename;
+        global $theme_forms_database_handler;
 
 
         // echo '<pre style="width: 100%; overflow: auto;">';
@@ -38,15 +38,29 @@ class Theme_Forms_Admin_Pages {
 
                 if ( isset( $_GET[ '_wpnonce' ] ) && wp_verify_nonce( $_GET[ '_wpnonce' ], 'delete' . $id . $functions_file_basename ) ) {
                     // delete item
+                    $deleted = $theme_forms_database_handler->delete_row( $id );
 
-
-                    echo '<br>DELETE (' . $id . ')';
-
+                    if ( false === $deleted ) {
+                        // error
+                        printf(
+                            '<div class="notice notice-error">
+                                <p>%1$s</p>
+                            </div>',
+                            esc_html__( 'Error while trying to update database. Your data has not been deleted.', 'bsx-wordpress' ),
+                        );
+                    }
+                    else {
+                        // successfully updated
+                        printf(
+                            '<div class="notice notice-success">
+                                <p>%1$s</p>
+                            </div>',
+                            esc_html__( 'Your entry was successfully deleted.', 'bsx-wordpress' ),
+                        );
+                    }
                 }
                 else {
                     // skip delete
-
-                    echo '<br>SKIP DELETE (' . $id . ')';
                 }
 
                 $this->show_list_page();
@@ -340,7 +354,7 @@ class Theme_Forms_Admin_Pages {
                         </div>',
                         esc_html__( 'Your entry was successfully updated.', 'bsx-wordpress' ),
                     );
-                } 
+                }
             }
         }
         else {
@@ -498,9 +512,9 @@ class Theme_Forms_Admin_Pages {
                                     // prepare options
                                     // TODO: movi into text/config class
                                     $options_values = [
-                                        'auto-logged' => esc_html__( 'Auto logged', 'bsx-wordpress' ),
-                                        'to-do' => esc_html__( 'To do', 'bsx-wordpress' ),
-                                        'done' => esc_html__( 'Done', 'bsx-wordpress' ),
+                                        'auto-logged' => 'auto-logged', // esc_html__( 'Auto logged', 'bsx-wordpress' ),
+                                        'to-do' => 'to-do', // esc_html__( 'To do', 'bsx-wordpress' ),
+                                        'done' => 'done', // esc_html__( 'Done', 'bsx-wordpress' ),
                                     ];
                                     $options = '';
                                     foreach ( $options_values as $key => $value ) {
@@ -562,6 +576,7 @@ class Theme_Forms_Admin_Pages {
                                         </div>
                                         <div id="delete-action">
                                             <?php
+
                                                 // prepare delete nonce
                                                 $delete_nonce = wp_create_nonce( 'delete' . $id . $functions_file_basename );
 
@@ -573,9 +588,10 @@ class Theme_Forms_Admin_Pages {
                                                     $delete_nonce,
                                                     esc_html__( 'Delete' ),
                                                     sprintf(
-                                                        /* translators: %1$s: The title of the entry. %2$d: The id of the entry. */
-                                                        esc_attr__( 'Are you sure you want to delete this entry: ”%1$s“ (id: %2$d)?', 'bsx-wordpress' ),
+                                                        /* translators: %1$s: The title of the entry. %1$s: The email address. %3$d: The id of the entry. */
+                                                        esc_attr__( 'Really delete ”%1$s“ from %2$s (id: %3$d)?', 'bsx-wordpress' ),
                                                         $result[ 0 ]->title,
+                                                        $result[ 0 ]->email,
                                                         absint( $id ),
                                                     ),
                                                 );

@@ -103,6 +103,21 @@ class Theme_Forms_Database_Handler {
 
 	} // function update_row()
 
+
+	public function delete_row( $row_id ) {
+        global $wpdb;
+
+        $table = $wpdb->prefix . $this->table_name;
+        $where = array( 
+            'id' => $row_id,
+        );
+        $where_format = array(
+            '%d',
+        );
+
+        return $wpdb->delete( $table, $where, $where_format );
+	} // function delete_row()
+
 }
 
 

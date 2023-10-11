@@ -35,6 +35,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
     function get_columns() {
         $columns = array(
+            'id' => esc_html__( 'ID', 'bsx-wordpress' ),
             'date' => esc_html__( 'Date', 'bsx-wordpress' ),
             'title' => esc_html__( 'Title', 'bsx-wordpress' ),
             'email' => esc_html__( 'Email', 'bsx-wordpress' ),
@@ -56,7 +57,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
     }
 
     function column_default( $item, $column_name ) {
-        switch ( $column_name ) { 
+        switch ( $column_name ) {
+            case 'id':
             case 'date':
             case 'title':
             case 'email':
@@ -72,6 +74,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
     function get_sortable_columns() {
         $sortable_columns = array(
+            'id'  => array( 'id', false ),
             'date'  => array( 'date', false ),
             'email'  => array( 'email', false ),
             'name'  => array( 'name', false ),
@@ -94,12 +97,26 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
         // create nonces
         $edit_nonce = wp_create_nonce( 'edit' . $functions_file_basename );
-        // $delete_nonce = wp_create_nonce( 'delete' . $functions_file_basename );
+        $delete_nonce = wp_create_nonce( 'delete' . $item[ 'id' ] . $functions_file_basename );
 
         $actions = [
             'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">' . esc_html__( 'View' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ),
             'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Edit' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'edit', absint( $item[ 'id' ] ), $edit_nonce ),
-            // 'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Delete' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'delete', absint( $item[ 'id' ] ), $delete_nonce ),
+            'delete' => sprintf( 
+                '<a href="?page=%1$s&action=%2$s&id=%3$s&_wpnonce=%4$s" onclick="return confirm( \'%6$s\' );">%5$s</a>', 
+                esc_attr( $_REQUEST[ 'page' ] ), 
+                'delete', 
+                absint( $item[ 'id' ] ), 
+                $delete_nonce,
+                esc_html__( 'Delete' ),
+                sprintf(
+                    /* translators: %1$s: The title of the entry. %1$s: The email address. %3$d: The id of the entry. */
+                    esc_attr__( 'Really delete ”%1$s“ from %2$s (id: %3$d)?', 'bsx-wordpress' ),
+                    $item[ 'title' ],
+                    $item[ 'email' ],
+                    absint( $item[ 'id' ] ),
+                ),
+            ),
         ];
 
         return sprintf( '%1$s %2$s', sprintf( '<a href="?page=%s&action=%s&id=%s">' . $item[ 'title' ] . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ), $this->row_actions( $actions ) );

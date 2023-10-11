@@ -4,6 +4,8 @@ class Theme_Forms_Admin_Pages {
 
     public function init() {
 
+        global $functions_file_basename;
+
 
         // echo '<pre style="width: 100%; overflow: auto;">';
         // print_r( $wpdb->tables );
@@ -17,7 +19,7 @@ class Theme_Forms_Admin_Pages {
 
         // check url if show list or action
 
-        $allowed_action_values = [ 'view', 'edit' ];
+        $allowed_action_values = [ 'view', 'edit', 'delete' ];
 
         if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], $allowed_action_values ) && isset( $_GET[ 'id' ] ) && is_numeric( $_GET[ 'id' ] ) ) {
             // show single entry
@@ -31,6 +33,24 @@ class Theme_Forms_Admin_Pages {
                 // show edit page
                 $this->show_edit_page( $id );
             }
+            else if ( $_GET[ 'action' ] == 'delete' ) {
+                // delete, then show list page
+
+                if ( isset( $_GET[ '_wpnonce' ] ) && wp_verify_nonce( $_GET[ '_wpnonce' ], 'delete' . $id . $functions_file_basename ) ) {
+                    // delete item
+
+
+                    echo '<br>DELETE (' . $id . ')';
+
+                }
+                else {
+                    // skip delete
+
+                    echo '<br>SKIP DELETE (' . $id . ')';
+                }
+
+                $this->show_list_page();
+            }
             else {
                 // show nothing
             }
@@ -40,49 +60,14 @@ class Theme_Forms_Admin_Pages {
 
         }
         else {
-            // show list
-            ?>
-                <h1><?php esc_html_e( 'Theme Form Entries', 'bsx-wordpress' ); ?></h1>
-            <?php
+            // show list page
 
-            // $entries = $wpdb->get_results( "SELECT * FROM $table" );
-
-            // echo '<pre style="width: 100%; overflow: auto;">';
-            // print_r( $entries );
-            // echo '</pre>';
-
-            // TEST
-            // foreach( $entries as &$entry ) {
-
-            //     printf(
-            //         '<div><a href="%s">%s</a></div>',
-            //         esc_url(
-            //             add_query_arg(
-            //                 [
-            //                     // 'view'     => 'edit',
-            //                     'id' => $entry->id,
-            //                 ],
-            //                 admin_url( 'admin.php?page=theme-form-entries' )
-            //             )
-            //         ),
-            //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
-            //     );
-            // }
-
-
-
-            // list contents in table
-
-            $theme_forms_list_table = new Theme_Forms_List_Table();
-            $theme_forms_list_table->prepare_items(); 
-            $theme_forms_list_table->display();
+            $this->show_list_page();
 
         }
 
+    } // /init()
 
-
-
-    }
 
     private function show_view_page( $id ) {
 
@@ -244,7 +229,8 @@ class Theme_Forms_Admin_Pages {
             </div>
         <?php
 
-    }
+    } // /show_view_page()
+
 
     private function show_edit_page( $id ) {
         
@@ -577,15 +563,21 @@ class Theme_Forms_Admin_Pages {
                                         <div id="delete-action">
                                             <?php
                                                 // prepare delete nonce
-                                                $delete_nonce = wp_create_nonce( 'delete' . $functions_file_basename );
+                                                $delete_nonce = wp_create_nonce( 'delete' . $id . $functions_file_basename );
 
                                                 printf(
-                                                    '<a class="submitdelete deletion" href="?page=%s&action=%s&id=%s&_wpnonce=%s">%s</a>',
+                                                    '<a class="submitdelete deletion" href="?page=%1$s&action=%2$s&id=%3$d&_wpnonce=%4$s" onclick="return confirm( \'%6$s\' );">%5$s</a>',
                                                     esc_attr( $_REQUEST[ 'page' ] ),
                                                     'delete',
                                                     absint( $id ),
                                                     $delete_nonce,
                                                     esc_html__( 'Delete' ),
+                                                    sprintf(
+                                                        /* translators: %1$s: The title of the entry. %2$d: The id of the entry. */
+                                                        esc_attr__( 'Are you sure you want to delete this entry: ”%1$s“ (id: %2$d)?', 'bsx-wordpress' ),
+                                                        $result[ 0 ]->title,
+                                                        absint( $id ),
+                                                    ),
                                                 );
                                             ?>
                                         </div>
@@ -621,6 +613,47 @@ $actions = [
             </form>
         <?php
 
-    }
+    } // show_edit_page()
+
+
+    private function show_list_page() {
+
+        ?>
+            <h1><?php esc_html_e( 'Theme Form Entries', 'bsx-wordpress' ); ?></h1>
+        <?php
+
+        // $entries = $wpdb->get_results( "SELECT * FROM $table" );
+
+        // echo '<pre style="width: 100%; overflow: auto;">';
+        // print_r( $entries );
+        // echo '</pre>';
+
+        // TEST
+        // foreach( $entries as &$entry ) {
+
+        //     printf(
+        //         '<div><a href="%s">%s</a></div>',
+        //         esc_url(
+        //             add_query_arg(
+        //                 [
+        //                     // 'view'     => 'edit',
+        //                     'id' => $entry->id,
+        //                 ],
+        //                 admin_url( 'admin.php?page=theme-form-entries' )
+        //             )
+        //         ),
+        //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
+        //     );
+        // }
+
+
+
+        // list contents in table
+
+        $theme_forms_list_table = new Theme_Forms_List_Table();
+        $theme_forms_list_table->prepare_items(); 
+        $theme_forms_list_table->display();
+
+    } // /show_list_page()
 
 }

@@ -556,13 +556,44 @@ class Theme_Forms_Admin_Pages {
                         </div>
                         
                         <!-- actions box -->
-                        <div class="postbox">
+                        <div class="postbox" id="submitdiv">
 
                             <div class="postbox-header">
                                 <h2 class="hndle"><?php esc_html_e( 'Actions', 'bsx-wordpress' ); ?></h2>
                             </div>
 
                             <div class="inside">
+                                <div class="submitbox" id="submitpost">
+                                    <div id="major-publishing-actions">
+
+                                        <div id="publishing-action">
+                                            <?php
+                                                printf(
+                                                    '<button class="button button-primary button-large" type="submit">%s</button>',
+                                                    esc_html__( 'Save' ),
+                                                );
+                                            ?>
+                                        </div>
+                                        <div id="delete-action">
+                                            <?php
+                                                // prepare delete nonce
+                                                $delete_nonce = wp_create_nonce( 'delete' . $functions_file_basename );
+
+                                                printf(
+                                                    '<a class="submitdelete deletion" href="?page=%s&action=%s&id=%s&_wpnonce=%s">%s</a>',
+                                                    esc_attr( $_REQUEST[ 'page' ] ),
+                                                    'delete',
+                                                    absint( $id ),
+                                                    $delete_nonce,
+                                                    esc_html__( 'Delete' ),
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+
                                 <?php
 /*
 // create nonces
@@ -578,7 +609,7 @@ $actions = [
                                     // create nonces
                                     // $edit_nonce = wp_create_nonce( 'edit' . $functions_file_basename );
 
-                                    printf( '<button class="button button-primary button-large" type="submit">' . esc_html__( 'Save' ) . '</button>', esc_attr( $_REQUEST[ 'page' ] ), 'edit', absint( $id ) );
+
                                 ?>
                             </div>
 

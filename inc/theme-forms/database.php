@@ -13,6 +13,8 @@ class Theme_Forms_Database_Handler {
 
 		    // create db table
 
+		    // TODO: add first_name, last_name, company
+
 		    global $wpdb;
 		    $charset_collate = $wpdb->get_charset_collate();
 
@@ -36,7 +38,11 @@ class Theme_Forms_Database_Handler {
 		        comment TEXT NOT NULL,
 		        ip_address VARCHAR(128) NOT NULL,
 		        user_agent VARCHAR(256) NOT NULL,
-		        history LONGTEXT NOT NULL
+		        history LONGTEXT NOT NULL,
+		        -- first_name VARCHAR(64) NOT NULL,
+		        -- last_name VARCHAR(64) NOT NULL,
+		        -- company VARCHAR(100) NOT NULL
+		        -- subject VARCHAR(256) NOT NULL
 		    ) $charset_collate;";
 
 		    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

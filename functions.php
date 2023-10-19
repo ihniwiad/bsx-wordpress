@@ -967,10 +967,15 @@ $theme_forms_database_handler = new Theme_Forms_Database_Handler;
 $theme_forms_database_handler->create_table();
 require_once( __DIR__ . '/inc/theme-forms/class-theme-forms-list-table.php' );
 require_once( __DIR__ . '/inc/theme-forms/admin-pages.php' );
+require_once( __DIR__ . '/inc/theme-forms/rest-route.php' );
+require_once( __DIR__ . '/inc/theme-forms/form-template.php' );
+require_once( __DIR__ . '/inc/theme-forms/shortcode.php' );
+
 require_once( __DIR__ . '/src/libs/form/class-bsx-mail-form.php' );
 if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' ) ) {
     ( new Bsx_Mail_Form() )->init();
 }
+
 
 
 /**

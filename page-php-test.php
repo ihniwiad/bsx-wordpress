@@ -17,7 +17,7 @@ get_header();
     <div class="container below-navbar-content mb-5">
         <?php
 
-            echo '<br><b>DATABASE TEST</b>';
+            // echo '<br><b>DATABASE TEST</b>';
 
             // $local_time = new DateTime( 'now', new DateTimeZone( wp_timezone_string() ) );
             // echo '<br>Local time: ' . $local_time->format( 'Y-m-d H:i:s' );
@@ -101,17 +101,18 @@ get_header();
 
             // $query = new WP_Query( array( 'author' => -12 ) );
             // $myrows = $wpdb->get_results( "SELECT id, title FROM $table" );
-            $myrows = $wpdb->get_results( "SELECT * FROM $table" );
 
-            echo '<pre style="width: 100%; overflow: auto;">';
-            print_r( $myrows );
-            echo '</pre>';
+            // $myrows = $wpdb->get_results( "SELECT * FROM $table" );
+
+            // echo '<pre style="width: 100%; overflow: auto;">';
+            // print_r( $myrows );
+            // echo '</pre>';
 
 
             // include 'src/libs/form/example.php';
-            // if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form', 'print_form' ) ) {
-            //     ( new Bsx_Mail_Form )->print_form( 1 );
-            // }
+            if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form', 'print_form' ) ) {
+                Bsx_Mail_Form::print_form( 1 );
+            }
         ?>
     </div>
 

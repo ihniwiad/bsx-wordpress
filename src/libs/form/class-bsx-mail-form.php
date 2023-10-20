@@ -29,8 +29,8 @@ class Bsx_Mail_Form {
         function theme_form_settings_add_menu() {
             // page 1
             add_menu_page( 
-                esc_html__( 'Theme Forms', 'bsx-wordpress' ), // page title
-                esc_html__( 'Theme Forms', 'bsx-wordpress' ), // menu title
+                esc_html__( 'Theme Forms (Deprecated)', 'bsx-wordpress' ), // page title
+                esc_html__( 'Theme Forms (Deprecated)', 'bsx-wordpress' ), // menu title
                 'manage_options', // capability
                 'theme_form_options', // menu_slug
                 'theme_form_settings_page_1', // function to show related content
@@ -55,15 +55,15 @@ class Bsx_Mail_Form {
                 'theme_form_settings_page_3', // function = '', 
                 3 // position = null
             );
-            add_submenu_page( 
-                'theme_form_options', // parent_slug
-                esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // page_title
-                esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // menu_title
-                'manage_options', // capability
-                'theme-form-entries', // menu_slug, 
-                'theme_form_show_entries', // function = '', 
-                3 // position = null
-            );
+            // add_submenu_page( 
+            //     'theme_form_options', // parent_slug
+            //     esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // page_title
+            //     esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // menu_title
+            //     'manage_options', // capability
+            //     'theme-form-entries', // menu_slug, 
+            //     'theme_form_show_entries', // function = '', 
+            //     3 // position = null
+            // );
         }
         add_action( 'admin_menu', 'theme_form_settings_add_menu' );
 
@@ -110,6 +110,7 @@ class Bsx_Mail_Form {
                 </form>
             </div>
         <?php }
+        /*
         function theme_form_show_entries() { 
             global $functions_file_basename;
             ?>
@@ -119,6 +120,7 @@ class Bsx_Mail_Form {
                 ?>
             </div>
         <?php }
+        */
 
         /**
          * custom settings, create pages setup

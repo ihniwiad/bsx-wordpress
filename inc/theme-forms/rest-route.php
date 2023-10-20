@@ -1,10 +1,9 @@
 <?php
 
-    // private function register_mailer_rest_route() {
-
 /**
  * callback function for routes endpoint
  */
+
 function bsx_mailer_post_endpoint( $request ) {
     global $theme_forms_database_handler;
 
@@ -68,21 +67,38 @@ function bsx_mailer_post_endpoint( $request ) {
 
 
         // TODO: replace later by (custom) post id
-        // get template key by hash
-        $forms_count = Bsx_Mail_Form::get_forms_count();
-        $form_index = '';
-        for ( $i = 1; $i <= $forms_count; $i++ ) {
-            if ( hash( 'md5', 'x' . $i ) === $sanitized_values[ 'idh' ] ) {
-                $form_index = $i;
-                break;
-            }
+
+        $form_id = $sanitized_values[ 'idh' ];
+        $is_deprecated_non_post_form = false;
+        $form_index = ''; // only used for deprecated non post forms
+
+        if ( is_numeric( $form_id ) && strlen( $form_id ) < 32 ) {
+        	// is post id
+
+        	// do nothing
+        }
+        else {
+        	// is hash
+        	$is_deprecated_non_post_form = true;
+
+	        // get form index by hash
+	        $forms_count = Bsx_Mail_Form::get_forms_count();
+	        for ( $i = 1; $i <= $forms_count; $i++ ) {
+	            if ( hash( 'md5', 'x' . $i ) === $sanitized_values[ 'idh' ] ) {
+	                $form_index = $i;
+	                break;
+	            }
+	        }
         }
 
 
 
 
 
-        
+
+
+
+
 
         function replace_placeholders( $text, $sanitized_values ) {
             // $text = str_replace ( '[site-title]', get_the_title(), $text );
@@ -171,9 +187,52 @@ function bsx_mailer_post_endpoint( $request ) {
             $validation_ok = false;
         }
 
-        // better use strip_tags()
-        // $sanitized_mail_subject = filter_var( get_option( 'form-' . $form_index . '-subject' ), FILTER_SANITIZE_STRING );
-        $sanitized_mail_subject = strip_tags( get_option( 'form-' . $form_index . '-subject' ) );
+
+
+        // TODO: get data from post meta instead of optiona
+
+        if ( $is_deprecated_non_post_form ) {
+        	// get data from options
+
+	        $recipient_mail = get_option( 'form-' . $form_index . '-recipient-email' );
+	        $sender_mail = get_option( 'form-' . $form_index . '-sender-email' );
+	        $mail_subject = strip_tags( get_option( 'form-' . $form_index . '-subject' ) );
+	        $mail_content = filter_var( get_option( 'form-' . $form_index . '-mail-template' ), FILTER_UNSAFE_RAW );
+
+	        $recipient_mail_2 = get_option( 'form-' . $form_index . '-recipient-email-2' );
+	        $sender_mail_2 = get_option( 'form-' . $form_index . '-sender-email-2' );
+	        $mail_subject_2 = strip_tags( get_option( 'form-' . $form_index . '-subject-2' ) );
+	        $mail_content_2 = filter_var( get_option( 'form-' . $form_index . '-mail-template-2' ), FILTER_UNSAFE_RAW );
+        }
+        else {
+        	// get data from post meta
+
+            $meta = get_post_meta( $form_id, 'theme_forms', true );
+
+	        $recipient_mail = isset( $meta[ 'recipient_email' ] ) ? $meta[ 'recipient_email' ] : '';
+	        $sender_mail = isset( $meta[ 'sender_email' ] ) ? $meta[ 'sender_email' ] : '';
+	        $mail_subject = isset( $meta[ 'subject' ] ) ? $meta[ 'subject' ] : '';
+	        $mail_content = isset( $meta[ 'email_template' ] ) ? $meta[ 'email_template' ] : '';
+
+	        $recipient_mail_2 = isset( $meta[ 'recipient_2_email' ] ) ? $meta[ 'recipient_2_email' ] : '';
+	        $sender_mail_2 = isset( $meta[ 'sender_2_email' ] ) ? $meta[ 'sender_2_email' ] : '';
+	        $mail_subject_2 = isset( $meta[ 'subject_2' ] ) ? $meta[ 'subject_2' ] : '';
+	        $mail_content_2 = isset( $meta[ 'email_2_template' ] ) ? $meta[ 'email_2_template' ] : '';
+        }
+
+
+
+
+        // sanitize
+
+        $sanitized_mail_subject = strip_tags( $mail_subject );
+        $sanitized_mail_content = filter_var( $mail_content, FILTER_UNSAFE_RAW );
+        $sanitized_mail_subject_2 = strip_tags( $mail_subject_2 );
+        $sanitized_mail_content_2 = filter_var( $mail_content_2, FILTER_UNSAFE_RAW );
+
+
+
+
         $mail_subject = replace_placeholders( $sanitized_mail_subject, $sanitized_values );
         if ( empty( $mail_subject ) ) {
             // fallback subject (only mail 1)
@@ -181,7 +240,6 @@ function bsx_mailer_post_endpoint( $request ) {
         }
 
         // TODO: better sanitation possible?
-        $sanitized_mail_content = filter_var( get_option( 'form-' . $form_index . '-mail-template' ), FILTER_UNSAFE_RAW );
         $mail_content = replace_placeholders( $sanitized_mail_content, $sanitized_values );
         $mail_content = str_replace ( "\n", "<br/>", $mail_content );
 
@@ -192,18 +250,12 @@ function bsx_mailer_post_endpoint( $request ) {
             }
         }
 
-        // get recipient mail
-        $recipient_mail = get_option( 'form-' . $form_index . '-recipient-email' );
-        $recipient_mail_2 = get_option( 'form-' . $form_index . '-recipient-email-2' );
-
-        $sender_mail = get_option( 'form-' . $form_index . '-sender-email' );
 
         // ckeck if $recipient_mail_2 is filled
         $mail_2_ok = false;
 
         if ( ! empty( $recipient_mail_2 ) ) {
 
-            $sender_mail_2 = get_option( 'form-' . $form_index . '-sender-email-2' );
 
             // ckeck if $recipient_mail_2 is mail or placeholder
             if ( substr( $recipient_mail_2, 0, 1 ) === '[' && substr( $recipient_mail_2, -1 ) === ']' ) {
@@ -215,11 +267,9 @@ function bsx_mailer_post_endpoint( $request ) {
             }
 
             // sanitize
-            $sanitized_mail_subject_2 = strip_tags( get_option( 'form-' . $form_index . '-subject-2' ) );
             $mail_subject_2 = replace_placeholders( $sanitized_mail_subject_2, $sanitized_values );
 
             // TODO: better sanitation possible?
-            $sanitized_mail_content_2 = filter_var( get_option( 'form-' . $form_index . '-mail-template-2' ), FILTER_UNSAFE_RAW );
             $mail_content_2 = replace_placeholders( $sanitized_mail_content_2, $sanitized_values );
             $mail_content_2 = str_replace ( "\n", "<br/>", $mail_content_2 );
 
@@ -271,7 +321,7 @@ function bsx_mailer_post_endpoint( $request ) {
                 // make utf-8 compatible
                 $encoded_mail_subject = '=?UTF-8?B?'.base64_encode( $mail_subject ).'?=';
 
-                if ( isset( $sender_mail_2 ) ) {
+                if ( isset( $sender_mail_2 ) && ! empty( $sender_mail_2 ) ) {
                     $headers_2 = $global_headers . 'From: ' . $sender_mail_2 . "\r\n";
                     
                     // make utf-8 compatible
@@ -390,5 +440,6 @@ function bsx_mailer_register_rest_route() {
     ) );
 }
 add_action( 'rest_api_init', 'bsx_mailer_register_rest_route' );
+
 
     // } // /register_mailer_rest_route()

@@ -100,10 +100,10 @@ class Theme_Forms_List_Table extends WP_List_Table {
         $delete_nonce = wp_create_nonce( 'delete' . $item[ 'id' ] . $functions_file_basename );
 
         $actions = [
-            'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">' . esc_html__( 'View' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ),
-            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Edit' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'edit', absint( $item[ 'id' ] ), $edit_nonce ),
+            'view' => sprintf( '<a href="admin.php?page=%s&action=%s&id=%s">' . esc_html__( 'View' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ),
+            'edit' => sprintf( '<a href="admin.php?page=%s&action=%s&id=%s&_wpnonce=%s">' . esc_html__( 'Edit' ) . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'edit', absint( $item[ 'id' ] ), $edit_nonce ),
             'delete' => sprintf( 
-                '<a href="?page=%1$s&action=%2$s&id=%3$s&_wpnonce=%4$s" onclick="return confirm( \'%6$s\' );">%5$s</a>', 
+                '<a href="admin.php?page=%1$s&action=%2$s&id=%3$s&_wpnonce=%4$s" onclick="return confirm( \'%6$s\' );">%5$s</a>', 
                 esc_attr( $_REQUEST[ 'page' ] ), 
                 'delete', 
                 absint( $item[ 'id' ] ), 
@@ -119,7 +119,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
             ),
         ];
 
-        return sprintf( '%1$s %2$s', sprintf( '<a href="?page=%s&action=%s&id=%s">' . $item[ 'title' ] . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ), $this->row_actions( $actions ) );
+        return sprintf( '%1$s %2$s', sprintf( '<a href="admin.php?page=%s&action=%s&id=%s">' . $item[ 'title' ] . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ), $this->row_actions( $actions ) );
     }
 
     function column_date( $item ) {

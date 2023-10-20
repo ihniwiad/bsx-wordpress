@@ -15,11 +15,37 @@ class Theme_Forms_Form_Template {
 
     public static function make_form_from_template( $index ) {
 
-        $hash = hash( 'md5', 'x' . $index );
+
+
+        // TODO: check if post form or fix form
+
+        $form_id = $index;
+        $is_deprecated_non_post_form = false;
+
+        if ( $index < 6 ) {
+        	// is hash
+        	$is_deprecated_non_post_form = true;
+
+        }
+
+
+        if ( $is_deprecated_non_post_form ) {
+        	// get data from options
+
+        	$form_id = hash( 'md5', 'x' . $index );
+        	$template = get_option( 'form-' . $index . '-form-template' );
+        }
+        else {
+        	// get data from post meta
+
+            $meta = get_post_meta( $form_id, 'theme_forms', true );
+
+	        $template = isset( $meta[ 'form_template' ] ) ? $meta[ 'form_template' ] : '';
+        }
+
 
         // TODO: better sanitation possible?
-        $sanitized_template = filter_var( get_option( 'form-' . $index . '-form-template' ), FILTER_UNSAFE_RAW );
-        $template = $sanitized_template;
+        $template = filter_var( $template, FILTER_UNSAFE_RAW );
 
         // pattern for placeholders (allow css selectors for js)
         $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\"\,.#\[\]\(\)]|)+\]/s";
@@ -66,7 +92,7 @@ class Theme_Forms_Form_Template {
                 $html .= $template;
                 $html .= '<input type="hidden" name="hv__text__r" value="" data-g-tg="hv">';
                 $html .= '<input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">';
-                $html .= '<input type="hidden" name="idh__text__r" value="' . $hash . '">';
+                $html .= '<input type="hidden" name="idh__text__r" value="' . $form_id . '">';
             $html .= '</form>';
             $html .= '<div data-g-tg="message-wrapper">';
                 $html .= '<div data-g-tg="success-message" aria-hidden="true" style="display: none;">';

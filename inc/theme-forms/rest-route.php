@@ -61,6 +61,12 @@ function bsx_mailer_post_endpoint( $request ) {
             $sanitized_values[ $name ] = $value;
         }
 
+
+
+
+
+
+
         // TODO: replace later by (custom) post id
         // get template key by hash
         $forms_count = Bsx_Mail_Form::get_forms_count();
@@ -71,6 +77,12 @@ function bsx_mailer_post_endpoint( $request ) {
                 break;
             }
         }
+
+
+
+
+
+        
 
         function replace_placeholders( $text, $sanitized_values ) {
             // $text = str_replace ( '[site-title]', get_the_title(), $text );

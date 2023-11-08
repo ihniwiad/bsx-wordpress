@@ -1054,3 +1054,114 @@ function bsx_theme_activation() {
 
 
 
+// function wk_add_custom_screen_option() {
+//     $args = array(
+//         'label' => 'Custom Option',
+//         'default' => 10,
+//         'option' => 'custom_option'
+//     );
+
+//     add_screen_option('per_page', $args);
+// }
+// add_action('admin_head', 'wk_add_custom_screen_option');
+
+
+// function wk_save_custom_screen_option($status, $option, $value) {
+
+// // echo '<br>TEST_1';
+// // echo '<pre style="width: 100%; overflow: auto;">';
+// // print_r( $option );
+// // echo '</pre>';
+
+//     if ($option === 'custom_option') {
+//         update_option('custom_option', $value);
+//     }
+//     return $status;
+// }
+// add_filter('set-screen-option', 'wk_save_custom_screen_option', 10, 3);
+
+
+
+
+
+
+// add_filter('set-screen-option', 'cmi_set_option', 10, 3);
+// function cmi_set_option($status, $option, $value) {
+//     return $value;
+// }
+
+// add_filter('set-screen-option', 'cmi_set_screen_options', 11, 3);
+// function cmi_set_screen_options($status, $option, $value) {
+//     if ( 'cmi_show_columns' == $option ) { 
+//         $value = $_POST['cmi_columns'];
+//     }
+//     return $value;
+// }
+
+
+
+
+
+// function test_add_custom_screen_option() {
+//     $option_name = 'my_option';
+//     add_screen_option( "wordpress_screen_options_demo_$option_name", [
+//         'option'  => $option_name,
+//         'value'   => true,
+//     ] );
+// }
+// $admin_page = 'custom_options';
+// // add_action( 'load-' . $admin_page, 'test_add_custom_screen_option' );
+// add_action( 'admin_head', 'test_add_custom_screen_option' );
+
+// /**
+//  * Display a screen option.
+//  *
+//  * @param  string $title  The title to display.
+//  * @param  string $option The name of the option we're displaying.
+//  */
+// function show_option( $title, $option ) {
+//     $screen    = get_current_screen();
+//     $id        = "wordpress_screen_options_demo_$option";
+//     $user_meta = get_usermeta( get_current_user_id(), 'wordpress_screen_options_demo_options' );
+
+//     // Check if the screen options have been saved. If so, use the saved value. Otherwise, use the default values.
+//     if ( $user_meta ) {
+//         $checked = array_key_exists( $option, $user_meta );
+//     } else {
+//         $checked = $screen->get_option( $id, 'value' ) ? true : false;
+//     }
+/*     ?>
+//         <label for="<?php echo esc_textarea( $id ); ?>">
+//             <input type="checkbox" 
+//                    name="wordpress_screen_options_demo[<?php echo esc_textarea( $option ); ?>]" 
+//                    class="wordpress-screen-options-demo" 
+//                    id="<?php echo esc_textarea( $id ); ?>" 
+//                    <?php checked( $checked ); ?>
+//             /> 
+//             <?php echo esc_html( $title ); ?>
+//         </label>
+//     <?php
+*/
+// }
+
+// add_filter( 'set-screen-option', 'set_option', 10, 3 );
+
+// function set_option( $status, $option, $value ) {
+//     if ( 'my_option' === $option ) {
+//         return $value;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+// add_filter('set-screen-option', 'test_table_set_option', 10, 3);
+// function test_table_set_option($status, $option, $value) {
+//   return '<br>TEST: ' . $value;
+// }
+

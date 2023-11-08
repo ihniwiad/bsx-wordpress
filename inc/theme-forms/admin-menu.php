@@ -1,9 +1,11 @@
 <?php
 
 function bsx_theme_forms_add_menu() {
+ 
+    global $bsx_theme_forms_page;
 
     // item level 1
-    add_menu_page( 
+    $bsx_theme_forms_page = add_menu_page( 
         esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // page title
         esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // menu title
         'manage_options', // capability
@@ -23,6 +25,28 @@ function bsx_theme_forms_add_menu() {
     //     'bsx_theme_form_show_entries', // function = '', 
     //     10 // position = null
     // );
+
+    // function myFilterScreenOption( $keep, $option, $value ) {
+    //     if ( $option === 'entries_per_page' ) {
+    //         if ( $value < 0 ) {
+    //             $value = 0;
+    //         } elseif ( $value > 100 ) {
+    //             $value = 100;
+    //         }
+    //     }
+    //     return $value;
+    // }
+    // add_filter( 'set-screen-option', 'myFilterScreenOption', 11, 3 );
+
+
+    add_action( 'load-' . $bsx_theme_forms_page, 'bsx_add_custom_screen_option' );
+
+    // function test_table_set_option( $status, $option, $value ) {
+    //     return $value;
+    // }
+    // add_filter( 'set-screen-option', 'test_table_set_option', 10, 3 );
+
+
 }
 add_action( 'admin_menu', 'bsx_theme_forms_add_menu' );
 
@@ -36,3 +60,31 @@ function bsx_theme_form_show_entries() {
         </div>
     <?php
 }
+
+
+// add screen options to page
+function bsx_add_custom_screen_option() {
+    $option = 'per_page';
+    $args = array(
+        'label' => 'Form Entries',
+        'default' => 10,
+        'option' => 'entries_per_page'
+    );
+    add_screen_option( $option, $args );
+    // add_screen_option( 'layout_columns', array( 'max' => 2, 'default' => 2 ) );
+}
+
+
+
+
+
+
+// save screen options
+function bsx_save_custom_screen_option( $status, $option, $value ) {
+    // if ( $option === 'entries_per_page' ) {
+    //     update_option( 'entries_per_page', $value );
+    // }
+    // return $status;
+    return $value;
+}
+add_filter( 'set_screen_option', 'bsx_save_custom_screen_option', 10, 3 );

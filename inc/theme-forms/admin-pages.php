@@ -636,39 +636,47 @@ $actions = [
 
         ?>
             <h1><?php esc_html_e( 'Theme Form Entries', 'bsx-wordpress' ); ?></h1>
+            <!-- form method="post" onSubmit="return function() { if ( ! confirm( 'Sure to delete items ' + this.form.serialize() + '?' ) ) return false; else this.form.submit(); }" -->
+            <!-- form method="post" onsubmit="return confirm( 'Do you want to delete ' + Object.values( this ).reduce( ( obj, field ) => { obj[ field.name ] = field.value; return obj }, {} ) + '?' )" -->
+            <form method="post" onsubmit="return confirm( 'Do you really want to delete one or multiple items?' )">
+                <?php
+
+                // $entries = $wpdb->get_results( "SELECT * FROM $table" );
+
+                // echo '<pre style="width: 100%; overflow: auto;">';
+                // print_r( $entries );
+                // echo '</pre>';
+
+                // TEST
+                // foreach( $entries as &$entry ) {
+
+                //     printf(
+                //         '<div><a href="%s">%s</a></div>',
+                //         esc_url(
+                //             add_query_arg(
+                //                 [
+                //                     // 'view'     => 'edit',
+                //                     'id' => $entry->id,
+                //                 ],
+                //                 admin_url( 'admin.php?page=theme-form-entries' )
+                //             )
+                //         ),
+                //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
+                //     );
+                // }
+
+
+
+                // list contents in table
+
+                $theme_forms_list_table = new Theme_Forms_List_Table();
+                // $theme_forms_list_table->screen_option(); 
+                $theme_forms_list_table->prepare_items(); 
+                $theme_forms_list_table->display();
+
+                ?>
+            </form>
         <?php
-
-        // $entries = $wpdb->get_results( "SELECT * FROM $table" );
-
-        // echo '<pre style="width: 100%; overflow: auto;">';
-        // print_r( $entries );
-        // echo '</pre>';
-
-        // TEST
-        // foreach( $entries as &$entry ) {
-
-        //     printf(
-        //         '<div><a href="%s">%s</a></div>',
-        //         esc_url(
-        //             add_query_arg(
-        //                 [
-        //                     // 'view'     => 'edit',
-        //                     'id' => $entry->id,
-        //                 ],
-        //                 admin_url( 'admin.php?page=theme-form-entries' )
-        //             )
-        //         ),
-        //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
-        //     );
-        // }
-
-
-
-        // list contents in table
-
-        $theme_forms_list_table = new Theme_Forms_List_Table();
-        $theme_forms_list_table->prepare_items(); 
-        $theme_forms_list_table->display();
 
     } // /show_list_page()
 

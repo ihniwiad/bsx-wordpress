@@ -118,7 +118,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
         // Process bulk action (before getting data)
         $this->process_bulk_action();
 
-        $per_page = $this->get_items_per_page( 'entries_per_page', 10 );
+        $per_page = $this->get_items_per_page( 'theme_forms_entries_per_page', 10 );
         $current_page = $this->get_pagenum();
         $total_items = self::record_count();
 
@@ -239,7 +239,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
 
 
-    // DOING – TODO: finish
+    // bulk actions
 
 
     public function process_bulk_action() {
@@ -305,62 +305,6 @@ class Theme_Forms_List_Table extends WP_List_Table {
             // do nothing
         }
     }
-
-
-
-
-
-    /**
-     * Screen options
-     */
-    // public function screen_option() {
-
-    //     // $option = 'per_page';
-    //     // $args = [
-    //     //     'label' => 'Form Entries',
-    //     //     'default' => 10,
-    //     //     'option' => 'entries_per_page'
-    //     // ];
-
-    //     // add_screen_option( $option, $args );
-
-    //     // add_action( 'admin_menu', function() {
-
-    //     //     global $bsx_theme_forms_page;
-         
-    //     //     $screen = get_current_screen();
-         
-    //     //     // get out of here if we are not on our settings page
-    //     //     if( ! is_object( $screen ) || $screen->id != $bsx_theme_forms_page )
-    //     //         return;
-         
-    //     //     $args = [
-    //     //         'label' => 'Form Entries',
-    //     //         'default' => 10,
-    //     //         'option' => 'entries_per_page'
-    //     //     ];
-    //     //     add_screen_option( 'per_page', $args );
-
-    //     // }, 10, 3 );
-
-
-    //     // $hook = add_menu_page('My Plugin List Table', 'My List Table Example', 'activate_plugins', 'my_list_test', 'my_render_list_page');
-
-    //     // global $bsx_theme_forms_page;
-
-    //     // add_action( 'load-' . $bsx_theme_forms_page, 'add_options' );
-
-    //     // function add_options() {
-    //     //     $option = 'per_page';
-    //     //     $args = array(
-    //     //         'label' => 'Form Entries',
-    //     //         'default' => 10,
-    //     //         'option' => 'entries_per_page'
-    //     //     );
-    //     //     add_screen_option( $option, $args );
-    //     // }
-
-    // }
 
 
 }

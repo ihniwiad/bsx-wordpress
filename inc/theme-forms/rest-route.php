@@ -339,8 +339,8 @@ function bsx_mailer_post_endpoint( $request ) {
                 $data = array(
                     'date' => current_time( 'mysql' ),
                     'data_gmt' => current_time( 'mysql', 1 ),
-                    'form_id' => $form_index,
-                    'form_title' => 'Theme Form ' . $form_index,
+                    'form_id' => $is_deprecated_non_post_form ? $form_index : $form_id,
+                    'form_title' => $is_deprecated_non_post_form ? 'Theme Form ' . $form_index : get_the_title( $form_id ) . ' (' . $form_id . ')',
                     'title' => $mail_subject,
 
                     'content' => $mail_content,
@@ -353,11 +353,11 @@ function bsx_mailer_post_endpoint( $request ) {
                     'email' => ( isset( $sanitized_values[ 'email' ] ) ) ? $sanitized_values[ 'email' ] : '',
                     'name' => ( isset( $sanitized_values[ 'name' ] ) ) ? $sanitized_values[ 'name' ] : '',
                     'phone' => ( isset( $sanitized_values[ 'phone' ] ) ) ? $sanitized_values[ 'phone' ] : '',
-                    // 'first_name' => ( isset( $sanitized_values[ 'first_name' ] ) ) ? $sanitized_values[ 'first_name' ] : '',
+                    'first_name' => ( isset( $sanitized_values[ 'first_name' ] ) ) ? $sanitized_values[ 'first_name' ] : '',
 
-                    // 'last_name' => ( isset( $sanitized_values[ 'last_name' ] ) ) ? $sanitized_values[ 'last_name' ] : '',
-                    // 'company' => ( isset( $sanitized_values[ 'company' ] ) ) ? $sanitized_values[ 'company' ] : '',
-                    // 'subject' => ( isset( $sanitized_values[ 'subject' ] ) ) ? $sanitized_values[ 'subject' ] : '',
+                    'last_name' => ( isset( $sanitized_values[ 'last_name' ] ) ) ? $sanitized_values[ 'last_name' ] : '',
+                    'company' => ( isset( $sanitized_values[ 'company' ] ) ) ? $sanitized_values[ 'company' ] : '',
+                    'subject' => ( isset( $sanitized_values[ 'subject' ] ) ) ? $sanitized_values[ 'subject' ] : '',
                 );
                 $format = array(
                     '%s',
@@ -376,11 +376,11 @@ function bsx_mailer_post_endpoint( $request ) {
                     '%s',
                     '%s',
                     '%s',
-                    // '%s',
+                    '%s',
 
-                    // '%s',
-                    // '%s',
-                    // '%s',
+                    '%s',
+                    '%s',
+                    '%s',
                 );
 
                 // returns false if error

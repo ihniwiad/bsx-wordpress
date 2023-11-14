@@ -2,9 +2,10 @@
 
 class Theme_Forms_Admin_Pages {
 
-    public function init() {
+    public static function init() {
         global $functions_file_basename;
         global $theme_forms_database_handler;
+        global $theme_forms_list_table;
 
 
         // echo '<pre style="width: 100%; overflow: auto;">';
@@ -27,11 +28,11 @@ class Theme_Forms_Admin_Pages {
 
             if ( $_GET[ 'action' ] == 'view' ) {
                 // show view page
-                $this->show_view_page( $id );
+                self::show_view_page( $id );
             }
             else if ( $_GET[ 'action' ] == 'edit' ) {
                 // show edit page
-                $this->show_edit_page( $id );
+                self::show_edit_page( $id );
             }
             else if ( $_GET[ 'action' ] == 'delete' ) {
                 // delete, then show list page
@@ -63,7 +64,7 @@ class Theme_Forms_Admin_Pages {
                     // skip delete
                 }
 
-                $this->show_list_page();
+                self::show_list_page();
             }
             else {
                 // show nothing
@@ -76,14 +77,14 @@ class Theme_Forms_Admin_Pages {
         else {
             // show list page
 
-            $this->show_list_page();
+            self::show_list_page();
 
         }
 
     } // /init()
 
 
-    private function show_view_page( $id ) {
+    public static function show_view_page( $id ) {
 
         global $functions_file_basename;
         global $theme_forms_database_handler;
@@ -246,7 +247,7 @@ class Theme_Forms_Admin_Pages {
     } // /show_view_page()
 
 
-    private function show_edit_page( $id ) {
+    public static function show_edit_page( $id ) {
         
         global $functions_file_basename;
         global $theme_forms_database_handler;
@@ -305,13 +306,43 @@ class Theme_Forms_Admin_Pages {
                 '%s',
             ];
 
+            // special field keys that are stored in database to be listed/sortable in backend list table
+            $allowed_field_keys = [
+                'email', // will have $fields_prefix in $_POST object
+                'name',
+                'phone',
+                'first_name',
+                'last_name',
 
-            $index = 0;
+                'company',
+                'subject',
+            ];
+            $allowed_field_format = [
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+
+                '%s',
+                '%s',
+            ];
+
+
             foreach ( $_POST as $key => $value ) {
                 if ( in_array( $key, $allowed_keys ) ) {
+                    // echo '<br>TEST ($allowed_keys): ' . $key;
                     $data[ $key ] = $value;
-                    $format[] = $allowed_format[ $index ];
-                    $index++;
+                    $format[] = $allowed_format[ intval( array_keys( $allowed_keys, $key ) ) ];
+                }
+                else if ( substr( $key, 0, strlen( $fields_prefix ) ) === $fields_prefix ) {
+                    // is prefixed field name
+                    $unprefixed_key = substr( $key, strlen( $fields_prefix ), strlen( $key ) );
+                    if ( in_array( $unprefixed_key, $allowed_field_keys ) ) {
+                        // echo '<br>TEST ($allowed_field_keys): ' . $unprefixed_key;
+                        $data[ $unprefixed_key ] = $value;
+                        $format[] = $allowed_field_format[ intval( array_keys( $allowed_field_keys, $unprefixed_key ) ) ];
+                    }
                 }
             }
 
@@ -330,6 +361,10 @@ class Theme_Forms_Admin_Pages {
                 // echo '<pre style="width: 100%; overflow: auto;">';
                 // print_r( $format );
                 // echo '</pre>';
+
+                // add modified date
+                $data[ 'date_modified' ] = current_time( 'mysql' );
+                $format[] = '%s';
 
                 $updated = $theme_forms_database_handler->update_row( 
                     $_POST[ 'id' ],
@@ -632,47 +667,50 @@ $actions = [
     } // show_edit_page()
 
 
-    private function show_list_page() {
+    public static function show_list_page() {
+        global $theme_forms_list_table;
 
         ?>
             <h1><?php esc_html_e( 'Theme Form Entries', 'bsx-wordpress' ); ?></h1>
             <!-- form method="post" onSubmit="return function() { if ( ! confirm( 'Sure to delete items ' + this.form.serialize() + '?' ) ) return false; else this.form.submit(); }" -->
             <!-- form method="post" onsubmit="return confirm( 'Do you want to delete ' + Object.values( this ).reduce( ( obj, field ) => { obj[ field.name ] = field.value; return obj }, {} ) + '?' )" -->
-            <form method="post" onsubmit="return confirm( 'Do you really want to delete one or multiple items?' )">
+            <form method="post" onsubmit="return confirm( '<?php esc_html_e( 'Do you really want to delete one or multiple items?', 'bsx-wordpress' ) ?>' )">
                 <?php
 
-                // $entries = $wpdb->get_results( "SELECT * FROM $table" );
+                    // $entries = $wpdb->get_results( "SELECT * FROM $table" );
 
-                // echo '<pre style="width: 100%; overflow: auto;">';
-                // print_r( $entries );
-                // echo '</pre>';
+                    // echo '<pre style="width: 100%; overflow: auto;">';
+                    // print_r( $entries );
+                    // echo '</pre>';
 
-                // TEST
-                // foreach( $entries as &$entry ) {
+                    // TEST
+                    // foreach( $entries as &$entry ) {
 
-                //     printf(
-                //         '<div><a href="%s">%s</a></div>',
-                //         esc_url(
-                //             add_query_arg(
-                //                 [
-                //                     // 'view'     => 'edit',
-                //                     'id' => $entry->id,
-                //                 ],
-                //                 admin_url( 'admin.php?page=theme-form-entries' )
-                //             )
-                //         ),
-                //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
-                //     );
-                // }
+                    //     printf(
+                    //         '<div><a href="%s">%s</a></div>',
+                    //         esc_url(
+                    //             add_query_arg(
+                    //                 [
+                    //                     // 'view'     => 'edit',
+                    //                     'id' => $entry->id,
+                    //                 ],
+                    //                 admin_url( 'admin.php?page=theme-form-entries' )
+                    //             )
+                    //         ),
+                    //         esc_html( $entry->form_title . ' [' . $entry->title . '] (id: ' . $entry->id . ')' )
+                    //     );
+                    // }
 
 
 
-                // list contents in table
+                    // list contents in table
 
-                $theme_forms_list_table = new Theme_Forms_List_Table();
-                // $theme_forms_list_table->screen_option(); 
-                $theme_forms_list_table->prepare_items(); 
-                $theme_forms_list_table->display();
+                    // $theme_forms_list_table = new Theme_Forms_List_Table();
+                    if ( isset( $theme_forms_list_table ) && $theme_forms_list_table instanceof Theme_Forms_List_Table ) {
+                        // $theme_forms_list_table->screen_option(); 
+                        // $theme_forms_list_table->prepare_items(); 
+                        $theme_forms_list_table->display();
+                    }
 
                 ?>
             </form>

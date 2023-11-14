@@ -21,7 +21,7 @@ class Theme_Forms_Database_Handler {
 		    // see data types: https://www.w3schools.com/sql/sql_datatypes.asp
 
 		    $table_name = $wpdb->prefix . 'bsx_themeforms_entries';
-		    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+		    $sql = "CREATE TABLE $table_name (
 		        id BIGINT(20) AUTO_INCREMENT primary key NOT NULL,
 		        date DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		        data_gmt DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
@@ -39,20 +39,20 @@ class Theme_Forms_Database_Handler {
 		        ip_address VARCHAR(128) NOT NULL,
 		        user_agent VARCHAR(256) NOT NULL,
 		        history LONGTEXT NOT NULL,
-		        -- first_name VARCHAR(64) NOT NULL,
-		        -- last_name VARCHAR(64) NOT NULL,
-		        -- company VARCHAR(100) NOT NULL
-		        -- subject VARCHAR(256) NOT NULL
+		        first_name VARCHAR(64) NOT NULL,
+		        last_name VARCHAR(64) NOT NULL,
+		        company VARCHAR(100) NOT NULL,
+		        subject VARCHAR(256) NOT NULL
 		    ) $charset_collate;";
 
 		    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-		    dbDelta( $sql );
+		    maybe_create_table( $table_name, $sql );
 
 
 		    // $table_name = $wpdb->prefix . 'test';
 		    // $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-		    //     id mediumint(9) NOT NULL AUTO_INCREMENT,
+		    //     id mediumint(9) AUTO_INCREMENT primary key NOT NULL
 		    //     time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		    //     count smallint(5) NOT NULL,
 		    //     text text NOT NULL,
@@ -60,12 +60,22 @@ class Theme_Forms_Database_Handler {
 		    // ) $charset_collate;";
 
 		    // dbDelta( $sql );
+		    // maybe_create_table( $table_name, $sql );
 
 
-			// add column if not exists
+			// // add column if not exists
 			// $row = $wpdb->get_row( "SELECT * FROM $table_name" );
-			// if ( ! isset( $row->email ) ){
-			// 	$wpdb->query( "ALTER TABLE $table_name ADD email VARCHAR(100) NOT NULL" );
+			// if ( ! isset( $row->first_name ) ){
+			// 	$wpdb->query( "ALTER TABLE $table_name ADD first_name VARCHAR(64) NOT NULL" );
+			// }
+			// if ( ! isset( $row->last_name ) ){
+			// 	$wpdb->query( "ALTER TABLE $table_name ADD last_name VARCHAR(64) NOT NULL" );
+			// }
+			// if ( ! isset( $row->company ) ){
+			// 	$wpdb->query( "ALTER TABLE $table_name ADD company VARCHAR(100) NOT NULL" );
+			// }
+			// if ( ! isset( $row->subject ) ){
+			// 	$wpdb->query( "ALTER TABLE $table_name ADD subject VARCHAR(256) NOT NULL" );
 			// }
 
 		}

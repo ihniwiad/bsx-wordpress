@@ -16,55 +16,26 @@ class Theme_Forms_List_Table extends WP_List_Table {
             'ajax' => false // should this table support ajax?
         ] );
 
+        add_action( 'admin_head', array( &$this, 'add_style' ) );  
     }
 
-    // function get_data() {
 
-    //     // get order params from url
-    //     $orderby = isset( $_GET[ 'orderby' ] ) ? $_GET[ 'orderby' ] : 'date';
-    //     $order = isset( $_GET[ 'order' ] ) ? strtoupper( $_GET[ 'order' ] ) : 'DESC';
+    function add_style() {
+        global $theme_forms_menu_slug;
 
-    //     global $wpdb;
-    //     $table_name = $wpdb->prefix . "bsx_themeforms_entries";
-    //     // $result = $wpdb->get_results( "SELECT * FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-    //     // $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-    //     $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
+        $page = ( isset( $_GET[ 'page' ] ) ) ? esc_attr( $_GET[ 'page' ] ) : false;
+        if ( $theme_forms_menu_slug != $page ) {
+            return;
+        }
+        echo '<style type="text/css">';
+        echo '.wp-list-table .column-id { width: 5.5em; }';
+        // echo '.wp-list-table .column-status { width: 8%; }';
+        // echo '.wp-list-table .column-name, .wp-list-table .column-title { width: 15%; }';
+        echo '</style>';
+    }
 
-    //     return $result;
-    // }
 
     function get_data( $per_page = 5, $page_number = 1 ) {
-
-        // // get order params from url
-        // $orderby = isset( $_GET[ 'orderby' ] ) ? $_GET[ 'orderby' ] : 'date';
-        // $order = isset( $_GET[ 'order' ] ) ? strtoupper( $_GET[ 'order' ] ) : 'DESC';
-
-        // global $wpdb;
-        // $table_name = $wpdb->prefix . "bsx_themeforms_entries";
-        // // $result = $wpdb->get_results( "SELECT * FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-        // // $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-        // $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-
-
-        // global $wpdb;
-
-        // // columns from table
-        // $sql = "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status` FROM {$wpdb->prefix}bsx_themeforms_entries";
-
-        // // order
-        // $sql .= ' ORDER BY ' . ( ! empty( $_REQUEST[ 'orderby' ] ) ? '`' . esc_sql( $_REQUEST[ 'orderby' ] ) . '`' : ' date' );
-        // $sql .= ! empty( $_REQUEST[ 'order' ] ) ? ' ' . esc_sql( $_REQUEST[ 'order' ] ) : ' DESC';
-
-        // // paginated
-        // $sql .= " LIMIT $per_page";
-        // $sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
-
-        // $result = $wpdb->get_results( $sql, 'ARRAY_A' );
-
-        // return $result;
-
-
-
 
         // get order params from url
         $orderby = isset( $_GET[ 'orderby' ] ) ? $_GET[ 'orderby' ] : 'date';
@@ -73,12 +44,12 @@ class Theme_Forms_List_Table extends WP_List_Table {
         global $wpdb;
         $table_name = $wpdb->prefix . "bsx_themeforms_entries";
         $offset = ( $page_number - 1 ) * $per_page;
-        // $result = $wpdb->get_results( "SELECT * FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-        // $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order", ARRAY_A );
-        $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status` FROM `$table_name` ORDER BY `$orderby` $order LIMIT $per_page OFFSET $offset", ARRAY_A );
+        // $result = $wpdb->get_results( "SELECT `id`, `date`, `title`, `email`, `name`, `form_title`, `status`, `content` FROM `$table_name` ORDER BY `$orderby` $order LIMIT $per_page OFFSET $offset", ARRAY_A );
+        $result = $wpdb->get_results( "SELECT * FROM `$table_name` ORDER BY `$orderby` $order LIMIT $per_page OFFSET $offset", ARRAY_A );
 
         return $result;
     }
+
 
     function get_columns() {
         $columns = array(
@@ -88,32 +59,29 @@ class Theme_Forms_List_Table extends WP_List_Table {
             'title' => esc_html__( 'Title', 'bsx-wordpress' ),
             'email' => esc_html__( 'Email', 'bsx-wordpress' ),
             'name' => esc_html__( 'Name', 'bsx-wordpress' ),
+            'first_name' => esc_html__( 'First name', 'bsx-wordpress' ),
+            'last_name' => esc_html__( 'Last name', 'bsx-wordpress' ),
             'form_title' => esc_html__( 'Form Title', 'bsx-wordpress' ),
+            'phone' => esc_html__( 'Phone', 'bsx-wordpress' ),
+            'company' => esc_html__( 'Company', 'bsx-wordpress' ),
+            'subject' => esc_html__( 'Subject', 'bsx-wordpress' ),
             'status' => esc_html__( 'Status', 'bsx-wordpress' ),
-            // 'content' => esc_html__( 'Content', 'bsx-wordpress' )
+            'content' => esc_html__( 'Content', 'bsx-wordpress' )
         );
         return $columns;
     }
 
-    // function prepare_items() {
-    //     $columns = $this->get_columns();
-    //     $hidden = array();
-    //     $sortable = $this->get_sortable_columns(); // array();
-    //     $this->_column_headers = array( $columns, $hidden, $sortable );
-    //     // $this->items = $this->example_data;
-    //     $this->items = $this->get_data();
-    // }
 
     /**
      * Handles data query and filter, sorting, and pagination.
      */
     public function prepare_items() {
 
-        // $this->_column_headers = $this->get_column_info();
-        $columns = $this->get_columns();
-        $hidden = array();
-        $sortable = $this->get_sortable_columns(); // array();
-        $this->_column_headers = array( $columns, $hidden, $sortable );
+        // $columns = $this->get_columns();
+        // $hidden = array();
+        // $sortable = $this->get_sortable_columns(); // array();
+        // $this->_column_headers = array( $columns, $hidden, $sortable );
+        $this->_column_headers = $this->get_column_info();
 
         // Process bulk action (before getting data)
         $this->process_bulk_action();
@@ -138,9 +106,14 @@ class Theme_Forms_List_Table extends WP_List_Table {
             case 'title':
             case 'email':
             case 'name':
+            case 'first_name':
+            case 'last_name':
             case 'form_title':
+            case 'phone':
+            case 'company':
+            case 'subject':
             case 'status':
-            // case 'content':
+            case 'content':
             return $item[ $column_name ];
         default:
             return print_r( $item, true ) ; // show for debugging purposes
@@ -151,9 +124,14 @@ class Theme_Forms_List_Table extends WP_List_Table {
         $sortable_columns = array(
             'id'  => array( 'id', false ),
             'date'  => array( 'date', false ),
+            'title'  => array( 'title', false ),
             'email'  => array( 'email', false ),
             'name'  => array( 'name', false ),
+            'first_name'  => array( 'first_name', false ),
+            'last_name'  => array( 'last_name', false ),
             'form_title' => array( 'form_title', false ),
+            'phone'  => array( 'phone', false ),
+            'company'  => array( 'company', false ),
             'status'   => array( 'status', false )
         );
         return $sortable_columns;
@@ -216,7 +194,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
      */
     public function get_bulk_actions() {
         $actions = [
-            'bulk-delete' => 'Delete'
+            'bulk-delete' => __( 'Delete' , 'bsx-wordpress' )
         ];
         return $actions;
     }

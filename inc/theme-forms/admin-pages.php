@@ -708,7 +708,7 @@ $actions = [
                     // $theme_forms_list_table = new Theme_Forms_List_Table();
                     if ( isset( $theme_forms_list_table ) && $theme_forms_list_table instanceof Theme_Forms_List_Table ) {
                         // $theme_forms_list_table->screen_option(); 
-                        // $theme_forms_list_table->prepare_items(); 
+                        $theme_forms_list_table->prepare_items(); 
                         $theme_forms_list_table->display();
                     }
 

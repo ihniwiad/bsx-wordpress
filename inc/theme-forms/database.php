@@ -11,9 +11,7 @@ class Theme_Forms_Database_Handler {
 
 		function bsx_theme_forms_create_table() {
 
-		    // create db table
-
-		    // TODO: add first_name, last_name, company
+		    // create db table if not already existing
 
 		    global $wpdb;
 		    $charset_collate = $wpdb->get_charset_collate();

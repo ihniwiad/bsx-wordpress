@@ -1,9 +1,10 @@
 <?php
 
 function bsx_theme_forms_add_menu() {
- 
-    global $bsx_theme_forms_page;
     global $theme_forms_list_table;
+    global $theme_forms_menu_slug;
+
+    $theme_forms_menu_slug = 'theme-form-entries';
 
     // item level 1
     $bsx_theme_forms_page = add_menu_page( 
@@ -18,14 +19,13 @@ function bsx_theme_forms_add_menu() {
 
 
     // hook screen options
-    add_action( 'load-' . $bsx_theme_forms_page, 'bsx_add_custom_screen_option' );
+    add_action( 'load-' . $bsx_theme_forms_page, 'bsx_theme_forms_add_screen_option' );
 
 }
 add_action( 'admin_menu', 'bsx_theme_forms_add_menu' );
 
 
 function bsx_theme_form_show_entries() { 
-    global $functions_file_basename;
     global $theme_forms_list_table;
 
     ?>
@@ -34,7 +34,7 @@ function bsx_theme_form_show_entries() {
 
                 // TODO: check if list page, prepare items & show screen options only if list page
 
-                $theme_forms_list_table->prepare_items();
+                // $theme_forms_list_table->prepare_items();
 
                 Theme_Forms_Admin_Pages::init();
             ?>
@@ -44,7 +44,7 @@ function bsx_theme_form_show_entries() {
 
 
 // add screen options to page
-function bsx_add_custom_screen_option() {
+function bsx_theme_forms_add_screen_option() {
     global $theme_forms_list_table;
     $option = 'per_page';
     $args = array(
@@ -60,10 +60,48 @@ function bsx_add_custom_screen_option() {
 
 
 // save screen options
-function bsx_save_custom_screen_option( $status, $option, $value ) {
+function bsx_theme_forms_save_screen_option( $status, $option, $value ) {
     return $value;
 }
-add_filter( 'set-screen-option', 'bsx_save_custom_screen_option', 10, 3 );
+add_filter( 'set-screen-option', 'bsx_theme_forms_save_screen_option', 10, 3 );
 
+
+// set default hidden columns
+function bsx_theme_forms_set_default_hidden_columns( $hidden, $screen ) {
+    global $theme_forms_menu_slug;
+    if ( isset( $screen->id ) && 'toplevel_page_' . $theme_forms_menu_slug === $screen->id ) {
+        $hidden[] = 'first_name';
+        $hidden[] = 'last_name';
+        // $hidden[] = 'form_title';
+        $hidden[] = 'phone';
+        $hidden[] = 'company';
+        $hidden[] = 'subject';
+        $hidden[] = 'status';
+        $hidden[] = 'content';
+    }
+    return $hidden;
+}
+add_filter( 'default_hidden_columns', 'bsx_theme_forms_set_default_hidden_columns', 10, 2 );
+
+
+// // seems not to work
+// function bsx_theme_forms_set_list_table_primary_column( $default, $screen ) {
+//     global $theme_forms_menu_slug;
+//     // print_r( $screen );
+//     if ( 'toplevel_page_' . $theme_forms_menu_slug === $screen ) {
+//         $default = 'date';
+//     }
+//     return $default;
+// }
+// add_filter( 'list_table_primary_column', 'bsx_theme_forms_set_list_table_primary_column', 10, 2 );
+
+
+// // get screen id
+// function check_my_current_screen( $screen ) {
+//     if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) return $screen;
+//     print_r( $screen );
+//     return $screen;
+// }
+// add_filter( 'current_screen' , 'check_my_current_screen' );
 
 

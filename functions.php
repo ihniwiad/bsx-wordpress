@@ -962,10 +962,23 @@ add_shortcode( 'consent-trigger-button', 'add_consent_button_shortcode' );
  * include mail form
  */
 
+require_once( __DIR__ . '/inc/theme-forms/database.php' );
+$theme_forms_database_handler = new Theme_Forms_Database_Handler;
+$theme_forms_database_handler->create_table();
+require_once( __DIR__ . '/inc/theme-forms/class-theme-forms-list-table.php' );
+require_once( __DIR__ . '/inc/theme-forms/custom-post-type.php' );
+require_once( __DIR__ . '/inc/theme-forms/meta-box.php' );
+require_once( __DIR__ . '/inc/theme-forms/admin-menu.php' );
+require_once( __DIR__ . '/inc/theme-forms/admin-pages.php' );
+require_once( __DIR__ . '/inc/theme-forms/rest-route.php' );
+require_once( __DIR__ . '/inc/theme-forms/form-template.php' );
+require_once( __DIR__ . '/inc/theme-forms/shortcode.php' );
+
 require_once( __DIR__ . '/src/libs/form/class-bsx-mail-form.php' );
 if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' ) ) {
     ( new Bsx_Mail_Form() )->init();
 }
+
 
 
 /**
@@ -977,4 +990,178 @@ if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' 
 
 
 
+
+
+
+
+
+
+
+/**
+ * TEST – store custom data in wp database
+ */
+
+/*
+add_action( 'after_switch_theme', 'bsx_theme_activation' );
+
+function bsx_theme_activation() {
+
+    // create db table
+
+    global $wpdb;
+    $charset_collate = $wpdb->get_charset_collate();
+
+    // see data types: https://www.w3schools.com/sql/sql_datatypes.asp
+
+    // TODO: add
+    // - email (extract from field type email)
+    // - date_modified
+    // - history (modified)
+
+    $table_name = $wpdb->prefix . 'bsx_themeforms_entries';
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id BIGINT(20) AUTO_INCREMENT primary key NOT NULL,
+        date DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        data_gmt DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        form_id MEDIUMINT(9) NOT NULL,
+        form_title TEXT NOT NULL,
+        title TEXT NOT NULL,
+        content LONGTEXT NOT NULL,
+        status VARCHAR(30) NOT NULL,
+        fields LONGTEXT NOT NULL,
+        comment TEXT NOT NULL,
+        ip_address VARCHAR(128) NOT NULL,
+        user_agent VARCHAR(256) NOT NULL
+    ) $charset_collate;";
+
+    // $table_name = $wpdb->prefix . 'test';
+    // $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+    //     id mediumint(9) NOT NULL AUTO_INCREMENT,
+    //     time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+    //     count smallint(5) NOT NULL,
+    //     text text NOT NULL,
+    //     UNIQUE KEY id (id)
+    // ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+    dbDelta( $sql );
+}
+*/
+
+
+
+
+
+
+// function wk_add_custom_screen_option() {
+//     $args = array(
+//         'label' => 'Custom Option',
+//         'default' => 10,
+//         'option' => 'custom_option'
+//     );
+
+//     add_screen_option('per_page', $args);
+// }
+// add_action('admin_head', 'wk_add_custom_screen_option');
+
+
+// function wk_save_custom_screen_option($status, $option, $value) {
+
+// // echo '<br>TEST_1';
+// // echo '<pre style="width: 100%; overflow: auto;">';
+// // print_r( $option );
+// // echo '</pre>';
+
+//     if ($option === 'custom_option') {
+//         update_option('custom_option', $value);
+//     }
+//     return $status;
+// }
+// add_filter('set-screen-option', 'wk_save_custom_screen_option', 10, 3);
+
+
+
+
+
+
+// add_filter('set-screen-option', 'cmi_set_option', 10, 3);
+// function cmi_set_option($status, $option, $value) {
+//     return $value;
+// }
+
+// add_filter('set-screen-option', 'cmi_set_screen_options', 11, 3);
+// function cmi_set_screen_options($status, $option, $value) {
+//     if ( 'cmi_show_columns' == $option ) { 
+//         $value = $_POST['cmi_columns'];
+//     }
+//     return $value;
+// }
+
+
+
+
+
+// function test_add_custom_screen_option() {
+//     $option_name = 'my_option';
+//     add_screen_option( "wordpress_screen_options_demo_$option_name", [
+//         'option'  => $option_name,
+//         'value'   => true,
+//     ] );
+// }
+// $admin_page = 'custom_options';
+// // add_action( 'load-' . $admin_page, 'test_add_custom_screen_option' );
+// add_action( 'admin_head', 'test_add_custom_screen_option' );
+
+// /**
+//  * Display a screen option.
+//  *
+//  * @param  string $title  The title to display.
+//  * @param  string $option The name of the option we're displaying.
+//  */
+// function show_option( $title, $option ) {
+//     $screen    = get_current_screen();
+//     $id        = "wordpress_screen_options_demo_$option";
+//     $user_meta = get_usermeta( get_current_user_id(), 'wordpress_screen_options_demo_options' );
+
+//     // Check if the screen options have been saved. If so, use the saved value. Otherwise, use the default values.
+//     if ( $user_meta ) {
+//         $checked = array_key_exists( $option, $user_meta );
+//     } else {
+//         $checked = $screen->get_option( $id, 'value' ) ? true : false;
+//     }
+/*     ?>
+//         <label for="<?php echo esc_textarea( $id ); ?>">
+//             <input type="checkbox" 
+//                    name="wordpress_screen_options_demo[<?php echo esc_textarea( $option ); ?>]" 
+//                    class="wordpress-screen-options-demo" 
+//                    id="<?php echo esc_textarea( $id ); ?>" 
+//                    <?php checked( $checked ); ?>
+//             /> 
+//             <?php echo esc_html( $title ); ?>
+//         </label>
+//     <?php
+*/
+// }
+
+// add_filter( 'set-screen-option', 'set_option', 10, 3 );
+
+// function set_option( $status, $option, $value ) {
+//     if ( 'my_option' === $option ) {
+//         return $value;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+// add_filter('set-screen-option', 'test_table_set_option', 10, 3);
+// function test_table_set_option($status, $option, $value) {
+//   return '<br>TEST: ' . $value;
+// }
 

@@ -28,19 +28,19 @@ class Theme_Forms_Database_Handler {
 		        form_title TEXT NOT NULL,
 		        title TEXT NOT NULL,
 		        content LONGTEXT NOT NULL,
-		        email VARCHAR(100) NOT NULL,
-		        name VARCHAR(100) NOT NULL,
-		        phone VARCHAR(64) NOT NULL,
 		        status VARCHAR(30) NOT NULL,
-		        fields LONGTEXT NOT NULL,
 		        comment TEXT NOT NULL,
 		        ip_address VARCHAR(128) NOT NULL,
 		        user_agent VARCHAR(256) NOT NULL,
 		        history LONGTEXT NOT NULL,
-		        first_name VARCHAR(64) NOT NULL,
-		        last_name VARCHAR(64) NOT NULL,
-		        company VARCHAR(100) NOT NULL,
-		        subject VARCHAR(256) NOT NULL
+		        fields LONGTEXT NOT NULL,
+		        f_name VARCHAR(100) NOT NULL,
+		        f_first_name VARCHAR(64) NOT NULL,
+		        f_last_name VARCHAR(64) NOT NULL,
+		        f_email VARCHAR(100) NOT NULL,
+		        f_phone VARCHAR(64) NOT NULL,
+		        f_company VARCHAR(100) NOT NULL,
+		        f_subject VARCHAR(256) NOT NULL
 		    ) $charset_collate;";
 
 		    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

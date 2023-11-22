@@ -70,12 +70,12 @@ add_filter( 'set-screen-option', 'bsx_theme_forms_save_screen_option', 10, 3 );
 function bsx_theme_forms_set_default_hidden_columns( $hidden, $screen ) {
     global $theme_forms_menu_slug;
     if ( isset( $screen->id ) && 'toplevel_page_' . $theme_forms_menu_slug === $screen->id ) {
-        $hidden[] = 'first_name';
-        $hidden[] = 'last_name';
+        $hidden[] = 'f_first_name';
+        $hidden[] = 'f_last_name';
         // $hidden[] = 'form_title';
-        $hidden[] = 'phone';
-        $hidden[] = 'company';
-        $hidden[] = 'subject';
+        $hidden[] = 'f_phone';
+        $hidden[] = 'f_company';
+        $hidden[] = 'f_subject';
         $hidden[] = 'status';
         $hidden[] = 'content';
     }

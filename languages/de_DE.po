@@ -267,11 +267,131 @@ msgstr "Vielen Dank. Ihre Nachricht wurde erfolgreich gesendet."
 msgid "Something went wrong while trying to send email."
 msgstr "Beim Versuch die Nachricht zu senden ist ein Fehler aufgetreten."
 
-#: src/libs/form/class-bsx-mail.form.php:97
+#: src/libs/form/class-bsx-mail.form.php:260
 msgid "Your data is invalid or you are not allowed to access this server."
 msgstr "Ihre Daten sind ungültig oder Sie haben keine Berechtigung, auf diesen Server zuzugreifen."
 
+#: inc/theme-forms/class-theme-forms-list-table.php:14
+msgid "Theme Form Entry"
+msgstr "Theme Form Eintrag"
 
+#: inc/theme-forms/class-theme-forms-list-table.php:15
+msgid "Theme Form Entries"
+msgstr "Theme Form Einträge"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Error while trying to process bulk action. Your data has not been deleted."
+msgstr "Fehler während der Stapelverarbeitung. Die gewünschten Daten konnten nicht gelöscht werden."
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "One ore multiple entries were successfully deleted by bulk action."
+msgstr "Einen oder mehrere Einträge wurden erfolgreich mittels Stapelverarbeitung gelöscht."
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "ID"
+msgstr "ID"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Date"
+msgstr "Datum"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Name"
+msgstr "Name"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Form Title"
+msgstr "Formular-Titel"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Company"
+msgstr "Unternehmen"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Subject"
+msgstr "Betreff"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Status"
+msgstr "Status"
+
+#: inc/theme-forms/class-theme-forms-list-table.php:97
+msgid "Content"
+msgstr "Inhalt"
+
+#: inc/theme-forms/rest-route:97
+msgid "Error while trying to connect database."
+msgstr "Fehler beim Versuch eine Datenbankverbindung herzustellen."
+
+#: inc/theme-forms/admin-pages.php:539
+msgid "Form ID"
+msgstr "Formular-ID"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Error while trying to update database. Your data has not been deleted."
+msgstr "Fehler beim Aktualisieren der Datenbank. Die gewünschten Daten konnten nicht gelöscht werden."
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Your entry was successfully deleted."
+msgstr "Der gewünschte Eintrag wurde erfolgreich gelöscht."
+
+#. msgctxt "translators: %s: Entry ID."
+#: inc/theme-forms/admin-pages.php:97
+msgid "View Theme Form Entry %s"
+msgstr "Theme Form Eintrag %s ansehen"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Entries List"
+msgstr "Einträge-Übersicht"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Fields"
+msgstr "Felder"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Field Name"
+msgstr "Feld-Name"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Field Value"
+msgstr "Feld-Wert"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Details"
+msgstr "Details"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "IP Address"
+msgstr "IP-Addresss"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "User Agent"
+msgstr "User-Agent"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Comment"
+msgstr "Kommentar"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Error while trying to update database. Your data has not been saved."
+msgstr "Fehler beim Aktualisieren der Datenbank. Die gewünschten Daten konnten nicht gespeichert werden."
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Your entry was successfully updated."
+msgstr "Der Eintrag wurde erfolgreich aktualisiert."
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Edit Theme Form Entry"
+msgstr "Theme Form Eintrag bearbeiten"
+
+#. msgctxt "translators: %1$s: The title of the entry. %1$s: The email address. %3$d: The id of the entry."
+#: inc/theme-forms/admin-pages.php:97
+msgid "Really delete ”%1$s“ from %2$s (id: %3$d)?"
+msgstr "Möchtes du „%1$s“ von %2$s (ID: %3$d) wirklich löschen?"
+
+#: inc/theme-forms/admin-pages.php:97
+msgid "Do you really want to delete one or multiple items?"
+msgstr "Möchtest du wirklich einen oder mehrere Einträge löschen?"
 
 
 

@@ -341,7 +341,7 @@ function bsx_mailer_post_endpoint( $request ) {
                     'data_gmt' => current_time( 'mysql', 1 ),
                     'form_id' => $is_deprecated_non_post_form ? $form_index : $form_id,
                     'form_title' => $is_deprecated_non_post_form ? 'Theme Form ' . $form_index : get_the_title( $form_id ) . ' (' . $form_id . ')',
-                    'title' => $mail_subject,
+                    'title' => $is_deprecated_non_post_form ? $mail_subject : get_the_title( $form_id ) . ': ' . $mail_subject,
 
                     'content' => $mail_content,
                     'status' => 'auto-logged',
@@ -350,14 +350,14 @@ function bsx_mailer_post_endpoint( $request ) {
                     'ip_address' => $_SERVER[ 'REMOTE_ADDR' ],
 
                     'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ],
-                    'email' => ( isset( $sanitized_values[ 'email' ] ) ) ? $sanitized_values[ 'email' ] : '',
-                    'name' => ( isset( $sanitized_values[ 'name' ] ) ) ? $sanitized_values[ 'name' ] : '',
-                    'phone' => ( isset( $sanitized_values[ 'phone' ] ) ) ? $sanitized_values[ 'phone' ] : '',
-                    'first_name' => ( isset( $sanitized_values[ 'first_name' ] ) ) ? $sanitized_values[ 'first_name' ] : '',
+                    'f_email' => ( isset( $sanitized_values[ 'email' ] ) ) ? $sanitized_values[ 'email' ] : '',
+                    'f_name' => ( isset( $sanitized_values[ 'name' ] ) ) ? $sanitized_values[ 'name' ] : '',
+                    'f_phone' => ( isset( $sanitized_values[ 'phone' ] ) ) ? $sanitized_values[ 'phone' ] : '',
+                    'f_first_name' => ( isset( $sanitized_values[ 'first_name' ] ) ) ? $sanitized_values[ 'first_name' ] : '',
 
-                    'last_name' => ( isset( $sanitized_values[ 'last_name' ] ) ) ? $sanitized_values[ 'last_name' ] : '',
-                    'company' => ( isset( $sanitized_values[ 'company' ] ) ) ? $sanitized_values[ 'company' ] : '',
-                    'subject' => ( isset( $sanitized_values[ 'subject' ] ) ) ? $sanitized_values[ 'subject' ] : '',
+                    'f_last_name' => ( isset( $sanitized_values[ 'last_name' ] ) ) ? $sanitized_values[ 'last_name' ] : '',
+                    'f_company' => ( isset( $sanitized_values[ 'company' ] ) ) ? $sanitized_values[ 'company' ] : '',
+                    'f_subject' => ( isset( $sanitized_values[ 'subject' ] ) ) ? $sanitized_values[ 'subject' ] : '',
                 );
                 $format = array(
                     '%s',

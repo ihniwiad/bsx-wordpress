@@ -52,19 +52,21 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
 
     function get_columns() {
+        // some field names cannot be hidden in list table (see `$special` in `class-wp-screen.php`):
+        // '_title', 'cb', 'comment', 'media', 'name', 'title', 'username', 'blogname'
         $columns = array(
             'cb' => '<input type="checkbox" />',
             'id' => esc_html__( 'ID', 'bsx-wordpress' ),
             'date' => esc_html__( 'Date', 'bsx-wordpress' ),
             'title' => esc_html__( 'Title', 'bsx-wordpress' ),
-            'email' => esc_html__( 'Email', 'bsx-wordpress' ),
-            'name' => esc_html__( 'Name', 'bsx-wordpress' ),
-            'first_name' => esc_html__( 'First name', 'bsx-wordpress' ),
-            'last_name' => esc_html__( 'Last name', 'bsx-wordpress' ),
+            'f_email' => esc_html__( 'Email', 'bsx-wordpress' ),
+            'f_name' => esc_html__( 'Name', 'bsx-wordpress' ),
+            'f_first_name' => esc_html__( 'First Name', 'bsx-wordpress' ),
+            'f_last_name' => esc_html__( 'Last Name', 'bsx-wordpress' ),
             'form_title' => esc_html__( 'Form Title', 'bsx-wordpress' ),
-            'phone' => esc_html__( 'Phone', 'bsx-wordpress' ),
-            'company' => esc_html__( 'Company', 'bsx-wordpress' ),
-            'subject' => esc_html__( 'Subject', 'bsx-wordpress' ),
+            'f_phone' => esc_html__( 'Phone', 'bsx-wordpress' ),
+            'f_company' => esc_html__( 'Company', 'bsx-wordpress' ),
+            'f_subject' => esc_html__( 'Subject', 'bsx-wordpress' ),
             'status' => esc_html__( 'Status', 'bsx-wordpress' ),
             'content' => esc_html__( 'Content', 'bsx-wordpress' )
         );
@@ -104,14 +106,14 @@ class Theme_Forms_List_Table extends WP_List_Table {
             case 'id':
             case 'date':
             case 'title':
-            case 'email':
-            case 'name':
-            case 'first_name':
-            case 'last_name':
+            case 'f_email':
+            case 'f_name':
+            case 'f_first_name':
+            case 'f_last_name':
             case 'form_title':
-            case 'phone':
-            case 'company':
-            case 'subject':
+            case 'f_phone':
+            case 'f_company':
+            case 'f_subject':
             case 'status':
             case 'content':
             return $item[ $column_name ];
@@ -125,13 +127,13 @@ class Theme_Forms_List_Table extends WP_List_Table {
             'id'  => array( 'id', false ),
             'date'  => array( 'date', false ),
             'title'  => array( 'title', false ),
-            'email'  => array( 'email', false ),
-            'name'  => array( 'name', false ),
-            'first_name'  => array( 'first_name', false ),
-            'last_name'  => array( 'last_name', false ),
+            'f_email'  => array( 'f_email', false ),
+            'f_name'  => array( 'f_name', false ),
+            'f_first_name'  => array( 'f_first_name', false ),
+            'f_last_name'  => array( 'f_last_name', false ),
             'form_title' => array( 'form_title', false ),
-            'phone'  => array( 'phone', false ),
-            'company'  => array( 'company', false ),
+            'f_phone'  => array( 'f_phone', false ),
+            'f_company'  => array( 'f_company', false ),
             'status'   => array( 'status', false )
         );
         return $sortable_columns;
@@ -166,7 +168,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
                     /* translators: %1$s: The title of the entry. %1$s: The email address. %3$d: The id of the entry. */
                     esc_attr__( 'Really delete ”%1$s“ from %2$s (id: %3$d)?', 'bsx-wordpress' ),
                     $item[ 'title' ],
-                    $item[ 'email' ],
+                    $item[ 'f_email' ],
                     absint( $item[ 'id' ] ),
                 ),
             ),
@@ -194,7 +196,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
      */
     public function get_bulk_actions() {
         $actions = [
-            'bulk-delete' => __( 'Delete' , 'bsx-wordpress' )
+            'bulk-delete' => __( 'Delete' )
         ];
         return $actions;
     }

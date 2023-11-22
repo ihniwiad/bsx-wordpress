@@ -96,7 +96,12 @@ class Theme_Forms_Admin_Pages {
         $result = $theme_forms_database_handler->get_row( $id );
 
         ?>
-            <h1 class="page-title"><?php echo esc_html__( 'View Theme Form Entry', 'bsx-wordpress' ) . ' ' . $id; ?></h1>
+            <h1 class="page-title"><?php 
+                printf(
+                    /* translators: %s: entry id */
+                    esc_html__( 'View Theme Form Entry %s', 'bsx-wordpress' ),
+                    $id
+                ); ?></h1>
             <div class="">
                 <?php
                     printf( '<a class="button" href="?page=%s">%s</a>', esc_attr( $_REQUEST[ 'page' ] ), '&larr; ' . esc_html__( 'Entries List', 'bsx-wordpress' ) );
@@ -224,7 +229,7 @@ class Theme_Forms_Admin_Pages {
                         <div class="postbox">
 
                             <div class="postbox-header">
-                                <h2 class="hndle"><?php esc_html_e( 'Actions', 'bsx-wordpress' ); ?></h2>
+                                <h2 class="hndle"><?php esc_html_e( 'Actions' ); ?></h2>
                             </div>
 
                             <div class="inside">
@@ -252,7 +257,7 @@ class Theme_Forms_Admin_Pages {
         global $functions_file_basename;
         global $theme_forms_database_handler;
 
-        $fields_prefix = 'field_';
+        $fields_prefix = 'field_'; // form input prefix for all fields
 
         // check if post data
 
@@ -308,14 +313,14 @@ class Theme_Forms_Admin_Pages {
 
             // special field keys that are stored in database to be listed/sortable in backend list table
             $allowed_field_keys = [
-                'email', // will have $fields_prefix in $_POST object
-                'name',
-                'phone',
-                'first_name',
-                'last_name',
+                'f_email', // will have $fields_prefix in $_POST object
+                'f_name',
+                'f_phone',
+                'f_first_name',
+                'f_last_name',
 
-                'company',
-                'subject',
+                'f_company',
+                'f_subject',
             ];
             $allowed_field_format = [
                 '%s',
@@ -337,7 +342,8 @@ class Theme_Forms_Admin_Pages {
                 }
                 else if ( substr( $key, 0, strlen( $fields_prefix ) ) === $fields_prefix ) {
                     // is prefixed field name
-                    $unprefixed_key = substr( $key, strlen( $fields_prefix ), strlen( $key ) );
+                    // database columns use prefix `f_` for fields (only special fields are saved in database as column)
+                    $unprefixed_key = 'f_' . substr( $key, strlen( $fields_prefix ), strlen( $key ) );
                     if ( in_array( $unprefixed_key, $allowed_field_keys ) ) {
                         // echo '<br>TEST ($allowed_field_keys): ' . $unprefixed_key;
                         $data[ $unprefixed_key ] = $value;
@@ -594,7 +600,7 @@ class Theme_Forms_Admin_Pages {
                         <div class="postbox" id="submitdiv">
 
                             <div class="postbox-header">
-                                <h2 class="hndle"><?php esc_html_e( 'Actions', 'bsx-wordpress' ); ?></h2>
+                                <h2 class="hndle"><?php esc_html_e( 'Actions' ); ?></h2>
                             </div>
 
                             <div class="inside">
@@ -626,7 +632,7 @@ class Theme_Forms_Admin_Pages {
                                                         /* translators: %1$s: The title of the entry. %1$s: The email address. %3$d: The id of the entry. */
                                                         esc_attr__( 'Really delete ”%1$s“ from %2$s (id: %3$d)?', 'bsx-wordpress' ),
                                                         $result[ 0 ]->title,
-                                                        $result[ 0 ]->email,
+                                                        $result[ 0 ]->f_email,
                                                         absint( $id ),
                                                     ),
                                                 );

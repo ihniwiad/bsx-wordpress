@@ -178,7 +178,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
     }
 
     function column_date( $item ) {
-        return DateTime::createFromFormat( 'Y-m-d H:i:s', $item[ 'date' ] )->format( "D, j. F Y H:i:s" );
+        // return DateTime::createFromFormat( 'Y-m-d H:i:s', $item[ 'date' ] )->format( "D, j. F Y H:i:s" );
+        return date_i18n( "D, j. F Y H:i:s", DateTime::createFromFormat( 'Y-m-d H:i:s', $item[ 'date' ] )->getTimestamp() );
     }
 
     // checkbox column for bulk actions

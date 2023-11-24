@@ -188,7 +188,8 @@ class Theme_Forms_Admin_Pages {
                                     printf( 
                                         $detail_template, 
                                         esc_html__( 'Date', 'bsx-wordpress' ),
-                                        DateTime::createFromFormat( 'Y-m-d H:i:s', $result[ 0 ]->date )->format( "D, j. F Y H:i:s" ),
+                                        // DateTime::createFromFormat( 'Y-m-d H:i:s', $result[ 0 ]->date )->format( "D, j. F Y H:i:s" ),
+                                        date_i18n( "D, j. F Y H:i:s", DateTime::createFromFormat( 'Y-m-d H:i:s', $result[ 0 ]->date )->getTimestamp() )
                                     );
                                     printf( 
                                         $detail_template, 
@@ -537,7 +538,8 @@ class Theme_Forms_Admin_Pages {
                                     printf( 
                                         $detail_template, 
                                         esc_html__( 'Date', 'bsx-wordpress' ),
-                                        DateTime::createFromFormat( 'Y-m-d H:i:s', $result[ 0 ]->date )->format( "D, j. F Y H:i:s" ),
+                                        // DateTime::createFromFormat( 'Y-m-d H:i:s', $result[ 0 ]->date )->format( "D, j. F Y H:i:s" ),
+                                        date_i18n( "D, j. F Y H:i:s", DateTime::createFromFormat( 'Y-m-d H:i:s', $result[ 0 ]->date )->getTimestamp() )
                                     );
                                     printf( 
                                         $detail_template, 

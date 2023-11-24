@@ -393,7 +393,117 @@ msgstr "Möchtes du „%1$s“ von %2$s (ID: %3$d) wirklich löschen?"
 msgid "Do you really want to delete one or multiple items?"
 msgstr "Möchtest du wirklich einen oder mehrere Einträge löschen?"
 
+#: inc/theme-forms/meta-box.php:9
+msgid "Theme Form Settings"
+msgstr "Theme Form Einstellungen"
 
+#: inc/theme-forms/meta-box.php:9
+msgid "Input placeholder syntax"
+msgstr "Felder-Platzhalter Syntax"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Input"
+msgstr "Feld"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Syntax"
+msgstr "Syntax"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Translation"
+msgstr "Übersetzung"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Input examples"
+msgstr "Beispielfelder"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Mandatory input example"
+msgstr "Beispiel Pflichfeld"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Optional input example"
+msgstr "Beispiel optionales Feld"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Textarea example"
+msgstr "Beispiel Textfeld"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Translation example"
+msgstr "Beispiel Übersetzung"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Human verification display"
+msgstr "Human-Verification-Code Anzeige"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Human verification input"
+msgstr "Human-Verification Eingabefeld"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Human verification refresh code attribute"
+msgstr "Human-Verification-Code neu laden Attribut"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Special input names"
+msgstr "Spezielle Feldnamen"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "In addition to sending an e-mail, all data is saved in the database. The following (optional) special input names are saved in separate database columns so that they can then be clearly displayed / sorted in the backend:"
+msgstr "Neben dem Senden einer E-Mail werden alle Daten in der Datenbank gespeichert. Die folgenden (optionalen) speziellen Input-Namen werden dabei in separaten Datenbankspalten gespeichert, um anschließend im Backend übersichtlich darstellbar / sortierbar zu sein:"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Embed shortcode"
+msgstr "Shortcode zum Einbetten"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Form Template"
+msgstr "Formular-Template"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "E-mail"
+msgstr "E-Mail"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Recipient e-mail"
+msgstr "Empfänger-E-Mail"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Sender e-mail"
+msgstr "Sender-E-Mail"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Use placeholders in subject (optional) and e-mail templates:"
+msgstr "Nutze Platzhalter in Betreff (optional) und E-Mail-Template:"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "E-mail template"
+msgstr "E-Mail-Template"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "E-mail 2 (optional)"
+msgstr "E-Mail 2 (optional)"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Optional use e-mail placeholder, e.g.:"
+msgstr "Optional E-Mail-Platzhalter nutzen, z.B.:"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Recipient 2 e-mail"
+msgstr "Empfänger 2 E-Mail"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Sender 2 e-mail"
+msgstr "Sender 2 E-Mail"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Subject 2"
+msgstr "Betreff 2"
+
+#: inc/theme-forms/meta-box.php:9
+msgid "E-mail 2 template"
+msgstr "E-Mail 2 Template"
 
 
 

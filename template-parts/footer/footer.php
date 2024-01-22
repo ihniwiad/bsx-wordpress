@@ -98,12 +98,8 @@ global $phoneHrefRemovePatterns;
                         }
 
                         ?>
-                            <li class="list-inline-item mx-0">
-                                <a class="fa-stack fa-lg<?php if ( $hover_class_name ) : echo ' ' . $hover_class_name; endif ?>"<?php if ( $href ) : echo ' href="' . $href . '"'; endif ?><?php if ( $link_atts ) : echo ' ' . $link_atts ; endif ?>>
-                                    <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
-                                    <i class="fa<?php if ( ! empty( $icon_type ) ) : echo $icon_type; else : echo 's'; endif; ?> fa-<?php echo $icon; ?> fa-stack-1x fa-inverse" aria-hidden="true"></i>
-                                    <span class="sr-only"><?php echo $title; ?></span>
-                                </a>
+                            <li class="list-inline-item">
+                                <a class="footer-icon-link<?php if ( $hover_class_name ) : echo ' ' . $hover_class_name; endif ?>"<?php if ( $href ) : echo ' href="' . $href . '"'; endif ?><?php if ( $link_atts ) : echo ' ' . $link_atts ; endif ?>><i class="fa<?php if ( ! empty( $icon_type ) ) : echo $icon_type; else : echo 's'; endif; ?> fa-<?php echo $icon; ?>"></i><span class="sr-only"><?php echo $title; ?></span></a>
                             </li>
                         <?php
                     }

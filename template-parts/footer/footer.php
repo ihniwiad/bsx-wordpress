@@ -89,18 +89,21 @@ global $phoneHrefRemovePatterns;
 
                 <?php 
                     // prepare li output (for social media icons & mail & phone)
-                    function printIconLinkItem( $icon, $href, $title, $hover_class_id = '', $link_atts = '' ) {
+                    function printIconLinkItem( $icon, $icon_type, $href, $title, $hover_class_id = '', $link_atts = '' ) {
+
                         // hover color class name if configured in theme options
                         $hover_class_name = '';
                         if ( get_option( 'social_media_colors_use' ) && $hover_class_id ) {
                             $hover_class_name = 'hover-text-' . $hover_class_id;
                         }
-                        else {
-                            $hover_class_name = 'hover-text-primary';
-                        }
+
                         ?>
-                            <li class="list-inline-item">
-                                <a class="footer-icon-link<?php if ( $hover_class_name ) : echo ' ' . $hover_class_name; endif ?>"<?php if ( $href ) : echo ' href="' . $href . '"'; endif ?><?php if ( $link_atts ) : echo ' ' . $link_atts ; endif ?>><i class="fa fa-<?php echo $icon; ?>"></i><span class="sr-only"><?php echo $title; ?></span></a>
+                            <li class="list-inline-item mx-0">
+                                <a class="fa-stack fa-lg<?php if ( $hover_class_name ) : echo ' ' . $hover_class_name; endif ?>"<?php if ( $href ) : echo ' href="' . $href . '"'; endif ?><?php if ( $link_atts ) : echo ' ' . $link_atts ; endif ?>>
+                                    <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
+                                    <i class="fa<?php if ( ! empty( $icon_type ) ) : echo $icon_type; else : echo 's'; endif; ?> fa-<?php echo $icon; ?> fa-stack-1x fa-inverse" aria-hidden="true"></i>
+                                    <span class="sr-only"><?php echo $title; ?></span>
+                                </a>
                             </li>
                         <?php
                     }
@@ -120,7 +123,7 @@ global $phoneHrefRemovePatterns;
                             }
                             $phoneHref = 'tel:' . $phoneHref;
 
-                            printIconLinkItem( 'phone', $phoneHref, __( 'Phone', 'bsx-wordpress' ), 'primary' );
+                            printIconLinkItem( 'phone', '', $phoneHref, __( 'Phone', 'bsx-wordpress' ), 'primary' );
                         }
                         if ( $mail ) {
                             // make attribute from mail address
@@ -133,7 +136,7 @@ global $phoneHrefRemovePatterns;
 
                             $link_attr = 'data-fn="create-mt" data-mt-n="' . $name . '" data-mt-d="' . $domain .'" data-mt-s="' . $extension . '"';
 
-                            printIconLinkItem( 'envelope', '', __( 'Email', 'bsx-wordpress' ), 'primary', $link_attr );
+                            printIconLinkItem( 'envelope', '', '', __( 'Email', 'bsx-wordpress' ), 'primary', $link_attr );
                         }
                     } // /if
 
@@ -151,7 +154,7 @@ global $phoneHrefRemovePatterns;
                     foreach( $social_media_list as $item ) {
                         $social_media_href = get_option( $item[ 'id' ] );
                         if ( $social_media_href ) {
-                            printIconLinkItem( $item[ 'icon' ], $social_media_href, $item[ 'title' ], $item[ 'id' ], '' );
+                            printIconLinkItem( $item[ 'icon' ], 'b', $social_media_href, $item[ 'title' ], $item[ 'id' ], 'target="_blank" rel="nofollow"' );
                         }
                     }
                 ?>

@@ -1,3 +1,6 @@
+<?php /*
+
+
 <?php if ( post_password_required() ) {
 	return;
 } ?>
@@ -31,3 +34,5 @@ wp_list_comments( array(
 
 </div>
 <!-- /.container[data-id="comments"] -->
+
+*/

@@ -1,0 +1,16 @@
+@import "./variables";
+
+
+@mixin rubik-font($variant, $type, $weight, $style) {
+
+    $font-full-path: '#{$rubik-font-path}/#{$variant}';
+
+    @font-face {
+        font-family: '#{$variant}';
+        src: url('#{$font-full-path}-#{$type}.woff2') format('woff2'),
+             url('#{$font-full-path}-#{$type}.woff') format('woff');
+        font-weight: $weight;
+        font-style: $style;
+        font-display: swap;
+    }
+}

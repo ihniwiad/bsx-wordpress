@@ -113,7 +113,7 @@ if ( ! defined( 'BSX_BLOCKS_PLUGINS_URL' ) ) {
       </section -->
       <?php
         // example positioned inside
-        include 'src/test/is-positioned-inside/example.php';
+        include 'src/libs/test/is-positioned-inside/example.php';
       ?>
 
 

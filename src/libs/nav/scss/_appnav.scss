@@ -91,7 +91,7 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 			// icon hover style
 
 			#{$bsx-icon-font-selector} {
-				color: $bsx-appnav-icon-hover-color;
+				//color: $bsx-appnav-icon-hover-color;
 			}
 		}
 
@@ -146,7 +146,8 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 
 // NAVBAR NAV (LINK & ICON & LEVEL 2 LIST)
 
-.bsx-appnav-navbar-nav {
+.bsx-appnav-navbar-nav,
+.bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav {
 
 	li {
 
@@ -202,7 +203,7 @@ body.scroll-away-top.scroll-down:not( .nav-open ) .bsx-appnav-navbar-scroll-togg
 
 			#{$bsx-icon-font-selector} {
 				width: 16px;
-				color: $bsx-appnav-icon-color;
+				//color: $bsx-appnav-icon-color;
 
 			//	&:after {
 			//		// remove atf style

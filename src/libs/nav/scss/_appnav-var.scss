@@ -23,7 +23,7 @@ $bsx-appnav-quickstart-inverse-color: 		$primary !default;
 //$bsx-appnav-quickstart-hover-color: 		darken($bsx-appnav-quickstart-color, 15) !default;
 //$bsx-appnav-quickstart-icon-hover-color: 	$bsx-appnav-quickstart-color !default;
 $bsx-appnav-quickstart-hover-color: 		$bsx-appnav-quickstart-inverse-color !default;
-$bsx-appnav-quickstart-icon-hover-color: 	lighten($bsx-appnav-quickstart-inverse-color, 10) !default;
+$bsx-appnav-quickstart-icon-hover-color: 	$bsx-appnav-quickstart-inverse-color !default; // lighten($bsx-appnav-quickstart-inverse-color, 10)
 
 $bsx-appnav-quickstart-highlight-color: 			$primary !default;
 $bsx-appnav-quickstart-button-bg-color: 			$secondary !default;

@@ -24,31 +24,26 @@ $img_list[ 0 ] = array(
   )
 );
 
+
 $img_list[ 1 ] = array(
   'img' => array(
-    'url' => 'http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1536x512.jpg',
+    'url' => 'https://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1536x512.jpg',
     'width' => 1536,
     'height' => 512,
     'alt' => 'Rocky island with palms'
   ),
   'source' => array(
     array(
-      'url' => 'http://localhost/wp-example/wp-content/uploads/2020/04/sergio-jara-yX9WbPbz8J8-unsplash-1200x600-1-768x384.jpg',
+      'url' => 'https://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2020/04/sergio-jara-yX9WbPbz8J8-unsplash-1200x600-1-768x384.jpg',
       'width' => 768,
       'height' => 384,
       'media' => '(orientation: portrait) and (max-width: 499.98px)'
     ),
     array(
-      'url' => 'http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-768x256.jpg',
-      'width' => 768,
-      'height' => 256,
-      'media' => '(max-width: 459.98px)'
-    ),
-    array(
-      'url' => 'http://localhost/wp-example/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1024x341.jpg',
+      'url' => 'https://wp-example.sandbox.matthiasbroecker.de/wp-content/uploads/2021/01/sergio-jara-yX9WbPbz8J8-unsplash-3000x1000-1-1024x341.jpg',
       'width' => 1024,
-      'height' => 341,
-      'media' => '(max-width: 767.98px)'
+      'height' => 314,
+      'media' => '(max-width: 459.98px)'
     )
   )
 );

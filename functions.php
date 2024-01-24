@@ -14,11 +14,20 @@ function bsx_theme_localized( $locale ) {
     }
     return $locale;
 }
+
 /**
  * Load theme translation from bsx-wordpress-example/languages/ directory
  */
 load_theme_textdomain( 'bsx-wordpress', get_template_directory() . '/languages' );
 
+/**
+ * helper
+ */
+
+$file = dirname( __FILE__ ) . '/inc/helper/helper-functions.php';
+if ( file_exists( $file ) ) {
+    require $file;
+}
 
 /**
  * variables
@@ -315,6 +324,69 @@ function custom_search_form( $form ) {
 }
 add_filter( 'get_search_form', 'custom_search_form' );
 
+/**
+ * Reduce search to posts (exclude pages)
+ */
+function reduce_search_only_posts( $query ) {
+    if ( $query->is_search ) {
+        $query->set( 'post_type', 'post' );
+    }
+    return $query;
+}
+add_filter( 'pre_get_posts', 'reduce_search_only_posts' );
+
+
+/**
+ * banner custom post
+ */
+
+// helper
+$file = dirname( __FILE__ ) . '/inc/banner/helper-functions.php';
+if ( file_exists( $file ) ) {
+    require $file;
+}
+// custom post
+$file = dirname( __FILE__ ) . '/inc/banner/custom-post-type.php';
+if ( file_exists( $file ) ) {
+    require $file;
+}
+// meta box
+$file = dirname( __FILE__ ) . '/inc/banner/meta-box.php';
+if ( file_exists( $file ) ) {
+    require $file;
+    ( new BannerMeta() )->init();
+}
+
+
+/*
+ * Set post views count using post meta
+ */
+
+function countPostViews( $postID ) {
+    $countKey = 'post_views_count';
+    $count = get_post_meta( $postID, $countKey, true );
+    if ( $count == '' ) {
+        $count = 0;
+        delete_post_meta( $postID, $countKey );
+        add_post_meta( $postID, $countKey, '0' );
+    }
+    else {
+        $count++;
+        update_post_meta( $postID, $countKey, $count);
+    }
+}
+
+
+/**
+ * post list shortcode
+ */
+
+$file = dirname( __FILE__ ) . '/inc/post-list/shortcode.php';
+if ( file_exists( $file ) ) {
+    require $file;
+    ( new PostListShortcode() )->init();
+}
+
 
 // manage allowed block types
 
@@ -427,6 +499,7 @@ function custom_settings_layout() { ?>
 
 function custom_settings_page_setup() {
 
+
     // section
     add_settings_section(
         'custom-settings-section-contact', // id
@@ -447,6 +520,11 @@ function custom_settings_page_setup() {
             'label_for' => 'owner-name'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'owner-name' // option name
+    );
+
     add_settings_field(
         'street', // id
         __( 'Street', 'bsx-wordpress' ), // title
@@ -458,6 +536,11 @@ function custom_settings_page_setup() {
             'label_for' => 'street'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'street' // option name
+    );
+
     add_settings_field(
         'address-additional', // id
         __( 'Adress Additional', 'bsx-wordpress' ), // title
@@ -469,6 +552,11 @@ function custom_settings_page_setup() {
             'label_for' => 'address-additional'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'address-additional' // option name
+    );
+
     add_settings_field(
         'zip', // id
         __( 'Zip', 'bsx-wordpress' ), // title
@@ -480,6 +568,11 @@ function custom_settings_page_setup() {
             'label_for' => 'zip'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'zip' // option name
+    );
+
     add_settings_field(
         'city', // id
         __( 'City', 'bsx-wordpress' ), // title
@@ -491,6 +584,11 @@ function custom_settings_page_setup() {
             'label_for' => 'city'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'city' // option name
+    );
+
     add_settings_field(
         'country', // id
         __( 'Country', 'bsx-wordpress' ), // title
@@ -502,6 +600,11 @@ function custom_settings_page_setup() {
             'label_for' => 'country'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'country' // option name
+    );
+
     add_settings_field(
         'phone', // id
         __( 'Phone', 'bsx-wordpress' ), // title
@@ -513,6 +616,11 @@ function custom_settings_page_setup() {
             'label_for' => 'phone'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'phone' // option name
+    );
+
     add_settings_field(
         'mail', // id
         __( 'Email', 'bsx-wordpress' ), // title
@@ -524,6 +632,11 @@ function custom_settings_page_setup() {
             'label_for' => 'mail'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'mail' // option name
+    );
+
     add_settings_field(
         'service-phone', // id
         __( 'Service Phone', 'bsx-wordpress' ), // title
@@ -535,6 +648,11 @@ function custom_settings_page_setup() {
             'label_for' => 'service-phone'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-contact', // option group
+        'service-phone' // option name
+    );
+    
     add_settings_field(
         'service-mail', // id
         __( 'Service Email', 'bsx-wordpress' ), // title
@@ -546,48 +664,11 @@ function custom_settings_page_setup() {
             'label_for' => 'service-mail'
         ) // args = array()
     );
-
-    // register each field
-    register_setting(
-        'custom-settings-contact', // option group
-        'owner-name' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'street' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'address-additional' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'zip' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'city' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'country' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'phone' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'mail' // option name
-    );
-    register_setting(
-        'custom-settings-contact', // option group
-        'service-phone' // option name
-    );
     register_setting(
         'custom-settings-contact', // option group
         'service-mail' // option name
     );
+
 
     // social media section
     add_settings_section(
@@ -609,9 +690,14 @@ function custom_settings_page_setup() {
             'label_for' => 'facebook'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'facebook' // option name
+    );
+
     add_settings_field(
         'twitter', // id
-        __( 'Twitter', 'bsx-wordpress' ), // title
+        __( 'X (Twitter)', 'bsx-wordpress' ), // title
         'render_custom_input_field', // callback, use unique function name
         'custom_options_social_media', // page
         'custom-settings-section-social-media', // section = 'default'
@@ -620,6 +706,11 @@ function custom_settings_page_setup() {
             'label_for' => 'twitter'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'twitter' // option name
+    );
+
     add_settings_field(
         'instagram', // id
         __( 'Instagram', 'bsx-wordpress' ), // title
@@ -631,6 +722,11 @@ function custom_settings_page_setup() {
             'label_for' => 'instagram'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'instagram' // option name
+    );
+
     add_settings_field(
         'googleplus', // id
         __( 'Google Plus', 'bsx-wordpress' ), // title
@@ -642,6 +738,11 @@ function custom_settings_page_setup() {
             'label_for' => 'googleplus'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'googleplus' // option name
+    );
+
     add_settings_field(
         'xing', // id
         __( 'Xing', 'bsx-wordpress' ), // title
@@ -653,6 +754,11 @@ function custom_settings_page_setup() {
             'label_for' => 'xing'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-social-media', // option group
+        'xing' // option name
+    );
+
     add_settings_field(
         'linkedin', // id
         __( 'LinkedIn', 'bsx-wordpress' ), // title
@@ -664,32 +770,11 @@ function custom_settings_page_setup() {
             'label_for' => 'linkedin'
         ) // args = array()
     );
-
-    // register each field
-    register_setting(
-        'custom-settings-social-media', // option group
-        'facebook' // option name
-    );
-    register_setting(
-        'custom-settings-social-media', // option group
-        'twitter' // option name
-    );
-    register_setting(
-        'custom-settings-social-media', // option group
-        'instagram' // option name
-    );
-    register_setting(
-        'custom-settings-social-media', // option group
-        'googleplus' // option name
-    );
-    register_setting(
-        'custom-settings-social-media', // option group
-        'xing' // option name
-    );
     register_setting(
         'custom-settings-social-media', // option group
         'linkedin' // option name
     );
+
 
     // layout section
     add_settings_section(
@@ -711,6 +796,11 @@ function custom_settings_page_setup() {
             'label_for' => 'logo'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-layout', // option group
+        'logo' // option_name
+    );
+
     add_settings_field(
         'footer_columns_count', // id
         esc_html__( 'Footer Menu Columns Count (0...5)', 'bsx-wordpress' ), // title
@@ -722,6 +812,11 @@ function custom_settings_page_setup() {
             'label_for' => 'footer_columns_count'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-layout', // option group
+        'footer_columns_count' // option_name
+    );
+
     add_settings_field(
         'footer_phone_mail_show', // id
         esc_html__( 'Show Phone & Email in footer', 'bsx-wordpress' ), // title
@@ -733,6 +828,11 @@ function custom_settings_page_setup() {
             'label_for' => 'footer_phone_mail_show'
         ) // args = array()
     );
+    register_setting(
+        'custom-settings-layout', // option group
+        'footer_phone_mail_show' // option_name
+    );
+
     add_settings_field(
         'social_media_colors_use', // id
         esc_html__( 'Use Social Media Brand colors', 'bsx-wordpress' ), // title
@@ -744,23 +844,25 @@ function custom_settings_page_setup() {
             'label_for' => 'social_media_colors_use'
         ) // args = array()
     );
-
-    // register each field
-    register_setting(
-        'custom-settings-layout', // option group
-        'logo' // option_name
-    );
-    register_setting(
-        'custom-settings-layout', // option group
-        'footer_columns_count' // option_name
-    );
-    register_setting(
-        'custom-settings-layout', // option group
-        'footer_phone_mail_show' // option_name
-    );
     register_setting(
         'custom-settings-layout', // option group
         'social_media_colors_use' // option_name
+    );
+
+    add_settings_field(
+        'global_banner_post_id', // id
+        esc_html__( 'Global Banner Post id or Banner Type', 'bsx-wordpress' ), // title
+        'render_custom_input_field', // callback, use unique function name
+        'custom_options_layout', // page
+        'custom-settings-section-layout', // section = 'default'
+        array(
+            'global_banner_post_id',
+            'label_for' => 'global_banner_post_id'
+        ) // args = array()
+    );
+    register_setting(
+        'custom-settings-layout', // option group
+        'global_banner_post_id' // option_name
     );
 
 }
@@ -781,73 +883,13 @@ function render_custom_textarea_field( $args ) {
 add_action( 'admin_init', 'custom_settings_page_setup' );
 
 
-/**
- * meta boxes
- */
+// page style meta box
 
-// page style
-function add_page_style_meta_box() {
-    $screen = 'page'; // choose 'post' or 'page'
-    add_meta_box( 
-        'page_style_meta_box', // $id
-        __( 'Page Style', 'bsx-wordpress' ), // $title
-        'show_page_style_meta_box', // $callback
-        $screen, // $screen
-        'side', // $context, choose 'normal' or 'side')
-        'default', // $priority
-        null 
-    );
+$file = dirname( __FILE__ ) . '/inc/page-style/meta-box.php';
+if ( file_exists( $file ) ) {
+    require $file;
 }
-add_action( 'add_meta_boxes', 'add_page_style_meta_box' );
 
-function show_page_style_meta_box() {
-    global $post;
-    $meta = get_post_meta( $post->ID, 'page_style', true ); 
-    ?>
-        <input type="hidden" name="page_style_meta_box_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-        <p>
-            <label>
-                <input type="checkbox" name="page_style[add_page_top_space]" value="1" <?php if ( is_array( $meta ) && isset( $meta[ 'add_page_top_space' ] ) && $meta[ 'add_page_top_space' ] == 1 ) echo 'checked' ?>><?php echo __( 'Add space on Page top', 'bsx-wordpress' ); ?>
-            </label>
-        </p>
-        <p>
-            <label>
-                <input type="checkbox" name="page_style[wrap_page_with_container]" value="1" <?php if ( is_array( $meta ) && isset( $meta[ 'wrap_page_with_container' ] ) && $meta[ 'wrap_page_with_container' ] == 1 ) echo 'checked' ?>><?php echo  __( 'Wrap Page with Container', 'bsx-wordpress' ); ?>
-            </label>
-        </p>
-    <?php 
-}
-function save_page_style_meta( $post_id ) {
-    // verify nonce
-    if ( isset( $_POST[ 'page_style_meta_box_nonce' ] ) && ! wp_verify_nonce( $_POST[ 'page_style_meta_box_nonce' ], basename(__FILE__) ) ) {
-        return $post_id;
-    }
-    // check autosave
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-        return $post_id;
-    }
-    // check permissions
-    if ( isset( $_POST[ 'post_type' ] ) && 'page' === $_POST[ 'post_type' ] ) {
-        if ( !current_user_can( 'edit_page', $post_id ) ) {
-            return $post_id;
-        } 
-        elseif ( !current_user_can( 'edit_post', $post_id ) ) {
-            return $post_id;
-        }
-    }
-    // cannot check for `isset( $_POST[ 'page_style' ] )` since empty checkboxes would never be saved
-    if ( isset( $_POST[ 'page_style_meta_box_nonce' ] ) ) {
-        // $old = get_post_meta( $post_id, 'page_style', true );
-        $new = $_POST[ 'page_style' ];
-        // if ( isset( $new ) && $new !== $old ) {
-            update_post_meta( $post_id, 'page_style', $new );
-        // } 
-        // elseif ( '' === $new && $old ) {
-        //     delete_post_meta( $post_id, 'page_style', $old );
-        // }
-    }
-}
-add_action( 'save_post', 'save_page_style_meta' );
 
 // meta tag
 function add_meta_tag_meta_box() {
@@ -977,6 +1019,17 @@ require_once( __DIR__ . '/inc/theme-forms/shortcode.php' );
 require_once( __DIR__ . '/src/libs/form/class-bsx-mail-form.php' );
 if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' ) ) {
     ( new Bsx_Mail_Form() )->init();
+}
+
+
+/*
+ * Breadcrumb
+ */
+
+$file = dirname( __FILE__ ) . '/inc/breadcrumb/breadcrumb.php';
+if ( file_exists( $file ) ) {
+    require $file;
+    ( new Bsx_Breadcrumb() )->init();
 }
 
 

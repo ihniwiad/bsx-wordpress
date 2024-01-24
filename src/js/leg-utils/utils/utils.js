@@ -73,6 +73,7 @@ var Utils = {
         }
     ],
 
+    anchorOffsetTopDistance: 20,
     anchorOffsetTop: 0,
     
 };

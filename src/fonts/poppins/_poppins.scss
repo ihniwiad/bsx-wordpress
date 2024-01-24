@@ -1,0 +1,8 @@
+@import "./mixins";
+
+
+// please import in order to preload fonts (from most important to less important)
+
+@include poppins-font('poppins', 'Poppins', 'Regular', 400, normal);
+@include poppins-font('poppins', 'Poppins', 'SemiBold', 500, normal);
+@include poppins-font('poppins', 'Poppins', 'Italic', 400, italic);

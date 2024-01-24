@@ -1,0 +1,7 @@
+@import "./mixins";
+
+
+// please import in order to preload fonts (from most important to less important)
+
+// params: $css-font-name, $file-name-trunc, $variant, $weight, $style
+@include young-serif-font('Young Serif', 'young-serif-v2-latin_latin-ext', 'regular', 400, normal);

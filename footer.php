@@ -15,7 +15,7 @@ global $logoPath;
 			<?php include 'template-parts/footer/footer.php'; ?>
 
 			<div class="to-top-wrapper" data-fn="to-top-wrapper">
-				<a class="btn btn-secondary btn-only-icon" href="#top"><i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sr-only"><?php echo __( 'To top', 'bsx-wordpress' ); ?></span></a>
+				<a class="btn btn-primary btn-only-icon" href="#top"><i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sr-only"><?php echo __( 'To top', 'bsx-wordpress' ); ?></span></a>
 			</div>
 		
 		</div>

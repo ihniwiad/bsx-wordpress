@@ -139,6 +139,14 @@ msgstr "Oben Abstand für Menü zufügen"
 msgid "Wrap Page with Container"
 msgstr "Seite auf Container-Breite begrenzen"
 
+#: functions.php:689
+msgid "Show Breadcrumb"
+msgstr "Breadcrumb anzeigen"
+
+#: functions.php:689 functions.php:806
+msgid "Do not show bottom banner"
+msgstr "Bottom-Banner nicht anzeigen"
+
 #: functions.php:723
 msgid "Meta Data"
 msgstr "Meta-Daten"
@@ -170,6 +178,14 @@ msgstr "E-Mail & Telefon im Footer anzeigen"
 #: functions.php:714
 msgid "Use Social Media Brand colors"
 msgstr "Social Media Brand-Farben benutzen"
+
+#: functions.php:730
+msgid "Banner Type"
+msgstr "Banner-Typ"
+
+#: functions.php:1088
+msgid "Global Banner Post id or Banner Type"
+msgstr "Globaler Banner Post-ID oder Banner-Typ"
 
 #: functions.php:747
 msgid "Yes"
@@ -504,6 +520,50 @@ msgstr "Betreff 2"
 #: inc/theme-forms/meta-box.php:9
 msgid "E-mail 2 template"
 msgstr "E-Mail 2 Template"
+
+#: template-parts/content-single.php:39
+msgid "from"
+msgstr "von"
+
+#: template-parts/content-single.php:83
+msgid "Share"
+msgstr "Teilen"
+
+#: template-parts/content-single.php:89
+msgid "Share on"
+msgstr "Teilen auf"
+
+#: template-parts/content-single.php:101
+msgid "Share via Email"
+msgstr "Teilen per E-Mail"
+
+#: template-parts/banner/popular-posts.php:23
+msgid "Popular Posts"
+msgstr "Beliebte Beiträge"
+
+#: template-parts/banner/popular-posts.php:56
+msgid "No Popular Posts available"
+msgstr "Aktuell sind keine beliebten Beiträge verfügbar"
+
+#: functions.php:1324
+msgid "Error 404"
+msgstr "Fehler 404"
+
+#: functions.php:1318
+msgid "Search"
+msgstr "Suche"
+
+#. translators: %s: Search term.
+#: template-parts/content/content-none.php:22 search.php:21
+msgid "Results for \"%s\""
+msgstr "Suchergebnisse für „%s“"
+
+#. translators: %d: The number of search results.
+#: search.php:33
+msgid "We found %d result for your search."
+msgid_plural "We found %d results for your search."
+msgstr[0] "Es gibt %d Ergebnis für deine Suche."
+msgstr[1] "Es gibt %d Ergebnisse für deine Suche."
 
 
 

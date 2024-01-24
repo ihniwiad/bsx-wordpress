@@ -56,7 +56,7 @@ class Accordion {
     $output .= '>';
 
     // items
-    if ( isset ( $this->data[ 'items' ] ) && sizeof( $this->data[ 'items' ] > 0 ) ) {
+    if ( isset( $this->data[ 'items' ] ) && is_array( $this->data[ 'items' ] ) && ! empty( $this->data[ 'items' ] ) ) {
       $index = 0;
       foreach ( $this->data[ 'items' ] as $item ) {
         if ( isset( $item[ 'title' ], $item[ 'content' ] ) ) {
@@ -68,7 +68,7 @@ class Accordion {
                 // set trigger aria & opened class
                 $trigger_opened_class = $item[ 'opened' ] ? ( isset( $this->data[ 'config' ][ 'trigger_opened_class' ] ) ? ' ' . $this->data[ 'config' ][ 'trigger_opened_class' ] : ' ' . self::DEFAULT_TRIGGER_OPENED_CLASS )  : '';
                 $aria_expanded_val = $item[ 'opened' ] ? 'true' : 'false';
-                $aria_disabled_attr = ! $this->data[ 'multi_open' ] && $item[ 'opened' ] ? ' aria-disabled="true"' : '';
+                $aria_disabled_attr = isset( $this->data[ 'multi_open' ] ) && ! $this->data[ 'multi_open' ] && $item[ 'opened' ] ? ' aria-disabled="true"' : '';
                 $output .= '<button class="acc-header' . $trigger_opened_class . '" id="acc-' . $this->id . '-' . $index . '-trig" data-bsx="acc" aria-controls="acc-' . $this->id . '-' . $index . '-cont" aria-expanded="' . $aria_expanded_val . '">';
                 
                   $output .= '<span class="acc-header-text">' . $item[ 'title' ] . '</span>';
@@ -80,7 +80,7 @@ class Accordion {
               $target_opened_class = $item[ 'opened' ] ? ( isset( $this->data[ 'config' ][ 'target_opened_class' ] ) ? ' ' . $this->data[ 'config' ][ 'target_opened_class' ] : ' ' . self::DEFAULT_TARGET_OPENED_CLASS )  : '';
               $output .= '<div class="bsx-acc-content' . $target_opened_class . '" id="acc-' . $this->id . '-' . $index . '-cont" role="region" aria-labeledby="acc-' . $this->id . '-' . $index . '-trig">';
               
-                $output .= '<div data-acc-cnt-inr>';
+                $output .= '<div class="bsx-acc-content-inner" data-acc-cnt-inr>';
                   $output .= $item[ 'content' ];
                 $output .= '</div>';
               $output .= '</div>';

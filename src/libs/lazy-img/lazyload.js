@@ -92,8 +92,87 @@ $.fn.lazyload = function( options, index ) {
         return currentSrc;
     }
 
+    var _getSizeAndDensityMatchingSrc = function( srcset, displayedWidth ) {
+        var pixelDesity = window.devicePixelRatio;
+
+        // console.log( 'pixelDesity: ' + pixelDesity );
+
+        var densityRelatedWidth = displayedWidth * pixelDesity;
+
+
+        var srcsetList = srcset.split( ',' );
+        var closestSmallerSrc = '';
+        var closestSmallerWidth = 0;
+        var closestLargerOrEqualSrc = '';
+        var closestLargerOrEqualWidth = 0;
+        var srcReturn = '';
+
+        for ( var i = 0; i < srcsetList.length; i++ ) {
+            srcsetList[ i ] = srcsetList[ i ].trim();
+            // remove multiple whitespaces, keep one
+            srcsetList[ i ].replace( /\s+/g, ' ' );
+            var splitSrcAndWidth = srcsetList[ i ].split( ' ' );
+
+            // console.log( 'loop: ' + i + ' – ' + parseInt( splitSrcAndWidth[ 1 ] ) );
+            // save before break for case of loop break
+            closestLargerOrEqualSrc = splitSrcAndWidth[ 0 ];
+            closestLargerOrEqualWidth = parseInt( splitSrcAndWidth[ 1 ] );
+
+            if ( parseInt( splitSrcAndWidth[ 1 ] ) >= densityRelatedWidth ) {
+                // console.log( 'found src (return): ' + splitSrcAndWidth[ 0 ] );
+                // console.log( 'BREAK' );
+                break;
+            }
+            // save after break for next loop
+            closestSmallerSrc = splitSrcAndWidth[ 0 ];
+            closestSmallerWidth = parseInt( splitSrcAndWidth[ 1 ] );
+        }
+
+        // check which img to choose dependend on displayed size & pixel density
+        if ( pixelDesity <= 1 ) {
+            srcReturn = closestLargerOrEqualSrc;
+        }
+        else {
+            var lowerDifference = densityRelatedWidth - closestSmallerWidth;
+            var upperDifference = closestLargerOrEqualWidth - densityRelatedWidth;
+            if ( pixelDesity <=2 ) {
+                // console.log( 'lowerDifference: ' + lowerDifference );
+                // console.log( 'upperDifference: ' + upperDifference );
+                if ( lowerDifference * 5 <= upperDifference ) {
+                    // use smaller src
+                    srcReturn = closestSmallerSrc;
+                }
+                else {
+                    // use larger src
+                    srcReturn = closestLargerOrEqualSrc;
+                }
+            }
+            else {
+                // console.log( 'lowerDifference: ' + lowerDifference );
+                // console.log( 'upperDifference: ' + upperDifference );
+
+                if ( lowerDifference * 4 <= upperDifference ) {
+                    // use smaller src
+                    srcReturn = closestSmallerSrc;
+                }
+                else {
+                    // use larger src
+                    srcReturn = closestLargerOrEqualSrc;
+                }
+            }
+        }
+
+        // console.log( 'return: ' + srcReturn );
+        return srcReturn;
+    }
+
     $.fn._isPicture = function() {
         return $( this ).parent().is( 'picture' );
+    }
+
+    $.fn._isSrcsetImg = function() {
+        var srcsetAttr = $( this ).attr( 'data-' + settings.srcset_data_attribute );
+        return ( $( this ).is( 'img' ) && ( typeof srcsetAttr !== 'undefined' && srcsetAttr !== false ) );
     }
 
     function update() {
@@ -312,13 +391,24 @@ $.fn.lazyload = function( options, index ) {
                 // check if src or srcset json
                 var srcsetJson = [];
                 if ( !! preloadImgSrcset ) {
-                    // get json
 
-                    srcsetJson = ( new Function( 'return ' + preloadImgSrcset ) )();
+                    if ( ! $self.is( "img" ) ) {
+                        // is div or anything but img
+                        // get json
+                        srcsetJson = ( new Function( 'return ' + preloadImgSrcset ) )();
 
-                    // get img src to preload
-                    preloadImgSrc = _getMediaMatchingSrc( srcsetJson, srcAttrVal );
-                    //console.log( 'preloadImgSrc: ' + preloadImgSrc );
+                        // get img src to preload
+                        preloadImgSrc = _getMediaMatchingSrc( srcsetJson, srcAttrVal );
+                        //console.log( 'NON img – preloadImgSrc: ' + preloadImgSrc );
+                    }
+                    else {
+                        // is img containing data-srcset
+
+                        var displayedWidth = parseInt( $self.css( 'width' ) );
+                        // console.log( 'displayedWidth: ' + displayedWidth );
+                        // get img src to preload from data-srcset list
+                        preloadImgSrc = _getSizeAndDensityMatchingSrc( preloadImgSrcset, displayedWidth );
+                    }
 
                 }
 
@@ -349,17 +439,22 @@ $.fn.lazyload = function( options, index ) {
                         if ( $self.is( "img" ) ) {
                             $self.hide();
                             //console.log( 'hidden (' + preloadImgSrc + ')' );
-                            if ( isPictureCompatibeBrowser && $self._isPicture() ) {
-                                // replace all sources (of which one has already been preloaded)
-                                $sources.each( function () {
-                                    var srcset = $( this ).attr( 'data-' + settings.srcset_data_attribute );
-                                    $( this ).attr( 'srcset', srcset );
-                                } );
+                            if ( $self._isSrcsetImg() ) {
+                                // set srcset first
+                                $self.attr( 'srcset', $( this ).attr( 'data-' + settings.srcset_data_attribute ) );
+                                // then set loaded url selected from srcset
+                                $self.attr( 'src', preloadImgSrc );
                             }
-                            $self
-                                .attr( 'src', $self.attr( 'data-' + settings.data_attribute ) )
-                                .css( { width: '', height: '' } )
-                            ; // custom adaption
+                            else {
+                                if ( isPictureCompatibeBrowser && $self._isPicture() ) {
+                                    // replace all sources (of which one has already been preloaded)
+                                    $sources.each( function () {
+                                        $( this ).attr( 'srcset', $( this ).attr( 'data-' + settings.srcset_data_attribute ) );
+                                    } );
+                                }
+                                $self.attr( 'src', $self.attr( 'data-' + settings.data_attribute ) ); 
+                            }
+                            $self.css( { width: '', height: '' } ); 
                             //console.log( 'settings.effect: ' + settings.effect );
                             //console.log( 'settings.effect_speed: ' + settings.effect_speed );
                             $self[ settings.effect ]( settings.effect_speed );

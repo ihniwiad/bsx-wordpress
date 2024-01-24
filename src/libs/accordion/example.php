@@ -6,8 +6,8 @@ $acc_data = array();
 $acc_data[ 0 ] = array(
   'config' => array(
     'multi_open' => false,
-    'trigger_opened_class' => 'active',
-    'target_opened_class' => 'show',
+    // 'trigger_opened_class' => 'active',
+    // 'target_opened_class' => 'show',
   ),
   'items' => array(
     array(

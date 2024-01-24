@@ -1,0 +1,10 @@
+@import "./mixins";
+
+
+// please import in order to preload fonts (from most important to less important)
+
+// used "rubik-v19-latin-500" as "Rubik-Medium"
+
+@include rubik-font('Rubik', 'Regular', 400, normal);
+@include rubik-font('Rubik', 'Medium', 500, normal);
+@include rubik-font('Rubik', 'Italic', 400, italic);

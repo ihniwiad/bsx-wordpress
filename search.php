@@ -6,68 +6,111 @@
  *
  */
 
-// TODO: add all translations to textdomain 'bsx-wordpress'
-
 get_header();
 
-if ( have_posts() ) {
-  ?>
+?>
+<div data-id="search">
   <main class="container below-navbar-content" id="main">
-  <header class="page-header alignwide">
-    <h1 class="page-title">
+
+    <div class="mb-4">
+        <?php
+            // breadcrumb
+            if ( class_exists( 'Bsx_Breadcrumb' ) && method_exists( 'Bsx_Breadcrumb', 'print' ) ) {
+                ( new Bsx_Breadcrumb )->print();
+            }
+        ?>
+    </div>
+
+    <div class="mb-4">
+      <?php get_search_form(); ?>
+    </div>
+
+    <header class="">
+      <h1 class="">
+        <?php
+        printf(
+          /* translators: %s: search term. */
+          esc_html__( 'Results for "%s"', 'bsx-wordpress' ),
+          '<span class="page-description search-term">' . esc_html( get_search_query() ) . '</span>'
+        );
+        ?>
+      </h1>
+    </header><!-- .page-header -->
+
+    <div class="mb-5">
       <?php
       printf(
-        /* translators: %s: search term. */
-        esc_html__( 'Results for "%s"', 'twentytwentyone' ),
-        '<span class="page-description search-term">' . esc_html( get_search_query() ) . '</span>'
+        esc_html(
+          /* translators: %d: the number of search results. */
+          _n(
+            'We found %d result for your search.',
+            'We found %d results for your search.',
+            (int) $wp_query->found_posts,
+            'bsx-wordpress'
+          )
+        ),
+        (int) $wp_query->found_posts
       );
       ?>
-    </h1>
-  </header><!-- .page-header -->
+    </div>
 
-  <div class="search-result-count default-max-width">
     <?php
-    printf(
-      esc_html(
-        /* translators: %d: the number of search results. */
-        _n(
-          'We found %d result for your search.',
-          'We found %d results for your search.',
-          (int) $wp_query->found_posts,
-          'twentytwentyone'
-        )
-      ),
-      (int) $wp_query->found_posts
-    );
+
+      if ( have_posts() ) {
+        // Start the Loop.
+
+        ?>
+          <div class="row">
+            <?php
+              while ( have_posts() ) {
+                the_post();
+
+                /*
+                 * Include the Post-Format-specific template for the content.
+                 * If you want to override this in a child theme, then include a file
+                 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+                 */
+                // get_template_part( 'template-parts/content/content-excerpt', get_post_format() );
+                get_template_part( 'template-parts/content/content', get_post_format() );
+
+              } // End the loop.
+            ?>
+          </div><!-- /.row -->
+        <?php
+
+        // pagination
+        get_template_part( 'template-parts/pagination/search-pagination' );
+
+        // Previous/next page navigation.
+        // twenty_twenty_one_the_posts_navigation();
+
+        // If no content, include the "No posts found" template.
+      } 
+      else {
+        get_template_part( 'template-parts/content/content-none' );
+      }
     ?>
-  </div><!-- .search-result-count -->
-  <?php
-  // Start the Loop.
-  while ( have_posts() ) {
-    the_post();
-
-    /*
-     * Include the Post-Format-specific template for the content.
-     * If you want to override this in a child theme, then include a file
-     * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-     */
-    // get_template_part( 'template-parts/content/content-excerpt', get_post_format() );
-    get_template_part( 'template-parts/content/content', get_post_format() );
-
-  } // End the loop.
-
-  // pagination
-  get_template_part( 'template-parts/pagination/search-pagination' );
-
-  // Previous/next page navigation.
-  // twenty_twenty_one_the_posts_navigation();
-
-  // If no content, include the "No posts found" template.
-  ?>
   </main>
+
   <?php
-} else {
-  get_template_part( 'template-parts/content/content-none' );
-}
+
+      // popular posts
+      get_template_part( 'template-parts/banner/popular-posts' );
+
+
+      // apply banner
+      ?>
+          <div class="mb-n-footer-space">
+              <?php
+                  echo BSXWP_Banner_Helper_Fn::getBannerHtml( 'blog' );
+              ?>
+          </div>
+      <?php
+
+  ?>
+
+</div><!-- /[data-id="search"] -->
+
+<?php
 
 get_footer();

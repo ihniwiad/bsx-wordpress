@@ -1,6 +1,5 @@
 // VAR
 
-
 // accordion function
 
 $bsx-acc-transition-duration:   0.4s !default;
@@ -9,10 +8,13 @@ $bsx-acc-transition-effect:     ease !default;
 // accordion styling
 
 // (main)
-$bsx-acc-header-padding:            .25rem 0 !default;
-$bsx-acc-header-background:         transparent !default;
 $bsx-acc-header-color:              inherit !default;
-$bsx-acc-header-open-background:    transparent !default;
+$bsx-acc-header-hover-color:        $primary !default;
+$bsx-acc-header-open-color:         $primary !default;
+$bsx-acc-header-open-hover-color:   darken($primary, 10%) !default;
+$bsx-acc-header-padding:            1rem 0 !default; // .25rem .5rem !default;
+$bsx-acc-header-background:         transparent !default; // transparent
+$bsx-acc-header-open-background:    transparent !default; // transparent
 $bsx-acc-header-border-style:       none !default;
 $bsx-acc-header-border-width:       1px !default;
 $bsx-acc-header-border-color:       $bsx-border-color !default;
@@ -20,10 +22,10 @@ $bsx-acc-header-font-size:          inherit !default;
 $bsx-acc-header-text-align:         left !default;
 $bsx-acc-header-transition:         $bsx-basic-transition !default;
 
-$bsx-acc-header-icon-after-width:         .75rem !default;
+$bsx-acc-header-icon-after-width:         .5rem !default;
 $bsx-acc-header-icon-padding-x:           $bsx-acc-header-icon-after-width / 5 !default;
 $bsx-acc-header-icon-after-margin-value:  $bsx-acc-header-icon-after-width / 5 * 3 !default;
-$bsx-acc-header-icon-after-border-width:  2px !default;
+$bsx-acc-header-icon-after-border-width:  1px !default;
 $bsx-acc-header-icon-after-border-style:  none none solid solid !default;
 $bsx-acc-header-icon-after-border-color:  inherit !default;
 
@@ -31,7 +33,8 @@ $bsx-acc-content-border-style:        none none solid !default;
 $bsx-acc-content-border-width:        1px !default;
 $bsx-acc-content-border-color:        $bsx-border-color !default;
 
-$bsx-acc-content-inner-padding:       1rem 0 0 !default;
+$bsx-acc-content-inner-padding:      .25rem 0 0 !default; // 1rem .5rem 0 !default;
+$bsx-acc-content-inner-background:    transparent !default;
 
 // (optional)
 $bsx-acc-header-icon-after-content:           "" !default;
@@ -47,19 +50,19 @@ $bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
   height: 0;
   overflow: hidden;
   transition: height $bsx-acc-transition-duration $bsx-acc-transition-effect;
-
-  &.open:not(.animating-in):not(.animating-out) {
-    // allow overflow (e.g. focus box shadow of form controls) while not animating in/out
-    overflow: visible;
-  }
 }
 .bsx-acc-content.open,
 .bsx-acc-content.show {
   height: unset;
 }
-.bsx-acc-content > [data-acc-cnt-inr] {
+.bsx-acc-content-inner {
   padding: $bsx-acc-content-inner-padding;
+  background: $bsx-acc-content-inner-background;
 
+  &::before {
+    content: "";
+    display: table;
+  }
   &::after {
     content: "";
     display: table;
@@ -86,8 +89,17 @@ $bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
   background: $bsx-acc-header-background;
   transition: $bsx-acc-header-transition;
 
+  &:hover {
+    color: $bsx-acc-header-hover-color;
+  }
+
   &.open {
+    color: $bsx-acc-header-open-color;
     background: $bsx-acc-header-open-background;
+
+    &:hover {
+      color: $bsx-acc-header-open-hover-color;
+    }
   }
 }
 .acc-header-text {
@@ -126,6 +138,6 @@ $bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
   border-color: $bsx-acc-content-border-color;
 }
 
-// accordion styling
+// /accordion styling
 
 

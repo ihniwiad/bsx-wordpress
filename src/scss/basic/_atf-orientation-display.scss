@@ -1,0 +1,30 @@
+
+
+@media screen and (orientation: portrait) {
+	.d-portrait-none {
+		display: none !important;
+	}
+	.d-portrait-block {
+		display: block !important;
+	}
+	.d-portrait-inline {
+		display: inline !important;
+	}
+	.d-portrait-flex {
+		display: flex !important;
+	}
+}
+@media screen and (orientation: landscape) {
+	.d-landscape-none {
+		display: none !important;
+	}
+	.d-landscape-block {
+		display: block !important;
+	}
+	.d-landscape-inline {
+		display: inline !important;
+	}
+	.d-landscape-flex {
+		display: flex !important;
+	}
+}

@@ -1,0 +1,13 @@
+@import "./variables";
+
+@mixin young-serif-font($css-font-name, $file-name-trunc, $variant, $weight, $style) {
+
+    @font-face {
+        font-display: swap; // Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
+        font-family: '#{$css-font-name}';
+        src: url('#{$young-serif-font-path}/#{$file-name-trunc}-#{$variant}.woff2') format('woff2'); // Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+        font-weight: $weight;
+        font-style: $style;
+    }
+}
+

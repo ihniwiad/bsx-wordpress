@@ -34,7 +34,14 @@ $.fn.animatedAnchors = function( options ) {
         var scrollTop = Utils.$window.scrollTop();
         var thisOffsetTop = $this.offset().top + options.scrollTolerance;
 
-        var scrollDuration = Math.abs( thisOffsetTop - options.offset() - scrollTop ) * options.scrollDurationPer1000 / 1000;
+        // if scrolling down header will not be shown and so not overlay anchor contents
+        var calculatedOffset = options.offset();
+        if ( scrollTop < thisOffsetTop ) {
+            // scroll down – use default spacer instead of header height
+            calculatedOffset = Utils.anchorOffsetTopDistance;
+        }
+
+        var scrollDuration = Math.abs( thisOffsetTop - calculatedOffset - scrollTop ) * options.scrollDurationPer1000 / 1000;
 
         // limit scroll duration (min, max)
         if  ( scrollDuration < options.scrollDurationMin ) {
@@ -44,7 +51,7 @@ $.fn.animatedAnchors = function( options ) {
             scrollDuration = options.scrollDurationMax;
         }
 
-        Utils.$scrollRoot.animate( { scrollTop: ( thisOffsetTop - options.offset() ) }, scrollDuration );
+        Utils.$scrollRoot.animate( { scrollTop: ( thisOffsetTop - calculatedOffset ) }, scrollDuration );
 
     }
 

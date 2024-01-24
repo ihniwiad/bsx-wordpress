@@ -138,7 +138,7 @@ global $phoneHrefRemovePatterns;
 
                     $social_media_list = array(
                         array( 'id' => 'facebook', 'title' => __( 'Facebook', 'bsx-wordpress' ), 'icon' => 'facebook' ),
-                        array( 'id' => 'twitter', 'title' => __( 'Twitter', 'bsx-wordpress' ), 'icon' => 'twitter' ),
+                        array( 'id' => 'twitter', 'title' => __( 'X (Twitter)', 'bsx-wordpress' ), 'icon' => 'x-twitter' ),
                         array( 'id' => 'instagram', 'title' => __( 'Instagram', 'bsx-wordpress' ), 'icon' => 'instagram' ),
                         array( 'id' => 'googleplus', 'title' => __( 'Google Plus', 'bsx-wordpress' ), 'icon' => 'google-plus' ),
                         array( 'id' => 'xing', 'title' => __( 'Xing', 'bsx-wordpress' ), 'icon' => 'xing' ),

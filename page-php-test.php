@@ -59,8 +59,8 @@ get_header();
 
 
 
-            global $wpdb;
-            $table = $wpdb->prefix . 'bsx_themeforms_entries';
+            // global $wpdb;
+            // $table = $wpdb->prefix . 'bsx_themeforms_entries';
 
             // $data = array( 
             //     'date' => current_time( 'mysql' ),
@@ -110,9 +110,15 @@ get_header();
 
 
             // include 'src/libs/form/example.php';
-            if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form', 'print_form' ) ) {
-                Bsx_Mail_Form::print_form( 1 );
-            }
+            // if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form', 'print_form' ) ) {
+            //     Bsx_Mail_Form::print_form( 1 );
+            // }
+
+
+
+            // test accordion
+            require_once( 'src/libs/accordion/class-accordion.php' );
+            include 'src/libs/accordion/example.php';
         ?>
     </div>
 

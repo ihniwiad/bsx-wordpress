@@ -20306,7 +20306,7 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
     height: 1remem;
     color: #606a73;
     content: "\f060";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 6 Free";
     margin-right: 0.5em;
   }
   .bsx-appnav-back-link a::after {
@@ -20330,7 +20330,7 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
 .bsx-appnav-dropdown-toggle:after {
   display: inline-block;
   content: "\f061";
-  font-family: FontAwesome;
+  font-family: "Font Awesome 6 Free";
   color: #606a73;
 }
 .bsx-appnav-dropdown-toggle:focus {
@@ -22308,7 +22308,7 @@ figcaption {
   bottom: 0;
   padding: 0.25rem 0.5rem;
   background: rgba(0, 0, 0, 0.35);
-  font-family: FontAwesome;
+  font-family: "Font Awesome 6 Free";
   color: rgba(255, 255, 255, 0.8);
   border-radius: 0.25rem 0 0 0;
   border-color: rgba(255, 255, 255, 0.5);
@@ -22446,7 +22446,7 @@ img[data-fn=lazyload][src*="data:image/svg+xml;base64"] {
 }
 .checklist li:before {
   content: "\f00c";
-  font-family: FontAwesome;
+  font-family: "Font Awesome 6 Free";
   display: inline-block;
   width: 2em;
   margin-left: -2em;

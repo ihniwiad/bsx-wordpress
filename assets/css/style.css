@@ -13963,7 +13963,7 @@ input[type=button].btn-block {
 
 .custom-range {
   width: 100%;
-  height: 1.9rem;
+  height: 1.4rem;
   padding: 0;
   background-color: transparent;
   -webkit-appearance: none;
@@ -13986,9 +13986,9 @@ input[type=button].btn-block {
   border: 0;
 }
 .custom-range::-webkit-slider-thumb {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-top: -0.5rem;
+  width: 1rem;
+  height: 1rem;
+  margin-top: -0.25rem;
   background-color: #0275D8;
   border: 0;
   border-radius: 1rem;
@@ -14016,8 +14016,8 @@ input[type=button].btn-block {
   border-radius: 1rem;
 }
 .custom-range::-moz-range-thumb {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   background-color: #0275D8;
   border: 0;
   border-radius: 1rem;
@@ -14045,8 +14045,8 @@ input[type=button].btn-block {
   border-radius: 1rem;
 }
 .custom-range::-ms-thumb {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   margin-top: 0;
   margin-right: 0.2rem;
   margin-left: 0.2rem;
@@ -14073,7 +14073,7 @@ input[type=button].btn-block {
   cursor: pointer;
   background-color: transparent;
   border-color: transparent;
-  border-width: 0.75rem;
+  border-width: 0.5rem;
 }
 .custom-range::-ms-fill-lower {
   background-color: #dee2e6;
@@ -14797,21 +14797,21 @@ input[type=button].btn-block {
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 0;
-  margin-bottom: 0;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
   list-style: none;
-  background-color: transparent;
-  border-radius: 0;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
 }
 
 .breadcrumb-item + .breadcrumb-item {
-  padding-left: 0.25rem;
+  padding-left: 0.5rem;
 }
 .breadcrumb-item + .breadcrumb-item::before {
   float: left;
-  padding-right: 0.25rem;
-  color: #495057;
-  content: "»";
+  padding-right: 0.5rem;
+  color: #6c757d;
+  content: "/";
 }
 .breadcrumb-item + .breadcrumb-item:hover::before {
   text-decoration: underline;
@@ -14820,7 +14820,7 @@ input[type=button].btn-block {
   text-decoration: none;
 }
 .breadcrumb-item.active {
-  color: #495057;
+  color: #6c757d;
 }
 
 .pagination {
@@ -20662,11 +20662,11 @@ body.scroll-away-top.scroll-up .to-top-wrapper {
 }
 
 .text-twitter {
-  color: #00aced !important;
+  color: #000000 !important;
 }
 
 .hover-text-twitter:hover, .hover-text-twitter:focus {
-  color: #00aced !important;
+  color: #000000 !important;
 }
 
 .text-xing {
@@ -20679,21 +20679,6 @@ body.scroll-away-top.scroll-up .to-top-wrapper {
 
 [class*=hover-text-] {
   transition: all 0.3s ease;
-}
-
-.fixed-banner {
-  position: fixed;
-  z-index: 1032;
-  left: 0;
-  right: 0;
-}
-
-.fixed-banner-top {
-  top: 0;
-}
-
-.fixed-banner-bottom {
-  bottom: 0;
 }
 
 /*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */
@@ -21676,18 +21661,18 @@ a.pswp__share--download:hover {
   -webkit-tap-highlight-color: transparent;
 }
 .owl-theme .owl-nav [class*=owl-] {
-  color: #FFF;
+  color: rgba(0, 0, 0, 0.8);
   font-size: 14px;
   margin: 5px;
   padding: 4px 7px;
-  background: #D6D6D6;
+  background: rgba(255, 255, 255, 0.6);
   display: inline-block;
   cursor: pointer;
   border-radius: 3px;
 }
 .owl-theme .owl-nav [class*=owl-]:hover {
-  background: #869791;
-  color: #FFF;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
   text-decoration: none;
 }
 .owl-theme .owl-nav .disabled {
@@ -21709,7 +21694,7 @@ a.pswp__share--download:hover {
 .owl-theme .owl-dots .owl-dot span {
   width: 10px;
   height: 10px;
-  margin: 5px 7px;
+  margin: 0;
   background: #D6D6D6;
   display: block;
   -webkit-backface-visibility: visible;
@@ -21759,7 +21744,7 @@ a.pswp__share--download:hover {
 }
 .owl-carousel.styled-nav button.owl-prev,
 .owl-carousel.styled-nav button.owl-next {
-  background-color: #D6D6D6;
+  background-color: rgba(255, 255, 255, 0.6);
   padding: 0.25em 0.5em !important;
 }
 .owl-carousel.styled-nav .owl-prev {
@@ -21819,7 +21804,7 @@ a.pswp__share--download:hover {
 }
 
 .owl-dot > span {
-  margin: 5px;
+  margin: 5px !important !important;
 }
 
 .dots-hidden .owl-dots {
@@ -22153,14 +22138,6 @@ body.is-android .bg-mobile-no-repeat {
   z-index: 1032;
   left: 0;
   right: 0;
-}
-
-.fixed-banner-top {
-  top: 0;
-}
-
-.fixed-banner-bottom {
-  bottom: 0;
 }
 
 .banner-st-1 {
@@ -22891,5 +22868,21 @@ html.touchevents .logo-list-overlay-close::before {
 
 .z-10 {
   z-index: 10 !important;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.left-0 {
+  left: 0;
+}
+
+.right-0 {
+  right: 0;
 }
 /*# sourceMappingURL=style.css.map */

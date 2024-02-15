@@ -1,18 +1,4 @@
 
-$bsx-breadcrumb-display:                block !default;
-$bsx-breadcrumb-flex-wrap:              unset !default;
-$bsx-breadcrumb-overflow:               hidden !default;
-$bsx-breadcrumb-white-space:            nowrap !default;
-$bsx-breadcrumb-text-overflow:          ellipsis !default;
-
-$bsx-breadcrumb-2nd-item-before-float:  none !default;
-$bsx-breadcrumb-item-display:           inline !default;
-
-
-
-
-// style
-
 .breadcrumb {
   display: $bsx-breadcrumb-display;
   flex-wrap: $bsx-breadcrumb-flex-wrap;
@@ -26,7 +12,7 @@ $bsx-breadcrumb-item-display:           inline !default;
   display: $bsx-breadcrumb-item-display;
 
   > a {
-    color: $breadcrumb-link-color;
+    color: $bsx-breadcrumb-link-color;
   }
 }
 

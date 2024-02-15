@@ -2,44 +2,11 @@
 @import "./../../../node_modules/owl.carousel/src/scss/owl.theme.default.scss";
 
 
-// var
-
-
-$nav-color:             rgba($black, 0.8) !default;
-$nav-color-hover:       $black !default;
-
-$nav-background:        rgba($white, 0.6) !default;
-$nav-background-hover:  rgba($white, 0.85) !default;
-
-$dot-margin:      0 !default;
-
-$owl-nav-button-pt:     0.25em !default;
-$owl-nav-button-px:     0.5em !default;
-
-$owl-nav-icon-lg-font-size:   1.5em !default;
-$owl-nav-icon-lg-line-height: 1.5 !default;
-
-$owl-nav-top-t:     1em !default;
-
-$owl-dot-margin:    5px !default;
-
-
-// fadeout
-$bsx-slider-fadeout-zindex:           1 !default;
-$bsx-slider-fadeout-width:            3rem !default;
-$bsx-slider-fadeout-color:            $body-bg !default;
-$bsx-slider-fadeout-left-gradient:    "linear-gradient(to right, #{$bsx-slider-fadeout-color} 0%,transparent 100%)" !default;
-$bsx-slider-fadeout-right-gradient:   "linear-gradient(to left, #{$bsx-slider-fadeout-color} 0%,transparent 100%)" !default;
-
-
-
 // INFO
 //
 // for default style use: .owl-carousel.owl-theme.styled-nav (on slider element)
 // if using bootstrap classes on nav, use: .is-prev .is-next (on nav additional to e.g. .btn.btn-primary)
 
-
-// style
 
 
 // catch margin
@@ -174,7 +141,7 @@ $bsx-slider-fadeout-right-gradient:   "linear-gradient(to left, #{$bsx-slider-fa
 }
 
 .owl-dot > span {
-  margin: $owl-dot-margin;
+  margin: $owl-dot-margin !important;
 }
 
 // dots hidden (since disable dots may cause problems)

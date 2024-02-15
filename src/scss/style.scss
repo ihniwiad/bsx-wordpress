@@ -1,6 +1,5 @@
 // variables
 
-@import "./custom-style-variables";
 @import "./variables";
 @import "./mixins/mixins";
 
@@ -53,7 +52,6 @@
 @import "./../libs/to-top/style";
 @import "./../libs/footer/style";
 @import "./../libs/footer/social-media-links";
-@import "./../libs/data-processing-consent/style";
 @import "./../libs/img-gallery/index";
 @import "./../libs/slider/style";
 @import "./../libs/grid/column-row";
@@ -63,7 +61,6 @@
 @import "./../libs/grid/text-column";
 @import "./../libs/banner/background";
 @import "./../libs/banner/fixed-banner";
-@import "./../libs/banner/banner";
 @import "./../libs/banner/st-banner";
 @import "./../libs/banner/vh-banner";
 @import "./../libs/img/figcaption";
@@ -80,6 +77,7 @@
 @import "./../libs/speech-bubble/speech-bubble";
 @import "./../libs/grid/multilayer";
 @import "./../libs/grid/z-index";
+@import "./../libs/position/position";
 
 
 

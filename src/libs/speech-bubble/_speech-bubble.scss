@@ -2,24 +2,6 @@
 // <div class="speech-bubble">Some text inside.</div>
 
 
-// var
-
-$bsx-speech-bubble-padding:         .5rem 1rem !default;
-$bsx-speech-bubble-border-radius:   $bsx-border-radius !default;
-$bsx-speech-bubble-color:           $white !default;
-$bsx-speech-bubble-bg-color:        $primary !default;
-
-$bsx-speech-bubble-arrow-size:      1.75rem !default;
-$bsx-speech-bubble-arrow-sm-size:      1.25rem !default;
-$bsx-speech-bubble-arrow-lg-size:      2.5rem !default;
-$bsx-speech-bubble-arrow-distance:  '' !default;
-
-
-
-
-// style
-
-
 .speech-bubble {
     position: relative;
     padding: $bsx-speech-bubble-padding;

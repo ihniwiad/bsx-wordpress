@@ -51,7 +51,7 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
   ?>
 
     <!-- consent popup -->    
-    <div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-light border-top shadow d-none" id="consent-popup" role="dialog" tabindex="-1" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
+    <div class="fixed-banner bottom-0 bg-light border-top shadow d-none" id="consent-popup" role="dialog" tabindex="-1" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
           
       <div class="container py-3">
 
@@ -137,7 +137,7 @@ if ( class_exists( 'Consent_Popup_Manager' ) ) {
 ?>
 
 <!-- consent popup -->    
-<div class="fixed-banner fixed-banner-bottom fixed-banner-closable bg-light border-top shadow d-none" id="consent-popup" role="dialog" tabindex="-1" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
+<div class="fixed-banner bottom-0 bg-light border-top shadow d-none" id="consent-popup" role="dialog" tabindex="-1" hidden data-fn="cookie-related-elem" data-tg="data-processing-popup" data-fn-options="{ cookieName: 'dataProcessingConsentBannerHidden', cookieExpiresDays: 365, hiddenCookieValue: '1', hiddenClass: 'd-none', remoteOpenable: true }">
       
   <div class="container py-3">
     

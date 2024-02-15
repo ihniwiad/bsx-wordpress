@@ -1,10 +1,3 @@
-$bsx-blockquote-border-color:		$border-color !default;
-$bsx-blockquote-border-width: 		$border-heavy-width !default;
-$bsx-blockquote-padding-left: 		1rem !default;
-$bsx-blockquote-cite-font-size: 	$bsx-small-font-size !default;
-$bsx-blockquote-cite-font-style: 	italic !default;
-
-
 
 blockquote {
     border-left: $bsx-blockquote-border-width solid $bsx-blockquote-border-color;

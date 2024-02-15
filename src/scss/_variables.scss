@@ -1,3 +1,8 @@
+
+@import "./custom-style-variables";
+
+
+
 // COLORS
 
 
@@ -124,13 +129,6 @@ $lead-font-size:                1.25rem !default;
 $badge-font-weight:       400 !default;
 
 
-// TEXT SHADOW
-
-$text-shadow-dark:              0 0 0.1em rgba(0, 0, 0, 0.33) !default;
-$text-shadow-darker:            0 0 0.5em rgba(0, 0, 0, 0.8), 0 0 0.1em rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.5) !default;
-$text-shadow-darkest:           0 0 0.5em #000, 0 0 0.1em rgba(0, 0, 0, 1), 0 0 1px rgba(0, 0, 0, 1) !default;
-
-
 // BUTTON (ICON, OUTLINE)
 
 $button-distance-icon-text:     0.75em !default;
@@ -143,55 +141,23 @@ $button-outline-border-width:   2px !default;
 $card-border-radius:            0 !default;
 
 
-// VIDEO
-
-// play button overlay
-$play-button-width:       2.5em !default;
-$play-button-height:            1.5em !default;
-$play-button-padding-left:      0.1em !default;
-$play-button-font-size:         2rem !default;
-$play-button-border-radius:     0.125em !default;
-$play-button-bg-color:          rgba($black, 0.4) !default;
-$play-button-bg-color-hover:    rgba($primary, 0.75) !default;
-$play-button-color:             rgba($white, 0.8) !default;
-$play-button-color-hover:       $white !default;
-$play-button-shadow-size:       0.25em !default;
-$play-button-shadow-color:      rgba($white, 0.25) !default;
-$play-button-transition:        $bsx-basic-transition !default;
-
-
-// CUSTOM FORM
-
-$custom-range-thumb-width:    1.5rem !default;
-$custom-range-thumb-height:   $custom-range-thumb-width !default;
-$custom-range-track-height:   $custom-range-thumb-width / 3 !default;
-
-// overwrite bootstrap style which doesn't fit to standard input styling
-$input-btn-focus-width:           .2rem !default; // @bootstrap dependant
-$custom-select-focus-box-shadow:    0 0 0 $input-btn-focus-width rgba($primary, .25) !default;
-
-
-// BREADCRUMB
-
-$breadcrumb-divider:                "»" !default;
-$breadcrumb-item-padding:           0.25rem !default;
-$breadcrumb-link-color:             $gray-700 !default;
-
-$breadcrumb-padding-y:              0 !default;
-$breadcrumb-padding-x:              0 !default;
-
-$breadcrumb-margin-bottom:          0 !default;
-
-$breadcrumb-bg:                     transparent !default;
-$breadcrumb-divider-color:          $breadcrumb-link-color !default;
-$breadcrumb-active-color:           $breadcrumb-link-color !default;
-
-$breadcrumb-border-radius:          0 !default;
-
-
 // TABLE
 
 $table-cell-padding-sm:       .35rem .25rem !default;
+
+
+// CHECKLIST
+
+$bsx-checklist-indent:              2em !default;
+
+$bsx-checklist-icon-content:        \f00c !default; // unquoted
+$bsx-checklist-icon-font-family:    $bsx-icon-font-family !default;
+$bsx-checklist-icon-color:          $primary !default;
+$bsx-checklist-icon-font-weight:    $bsx-icon-font-weight !default;
+
+$bsx-checklist-item-spacing:        .25em !default;
+
+
 
 
 // ===================================================================================
@@ -268,9 +234,416 @@ $bsx-dropdown-min-width:    $dropdown-min-width !default;
 // BUTTON
 
 $bsx-btn-border-radius:     $btn-border-radius !default;
+$bsx-btn-padding-y:         $btn-padding-y !default;
+$bsx-btn-padding-x:         $btn-padding-x !default;
+$bsx-btn-font-size:         $btn-font-size !default;
+$bsx-btn-line-height:       $btn-line-height !default;
+
+
+// TYPO (AFTER BOOTSTRAP)
+
+// blockquote
+
+$bsx-blockquote-border-color:		$border-color !default;
+$bsx-blockquote-border-width: 		$border-heavy-width !default;
+$bsx-blockquote-padding-left: 		1rem !default;
+$bsx-blockquote-cite-font-size: 	$bsx-small-font-size !default;
+$bsx-blockquote-cite-font-style: 	italic !default;
+
+// text inverse
+
+$bsx-text-inverse-color:      $white !default;
+$bsx-primary-inverse-color:   $white !default;
+$bsx-secondary-inverse-color: $white !default;
+$bsx-light-inverse-color:     $black !default;
+$bsx-dark-inverse-color:      $white !default;
+$bsx-info-inverse-color:      $white !default;
+
+// text shadow
+
+$bsx-dark-text-shadow:              0 0 0.1em rgba(0, 0, 0, 0.33) !default;
+$bsx-darker-text-shadow:            0 0 0.5em rgba(0, 0, 0, 0.8), 0 0 0.1em rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.5) !default;
+$bsx-darkest-text-shadow:           0 0 0.5em #000, 0 0 0.1em rgba(0, 0, 0, 1), 0 0 1px rgba(0, 0, 0, 1) !default;
+
+$bsx-light-text-shadow:           	0 0 .1em rgba(255, 255, 255, .6) !default;
+$bsx-primary-text-shadow:           0 0 .1em rgba($primary, .6) !default;
+
+// text
+
+$bsx-text-primary: "" !default;
+$bsx-bold-font-weight: 500 !default;
+$bsx-container-word-wrap: break-word !default;
+$bsx-container-hyphens: auto !default;
+
+
+// ACCORDION
+
+
+// accordion function
+
+$bsx-acc-transition-duration:   0.4s !default;
+$bsx-acc-transition-effect:     ease !default;
+
+// accordion styling
+
+// (main)
+$bsx-acc-header-color:              inherit !default;
+$bsx-acc-header-hover-color:        $primary !default;
+$bsx-acc-header-open-color:         $primary !default;
+$bsx-acc-header-open-hover-color:   darken($primary, 10%) !default;
+$bsx-acc-header-padding:            1rem 0 !default; // .25rem .5rem !default;
+$bsx-acc-header-background:         transparent !default; // transparent
+$bsx-acc-header-open-background:    transparent !default; // transparent
+$bsx-acc-header-border-style:       none !default;
+$bsx-acc-header-border-width:       1px !default;
+$bsx-acc-header-border-color:       $bsx-border-color !default;
+$bsx-acc-header-font-size:          inherit !default;
+$bsx-acc-header-text-align:         left !default;
+$bsx-acc-header-transition:         $bsx-basic-transition !default;
+
+$bsx-acc-header-icon-after-width:         .5rem !default;
+$bsx-acc-header-icon-padding-x:           $bsx-acc-header-icon-after-width / 5 !default;
+$bsx-acc-header-icon-after-margin-value:  $bsx-acc-header-icon-after-width / 5 * 3 !default;
+$bsx-acc-header-icon-after-border-width:  1px !default;
+$bsx-acc-header-icon-after-border-style:  none none solid solid !default;
+$bsx-acc-header-icon-after-border-color:  inherit !default;
+
+$bsx-acc-content-border-style:        none none solid !default;
+$bsx-acc-content-border-width:        1px !default;
+$bsx-acc-content-border-color:        $bsx-border-color !default;
+
+$bsx-acc-content-inner-padding:      .25rem 0 0 !default; // 1rem .5rem 0 !default;
+$bsx-acc-content-inner-background:    transparent !default;
+
+// (optional)
+$bsx-acc-header-icon-after-content:           "" !default;
+$bsx-acc-header-icon-after-transform:         rotate(-45deg) !default;
+$bsx-acc-header-icon-after-active-transform:  rotate(135deg) !default;
+
+
+// BANNER
+
+$bsx-banner-atf-bg-color:   $gray-300 !default;
+
+$bsx-banner-1-min-height: 26rem !default;
+$bsx-banner-1-desktop-min-height: 36rem !default; // calc(18rem + 20vw)
+$bsx-banner-2-min-height: 22rem !default;
+$bsx-banner-2-desktop-min-height: 30rem !default; // calc(15rem + 16vw)
+$bsx-banner-3-min-height: 18rem !default;
+$bsx-banner-3-desktop-min-height: 24rem !default; // calc(12rem + 12vw)
+$bsx-banner-4-min-height: 15rem !default;
+$bsx-banner-4-desktop-min-height: 18rem !default;
+$bsx-banner-5-min-height: 13rem !default;
+$bsx-banner-6-min-height: 11rem !default;
+
+$bg-transparency-light:          0.6 !default;
+$bg-transparency-medium:         0.55 !default;
+$bg-transparency-dark:           0.5 !default;
+$bg-opacity-light:   0.85 !default;
+$bg-opacity-medium:  0.75 !default;
+$bg-opacity-dark:    0.65 !default;
+
+$bsx-fixed-banner-z-index:      $bsx-fixed-z-index + 1 !default;
+
+$bsx-banner-st-1-py: 6rem !default;
+$bsx-banner-st-2-py: 4rem !default;
+$bsx-banner-st-3-py: 2rem !default;
+$bsx-banner-st-4-py: 1rem !default;
+
+
+// BREADCRUMB
+
+$bsx-breadcrumb-link-color:             $gray-700 !default;
+$bsx-breadcrumb-display:                block !default;
+$bsx-breadcrumb-flex-wrap:              unset !default;
+$bsx-breadcrumb-overflow:               hidden !default;
+$bsx-breadcrumb-white-space:            nowrap !default;
+$bsx-breadcrumb-text-overflow:          ellipsis !default;
+
+$bsx-breadcrumb-2nd-item-before-float:  none !default;
+$bsx-breadcrumb-item-display:           inline !default;
+
+
+// NAV (EXTERNAL VAR FILES)
+
+// include before footer since using var from nav
+@import "./../libs/nav/scss/var";
+
+
+// FOOTER
+
+$bsx-footer-icon-link-color:  lighten($bsx-appnav-color, 10) !default;
+
+$bsx-footer-margin-top:       $bsx-paragraph-margin-bottom * 2 !default;
+$bsx-footer-paddinf-bottom:   .5rem !default;
+$bsx-footer-bg-color:         $gray-100 !default;
+
+// social media links
+
+$bsx-social-media-color-prefix:         "text-" !default;
+$bsx-social-media-hover-color-prefix:   "hover-text-" !default;
+
+$bsx-social-media-colors: (
+  facebook: "#3b5998", 
+  googleplus: "#4285F4",
+  instagram: "#FF543E", 
+  linkedin: #0073B0,
+  twitter: "#000000", 
+  xing: "#B0D400",
+) !default;
+
+$bsx-social-media-hover-color-transition:   $bsx-basic-transition !default;
+
+
+// GRID
+
+$grid-float-gutter:     $bsx-grid-gutter-width !default;
+
+$bsx-rem-col-sizes: 12 15 18 20;
+
+// use `2 * $bsx-text-column-max-width + $bsx-grid-gutter-width` instead of 1470px ?
+$bsx-sized-container-sizes: (
+  lg: 1470px,
+  xl: 2000px
+) !default;
+
+$bsx-text-column-max-width:   34rem !default;
+
+
+// IMG
+
+$bsx-figcaption-line-height: 		1.25 !default;
+$bsx-figcaption-padding: 			.25rem 0 !default;
+$bsx-figcaption-font-style: 		italic !default;
+$bsx-figcaption-color: 				'' !default;
+
+
+$bsx-zoomable-img-display:            inline-block !default;
+$bsx-zoomable-img-line-height:        1.5 !default;
+
+$bsx-zoomable-img-after-color:          	rgba( $white, 0.8 ) !default;
+$bsx-zoomable-img-after-hover-color:      	$white !default;
+$bsx-zoomable-img-after-bg-color:         	rgba( $black, 0.35 ) !default;
+$bsx-zoomable-img-after-hover-bg-color:     rgba( $black, 0.5 ) !default;
+$bsx-zoomable-img-after-border-color:       rgba( $white, 0.5 ) !default;
+$bsx-zoomable-img-after-hover-border-color: rgba( $white, 0.85 ) !default;
+
+$bsx-zoomable-img-after-border-style:       solid none none solid !default;
+$bsx-zoomable-img-after-border-width:       1px !default;
+
+$bsx-zoomable-img-after-font-family:      	$bsx-icon-font-family !default;
+$bsx-zoomable-img-after-content:        	"\f00e" !default; // fullscreen: \f0b2 – magnifier: \f00e
+
+$bsx-zoomable-img-after-padding:        	0.25rem 0.5rem !default;
+$bsx-zoomable-img-after-border-radius:      0.25rem 0 0 0 !default;
+
+$bsx-zoomable-img-after-transition:       	$bsx-basic-transition !default;
 
 
 
+// IMG GALLERY (PHOTOSWIPE)
+
+$bsx-floating-gallery-margin:               .25rem !default;
+
+
+// img height sizes
+
+$bsx-floating-gallery-xs-height:            calc(4.9vh + 5.6vw) !default;
+$bsx-floating-gallery-xs-max-height:        7rem !default;
+
+$bsx-floating-gallery-sm-height:            calc(5.6vh + 6.4vw) !default;
+$bsx-floating-gallery-sm-max-height:        8rem !default;
+
+$bsx-floating-gallery-md-height:            calc(7vh + 8vw) !default;
+$bsx-floating-gallery-md-max-height:        10rem !default;
+
+$bsx-floating-gallery-lg-height:            calc(8.4vh + 9.6vw) !default;
+$bsx-floating-gallery-lg-max-height:        12rem !default;
+
+$bsx-floating-gallery-xl-height:            calc(10.5vh + 12vw) !default;
+$bsx-floating-gallery-xl-max-height:        15rem !default;
+
+
+// LAZY IMG
+
+$bsx-lazy-img-bg:         rgba(0, 0, 0, .05) !default;
+
+
+// LINE LABEL
+
+$bsx-line-label-color:          $text-muted !default;
+$bsx-line-label-text-transform: '' !default;
+$bsx-line-label-font-weight:    '' !default;
+$bsx-line-label-border-color:   $text-muted !default;
+$bsx-line-label-border-width:   1px !default;
+$bsx-line-label-px:             .33rem !default;
+$bsx-line-label-max-width:      75% !default;
+$bsx-line-label-line-length:    5000px !default; // overflow will be hidden
+
+
+// TOC LIST
+
+$bsx-toc-list-level-1-indent: 2.5rem !default; // 2rem
+$bsx-toc-list-level-2-indent: 3rem !default; // 3rem
+$bsx-toc-list-level-3-indent: 4rem !default; // 4rem
+$bsx-toc-list-small-device-indent: 1rem !default; // 1rem
+$bsx-toc-list-li-before-padding-right: .5rem !default;
+
+
+// LOGO LIST
+
+$bsx-limited-logo-xs-line-height:   3.2rem !default;
+$bsx-limited-logo-xs-height:      3rem !default;
+$bsx-limited-logo-xs-width:       5.8rem !default;
+
+$bsx-limited-logo-sm-line-height:   3.8rem !default;
+$bsx-limited-logo-sm-height:      3.6rem !default;
+$bsx-limited-logo-sm-width:       7rem !default;
+
+$bsx-limited-logo-md-line-height:   5rem !default;
+$bsx-limited-logo-md-height:      4.8rem !default;
+$bsx-limited-logo-md-width:       8.6rem !default;
+
+$bsx-limited-logo-lg-line-height:   7rem !default;
+$bsx-limited-logo-lg-height:      6.8rem !default;
+$bsx-limited-logo-lg-width:       13rem !default;
+
+
+// size basic
+$logo-list-md-line-heigh:     4em !default;
+$logo-list-py:         1em !default;
+$logo-list-px:         1em !default;
+$logo-list-md-img-max-height:   3.8em !default;
+
+// size lg
+$logo-list-lg-line-heigh:     5em !default;
+$logo-list-lg-img-max-height:   4.8em !default;
+
+// size xl
+$logo-list-xl-line-heigh:     7em !default;
+$logo-list-xl-img-max-height:   6.8em !default;
+
+// all
+$logo-list-overlay-start-height:    1px !default;
+$logo-list-overlay-arrow-width:     0.4em !default;
+$logo-list-inverse-img-opacity:     0.75 !default;
+$logo-list-transition-duration:     .4s !default;
+$logo-list-touch-transition-duration: .6s !default;
+
+$logo-list-overlay-bg-start-color:    rgba($black, 0.1) !default;
+$logo-list-overlay-bg-show-color:   rgba($black, 0.5) !default;
+$logo-list-overlay-icon-color:      $gray-300 !default;
+
+// close
+$logo-list-overlay-close-font-size:   2em !default;
+$logo-list-overlay-close-line-height: 1 !default;
+$logo-list-overlay-close-px:      0.33333em !default;
+$logo-list-overlay-close-pt:      0 !default;
+$logo-list-overlay-close-pb:      0.25em !default;
+
+$logo-list-overlay-close-color:     $white !default;
+$logo-list-overlay-close-content:   "\00d7" !default;
+
+// img alt (icon & text)
+$logo-list-img-alt-icon-font-size:    0.75em !default;
+$logo-list-img-alt-text-font-size:    0.20em !default;
+
+
+// SLIDER (OWL CAROUSEL)
+
+$nav-color:             rgba($black, 0.8) !default;
+$nav-color-hover:       $black !default;
+
+$nav-background:        rgba($white, 0.6) !default;
+$nav-background-hover:  rgba($white, 0.85) !default;
+
+$dot-margin:      0 !default;
+
+$owl-nav-button-pt:     0.25em !default;
+$owl-nav-button-px:     0.5em !default;
+
+$owl-nav-icon-lg-font-size:   1.5em !default;
+$owl-nav-icon-lg-line-height: 1.5 !default;
+
+$owl-nav-top-t:     1em !default;
+
+$owl-dot-margin:    5px !important !default;
+
+// fadeout
+$bsx-slider-fadeout-zindex:           1 !default;
+$bsx-slider-fadeout-width:            3rem !default;
+$bsx-slider-fadeout-color:            $body-bg !default;
+$bsx-slider-fadeout-left-gradient:    "linear-gradient(to right, #{$bsx-slider-fadeout-color} 0%,transparent 100%)" !default;
+$bsx-slider-fadeout-right-gradient:   "linear-gradient(to left, #{$bsx-slider-fadeout-color} 0%,transparent 100%)" !default;
+
+
+// SPEECH BUBBLE
+
+$bsx-speech-bubble-padding:         .5rem 1rem !default;
+$bsx-speech-bubble-border-radius:   $bsx-border-radius !default;
+$bsx-speech-bubble-color:           $white !default;
+$bsx-speech-bubble-bg-color:        $primary !default;
+
+$bsx-speech-bubble-arrow-size:      1.75rem !default;
+$bsx-speech-bubble-arrow-sm-size:      1.25rem !default;
+$bsx-speech-bubble-arrow-lg-size:      2.5rem !default;
+$bsx-speech-bubble-arrow-distance:  '' !default;
+
+
+// TABLE
+
+$bsx-styled-table-thead-bg: 	$light !default;
+
+
+// TAG FILTER
+
+$bsx-tgf-primary-color:                 $primary !default;
+$bsx-tgf-contrast-color:                $white !default;
+$bsx-tgf-trigger-transition:            $bsx-basic-transition !default;
+$bsx-tgf-target-item-transition:        $bsx-basic-transition !default;
+$bsx-tgf-label-height:                  43px !default;
+$bsx-tgf-label-checkbox-width:          1.2rem !default;
+$bsx-tgf-label-checkbox-border-radius:  5px !default;
+$bsx-tgf-label-checkbox-border-width:   2px !default;
+$bsx-tgf-label-checkbox-check-border-width:   3px !default;
+
+$bsx-tgf-label-padding-y:               $bsx-btn-padding-y !default;
+$bsx-tgf-label-padding-x:               $bsx-btn-padding-x !default;
+$bsx-tgf-label-font-size:               $bsx-btn-font-size !default;
+$bsx-tgf-label-line-height:             $bsx-btn-line-height !default;
+
+$bsx-tgf-label-padding-left:            2.5rem !default;
+
+
+// TO TOP
+
+$bsx-totop-z-index:     15 !default;
+$bsx-totop-transition:  all 400ms ease-in-out !default;
+$bsx-totop-margin:      0.5em !default;
+
+
+// HOVER EFFECTS
+
+$bsx-hover-transition:          $bsx-basic-transition !default;
+
+// shadow
+$bsx-hover-box-shadow:      0 1px 5px 0 rgba(0, 0, 0, 0) !default;
+$bsx-hover-hover-box-shadow:  0 1px 5px 0 rgba(0, 0, 0, 0.35) !default;
+
+// move
+$bsx-hover-move-top:          -1px !default;
+
+// img zoom
+$bsx-hover-img-zoom-transition:           all .4s ease-in-out !default;
+$bsx-hover-img-zoom-transform:            scale(1.05) !default;
+
+
+// WAIT SCREEN
+
+$bsx-wait-screen-color:         rgba($white, 0.66) !default;
+$bsx-wait-screen-icon-color:    $gray-600 !default;
+$bsx-wait-screen-icon-size:     3rem !default;
+$bsx-wait-screen-icon-z-index:  5000 !default;
 
 
 

@@ -146,6 +146,35 @@ $card-border-radius:            0 !default;
 $table-cell-padding-sm:       .35rem .25rem !default;
 
 
+// CUSTOM FORM
+
+$custom-range-thumb-width:    1.5rem !default;
+$custom-range-thumb-height:   $custom-range-thumb-width !default;
+$custom-range-track-height:   $custom-range-thumb-width / 3 !default;
+
+// overwrite bootstrap style which doesn't fit to standard input styling
+$input-btn-focus-width:           .2rem !default; // @bootstrap dependant
+$custom-select-focus-box-shadow:    0 0 0 $input-btn-focus-width rgba($primary, .25) !default;
+
+
+// BREADCRUMB
+
+$breadcrumb-divider:                "»" !default;
+$breadcrumb-item-padding:           0.25rem !default;
+$breadcrumb-link-color:             $gray-700 !default;
+
+$breadcrumb-padding-y:              0 !default;
+$breadcrumb-padding-x:              0 !default;
+
+$breadcrumb-margin-bottom:          0 !default;
+
+$breadcrumb-bg:                     transparent !default;
+$breadcrumb-divider-color:          $breadcrumb-link-color !default;
+$breadcrumb-active-color:           $breadcrumb-link-color !default;
+
+$breadcrumb-border-radius:          0 !default;
+
+
 // CHECKLIST
 
 $bsx-checklist-indent:              2em !default;
@@ -567,7 +596,7 @@ $owl-nav-icon-lg-line-height: 1.5 !default;
 
 $owl-nav-top-t:     1em !default;
 
-$owl-dot-margin:    5px !important !default;
+$owl-dot-margin:    5px !default;
 
 // fadeout
 $bsx-slider-fadeout-zindex:           1 !default;

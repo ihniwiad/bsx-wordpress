@@ -193,6 +193,11 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
             linkEl = figureEl.children[0]; // <a> element
 
+            if ( ! linkEl.getAttribute('data-size') ) {
+                // skip if attr is not set, ignore (non gallery) image
+                continue;
+            }
+
             size = linkEl.getAttribute('data-size').split('x');
 
             // create slide object

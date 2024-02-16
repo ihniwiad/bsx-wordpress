@@ -5,7 +5,7 @@
  */
 
 function create_banner_custom_post() {
-    register_post_type( 'banner-custom-post', // my-custom-post
+    register_post_type( 'banner-cpt', // my-cpt
         array(
         'labels' => array(
             'name' => __( 'Banner', 'bsx-wordpress' ),

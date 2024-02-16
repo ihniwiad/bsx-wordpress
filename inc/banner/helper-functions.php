@@ -20,7 +20,7 @@ class BSXWP_Banner_Helper_Fn {
 
         // query banner
         $args = array(
-            'post_type' => 'banner-custom-post',
+            'post_type' => 'banner-cpt',
             'meta_key' => 'banner',
             'meta_value' => BSXWP_Helper_Fn::metaArrayQueryVal( [ 'key' => 'banner_type', 'val' => $banner_type ] ),
             // 'meta_value' => serialize( 'banner_type' ) . serialize( 'blog' ), // creates serialized key value pair, e.g. `s:3:"foo";s:3:"bar";` to match in serialized array, e.g. `a:1:{s:3:"foo";s:3:"bar";}`

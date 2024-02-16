@@ -112,7 +112,7 @@ get_header(); ?>
 
             // banner
             $args = array(
-                'post_type' => 'banner-custom-post',
+                'post_type' => 'banner-cpt',
                 'posts_per_page' => -1,
                 'order' => 'DESC'
             );

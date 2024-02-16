@@ -10,7 +10,7 @@ class BannerMeta {
     private function registerMetaBox() {
 
         function add_banner_meta_box() {
-            $screen = 'banner-custom-post'; // choose 'post' or 'page' or custom post
+            $screen = 'banner-cpt'; // choose 'post' or 'page' or custom post
             add_meta_box( 
                 'banner_meta_box', // $id
                 __( 'Banner Settings', 'bsx-wordpress' ), // $title

@@ -46,6 +46,11 @@ function show_page_style_meta_box() {
             </label>
         </p>
         <p>
+            <label>
+                <input type="checkbox" name="page_style[page_is_gallery_parent]" value="1" <?php if ( is_array( $meta ) && isset( $meta[ 'page_is_gallery_parent' ] ) && $meta[ 'page_is_gallery_parent' ] == 1 ) echo 'checked' ?>><?php _e( 'Page is gallery parent', 'bsx-wordpress' ); ?>
+            </label>
+        </p>
+        <p>
             <label for="page_style[cpt_slug]">
                 <?php _e( 'Assign Custom Post Type (optional)', 'bsx-wordpress' ); ?>
             </label>

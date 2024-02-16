@@ -127,25 +127,33 @@ msgstr "Service-Telefon"
 msgid "Service Email"
 msgstr "Service-E-Mail"
 
-#: functions.php:660
+#: inc/page-style/meta-box.php:12
 msgid "Page Style"
 msgstr "Seiten-Style"
 
-#: functions.php:677
+#: inc/page-style/meta-box.php:12
 msgid "Add space on Page top"
 msgstr "Oben Abstand für Menü zufügen"
 
-#: functions.php:682
+#: inc/page-style/meta-box.php:12
 msgid "Wrap Page with Container"
 msgstr "Seite auf Container-Breite begrenzen"
 
-#: functions.php:689
+#: inc/page-style/meta-box.php:12
 msgid "Show Breadcrumb"
 msgstr "Breadcrumb anzeigen"
 
-#: functions.php:689 functions.php:806
+#: inc/page-style/meta-box.php:12
 msgid "Do not show bottom banner"
 msgstr "Bottom-Banner nicht anzeigen"
+
+#: inc/page-style/meta-box.php:12
+msgid "Page is gallery parent"
+msgstr "Seite ist Bildergallerie-Element"
+
+#: inc/page-style/meta-box.php:12
+msgid "Assign Custom Post Type (optional)"
+msgstr "Custom Post Type zuordnen (optional)"
 
 #: functions.php:723
 msgid "Meta Data"

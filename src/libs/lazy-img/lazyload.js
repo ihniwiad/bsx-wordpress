@@ -440,8 +440,9 @@ $.fn.lazyload = function( options, index ) {
                             $self.hide();
                             //console.log( 'hidden (' + preloadImgSrc + ')' );
                             if ( $self._isSrcsetImg() ) {
+                                // console.log( 'set srcset: ' + $self.attr( 'data-' + settings.srcset_data_attribute ) )
                                 // set srcset first
-                                $self.attr( 'srcset', $( this ).attr( 'data-' + settings.srcset_data_attribute ) );
+                                $self.attr( 'srcset', $self.attr( 'data-' + settings.srcset_data_attribute ) );
                                 // then set loaded url selected from srcset
                                 $self.attr( 'src', preloadImgSrc );
                             }

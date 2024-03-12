@@ -23,24 +23,24 @@ class Theme_Forms_Form_Template {
         $is_deprecated_non_post_form = false;
 
         if ( $index < 6 ) {
-        	// is hash
-        	$is_deprecated_non_post_form = true;
+            // is hash
+            $is_deprecated_non_post_form = true;
 
         }
 
 
         if ( $is_deprecated_non_post_form ) {
-        	// get data from options
+            // get data from options
 
-        	$form_id = hash( 'md5', 'x' . $index );
-        	$template = get_option( 'form-' . $index . '-form-template' );
+            $form_id = hash( 'md5', 'x' . $index );
+            $template = get_option( 'form-' . $index . '-form-template' );
         }
         else {
-        	// get data from post meta
+            // get data from post meta
 
             $meta = get_post_meta( $form_id, 'theme_forms', true );
 
-	        $template = isset( $meta[ 'form_template' ] ) ? $meta[ 'form_template' ] : '';
+            $template = isset( $meta[ 'form_template' ] ) ? $meta[ 'form_template' ] : '';
         }
 
 
@@ -48,8 +48,23 @@ class Theme_Forms_Form_Template {
         $template = filter_var( $template, FILTER_UNSAFE_RAW );
 
         // pattern for placeholders (allow css selectors for js)
-        $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\"\,.#\[\]\(\)]|)+\]/s";
-        $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\)\,.:?!\+€\/])+\]/s";
+        // $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\"\,.#\[\]\(\)]|)+\]/s";
+        // $translate_pattern = "/\[translate::+([a-zA-Z0-9-_ =\"'\(\)\,.:?!\+€\/])+\]/s";
+        $input_chars = "[a-zA-Z0-9-_ =\"\,.#*\[\]\(\)]"; // allowed chars in input placeholder
+        $translate_chars = "\[translate::+([a-zA-Z0-9-_ =\"'\(\)\,.#*:?!\+€\/])+\]"; // allowed chars in translation
+        $input_placeholder_attr_chars = "[a-zA-Z0-9-_ =\"\,.#*\[\]\(\)]"; // allowed chars in input placeholder’s placeholder attribute
+
+        // input pattern may contain translation in placeholder
+        $input_pattern = sprintf( 
+            "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+(%s|)+(%s|)+(%s|)+\]/s",
+            $input_chars,
+            " placeholder=\"$translate_chars", // may contain translation or not
+            $input_chars,
+        );
+        $translate_pattern = sprintf( 
+            "/%s/s",
+            $translate_chars,
+        );
 
         // replace input placeholders
         $matches = array();
@@ -114,7 +129,7 @@ class Theme_Forms_Form_Template {
 
         return $html;
 
-	}
+    }
 
 
     private static function translate( $translate_string ) {

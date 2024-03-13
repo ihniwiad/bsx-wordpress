@@ -83,6 +83,6 @@ global $logoPath;
 
         <a class="sr-only sr-only-focusable" href="#main"><?php echo __( 'Skip to main content', 'bsx-wordpress' ); ?></a>
     
-        <div class="wrapper" id="top">
+        <div class="page-wrapper" id="top">
 
             <?php include 'template-parts/header/header.php'; ?>

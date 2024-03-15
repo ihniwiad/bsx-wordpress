@@ -52,9 +52,10 @@ const paths = {
             'src/**/*.php', 
             '*.php', 
             'template-parts/**/*.php', 
-            'inc/**/*.php',
-            'languages/*.mo', 
-            'img/**/*'  
+            'inc/**/*.(php|svg)',
+            'languages/*.mo',
+            'assets/img/**/*',
+            'img/**/*',
         ],
     },
 };

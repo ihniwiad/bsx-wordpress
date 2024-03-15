@@ -195,10 +195,11 @@ function wpassist_remove_block_library_css(){
 } 
 add_action( 'wp_enqueue_scripts', 'wpassist_remove_block_library_css' );
 
+
 /**
  * remove more embed stuff (wp-embed.min.js)
  */
- 
+
 add_action( 'init', function() {
     remove_action( 'rest_api_init', 'wp_oembed_register_route' );
     remove_filter( 'oembed_dataparse', 'wp_filter_oembed_result', 10 );
@@ -210,6 +211,17 @@ add_action( 'init', function() {
     remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
     wp_dequeue_style( 'global-styles' );
     wp_deregister_style( 'global-styles' );
+}, PHP_INT_MAX - 1 );
+
+
+/**
+ * security (remove unnecessary information that could enable an attack)
+ */
+
+add_action( 'init', function() {
+    remove_action( 'wp_head', 'wp_generator' );
+    remove_action( 'wp_head', 'wlwmanifest_link' ); 
+    remove_action( 'wp_head', 'rsd_link' );
 }, PHP_INT_MAX - 1 );
 
 

@@ -12,7 +12,7 @@ global $logoPath;
 
 <!DOCTYPE html>
 
-<html class="no-js" <?php language_attributes(); ?><?php if ( $isDevMode ) echo ' data-dev="'.$isDevMode.'"' ?> data-id="<?php echo get_the_ID(); ?>">
+<html class="no-js" <?php language_attributes(); ?><?php if ( $isDevMode ) echo ' data-dev="'.$isDevMode.'"' ?> data-post-id="<?php echo get_queried_object_id(); ?>">
 
     <head>
     

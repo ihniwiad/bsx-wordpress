@@ -885,6 +885,15 @@ if ( file_exists( $file ) ) {
 }
 
 
+/**
+ * Add menu link to show reusable blocks list
+ */
+
+$file = dirname( __FILE__ ) . '/inc/admin-menu/reusable-blocks-link.php';
+if ( file_exists( $file ) ) {
+    require $file;
+}
+
 
 /**
  * Yoast SEO fallback og image (for all languages)

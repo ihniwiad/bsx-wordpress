@@ -20681,6 +20681,17 @@ body.scroll-away-top.scroll-up .to-top-wrapper {
   transition: all 0.3s ease;
 }
 
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper > main,
+.page-main {
+  flex: 1;
+}
+
 /*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */
 /*
 	Styles for basic PhotoSwipe functionality (sliding area, open/close transitions)

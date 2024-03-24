@@ -6,7 +6,7 @@ global $phoneHrefRemovePatterns;
 
 <footer class="page-footer" data-tg="sticky-container-above">
 
-    <hr>
+    <hr class="mt-0">
 
     <div class="container">
 

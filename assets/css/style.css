@@ -20081,6 +20081,8 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
     left: 0;
     padding: 0.25em 0;
     clip: rect(0px, 100000px, 100000px, -1000px);
+    max-height: calc(100vh - 4rem); /* header height */
+    overflow-y: auto;
   }
   .bsx-appnav-navbar-nav:not(.bsx-allmedia-dropdown-nav) > li > ul ul {
     top: -0.25em;
@@ -20468,6 +20470,8 @@ body.scroll-away-top.scroll-down:not(.nav-open) .bsx-appnav-navbar-scroll-toggle
   left: 0;
   padding: 0.25em 0;
   clip: rect(0px, 100000px, 100000px, -1000px);
+  max-height: calc(100vh - 4rem); /* header height */
+  overflow-y: auto;
 }
 .bsx-appnav-navbar-nav.bsx-allmedia-dropdown-nav > li > ul ul {
   top: -0.25em;

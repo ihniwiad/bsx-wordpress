@@ -168,6 +168,9 @@
 
 			// TODO: what about menu overflows screen?
 
+			max-height: calc(100vh - $bsx-below-navbar-top); /* header height */
+			overflow-y: auto;
+
 			ul {
 
 				// level 3..n
@@ -350,7 +353,7 @@
 			}
 		}
 
-    }
+	}
 
 	li:not(.bsx-appnav-bigmenu-dropdown) {
 

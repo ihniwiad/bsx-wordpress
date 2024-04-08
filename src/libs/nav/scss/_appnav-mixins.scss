@@ -169,7 +169,8 @@
 			// TODO: what about menu overflows screen?
 
 			max-height: calc(100vh - $bsx-below-navbar-top); /* header height */
-			overflow-y: auto;
+			// breaks desktop level 3 dropdowns since causes overflow-x
+			//overflow-y: auto;
 
 			ul {
 

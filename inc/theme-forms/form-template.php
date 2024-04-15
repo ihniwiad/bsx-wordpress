@@ -56,7 +56,7 @@ class Theme_Forms_Form_Template {
 
         // input pattern may contain translation in placeholder
         $input_pattern = sprintf( 
-            "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+(%s|)+(%s|)+(%s|)+\]/s",
+            "/\[+(\*|)+(text|email|tel|file|number|checkbox|radio|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+(%s|)+(%s|)+(%s|)+\]/s",
             $input_chars,
             " placeholder=\"$translate_chars", // may contain translation or not
             $input_chars,

@@ -145,15 +145,19 @@ var sendMail = function( $form ) {
         var $messageWrapper = $form.parent().find( '[data-g-tg="message-wrapper"]' );
 
         var formData = $form.serialize();
-        // var formData = Utils.getFormValues( $form );
 
-
-        // DEBUG
-        // console.log( 'typeof formData: ' + typeof formData )
-        // console.log( 'TEST:' + formData )
-
-        // console.log( 'TEST:' + JSON.stringify( formData, null, 2 ) )
-
+        // add unchecked checkbox values to enable template replacing placeholders (if placeholder names are sent)
+        $form.find( 'input[type="checkbox"], input[type="radio"]' ).each( function() {
+            if ( 
+                ! $( this ).prop( 'checked' ) // is not checked
+                // is not already contained (e.g. in case of radio inputs all having equal name but one or none is selected)
+                && formData.indexOf( $( this ).attr( 'name' ) + '=' ) !== 0 // is not first item
+                && formData.indexOf( '&' + $( this ).attr( 'name' ) + '=' ) === -1 // is not one of following items
+            ) {
+                formData += '&' + $( this ).attr( 'name' ) + '=';
+            }
+        } );
+        // console.log( 'formData: \n' + JSON.stringify( formData, null, 2 ) );
 
         var showMessage = function( $messageWrapper, state, message ) {
             var $message = $messageWrapper.find( '[data-g-tg="' + state + '-message"]' );
@@ -214,31 +218,24 @@ var sendMail = function( $form ) {
                 // $( formMessages ).text( response );
 
                 // clear inputs, remove success message on input click
-                var $visibleInputs = $form.find( 'input:not([type="hidden"]), textarea' );
-                // $visibleInputs
-                //     .val( '' )
-                //     .one( 'focus.removeMessage', function() {
-                //         hideMessage( $messageWrapper, 'success' );
-                //         $visibleInputs.off( 'focus.removeMessage' );
-                //     } )
-                // ;
-
-                // keep values of radio & chekboxes untouched
+                var $visibleInputs = $form.find( 'input:not([type="hidden"]):not([type="submit"]), textarea' );
                 $visibleInputs.each( function() {
-                    var $currentInput = $( this );
-                    if ( $currentInput.attr( 'type' ) == 'radio' || $currentInput.attr( 'type' ) == 'checkbox' ) {
-                        // do NOT manipulate value, just set unselected
-                        $currentInput.prop('checked', false)
+                    if ( 
+                        $( this ).is( 'input' )
+                        && ( $( this ).attr( 'type' ) == 'radio' || $( this ).attr( 'type' ) == 'checkbox' )
+                    ) {
+                        $( this ).prop( 'checked', false );
                     }
                     else {
-                        // reset to ""
-                        $currentInput.val( '' );
+                        $( this ).val( '' );
                     }
-                    $currentInput.one( 'focus.removeMessage', function() {
+                } );
+                $visibleInputs
+                    .one( 'focus.removeMessage', function() {
                         hideMessage( $messageWrapper, 'success' );
                         $visibleInputs.off( 'focus.removeMessage' );
                     } )
-                } );
+                ;
 
                 // show success
                 showMessage( $messageWrapper, 'success', response );

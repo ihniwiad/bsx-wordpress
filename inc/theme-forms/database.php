@@ -49,7 +49,7 @@ class Theme_Forms_Database_Handler {
 
 
 		    // $table_name = $wpdb->prefix . 'test';
-		    // $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+		    // $sql = "CREATE TABLE $table_name (
 		    //     id mediumint(9) AUTO_INCREMENT primary key NOT NULL
 		    //     time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		    //     count smallint(5) NOT NULL,
@@ -57,7 +57,6 @@ class Theme_Forms_Database_Handler {
 		    //     UNIQUE KEY id (id)
 		    // ) $charset_collate;";
 
-		    // dbDelta( $sql );
 		    // maybe_create_table( $table_name, $sql );
 
 

@@ -4,8 +4,8 @@ function bsx_theme_forms_create_custom_post() {
     register_post_type( 'theme-forms-cpt', // my-custom-post
         array(
         'labels' => array(
-            'name' => __( 'Theme Forms', 'bsx-wordpress' ),
-            'singular_name' => __( 'Theme Form', 'bsx-wordpress' ),
+            'name' => esc_html__( 'Theme Forms', 'bsx-wordpress' ),
+            'singular_name' => esc_html__( 'Theme Form', 'bsx-wordpress' ),
         ),
         'public' => true,
         'has_archive' => false,

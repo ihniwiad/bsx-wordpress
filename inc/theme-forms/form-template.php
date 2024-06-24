@@ -7,17 +7,12 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 class Theme_Forms_Form_Template {
 
 
-    // pattern for placeholders
-    // $pattern = "/\[+(\*|)+(text|email|number|message)+::+([a-zA-Z0-9-_ =\"])+\]+/s";
-    // $matches = array();
-    // $has_matches = preg_match( $pattern, $str, $matches );
-
-
     public static function make_form_from_template( $index ) {
 
+        global $functions_file_basename;
 
 
-        // TODO: check if post form or fix form
+        // check if custom post form (modern) or fix form (deprecated)
 
         $form_id = $index;
         $is_deprecated_non_post_form = false;
@@ -25,27 +20,30 @@ class Theme_Forms_Form_Template {
         if ( $index < 6 ) {
             // is hash
             $is_deprecated_non_post_form = true;
-
         }
-
 
         if ( $is_deprecated_non_post_form ) {
             // get data from options
-
             $form_id = hash( 'md5', 'x' . $index );
             $template = get_option( 'form-' . $index . '-form-template' );
         }
         else {
             // get data from post meta
-
             $meta = get_post_meta( $form_id, 'theme_forms', true );
-
             $template = isset( $meta[ 'form_template' ] ) ? $meta[ 'form_template' ] : '';
         }
 
 
-        // TODO: better sanitation possible?
-        $template = filter_var( $template, FILTER_UNSAFE_RAW );
+        // $template = filter_var( $template, FILTER_UNSAFE_RAW );
+
+        // sanitize user generated HTML template
+        // allow specific HTML tags
+        // allow `a` with `href` for link to privacy policy, but remove `href="javascript: ..."`
+        // if including more tags might be necessary to remove more attributes like `src="javascript: ..."`
+        $template = strip_tags( $template, [ 'div', 'span', 'label', 'button', 'a', 'br' ] );
+        $template = preg_replace( '/ (onload|onclick|onchange|onmouseover|onmouseout|onmousedown|onmouseup).*".*"/', '', $template );
+        $template = preg_replace( '/ href.*"javascript:.*"/', '', $template );
+
 
         // pattern for placeholders (allow css selectors for js)
         // $input_pattern = "/\[+(\*|)+(text|email|tel|file|number|message|human-verification-display|human-verification-input|human-verification-refresh-attr|submit)+(::|)+([a-zA-Z0-9-_ =\"\,.#\[\]\(\)]|)+\]/s";
@@ -102,33 +100,35 @@ class Theme_Forms_Form_Template {
             $action_url_trunc = substr( $action_url_trunc, 0, strlen( $action_url_trunc ) - 1 );
         }
 
-        $html = '<div data-id="form-wrapper">';
-            $html .= '<form novalidate method="post" action="' . $action_url_trunc . '/wp-json/bsx/v1/mailer/" data-fn="mail-form">';
-                $html .= $template;
-                $html .= '<input type="hidden" name="hv__text__r" value="" data-g-tg="hv">';
-                $html .= '<input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">';
-                $html .= '<input type="hidden" name="idh__text__r" value="' . $form_id . '">';
-            $html .= '</form>';
-            $html .= '<div data-g-tg="message-wrapper">';
-                $html .= '<div data-g-tg="success-message" aria-hidden="true" style="display: none;">';
-                    $html .= '<div class="alert alert-success lead mb-4" role="alert">';
-                        // include response here
-                        $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>';
-                        // $html .= '<span class="fa fa-check fa-lg" aria-hidden="true"></span> ' . esc_html__( 'Your message has been sent successfully.', 'bsx-wordpress' );
-                    $html .= '</div>';
-                $html .= '</div>';
-                $html .= '<div data-g-tg="error-message" aria-hidden="true" style="display: none;">';
-                    $html .= '<div class="alert alert-danger lead mb-4" role="alert">';
-                        // include response here
-                        $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>';
-                        // $html .= '<span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> ' . esc_html__( 'An error occured. Your message has not been sent.', 'bsx-wordpress' );
-                    $html .= '</div>';
-                $html .= '</div>';
-            $html .= '</div><!-- /[data-g-tg="message-wrapper"] -->';
-        $html .= '</div><!-- /[data-id="form-wrapper"] -->';
+
+        // wrap template with form and hidden inputs
+        ob_start();
+        ?>
+            <div data-id="form-wrapper">
+                <form novalidate method="post" action="<?= $action_url_trunc ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
+                    <?= $template ?>
+                    <input type="hidden" name="nonce" value="<?= wp_create_nonce( $functions_file_basename ) ?>">
+                    <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
+                    <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
+                    <input type="hidden" name="idh__text__r" value="<?= $form_id ?>">
+                </form>
+                <div data-g-tg="message-wrapper">
+                    <div data-g-tg="success-message" aria-hidden="true" style="display: none;">
+                        <div class="alert alert-success lead mb-4" role="alert">
+                            <span class="fa fa-check fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>
+                        </div>
+                    </div>
+                    <div data-g-tg="error-message" aria-hidden="true" style="display: none;">
+                        <div class="alert alert-danger lead mb-4" role="alert">
+                            <span class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></span> <span data-g-tg="response-text"></span>
+                        </div>
+                    </div>
+                </div><!-- /[data-g-tg="message-wrapper"] -->
+            </div><!-- /[data-id="form-wrapper"] -->
+        <?php
+        $html = ob_get_clean();
 
         return $html;
-
     }
 
 
@@ -143,7 +143,7 @@ class Theme_Forms_Form_Template {
         $space_split = explode( '::', $translate_string );
         $trans_text = $space_split[ 1 ];
 
-        $return = __( $trans_text, 'bsx-wordpress' );
+        $return = esc_html__( $trans_text, 'bsx-wordpress' );
 
         // print_r( $return );
 

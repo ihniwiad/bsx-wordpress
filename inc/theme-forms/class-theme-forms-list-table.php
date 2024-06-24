@@ -11,8 +11,8 @@ class Theme_Forms_List_Table extends WP_List_Table {
     public function __construct() {
 
         parent::__construct( [
-            'singular' => __( 'Theme Form Entry', 'bsx-wordpress' ), // singular name of the listed records
-            'plural' => __( 'Theme Form Entries', 'bsx-wordpress' ), // plural name of the listed records
+            'singular' => esc_html__( 'Theme Form Entry', 'bsx-wordpress' ), // singular name of the listed records
+            'plural' => esc_html__( 'Theme Form Entries', 'bsx-wordpress' ), // plural name of the listed records
             'ajax' => false // should this table support ajax?
         ] );
 
@@ -144,12 +144,6 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
         global $functions_file_basename;
 
-        // $actions = array(
-        //     'view' => sprintf( esc_html__( 'View' ), $_REQUEST[ 'page' ], 'view', $item[ 'id' ] ),
-        //     'edit' => sprintf( esc_html__( 'Edit' ), $_REQUEST[ 'page' ], 'edit', $item[ 'id' ] ),
-        //     'delete' => sprintf( esc_html__( 'Delete' ), $_REQUEST[ 'page' ], 'delete', $item[ 'id' ] ),
-        // );
-
         // create nonces
         $edit_nonce = wp_create_nonce( 'edit' . $functions_file_basename );
         $delete_nonce = wp_create_nonce( 'delete' . $item[ 'id' ] . $functions_file_basename );
@@ -174,7 +168,11 @@ class Theme_Forms_List_Table extends WP_List_Table {
             ),
         ];
 
-        return sprintf( '%1$s %2$s', sprintf( '<a href="admin.php?page=%s&action=%s&id=%s">' . $item[ 'title' ] . '</a>', esc_attr( $_REQUEST[ 'page' ] ), 'view', absint( $item[ 'id' ] ) ), $this->row_actions( $actions ) );
+        return sprintf( 
+            '<a href="admin.php?page=%s&action=%s&id=%s">' . $item[ 'title' ] . '</a>', 
+            esc_attr( $_REQUEST[ 'page' ] ), 'view', 
+            absint( $item[ 'id' ] ) 
+        ) . $this->row_actions( $actions );
     }
 
     function column_date( $item ) {
@@ -197,7 +195,7 @@ class Theme_Forms_List_Table extends WP_List_Table {
      */
     public function get_bulk_actions() {
         $actions = [
-            'bulk-delete' => __( 'Delete' )
+            'bulk-delete' => esc_html__( 'Delete' )
         ];
         return $actions;
     }
@@ -227,18 +225,11 @@ class Theme_Forms_List_Table extends WP_List_Table {
 
         global $theme_forms_database_handler;
 
-        // echo '<br>TEST_NONCE: ' . wp_create_nonce( 'bulk-' . $this->_args[ 'plural' ] );
-
-        // echo '<pre style="width: 100%; overflow: auto;">';
-        // print_r( $this );
-        // echo '</pre>';
-
         // check post data if delete bulk action has been triggered
         if ( 
             ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'bulk-delete' )
             || ( isset( $_POST[ 'action2' ] ) && $_POST[ 'action2' ] == 'bulk-delete' )
         ) {
-            // echo '<br>TEST_VERIFY_NONCE: ' . $_POST[ '_wpnonce' ];
 
             if ( isset( $_POST[ '_wpnonce' ] ) && wp_verify_nonce( $_POST[ '_wpnonce' ], 'bulk-' . $this->_args[ 'plural' ] ) ) {
 

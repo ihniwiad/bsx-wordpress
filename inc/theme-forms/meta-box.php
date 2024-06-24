@@ -6,7 +6,7 @@ function bsx_theme_forms_add_meta_box() {
     $screen = 'theme-forms-cpt'; // choose 'post' or 'page' or custom post
     add_meta_box( 
         'theme_forms_meta_box', // $id
-        __( 'Theme Form Settings', 'bsx-wordpress' ), // $title
+        esc_html__( 'Theme Form Settings', 'bsx-wordpress' ), // $title
         'bsx_theme_forms_show_meta_box', // $callback
         $screen, // $screen
         'normal', // $context, choose 'normal' or 'side'
@@ -58,30 +58,30 @@ function bsx_theme_forms_show_meta_box() {
         </p>
         <?php
             if ( isset( $post->post_title ) && ! empty( $post->post_title ) ) {
-            	 echo '<h4>' . __( 'Embed shortcode', 'bsx-wordpress' ) . '</h4><p><code>[theme-form id="' . $post->ID . '" title="' . $post->post_title . '"]</code></p>';
+            	 echo '<h4>' . esc_html__( 'Embed shortcode', 'bsx-wordpress' ) . '</h4><p><code>[theme-form id="' . esc_html( $post->ID ) . '" title="' . esc_html( $post->post_title ) . '"]</code></p>';
             }
         ?>
 
         <section class="bsxui-meta-section">
-            <h3 class="bsxui-meta-heading"><?php echo __( 'Form Template', 'bsx-wordpress' ); ?></h3>
+            <h3 class="bsxui-meta-heading"><?php esc_html_e( 'Form Template', 'bsx-wordpress' ); ?></h3>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[form_template]"><?php echo __( 'Form Template', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[form_template]"><?php esc_html_e( 'Form Template', 'bsx-wordpress' ); ?></label>
                 <br>
-                <textarea class="bsxui-meta-textarea" name="theme_forms[form_template]" id="theme_forms[form_template]" rows="20" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace; width:100%;"><?php if ( isset( $meta[ 'form_template' ] ) ) { echo $meta[ 'form_template' ]; } ?></textarea>
+                <textarea class="bsxui-meta-textarea" name="theme_forms[form_template]" id="theme_forms[form_template]" rows="20" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace; width:100%;"><?php if ( isset( $meta[ 'form_template' ] ) ) { echo esc_textarea( $meta[ 'form_template' ] ); } ?></textarea>
             </p>
         </section>
 
         <section class="bsxui-meta-section">
-            <h3 class="bsxui-meta-heading"><?php echo __( 'E-mail', 'bsx-wordpress' ); ?></h3>
+            <h3 class="bsxui-meta-heading"><?php esc_html_e( 'E-mail', 'bsx-wordpress' ); ?></h3>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[recipient_email]"><?php echo __( 'Recipient e-mail', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[recipient_email]"><?php esc_html_e( 'Recipient e-mail', 'bsx-wordpress' ); ?></label>
                 <br>
-                <input class="bsxui-meta-input" type="text" name="theme_forms[recipient_email]" id="theme_forms[recipient_email]" value="<?php if ( isset( $meta['recipient_email'] ) ) { echo $meta['recipient_email']; } ?>" style="width: 100%;"/>
+                <input class="bsxui-meta-input" type="text" name="theme_forms[recipient_email]" id="theme_forms[recipient_email]" value="<?php if ( isset( $meta['recipient_email'] ) ) { echo esc_html( $meta['recipient_email'] ); } ?>" style="width: 100%;"/>
             </p>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[sender_email]"><?php echo __( 'Sender e-mail', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[sender_email]"><?php esc_html_e( 'Sender e-mail', 'bsx-wordpress' ); ?></label>
                 <br>
-                <input class="bsxui-meta-input" type="text" name="theme_forms[sender_email]" id="theme_forms[sender_email]" value="<?php if ( isset( $meta['sender_email'] ) ) { echo $meta['sender_email']; } ?>" style="width: 100%;"/>
+                <input class="bsxui-meta-input" type="text" name="theme_forms[sender_email]" id="theme_forms[sender_email]" value="<?php if ( isset( $meta['sender_email'] ) ) { echo esc_html( $meta['sender_email'] ); } ?>" style="width: 100%;"/>
             </p>
             <?php
             	printf(
@@ -90,52 +90,52 @@ function bsx_theme_forms_show_meta_box() {
                 );
             ?>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[subject]"><?php echo __( 'Subject', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[subject]"><?php esc_html_e( 'Subject', 'bsx-wordpress' ); ?></label>
                 <br>
-                <input class="bsxui-meta-input" type="text" name="theme_forms[subject]" id="theme_forms[subject]" value="<?php if ( isset( $meta['subject'] ) ) { echo $meta['subject']; } ?>" style="width: 100%;"/>
+                <input class="bsxui-meta-input" type="text" name="theme_forms[subject]" id="theme_forms[subject]" value="<?php if ( isset( $meta['subject'] ) ) { echo esc_html( $meta['subject'] ); } ?>" style="width: 100%;"/>
             </p>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[email_template]"><?php echo __( 'E-mail template', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[email_template]"><?php esc_html_e( 'E-mail template', 'bsx-wordpress' ); ?></label>
                 <br>
-                <textarea class="bsxui-meta-textarea" name="theme_forms[email_template]" id="theme_forms[email_template]" rows="12" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace; width:100%;"><?php if ( isset( $meta[ 'email_template' ] ) ) { echo $meta[ 'email_template' ]; } ?></textarea>
+                <textarea class="bsxui-meta-textarea" name="theme_forms[email_template]" id="theme_forms[email_template]" rows="12" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace; width:100%;"><?php if ( isset( $meta[ 'email_template' ] ) ) { echo esc_textarea( $meta[ 'email_template' ] ); } ?></textarea>
             </p>
         </section>
 
         <hr>
 
         <section class="bsxui-meta-section">
-            <h3 class="bsxui-meta-heading"><?php echo __( 'E-mail 2 (optional)', 'bsx-wordpress' ); ?></h3>
+            <h3 class="bsxui-meta-heading"><?php esc_html_e( 'E-mail 2 (optional)', 'bsx-wordpress' ); ?></h3>
             <?php
             	printf( 
                     '<p>%s</p><p><small><code>[email]</code></small></p>',
-                    __( 'Optional use e-mail placeholder, e.g.:', 'bsx-wordpress' ),
+                    esc_html__( 'Optional use e-mail placeholder, e.g.:', 'bsx-wordpress' ),
                 )
             ?>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[recipient_2_email]"><?php echo __( 'Recipient 2 e-mail', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[recipient_2_email]"><?php esc_html_e( 'Recipient 2 e-mail', 'bsx-wordpress' ); ?></label>
                 <br>
-                <input class="bsxui-meta-input" type="text" name="theme_forms[recipient_2_email]" id="theme_forms[recipient_2_email]" value="<?php if ( isset( $meta['recipient_2_email'] ) ) { echo $meta['recipient_2_email']; } ?>" style="width: 100%;"/>
+                <input class="bsxui-meta-input" type="text" name="theme_forms[recipient_2_email]" id="theme_forms[recipient_2_email]" value="<?php if ( isset( $meta['recipient_2_email'] ) ) { echo esc_html( $meta['recipient_2_email'] ); } ?>" style="width: 100%;"/>
             </p>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[sender_2_email]"><?php echo __( 'Sender 2 e-mail', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[sender_2_email]"><?php esc_html_e( 'Sender 2 e-mail', 'bsx-wordpress' ); ?></label>
                 <br>
-                <input class="bsxui-meta-input" type="text" name="theme_forms[sender_2_email]" id="theme_forms[sender_2_email]" value="<?php if ( isset( $meta['sender_2_email'] ) ) { echo $meta['sender_2_email']; } ?>" style="width: 100%;"/>
+                <input class="bsxui-meta-input" type="text" name="theme_forms[sender_2_email]" id="theme_forms[sender_2_email]" value="<?php if ( isset( $meta['sender_2_email'] ) ) { echo esc_html( $meta['sender_2_email'] ); } ?>" style="width: 100%;"/>
             </p>
             <?php
             	printf(
                     '<p>%s</p><p><small><code>[email]</code>, <code>[name]</code>, <code>[site-url]</code>, ...</small></p>',
-                    __( 'Use placeholders in subject (optional) and e-mail templates:', 'bsx-wordpress' ),
+                    esc_html__( 'Use placeholders in subject (optional) and e-mail templates:', 'bsx-wordpress' ),
                 );
             ?>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[subject_2]"><?php echo __( 'Subject 2', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[subject_2]"><?php esc_html_e( 'Subject 2', 'bsx-wordpress' ); ?></label>
                 <br>
-                <input class="bsxui-meta-input" type="text" name="theme_forms[subject_2]" id="theme_forms[subject_2]" value="<?php if ( isset( $meta['subject_2'] ) ) { echo $meta['subject_2']; } ?>" style="width: 100%;"/>
+                <input class="bsxui-meta-input" type="text" name="theme_forms[subject_2]" id="theme_forms[subject_2]" value="<?php if ( isset( $meta['subject_2'] ) ) { echo esc_html( $meta['subject_2'] ); } ?>" style="width: 100%;"/>
             </p>
             <p class="bsxui-meta-row">
-                <label class="bsxui-meta-label" for="theme_forms[email_2_template]"><?php echo __( 'E-mail 2 template', 'bsx-wordpress' ); ?></label>
+                <label class="bsxui-meta-label" for="theme_forms[email_2_template]"><?php esc_html_e( 'E-mail 2 template', 'bsx-wordpress' ); ?></label>
                 <br>
-                <textarea class="bsxui-meta-textarea" name="theme_forms[email_2_template]" id="theme_forms[email_2_template]" rows="12" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace; width:100%;"><?php if ( isset( $meta[ 'email_2_template' ] ) ) { echo $meta[ 'email_2_template' ]; } ?></textarea>
+                <textarea class="bsxui-meta-textarea" name="theme_forms[email_2_template]" id="theme_forms[email_2_template]" rows="12" style="font-family:SFMono-Regular,Menlo,Monaco,Consolas,\'Liberation Mono\',\'Courier New\',monospace; width:100%;"><?php if ( isset( $meta[ 'email_2_template' ] ) ) { echo esc_textarea( $meta[ 'email_2_template' ] ); } ?></textarea>
             </p>
         </section>
 

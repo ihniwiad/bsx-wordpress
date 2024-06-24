@@ -251,17 +251,23 @@ var sendMail = function( $form ) {
 
                 Utils.WaitScreen.hide();
 
-                if ( data.responseText !== '' ) {
-                    // console.log( data.responseText );
+                // console.log( 'data: \n' + JSON.stringify( data, null, 2 ) );
 
-                    // show error
-                    showMessage( $messageWrapper, 'error', data.responseText );
+                // get error message
 
-                    scrollMessageIntoViewport( $messageWrapper );
-                } 
-                else {
-                    console.log( 'An unknown error occured. Your message could not be sent.' );
+                // fallback
+                var errorMessage = 'An unknown error occured. Your message could not be sent.';
+
+                if ( typeof data.responseJSON !== 'undefined' && typeof data.responseJSON.message !== 'undefined' && data.responseJSON.message ) {
+                    errorMessage = data.responseJSON.message;
                 }
+                else if ( data.responseText !== '' ) {
+                    errorMessage = data.responseText;
+                }
+
+                // show error
+                showMessage( $messageWrapper, 'error', errorMessage );
+                scrollMessageIntoViewport( $messageWrapper );
 
                 // enable submit button
                 $formSubmit.prop( 'disabled', false );

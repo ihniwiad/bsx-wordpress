@@ -31,11 +31,6 @@ function bsx_theme_form_show_entries() {
     ?>
         <div class="wrap">
             <?php
-
-                // TODO: check if list page, prepare items & show screen options only if list page
-
-                // $theme_forms_list_table->prepare_items();
-
                 Theme_Forms_Admin_Pages::init();
             ?>
         </div>
@@ -82,26 +77,5 @@ function bsx_theme_forms_set_default_hidden_columns( $hidden, $screen ) {
     return $hidden;
 }
 add_filter( 'default_hidden_columns', 'bsx_theme_forms_set_default_hidden_columns', 10, 2 );
-
-
-// // seems not to work
-// function bsx_theme_forms_set_list_table_primary_column( $default, $screen ) {
-//     global $theme_forms_menu_slug;
-//     // print_r( $screen );
-//     if ( 'toplevel_page_' . $theme_forms_menu_slug === $screen ) {
-//         $default = 'date';
-//     }
-//     return $default;
-// }
-// add_filter( 'list_table_primary_column', 'bsx_theme_forms_set_list_table_primary_column', 10, 2 );
-
-
-// // get screen id
-// function check_my_current_screen( $screen ) {
-//     if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) return $screen;
-//     print_r( $screen );
-//     return $screen;
-// }
-// add_filter( 'current_screen' , 'check_my_current_screen' );
 
 

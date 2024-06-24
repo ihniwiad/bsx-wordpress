@@ -288,12 +288,36 @@ msgid "Thank you. Your message has been sent successfully."
 msgstr "Vielen Dank. Ihre Nachricht wurde erfolgreich gesendet."
 
 #: src/libs/form/class-bsx-mail.form.php:97
-msgid "Something went wrong while trying to send email."
+msgid "Something went wrong while trying to send message."
 msgstr "Beim Versuch die Nachricht zu senden ist ein Fehler aufgetreten."
 
-#: src/libs/form/class-bsx-mail.form.php:260
-msgid "Your data is invalid or you are not allowed to access this server."
-msgstr "Ihre Daten sind ungültig oder Sie haben keine Berechtigung, auf diesen Server zuzugreifen."
+#: inc/theme-forms/rest-route:371
+msgid "There was a problem with your submission."
+msgstr "Es gab ein Problem beim Senden."
+
+#: inc/theme-forms/rest-route:371
+msgid "Your are not allowed to access this server."
+msgstr "Sie haben keine Berechtigung, auf diesen Server zuzugreifen."
+
+#: inc/theme-forms/rest-route:371
+msgid "Your data is invalid."
+msgstr "Ihre Daten sind ungültig."
+
+#: inc/theme-forms/rest-route:371
+msgid "Access denied!"
+msgstr "Zugriff verweigert!"
+
+#: inc/theme-forms/rest-route:371
+msgid "Human verification failed. Try again if you are a human."
+msgstr "Verifizierung als Mensch fehlgeschlagen. Versuchen Sie es erneut, falls Sie kein Roboter sind."
+
+#: inc/theme-forms/rest-route:371
+msgid "Your form data is incomplete. Access denied!"
+msgstr "Ihre gesendeten Daten sind unvollständig. Zugriff verweigert!"
+
+#: inc/theme-forms/rest-route:371
+msgid "Unable to send message. Missing configuration data."
+msgstr "Senden der Nachricht nicht möglich. Unvollständige Konfiguration."
 
 #: inc/theme-forms/class-theme-forms-list-table.php:14
 msgid "Theme Form Entry"

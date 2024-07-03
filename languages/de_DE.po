@@ -308,6 +308,10 @@ msgid "Access denied!"
 msgstr "Zugriff verweigert!"
 
 #: inc/theme-forms/rest-route:371
+msgid "Document expired. Please reload the page and try again. If you see this message again, your access might be denied."
+msgstr "Gültigkeit der Seite erloschen. Bitte laden Sie die Seite neu und versuchen Sie es erneut. Wenn Sie diese Meldung wiederholt sehen, ist Ihnen möglicherweise der Zugriff verweigert."
+
+#: inc/theme-forms/rest-route:371
 msgid "Human verification failed. Try again if you are a human."
 msgstr "Verifizierung als Mensch fehlgeschlagen. Versuchen Sie es erneut, falls Sie kein Roboter sind."
 

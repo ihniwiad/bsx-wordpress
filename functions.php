@@ -34,10 +34,7 @@ if ( file_exists( $file ) ) {
  */
 
 // paths
-
-if ( ! defined( 'BSX_THEME_BASENAME_FILE' ) ) {
-    define( 'BSX_THEME_BASENAME_FILE', basename( __FILE__ ) );
-}
+$functions_file_basename = getcwd(); // e.g. /var/www/some_user_123/html/
 
 $serverName = $_SERVER[ 'SERVER_NAME' ];
 $homeUrl = get_bloginfo( 'url' ) . '/';
@@ -856,17 +853,20 @@ add_shortcode( 'consent-trigger-button', 'add_consent_button_shortcode' );
  * include mail form
  */
 
-require_once( __DIR__ . '/inc/theme-forms/database.php' );
-$theme_forms_database_handler = new Theme_Forms_Database_Handler;
-$theme_forms_database_handler->create_table();
-require_once( __DIR__ . '/inc/theme-forms/class-theme-forms-list-table.php' );
-require_once( __DIR__ . '/inc/theme-forms/custom-post-type.php' );
-require_once( __DIR__ . '/inc/theme-forms/meta-box.php' );
-require_once( __DIR__ . '/inc/theme-forms/admin-menu.php' );
-require_once( __DIR__ . '/inc/theme-forms/admin-pages.php' );
-require_once( __DIR__ . '/inc/theme-forms/rest-route.php' );
-require_once( __DIR__ . '/inc/theme-forms/form-template.php' );
-require_once( __DIR__ . '/inc/theme-forms/shortcode.php' );
+// require_once( __DIR__ . '/inc/theme-forms/functions.php' );
+// require_once( __DIR__ . '/inc/theme-forms/database.php' );
+// $theme_forms_database_handler = new Theme_Forms_Database_Handler;
+// $theme_forms_database_handler->create_table();
+// require_once( __DIR__ . '/inc/theme-forms/class-theme-forms-list-table.php' );
+// require_once( __DIR__ . '/inc/theme-forms/custom-post-type.php' );
+// require_once( __DIR__ . '/inc/theme-forms/meta-box.php' );
+// require_once( __DIR__ . '/inc/theme-forms/admin-menu.php' );
+// require_once( __DIR__ . '/inc/theme-forms/admin-pages.php' );
+// require_once( __DIR__ . '/inc/theme-forms/rest-route.php' );
+// require_once( __DIR__ . '/inc/theme-forms/form-template.php' );
+// require_once( __DIR__ . '/inc/theme-forms/shortcode.php' );
+
+require_once( __DIR__ . '/inc/theme-forms/inc.php' );
 
 require_once( __DIR__ . '/src/libs/form/class-bsx-mail-form.php' );
 if ( class_exists( 'Bsx_Mail_Form' ) && method_exists( 'Bsx_Mail_Form' , 'init' ) ) {

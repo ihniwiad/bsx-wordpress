@@ -107,7 +107,7 @@ class Theme_Forms_Form_Template {
             <div data-id="form-wrapper">
                 <form novalidate method="post" action="<?= $action_url_trunc ?>/wp-json/bsx/v1/mailer/" data-fn="mail-form">
                     <?= $template ?>
-                    <input type="hidden" name="nonce" value="<?= wp_create_nonce( $functions_file_basename ) ?>">
+                    <input type="hidden" name="nonce" value="<?= bsx_theme_forms_create_nonce( $functions_file_basename ) ?>">
                     <input type="hidden" name="hv__text__r" value="" data-g-tg="hv">
                     <input type="hidden" name="hv_k__x__r" value="" data-g-tg="hv-k">
                     <input type="hidden" name="idh__text__r" value="<?= $form_id ?>">

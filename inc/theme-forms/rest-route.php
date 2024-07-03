@@ -392,9 +392,9 @@ function bsx_mailer_post_endpoint( $request ) {
     }
 
 
-    // check nonce, error if not contained or doesn’t match
-    if ( ! isset( $sanitized_values[ 'nonce' ] ) || wp_verify_nonce( $sanitized_values[ 'nonce' ], $functions_file_basename ) ) {
-        return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Access denied!', 'bsx-wordpress' ), array( 'status' => 403 ) );
+    // check nonce, error if not contained or doesn’t match (document might be expired after min 24 max 48 h)
+    if ( ! isset( $sanitized_values[ 'nonce' ] ) || ! bsx_theme_forms_verify_nonce( $sanitized_values[ 'nonce' ], $functions_file_basename ) ) {
+        return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Document expired. Please reload the page and try again. If you see this message again, your access might be denied.' , 'bsx-wordpress' ), array( 'status' => 403 ) );
     }
 
 
@@ -404,7 +404,7 @@ function bsx_mailer_post_endpoint( $request ) {
     }
 
 
-    // get form if from hidden input, error if unset
+    // get form id from hidden input, error if unset
     if ( ! isset( $sanitized_values[ 'idh' ] ) ) {
         return new WP_Error( 'rest_mailer_invalid', esc_html__( 'Your form data is incomplete. Access denied!', 'bsx-wordpress' ), array( 'status' => 403 ) );
     }

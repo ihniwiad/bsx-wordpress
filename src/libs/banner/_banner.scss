@@ -1,0 +1,26 @@
+
+
+// banner links hover overlay
+
+a[href][class^='banner-'], 
+a[href][class*=' banner-'] {
+    position: relative;
+
+    & > .banner-inner {
+        z-index: 10;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transition: $bsx-banner-link-transition;
+        background-color: $bsx-banner-link-overlay-bg;
+    }
+    &:hover::after {
+        background-color: $bsx-banner-link-hover-overlay-bg;
+    }
+}

@@ -21943,6 +21943,30 @@ body.ioslte10 .column-row .h-100 {
   max-width: 34rem;
 }
 
+a[href][class^=banner-],
+a[href][class*=" banner-"] {
+  position: relative;
+}
+a[href][class^=banner-] > .banner-inner,
+a[href][class*=" banner-"] > .banner-inner {
+  z-index: 10;
+}
+a[href][class^=banner-]::after,
+a[href][class*=" banner-"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all 0.3s ease;
+  background-color: rgba(0, 0, 0, 0);
+}
+a[href][class^=banner-]:hover::after,
+a[href][class*=" banner-"]:hover::after {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 body .bg-fixed {
   background-attachment: fixed;
 }

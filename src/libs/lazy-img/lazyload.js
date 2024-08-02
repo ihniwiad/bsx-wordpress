@@ -95,10 +95,23 @@ $.fn.lazyload = function( options, index ) {
     var _getSizeAndDensityMatchingSrc = function( srcset, displayedWidth ) {
         var pixelDesity = window.devicePixelRatio;
 
-        // console.log( 'pixelDesity: ' + pixelDesity );
+
+        // new calculation
+        var deviceWidth = ( window.innerWidth > 0 ) ? window.innerWidth : screen.width; // window width
+        // var clientWidth = document.documentElement.clientWidth; // window width - scrollbar width
+        var deviceAndDensityRelatedWidth = deviceWidth * pixelDesity;
+        // // console.log( 'clientWidth: ' + clientWidth );
+        // console.log( '>>> pixelDesity: ' + pixelDesity );
+        // console.log( 'deviceWidth: ' + deviceWidth );
+        // console.log( 'deviceAndDensityRelatedWidth (not knowing displayed width): ' + deviceAndDensityRelatedWidth );
+        // /new calculation
+
 
         var densityRelatedWidth = displayedWidth * pixelDesity;
-
+        // adapted to new calculation
+        var selectedRelatedWidth = deviceWidth <= 600 ? deviceAndDensityRelatedWidth : densityRelatedWidth;
+        // console.log( 'densityRelatedWidth (probably knowing displayed width): ' + densityRelatedWidth );
+        // console.log( 'use: ' + ( deviceWidth <= 600 ? 'deviceAndDensityRelatedWidth' : 'densityRelatedWidth' ) );
 
         var srcsetList = srcset.split( ',' );
         var closestSmallerSrc = '';
@@ -107,6 +120,8 @@ $.fn.lazyload = function( options, index ) {
         var closestLargerOrEqualWidth = 0;
         var srcReturn = '';
 
+
+        // new calculation loop
         for ( var i = 0; i < srcsetList.length; i++ ) {
             srcsetList[ i ] = srcsetList[ i ].trim();
             // remove multiple whitespaces, keep one
@@ -118,7 +133,7 @@ $.fn.lazyload = function( options, index ) {
             closestLargerOrEqualSrc = splitSrcAndWidth[ 0 ];
             closestLargerOrEqualWidth = parseInt( splitSrcAndWidth[ 1 ] );
 
-            if ( parseInt( splitSrcAndWidth[ 1 ] ) >= densityRelatedWidth ) {
+            if ( parseInt( splitSrcAndWidth[ 1 ] ) >= deviceAndDensityRelatedWidth ) {
                 // console.log( 'found src (return): ' + splitSrcAndWidth[ 0 ] );
                 // console.log( 'BREAK' );
                 break;
@@ -128,17 +143,47 @@ $.fn.lazyload = function( options, index ) {
             closestSmallerWidth = parseInt( splitSrcAndWidth[ 1 ] );
         }
 
+        // console.log( 'closestSmallerSrc (' + closestSmallerWidth + 'w): ' + closestSmallerSrc );
+        // console.log( 'closestLargerOrEqualSrc (' + closestLargerOrEqualWidth + 'w): ' + closestLargerOrEqualSrc );
+        // srcReturn = closestLargerOrEqualSrc;
+        // /new calculation loop
+
+
+        // for ( var i = 0; i < srcsetList.length; i++ ) {
+        //     srcsetList[ i ] = srcsetList[ i ].trim();
+        //     // remove multiple whitespaces, keep one
+        //     srcsetList[ i ].replace( /\s+/g, ' ' );
+        //     var splitSrcAndWidth = srcsetList[ i ].split( ' ' );
+
+        //     // console.log( 'loop: ' + i + ' – ' + parseInt( splitSrcAndWidth[ 1 ] ) );
+        //     // save before break for case of loop break
+        //     closestLargerOrEqualSrc = splitSrcAndWidth[ 0 ];
+        //     closestLargerOrEqualWidth = parseInt( splitSrcAndWidth[ 1 ] );
+
+        //     if ( parseInt( splitSrcAndWidth[ 1 ] ) >= selectedRelatedWidth ) {
+        //         // console.log( 'found src (return): ' + splitSrcAndWidth[ 0 ] );
+        //         // console.log( 'BREAK' );
+        //         break;
+        //     }
+        //     // save after break for next loop
+        //     closestSmallerSrc = splitSrcAndWidth[ 0 ];
+        //     closestSmallerWidth = parseInt( splitSrcAndWidth[ 1 ] );
+        // }
+
         // check which img to choose dependend on displayed size & pixel density
         if ( pixelDesity <= 1 ) {
             srcReturn = closestLargerOrEqualSrc;
         }
         else {
-            var lowerDifference = densityRelatedWidth - closestSmallerWidth;
-            var upperDifference = closestLargerOrEqualWidth - densityRelatedWidth;
+            var lowerDifference = Math.abs( selectedRelatedWidth - closestSmallerWidth );
+            var upperDifference = Math.abs( selectedRelatedWidth - closestLargerOrEqualWidth );
+            // console.log( 'lowerDifference: ' + lowerDifference );
+            // console.log( 'upperDifference: ' + upperDifference );
             if ( pixelDesity <=2 ) {
-                // console.log( 'lowerDifference: ' + lowerDifference );
-                // console.log( 'upperDifference: ' + upperDifference );
-                if ( lowerDifference * 5 <= upperDifference ) {
+                if (
+                    lowerDifference * 5 <= upperDifference
+                    || closestLargerOrEqualWidth > deviceAndDensityRelatedWidth * 1.6667 // do not load extremely oversized img
+                ) {
                     // use smaller src
                     srcReturn = closestSmallerSrc;
                 }
@@ -148,10 +193,10 @@ $.fn.lazyload = function( options, index ) {
                 }
             }
             else {
-                // console.log( 'lowerDifference: ' + lowerDifference );
-                // console.log( 'upperDifference: ' + upperDifference );
-
-                if ( lowerDifference * 4 <= upperDifference ) {
+                if (
+                    lowerDifference * 4 <= upperDifference
+                    || closestLargerOrEqualWidth > deviceAndDensityRelatedWidth * 1.6667 // do not load extremely oversized img
+                ) {
                     // use smaller src
                     srcReturn = closestSmallerSrc;
                 }

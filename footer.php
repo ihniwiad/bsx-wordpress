@@ -26,7 +26,7 @@ global $logoPath;
 
 		<?php 
 
-			include 'src/libs/data-processing-consent/example.php';
+			include 'src/libs/data-processing-consent/example-2.php';
 
 			// photoswipe shadowbox template
 

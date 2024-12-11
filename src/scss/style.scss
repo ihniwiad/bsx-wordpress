@@ -39,12 +39,12 @@
 // TODO: remove
 @import "./../libs/test/index";
 
-@import "./typo/text";
-@import "./typo/text-inverse";
-@import "./typo/text-shadow";
-@import "./typo/heading";
-@import "./typo/p";
-@import "./typo/blockquote";
+@import "./text/text";
+@import "./text/text-inverse";
+@import "./text/text-shadow";
+@import "./text/heading";
+@import "./text/p";
+@import "./text/blockquote";
 @import "./../libs/accordion/style";
 @import "./../libs/appear-effects/style";
 @import "./../libs/nav/style";
@@ -80,6 +80,7 @@
 @import "./../libs/grid/multilayer";
 @import "./../libs/grid/z-index";
 @import "./../libs/position/position";
+@import "./text/bg-text";
 
 
 

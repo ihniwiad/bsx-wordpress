@@ -133,7 +133,7 @@ $.fn.lazyload = function( options, index ) {
             closestLargerOrEqualSrc = splitSrcAndWidth[ 0 ];
             closestLargerOrEqualWidth = parseInt( splitSrcAndWidth[ 1 ] );
 
-            if ( parseInt( splitSrcAndWidth[ 1 ] ) >= deviceAndDensityRelatedWidth ) {
+            if ( parseInt( splitSrcAndWidth[ 1 ] ) >= selectedRelatedWidth ) {
                 // console.log( 'found src (return): ' + splitSrcAndWidth[ 0 ] );
                 // console.log( 'BREAK' );
                 break;
@@ -182,7 +182,7 @@ $.fn.lazyload = function( options, index ) {
             if ( pixelDesity <=2 ) {
                 if (
                     lowerDifference * 5 <= upperDifference
-                    || closestLargerOrEqualWidth > deviceAndDensityRelatedWidth * 1.6667 // do not load extremely oversized img
+                    || closestLargerOrEqualWidth > selectedRelatedWidth * 1.6667 // do not load extremely oversized img
                 ) {
                     // use smaller src
                     srcReturn = closestSmallerSrc;
@@ -195,7 +195,7 @@ $.fn.lazyload = function( options, index ) {
             else {
                 if (
                     lowerDifference * 4 <= upperDifference
-                    || closestLargerOrEqualWidth > deviceAndDensityRelatedWidth * 1.6667 // do not load extremely oversized img
+                    || closestLargerOrEqualWidth > selectedRelatedWidth * 1.6667 // do not load extremely oversized img
                 ) {
                     // use smaller src
                     srcReturn = closestSmallerSrc;

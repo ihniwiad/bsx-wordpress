@@ -1,0 +1,14 @@
+.bg-text-parent {
+    padding-top: .15em;
+    padding-bottom: .15em;
+}
+
+.bg-text {
+    background-color: #{$primary}; // fallback, use `.bg-{state}` classes on `.bg-text`
+    border-style: solid;
+    border-color: transparent;
+    border-width: .3em .5em;
+    line-height: 1.5; // 1.4
+    box-decoration-break: clone;
+    background-color: #{$primary};
+}

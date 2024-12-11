@@ -36,6 +36,11 @@ if ( file_exists( $file ) ) {
 // paths
 $functions_file_basename = getcwd(); // e.g. /var/www/some_user_123/html/
 
+$templateDir = get_template_directory(); // e.g. /Applications/MAMP/htdocs/block-development/wp-content/themes/bsx-wordpress
+$templateDirUri = get_template_directory_uri(); // e.g. http://block-development.local/wp-content/themes/bsx-wordpress
+$relativeTemplateDir = parse_url($templateDirUri, PHP_URL_PATH); // e.g. /wp-content/themes/bsx-wordpress
+
+
 $serverName = $_SERVER[ 'SERVER_NAME' ];
 $homeUrl = get_bloginfo( 'url' ) . '/';
 
@@ -902,4 +907,22 @@ if ( file_exists( $file ) ) {
 // require get_template_directory() . '/src/libs/yoast-meta/class-yoast-multilang-og-image.php';
 
 
-
+/**
+ * Add page styles to Block Editor iframe (wasn’t iframe before).
+ */
+// function site_enqueue_editor_styles() {
+//     global $cssFilePath, $cssVersion, $rootRelatedAssetsPath;
+//     if ( is_admin() ) {
+//         wp_enqueue_style( 'admin-editor',
+//             '/'.$cssFilePath,
+//             false,
+//             $cssVersion
+//         );
+//         wp_enqueue_style( 'admin-editor-atf',
+//             '/'.$rootRelatedAssetsPath . 'css/atf.min.css',
+//             false,
+//             $cssVersion
+//         );
+//     }
+// }
+// add_action( 'enqueue_block_assets', 'site_enqueue_editor_styles' );

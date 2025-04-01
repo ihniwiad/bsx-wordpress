@@ -215,6 +215,10 @@ add_action( 'init', function() {
     wp_deregister_style( 'global-styles' );
 }, PHP_INT_MAX - 1 );
 
+add_action('wp_footer', function () {
+    wp_dequeue_style('core-block-supports'); // Remove strange inline-CSS in body
+});
+
 
 /**
  * security (remove unnecessary information that could enable an attack)

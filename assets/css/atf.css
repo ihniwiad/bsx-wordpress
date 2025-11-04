@@ -219,12 +219,6 @@ button.bsx-appnav-dropdown-toggle {
     width: calc(100% - 20px);
   }
 }
-.bsx-appnav-navbar-nav > li > a {
-  position: relative;
-  min-width: 2rem;
-  min-height: 1.25em;
-  color: transparent;
-}
 @media (min-width: 992px) {
   .bsx-appnav-navbar-nav > li > a {
     width: auto;
@@ -240,6 +234,12 @@ button.bsx-appnav-dropdown-toggle {
     content: "";
     display: inline-block;
   }
+}
+.bsx-appnav-navbar-nav > li > a {
+  position: relative;
+  min-width: 2rem;
+  min-height: 1.25em;
+  color: transparent;
 }
 .bsx-appnav-navbar-nav > li > a::before {
   content: "";

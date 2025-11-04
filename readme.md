@@ -3,44 +3,43 @@
 This Bootstrap 4 based WordPress Theme can be used together with the custom Gutenberg Blocks Plugin [BSX Blocks](https://github.com/ihniwiad/bsx-blocks).
 
 
-## Create `.env`
+## Development
 
-Example workspace setting (using publishing from workspace to WordPress):
+* Use Node 20 (with NVM `nvm use 20`)
+* Install Node dependencies: `npm install`
+* Develop: `npm run watch`
+* Build: `npm run build`
+* (Optional, if using separate workspace) publish: `npm run publish`
+
+
+### Optionally separate workspace from WordPress folder
+
+You can install you repository in a separate workspace and publish your (dev-) build to your target WordPress themes folder (will be done automatically after each (dev-) build). In addition, you can use the publish task to publish without build.
+
+E.g.:
 
 ```
-...
-  ┗ workspace
-    ┗ my-project
-      ┣ bsx-wordpress
-      ┗ bsx-blocks
-...
-  ┗ htdocs
-    ┗ my-projects-wordpress
+<YOUR_USERS_FOLDER>
+  ┣ workspace
+  ┃ ┣ saneware-wp
+  ┃ ┗ wp-multi-block-plugin
+  ┃
+  ┗ Herd
+    ┗ my-project-wordpress-folder
       ┗ wp-content
         ┣ themes
-        ┃ ┗ bsx-wordpress
+        ┃ ┗ saneware-wp
         ┗ plugins
-          ┗ bsx-blocks
+          ┗ wp-multi-block-plugin
 ```
 
-You need the following variables if you use a workspace outside your WordPress folder (as seen above):
+* Create `.env`, add config data with
+    * `PUBLISH_PATH` ... path to your wordpress themes folder
+    * `FOLDER_NAME` ... name of your them folder to be created
 
-* `FOLDER_NAME` ... Folder name for publishing into your WordPress Theme folder
-* `PUBLISH_PATH` ... Path to publish into your WordPress Theme folder
-
-Example:
+E.g.:
 
 ```
-FOLDER_NAME=bsx-wordpress
-PUBLISH_PATH=../../../../../../Applications/MAMP/htdocs/wordpress-testing/wp-content/themes/
+PUBLISH_PATH="/Users/<YOUR_USERS_FOLDER>/Herd/saneware/wp-content/themes/"
+FOLDER_NAME=saneware
 ```
-
-All of your Plugin’s files but `node_modules` will be copied to this folder (as `bsx-blocks` folder) each time you build.
-
-**NOTE:** Please take care since publishing will **delete** (and copy again) a folder **outside your Workspace** each time you build or change.
-
-
-## Install & build
-
-* Run `npm install`
-* Run `npm run build`

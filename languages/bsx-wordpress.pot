@@ -1,0 +1,779 @@
+# Copyright (C) 2025 ihniwiad
+# This file is distributed under the same license as the BSX Bootstrap Extended theme.
+msgid ""
+msgstr ""
+"Project-Id-Version: BSX Bootstrap Extended 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/bsx-wordpress\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-07T20:10:26+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: bsx-wordpress\n"
+
+#. Theme Name of the theme
+#: style.css
+msgid "BSX Bootstrap Extended"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Bootstrap 4 based website and blog template"
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "ihniwiad"
+msgstr ""
+
+#: 404.php:11
+msgid "Not found"
+msgstr ""
+
+#: 404.php:14
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr ""
+
+#: footer.php:18
+msgid "To top"
+msgstr ""
+
+#: functions.php:108
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:109
+msgid "Footer Column 1 Menu"
+msgstr ""
+
+#: functions.php:110
+msgid "Footer Column 2 Menu"
+msgstr ""
+
+#: functions.php:111
+msgid "Footer Column 3 Menu"
+msgstr ""
+
+#: functions.php:112
+msgid "Footer Column 4 Menu"
+msgstr ""
+
+#: functions.php:113
+msgid "Footer Column 5 Menu"
+msgstr ""
+
+#: functions.php:114
+msgid "Footer Bottom Menu"
+msgstr ""
+
+#: functions.php:115
+msgid "Consent Popup Menu"
+msgstr ""
+
+#: functions.php:371
+#: functions.php:372
+#: functions.php:402
+msgid "Theme Settings"
+msgstr ""
+
+#: functions.php:414
+#: functions.php:618
+msgid "Social Media"
+msgstr ""
+
+#: functions.php:426
+#: functions.php:724
+msgid "Layout"
+msgstr ""
+
+#: functions.php:448
+msgid "Contact"
+msgstr ""
+
+#: functions.php:456
+msgid "Owner name"
+msgstr ""
+
+#: functions.php:472
+msgid "Street"
+msgstr ""
+
+#: functions.php:488
+msgid "Adress Additional"
+msgstr ""
+
+#: functions.php:504
+msgid "Zip"
+msgstr ""
+
+#: functions.php:520
+msgid "City"
+msgstr ""
+
+#: functions.php:536
+msgid "Country"
+msgstr ""
+
+#: functions.php:552
+#: inc/theme-forms/class-theme-forms-list-table.php:67
+#: template-parts/footer/footer.php:122
+msgid "Phone"
+msgstr ""
+
+#: functions.php:568
+#: inc/theme-forms/class-theme-forms-list-table.php:62
+#: template-parts/footer/footer.php:135
+msgid "Email"
+msgstr ""
+
+#: functions.php:584
+msgid "Service Phone"
+msgstr ""
+
+#: functions.php:600
+msgid "Service Email"
+msgstr ""
+
+#: functions.php:626
+#: template-parts/footer/footer.php:140
+msgid "Facebook"
+msgstr ""
+
+#: functions.php:642
+#: template-parts/footer/footer.php:141
+msgid "X (Twitter)"
+msgstr ""
+
+#: functions.php:658
+#: template-parts/footer/footer.php:142
+msgid "Instagram"
+msgstr ""
+
+#: functions.php:674
+#: template-parts/footer/footer.php:143
+msgid "Google Plus"
+msgstr ""
+
+#: functions.php:690
+#: template-parts/footer/footer.php:144
+msgid "Xing"
+msgstr ""
+
+#: functions.php:706
+#: template-parts/footer/footer.php:145
+msgid "LinkedIn"
+msgstr ""
+
+#: functions.php:732
+#: template-parts/footer/footer.php:23
+#: template-parts/header/header.php:23
+msgid "Logo"
+msgstr ""
+
+#: functions.php:748
+msgid "Footer Menu Columns Count (0...5)"
+msgstr ""
+
+#: functions.php:764
+msgid "Show Phone & Email in footer"
+msgstr ""
+
+#: functions.php:780
+msgid "Use Social Media Brand colors"
+msgstr ""
+
+#: functions.php:796
+msgid "Global Banner Post id or Banner Type"
+msgstr ""
+
+#: functions.php:819
+msgid "Yes"
+msgstr ""
+
+#: header.php:84
+msgid "Skip to main content"
+msgstr ""
+
+#: inc/admin-menu/reusable-blocks-link.php:14
+#: inc/admin-menu/reusable-blocks-link.php:15
+msgid "Reusable Blocks"
+msgstr ""
+
+#: inc/banner/custom-post-type.php:11
+#: inc/banner/custom-post-type.php:12
+msgid "Banner"
+msgstr ""
+
+#: inc/banner/meta-box.php:16
+msgid "Banner Settings"
+msgstr ""
+
+#: inc/banner/meta-box.php:33
+msgid "Banner Type"
+msgstr ""
+
+#: inc/breadcrumb/breadcrumb.php:300
+msgid "Search"
+msgstr ""
+
+#: inc/breadcrumb/breadcrumb.php:305
+msgid "Error 404"
+msgstr ""
+
+#: inc/meta-title-description-og/meta-box.php:8
+msgid "Meta Data"
+msgstr ""
+
+#: inc/meta-title-description-og/meta-box.php:30
+#: inc/theme-forms/admin-pages.php:404
+#: inc/theme-forms/class-theme-forms-list-table.php:61
+msgid "Title"
+msgstr ""
+
+#: inc/meta-title-description-og/meta-box.php:35
+msgid "Description"
+msgstr ""
+
+#: inc/page-style/meta-box.php:12
+msgid "Page Style"
+msgstr ""
+
+#: inc/page-style/meta-box.php:30
+msgid "Add space on Page top"
+msgstr ""
+
+#: inc/page-style/meta-box.php:35
+msgid "Wrap Page with Container"
+msgstr ""
+
+#: inc/page-style/meta-box.php:40
+msgid "Show Breadcrumb"
+msgstr ""
+
+#: inc/page-style/meta-box.php:45
+msgid "Do not show bottom banner"
+msgstr ""
+
+#: inc/page-style/meta-box.php:50
+msgid "Page is gallery parent"
+msgstr ""
+
+#: inc/page-style/meta-box.php:55
+msgid "Assign Custom Post Type (optional)"
+msgstr ""
+
+#: inc/page-style/meta-box.php:58
+msgid "– unset –"
+msgstr ""
+
+#: inc/theme-forms/admin-menu.php:11
+#: inc/theme-forms/admin-menu.php:12
+#: inc/theme-forms/admin-pages.php:620
+#: inc/theme-forms/class-theme-forms-list-table.php:15
+msgid "Theme Form Entries"
+msgstr ""
+
+#: inc/theme-forms/admin-menu.php:46
+msgid "Form Entries"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:40
+msgid "Error while trying to update database. Your data has not been deleted."
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:49
+msgid "Your entry was successfully deleted."
+msgstr ""
+
+#. translators: %s: entry id
+#: inc/theme-forms/admin-pages.php:92
+msgid "View Theme Form Entry %s"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:97
+#: inc/theme-forms/admin-pages.php:378
+msgid "Entries List"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:114
+#: inc/theme-forms/admin-pages.php:414
+#: inc/theme-forms/admin-pages.php:420
+#: inc/theme-forms/class-theme-forms-list-table.php:71
+msgid "Content"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:129
+#: inc/theme-forms/admin-pages.php:430
+msgid "Fields"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:137
+#: inc/theme-forms/admin-pages.php:446
+msgid "Field Name"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:138
+#: inc/theme-forms/admin-pages.php:447
+msgid "Field Value"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:168
+#: inc/theme-forms/admin-pages.php:483
+msgid "Details"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:177
+#: inc/theme-forms/admin-pages.php:490
+#: inc/theme-forms/class-theme-forms-list-table.php:59
+msgid "ID"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:182
+#: inc/theme-forms/admin-pages.php:495
+#: inc/theme-forms/class-theme-forms-list-table.php:60
+msgid "Date"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:187
+#: inc/theme-forms/admin-pages.php:501
+msgid "Form ID"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:192
+#: inc/theme-forms/admin-pages.php:506
+#: inc/theme-forms/class-theme-forms-list-table.php:66
+msgid "Form Title"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:197
+#: inc/theme-forms/admin-pages.php:530
+#: inc/theme-forms/class-theme-forms-list-table.php:70
+msgid "Status"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:202
+#: inc/theme-forms/admin-pages.php:536
+msgid "IP Address"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:207
+#: inc/theme-forms/admin-pages.php:541
+msgid "User Agent"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:212
+#: inc/theme-forms/admin-pages.php:547
+msgid "Comment"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:350
+msgid "Error while trying to update database. Your data has not been saved."
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:359
+msgid "Your entry was successfully updated."
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:375
+msgid "Edit Theme Form Entry"
+msgstr ""
+
+#. translators: %1$s: The title of the entry. %1$s: The email address. %3$d: The id of the entry.
+#: inc/theme-forms/admin-pages.php:590
+#: inc/theme-forms/class-theme-forms-list-table.php:163
+msgid "Really delete ”%1$s“ from %2$s (id: %3$d)?"
+msgstr ""
+
+#: inc/theme-forms/admin-pages.php:623
+msgid "Do you really want to delete one or multiple items?"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:14
+msgid "Theme Form Entry"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:63
+msgid "Name"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:64
+msgid "First Name"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:65
+msgid "Last Name"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:68
+msgid "Company"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:69
+#: inc/theme-forms/meta-box.php:93
+#: src/libs/form/class-bsx-mail-form.php:215
+#: src/libs/form/class-bsx-mail-form.php:299
+msgid "Subject"
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:252
+#: inc/theme-forms/class-theme-forms-list-table.php:272
+msgid "Error while trying to process bulk action. Your data has not been deleted."
+msgstr ""
+
+#: inc/theme-forms/class-theme-forms-list-table.php:261
+msgid "One ore multiple entries were successfully deleted by bulk action."
+msgstr ""
+
+#: inc/theme-forms/custom-post-type.php:7
+msgid "Theme Forms"
+msgstr ""
+
+#: inc/theme-forms/custom-post-type.php:8
+msgid "Theme Form"
+msgstr ""
+
+#: inc/theme-forms/form-template.php:202
+msgid "Send"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:9
+msgid "Theme Form Settings"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:25
+#: src/libs/form/class-bsx-mail-form.php:154
+msgid "Input placeholder syntax"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:28
+#: src/libs/form/class-bsx-mail-form.php:156
+msgid "Input"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:29
+#: src/libs/form/class-bsx-mail-form.php:157
+msgid "Syntax"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:30
+#: src/libs/form/class-bsx-mail-form.php:158
+msgid "Translation"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:33
+#: src/libs/form/class-bsx-mail-form.php:160
+msgid "Input examples"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:36
+#: src/libs/form/class-bsx-mail-form.php:164
+msgid "Mandatory input example"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:37
+#: src/libs/form/class-bsx-mail-form.php:165
+msgid "Optional input example"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:38
+#: src/libs/form/class-bsx-mail-form.php:166
+msgid "Textarea example"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:39
+#: src/libs/form/class-bsx-mail-form.php:167
+msgid "Translation example"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:40
+#: src/libs/form/class-bsx-mail-form.php:168
+msgid "Human verification display"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:41
+#: src/libs/form/class-bsx-mail-form.php:169
+msgid "Human verification input"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:42
+#: src/libs/form/class-bsx-mail-form.php:170
+msgid "Human verification refresh code attribute"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:45
+msgid "Special input names"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:48
+msgid "In addition to sending an e-mail, all data is saved in the database. The following (optional) special input names are saved in separate database columns so that they can then be clearly displayed / sorted in the backend:"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:61
+#: src/libs/form/class-bsx-mail-form.php:172
+msgid "Embed shortcode"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:66
+#: inc/theme-forms/meta-box.php:68
+msgid "Form Template"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:75
+msgid "E-mail"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:77
+msgid "Recipient e-mail"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:82
+msgid "Sender e-mail"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:89
+#: inc/theme-forms/meta-box.php:127
+msgid "Use placeholders in subject (optional) and e-mail templates:"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:98
+msgid "E-mail template"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:107
+msgid "E-mail 2 (optional)"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:111
+msgid "Optional use e-mail placeholder, e.g.:"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:115
+msgid "Recipient 2 e-mail"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:120
+msgid "Sender 2 e-mail"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:131
+msgid "Subject 2"
+msgstr ""
+
+#: inc/theme-forms/meta-box.php:136
+msgid "E-mail 2 template"
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:374
+msgid "There was a problem with your submission."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:380
+msgid "Your are not allowed to access this server."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:391
+msgid "Your data is invalid."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:397
+msgid "Document expired. Please reload the page and try again. If you see this message again, your access might be denied."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:403
+msgid "Human verification failed. Try again if you are a human."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:409
+msgid "Your form data is incomplete. Access denied!"
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:440
+msgid "Unable to send message. Missing configuration data."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:490
+msgid "Error while trying to connect database."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:522
+msgid "Thank you. Your message has been sent successfully."
+msgstr ""
+
+#: inc/theme-forms/rest-route.php:526
+msgid "Something went wrong while trying to send message."
+msgstr ""
+
+#: index.php:69
+msgid "Current Posts"
+msgstr ""
+
+#: index.php:69
+msgid "Posts (Page %s)"
+msgstr ""
+
+#. translators: %s: search term.
+#: search.php:33
+msgid "Results for \"%s\""
+msgstr ""
+
+#. translators: %d: the number of search results.
+#: search.php:45
+msgid "We found %d result for your search."
+msgid_plural "We found %d results for your search."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/libs/data-processing-consent/class-consent-popup-manager.php:64
+msgid "See/change cookie settings"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:6
+msgid "Analytics"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:26
+msgid "Customization"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:42
+msgid "HTML content"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:58
+msgid "Please help us to improve our products and our website by accepting our data processing. Thank you!"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:67
+msgid "Essential"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:78
+msgid "Save"
+msgstr ""
+
+#: src/libs/data-processing-consent/example.php:80
+msgid "Allow all"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:32
+#: src/libs/form/class-bsx-mail-form.php:33
+msgid "Theme Forms (Deprecated)"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:140
+msgid "Form %d template"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:147
+msgid "Form template"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:185
+msgid "Form %d mail"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:193
+#: src/libs/form/class-bsx-mail-form.php:271
+msgid "Recipient email"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:204
+#: src/libs/form/class-bsx-mail-form.php:288
+msgid "Sender email"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:226
+#: src/libs/form/class-bsx-mail-form.php:310
+msgid "Email template"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:234
+msgid "%sUse placeholders (Subject and Email template):%s"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:263
+msgid "Form %d mail 2 (optional)"
+msgstr ""
+
+#: src/libs/form/class-bsx-mail-form.php:279
+msgid "%sOptional use email placeholder, e.g.:%s"
+msgstr ""
+
+#: src/libs/form/example.php:79
+msgid "Your message has been sent successfully."
+msgstr ""
+
+#: src/libs/form/example.php:88
+msgid "An error occured. Your message has not been sent."
+msgstr ""
+
+#: src/libs/nav/classes/class-bsx-walker-nav-menu.php:433
+#: src/libs/nav/classes/class-bsx-walker-page.php:242
+msgid "Close Menu item"
+msgstr ""
+
+#: src/libs/nav/classes/class-bsx-walker-nav-menu.php:433
+#: src/libs/nav/classes/class-bsx-walker-page.php:242
+msgid "Back"
+msgstr ""
+
+#: src/libs/nav/classes/class-bsx-walker-nav-menu.php:438
+#: src/libs/nav/classes/class-bsx-walker-page.php:245
+msgid "Overview"
+msgstr ""
+
+#: template-parts/banner/popular-posts.php:29
+msgid "Popular Posts"
+msgstr ""
+
+#: template-parts/banner/popular-posts.php:81
+msgid "No Popular Posts available"
+msgstr ""
+
+#: template-parts/content/content-none.php:3
+msgid "No content available"
+msgstr ""
+
+#: template-parts/content/content-single.php:71
+msgid "from"
+msgstr ""
+
+#: template-parts/content/content-single.php:83
+msgid "Share"
+msgstr ""
+
+#: template-parts/content/content-single.php:94
+#: template-parts/content/content-single.php:104
+msgid "Share on"
+msgstr ""
+
+#: template-parts/content/content-single.php:114
+msgid "Share via Email"
+msgstr ""
+
+#: template-parts/header/header.php:10
+msgid "Menu"
+msgstr ""
+
+#: template-parts/pagination/post-pagination.php:5
+#: template-parts/pagination/search-pagination.php:5
+msgid "Previous Page"
+msgstr ""
+
+#: template-parts/pagination/post-pagination.php:6
+#: template-parts/pagination/search-pagination.php:6
+msgid "Next Page"
+msgstr ""
+
+#: template-parts/pagination/post-pagination.php:7
+#: template-parts/pagination/post-pagination.php:8
+msgid "Blog Pages Navigation"
+msgstr ""
+
+#: template-parts/pagination/search-pagination.php:7
+#: template-parts/pagination/search-pagination.php:8
+msgid "Search Pages Navigation"
+msgstr ""
